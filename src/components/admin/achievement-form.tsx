@@ -40,10 +40,12 @@ export function AchievementForm({
                   { value: "sports", label: "Sports" },
                   { value: "arts", label: "Arts" },
                   { value: "academics", label: "Academics" },
+                  { value: "general", label: "General & Social" },
                 ]}
               />
               <Field label="Date" name="date" type="date" defaultValue={item ? toDateInput(item.date) : new Date().toISOString().slice(0, 10)} required />
             </div>
+            <Field label="Award Winner / Team (Optional)" name="awardWinner" placeholder="e.g. 64th MBBS Batch / Dr. Ananya" />
             <TextArea label="Description" name="description" defaultValue={item?.description} required rows={5} />
             <UploadField label="Cover image" name="coverImage" defaultUrl={item?.coverImage} accept="image/*" hint="JPG, PNG, WebP up to 8MB" />
             <Toggle label="Published" name="published" defaultChecked={item?.published ?? true} hint="Show on the public site" />

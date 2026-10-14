@@ -42,11 +42,19 @@ const NAV = [
     ],
   },
   {
-    section: "Modules",
+    section: "Hospital & College",
     items: [
-      { href: "/adminahnuok/emergency", label: "Emergency", icon: Siren },
-      { href: "/adminahnuok/complaints", label: "Suggestions", icon: MessageSquareWarning },
-      { href: "/adminahnuok/committees", label: "Subcommittees", icon: Users },
+      { href: "/adminahnuok/doctors", label: "Doctors & OP", icon: Users },
+      { href: "/adminahnuok/departments", label: "Departments", icon: GraduationCap },
+      { href: "/adminahnuok/academic-calendar", label: "Academic Calendar", icon: CalendarDays },
+    ],
+  },
+  {
+    section: "YUGA Union Modules",
+    items: [
+      { href: "/adminahnuok/emergency", label: "Emergency Directory", icon: Siren },
+      { href: "/adminahnuok/complaints", label: "Suggestions & Grievances", icon: MessageSquareWarning },
+      { href: "/adminahnuok/committees", label: "Subcommittees & Clubs", icon: Users },
       { href: "/adminahnuok/pages", label: "Pages (About)", icon: GraduationCap },
     ],
   },

@@ -15,9 +15,10 @@ export const metadata: Metadata = {
 
 const CATEGORIES = [
   { key: "all", label: "All" },
+  { key: "arts", label: "Arts & Cultural" },
   { key: "sports", label: "Sports" },
-  { key: "arts", label: "Arts" },
-  { key: "academics", label: "Academics" },
+  { key: "academics", label: "Academics & Research" },
+  { key: "general", label: "General & Social" },
 ];
 
 export default async function AchievementsPage({
