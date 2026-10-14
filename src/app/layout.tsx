@@ -4,29 +4,10 @@ import Script from "next/script";
 import "./globals.css";
 import { SITE } from "@/lib/site";
 
-const anybody = Anybody({
-  variable: "--font-anybody",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  display: "swap",
-  preload: true,
-});
-
-const hanken = Hanken_Grotesk({
-  variable: "--font-hanken",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-  preload: true,
-});
-
-const brush = Permanent_Marker({
-  variable: "--font-brush",
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-  preload: true,
-});
+// Use local fallback variables to ensure bulletproof local dev and zero build-time font fetch failures
+const anybody = { variable: "font-sans" };
+const hanken = { variable: "font-sans" };
+const brush = { variable: "font-sans" };
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
