@@ -12,26 +12,38 @@ function parseJSON<T>(value: string | undefined | null, fallback: T): T {
 }
 
 export async function getSetting<T>(key: string, fallback: T): Promise<T> {
-  const row = await db.setting.findUnique({ where: { key } });
-  return parseJSON<T>(row?.value, fallback);
+  try {
+    const row = await db.setting.findUnique({ where: { key } });
+    return parseJSON<T>(row?.value, fallback);
+  } catch {
+    return fallback;
+  }
 }
 
 export async function getPage(key: string) {
-  const page = await db.page.findUnique({ where: { key } });
-  if (!page) return null;
-  return { ...page, data: parseJSON<Record<string, unknown>>(page.content, {}) };
+  try {
+    const page = await db.page.findUnique({ where: { key } });
+    if (!page) return null;
+    return { ...page, data: parseJSON<Record<string, unknown>>(page.content, {}) };
+  } catch {
+    return null;
+  }
 }
 
 export async function getMarquee() {
-  const [m, speedSetting] = await Promise.all([
-    db.marquee.findFirst({ orderBy: { updatedAt: "desc" } }),
-    db.setting.findUnique({ where: { key: "marquee_speed" } }),
-  ]);
-  if (!m?.enabled) return null;
-  return {
-    ...m,
-    speed: speedSetting ? parseInt(speedSetting.value) || 8 : 8,
-  };
+  try {
+    const [m, speedSetting] = await Promise.all([
+      db.marquee.findFirst({ orderBy: { updatedAt: "desc" } }),
+      db.setting.findUnique({ where: { key: "marquee_speed" } }),
+    ]);
+    if (!m?.enabled) return null;
+    return {
+      ...m,
+      speed: speedSetting ? parseInt(speedSetting.value) || 8 : 8,
+    };
+  } catch {
+    return null;
+  }
 }
 
 // --- Achievements ---
