@@ -1,0 +1,416 @@
+// ADVAYA — Alappuzha Medical College Union
+// Local dev uses SQLite (file-based, zero-config, data persists).
+// To deploy on Supabase: change provider to "postgresql" and set DATABASE_URL.
+// Schema intentionally avoids DB-specific features so the switch is clean.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+// ---------------------------------------------------------------------------
+// Auth — administrators only. Students/faculty are anonymous visitors.
+// ---------------------------------------------------------------------------
+model Admin {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("admin") // admin | superadmin (role-ready)
+  avatar       String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  sessions     AdminSession[]
+}
+
+model AdminSession {
+  id           String   @id @default(cuid())
+  adminId      String
+  admin        Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  token        String   @unique
+  ipAddress    String?
+  location     String?
+  userAgent    String?
+  lastActiveAt DateTime @default(now())
+  createdAt    DateTime @default(now())
+
+  @@index([adminId])
+}
+
+// ---------------------------------------------------------------------------
+// Achievements  (Sports / Arts / Academics / General)
+// ---------------------------------------------------------------------------
+model Achievement {
+  id          String             @id @default(cuid())
+  title       String
+  slug        String             @unique
+  category    String             // sports | arts | academics | general
+  description String
+  date        DateTime
+  coverImage  String?
+  awardWinner String?            // Individual or Team/Batch name
+  published   Boolean            @default(true)
+  media       AchievementMedia[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@index([category])
+  @@index([date])
+}
+
+model AchievementMedia {
+  id            String      @id @default(cuid())
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  achievementId String
+  type          String // image | video
+  url           String
+  caption       String?
+  order         Int         @default(0)
+}
+
+// ---------------------------------------------------------------------------
+// Hospital & Doctors Directory (GMC Kozhikode)
+// ---------------------------------------------------------------------------
+model Department {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  code        String   @unique // e.g. "CARDIO", "NEURO", "GENMED"
+  type        String   @default("clinical") // clinical | pre-clinical | para-clinical | super-specialty
+  description String?
+  opDays      String?  // e.g. "Mon, Wed, Fri"
+  opRoomNo    String?
+  phone       String?
+  order       Int      @default(0)
+  doctors     Doctor[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([type])
+}
+
+model Doctor {
+  id             String      @id @default(cuid())
+  name           String
+  designation    String      // Professor & HOD, Additional Professor, Associate Professor, Asst Professor
+  qualifications String      // MBBS, MD, DM, MCh
+  departmentId   String
+  department     Department  @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  opSchedule     String?     // e.g. "Monday & Thursday 9:00 AM - 1:00 PM"
+  roomNo         String?
+  photoUrl       String?
+  email          String?
+  phone          String?
+  isHOD          Boolean     @default(false)
+  order          Int         @default(0)
+  active         Boolean     @default(true)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([departmentId])
+  @@index([isHOD])
+}
+
+// ---------------------------------------------------------------------------
+// Academic Hub & Calendar (GMC Kozhikode)
+// ---------------------------------------------------------------------------
+model AcademicCalendarEvent {
+  id          String    @id @default(cuid())
+  title       String
+  batch       String    // "MBBS Phase 1", "MBBS Phase 2", "Final Part 1", "Final Part 2", "Interns", "PG", "All"
+  eventType   String    // exam | posting | holiday | vacation | internal
+  startDate   DateTime
+  endDate     DateTime?
+  description String?
+  pdfUrl      String?
+  published   Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([batch])
+  @@index([eventType])
+  @@index([startDate])
+}
+
+// ---------------------------------------------------------------------------
+// Events  (upcoming / completed / cancelled)
+// ---------------------------------------------------------------------------
+model Event {
+  id          String            @id @default(cuid())
+  title       String
+  slug        String            @unique
+  description String
+  date        DateTime
+  endDate     DateTime? // null = single-day event
+  time        String?
+  venue       String?
+  poster      String?
+  status      String            @default("upcoming") // upcoming | completed | cancelled
+  published   Boolean           @default(true)
+  committee   Committee?        @relation(fields: [committeeId], references: [id], onDelete: SetNull)
+  committeeId String?
+  committees  Committee[]       @relation("EventCommittees")
+  media       EventMedia[]
+  attachments EventAttachment[]
+  gallery     EventGallery?
+  registrationForm RegistrationForm?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([status])
+  @@index([date])
+  @@index([committeeId])
+}
+
+model EventGallery {
+  id         String         @id @default(cuid())
+  event      Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId    String         @unique
+  theme      String         // bohemian | scrapbook | corkboard
+  titleLine1 String         @default("")
+  titleLine2 String         @default("")
+  subtitle   String         @default("")
+  blogText   String?
+  photos     GalleryPhoto[]
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+}
+
+model GalleryPhoto {
+  id        String       @id @default(cuid())
+  gallery   EventGallery @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+  galleryId String
+  url       String
+  caption   String       @default("")
+  position  Int
+  order     Int          @default(0)
+  zoom      Float        @default(1.0)
+  offsetX   Float        @default(0.0)
+  offsetY   Float        @default(0.0)
+  rotation  Int          @default(0)
+}
+
+model EventMedia {
+  id      String @id @default(cuid())
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId String
+  type    String // image | video
+  url     String
+  caption String?
+  order   Int    @default(0)
+}
+
+model EventAttachment {
+  id      String @id @default(cuid())
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId String
+  name    String
+  url     String
+}
+
+// ---------------------------------------------------------------------------
+// Notifications
+// ---------------------------------------------------------------------------
+model Notification {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  date        DateTime @default(now())
+  image       String?
+  pdfUrl      String?
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date])
+}
+
+// ---------------------------------------------------------------------------
+// Finance  (income / expenditure — future-ready, transaction-wise)
+// ---------------------------------------------------------------------------
+model FinanceEntry {
+  id         String   @id @default(cuid())
+  kind       String // income | expenditure
+  category   String // e.g. "Union Fund", "Other Income", "Union Expenditure"
+  label      String
+  amount     Float
+  note       String?
+  receiptUrl String?
+  date       DateTime @default(now())
+  createdAt  DateTime @default(now())
+
+  @@index([kind])
+  @@index([category])
+}
+
+// ---------------------------------------------------------------------------
+// Complaints  (anonymous default, or named)
+// ---------------------------------------------------------------------------
+model Complaint {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String?
+  message   String
+  anonymous Boolean  @default(true)
+  status    String   @default("new") // new | read | resolved
+  createdAt DateTime @default(now())
+
+  @@index([status])
+}
+
+// ---------------------------------------------------------------------------
+// Interventions  (official letters / representations to authorities)
+// Future-ready: category, pinned, and multi-attachment can be added later.
+// ---------------------------------------------------------------------------
+model Intervention {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  date        DateTime @default(now())
+  image       String?
+  pdfUrl      String?
+  category    String? // future: categorisation
+  pinned      Boolean  @default(false) // future: pin important ones
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date])
+  @@index([pinned])
+}
+
+// ---------------------------------------------------------------------------
+// Emergency registry  (ambulance, hospital, police, fire, blood bank, ...)
+// ---------------------------------------------------------------------------
+model EmergencyContact {
+  id             String  @id @default(cuid())
+  category       String // Ambulance | Hospital | Police | Fire Force | Blood Bank | Other
+  name           String
+  phone          String
+  description    String?
+  order          Int     @default(0)
+  active         Boolean @default(true)
+  showOnHomepage Boolean @default(false)
+}
+
+// ---------------------------------------------------------------------------
+// Subcommittees
+// ---------------------------------------------------------------------------
+model Committee {
+  id          String            @id @default(cuid())
+  name        String
+  slug        String            @unique
+  description String?
+  order       Int               @default(0)
+  members     CommitteeMember[]
+  events      Event[]
+  coEvents    Event[]           @relation("EventCommittees")
+  createdAt   DateTime          @default(now())
+}
+
+model CommitteeMember {
+  id          String    @id @default(cuid())
+  committee   Committee @relation(fields: [committeeId], references: [id], onDelete: Cascade)
+  committeeId String
+  name        String
+  position    String?
+  photo       String?
+  contact     String?
+  order       Int       @default(0)
+}
+
+// ---------------------------------------------------------------------------
+// Marquee announcement (single active row)
+// ---------------------------------------------------------------------------
+model Marquee {
+  id         String   @id @default(cuid())
+  enabled    Boolean  @default(true)
+  text       String
+  buttonText String?
+  buttonUrl  String?
+  updatedAt  DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Editable rich pages (About Union, UG, PG, Home sections)
+// content is a JSON string of blocks so structure can evolve freely.
+// ---------------------------------------------------------------------------
+model Page {
+  id        String   @id @default(cuid())
+  key       String   @unique // about | ug | pg | home
+  title     String
+  content   String   @default("{}") // JSON
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Key-value settings (contact details, social links, hero, flags, ...)
+// value is JSON so any shape can be stored without a migration.
+// ---------------------------------------------------------------------------
+model Setting {
+  key       String   @id
+  value     String   @default("{}") // JSON
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Registration Forms
+// ---------------------------------------------------------------------------
+model RegistrationForm {
+  id            String                   @id @default(cuid())
+  title         String
+  slug          String                   @unique
+  description   String?
+  event         Event?                   @relation(fields: [eventId], references: [id], onDelete: SetNull)
+  eventId       String?                  @unique
+  fields        RegistrationField[]
+  submissions   RegistrationSubmission[]
+  deadline      DateTime?
+  published     Boolean                  @default(true)
+  createdAt     DateTime                 @default(now())
+  updatedAt     DateTime                 @updatedAt
+}
+
+model RegistrationField {
+  id         String           @id @default(cuid())
+  form       RegistrationForm @relation(fields: [formId], references: [id], onDelete: Cascade)
+  formId     String
+  label      String
+  type       String
+  required   Boolean          @default(false)
+  placeholder String?
+  options    String?
+  order      Int              @default(0)
+}
+
+model RegistrationSubmission {
+  id        String           @id @default(cuid())
+  form      RegistrationForm @relation(fields: [formId], references: [id], onDelete: Cascade)
+  formId    String
+  data      String
+  files     String?
+  createdAt DateTime         @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Media library
+// ---------------------------------------------------------------------------
+model Media {
+  id        String   @id @default(cuid())
+  name      String
+  url       String
+  type      String // image | video | pdf
+  mime      String?
+  size      Int? // bytes
+  width     Int?
+  height    Int?
+  createdAt DateTime @default(now())
+
+  @@index([type])
+}
