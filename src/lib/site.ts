@@ -40,6 +40,7 @@ export const YUGA = {
     youtube: "https://youtube.com/@yugacalicut",
     whatsapp: "https://chat.whatsapp.com/",
     facebook: "https://facebook.com/",
+    twitter: "https://twitter.com/",
   },
 } as const;
 

@@ -20,16 +20,10 @@ export default async function AdminDoctorsPage() {
       <AdminHeader
         title="Doctors & Faculty Directory"
         description="Manage hospital consultants, professors, OP consultation days and clinic rooms."
-        action={
-          <div className="flex items-center gap-2">
-            <Link
-              href="/adminahnuok/departments"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-ink-200 bg-white px-3.5 py-2 text-xs font-semibold text-ink-700 hover:bg-ink-50 transition"
-            >
-              <Building2 className="h-4 w-4" /> Manage Departments
-            </Link>
-          </div>
-        }
+        action={{
+          label: "Departments",
+          href: "/adminahnuok/departments",
+        }}
       />
 
       <div className="space-y-6">
