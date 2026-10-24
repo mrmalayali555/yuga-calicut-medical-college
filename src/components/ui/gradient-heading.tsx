@@ -1,78 +1,83 @@
-import React from "react";
-import { cn } from "@/lib/utils";
+import React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
 
-export interface GradientHeadingProps
-  extends React.HTMLAttributes<HTMLHeadingElement> {
-  variant?: "default" | "secondary" | "emerald" | "sunset" | "amber" | "light";
-  size?: "default" | "sm" | "md" | "lg" | "xl" | "xxl";
-  weight?: "normal" | "medium" | "semibold" | "bold" | "black";
-  as?: "h1" | "h2" | "h3" | "h4" | "span" | "p";
+import { cn } from "@/lib/utils"
+
+const headingVariants = cva(
+  "bg-clip-text pb-3 tracking-tight text-transparent",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-gradient-to-t from-neutral-700 to-neutral-800 dark:from-stone-200 dark:to-neutral-200",
+        pink: "from-accent to-accent/90 bg-gradient-to-t dark:from-stone-200 dark:to-neutral-200",
+        light: "bg-gradient-to-t from-neutral-200 to-neutral-300",
+        secondary:
+          "bg-gradient-to-t from-neutral-500 to-neutral-600 dark:from-stone-200 dark:to-neutral-200",
+      },
+      size: {
+        default: "text-2xl sm:text-3xl lg:text-4xl",
+        xxs: "text-base sm:text-lg lg:text-lg",
+        xs: "text-lg sm:text-xl lg:text-2xl",
+        sm: "text-xl sm:text-2xl lg:text-3xl",
+        md: "text-2xl sm:text-3xl lg:text-4xl",
+        lg: "text-3xl sm:text-4xl lg:text-5xl",
+        xl: "text-4xl sm:text-5xl lg:text-6xl",
+        xll: "text-4xl sm:text-6xl lg:text-[5.4rem] lg:leading-[0.5rem]",
+        xxl: "text-5xl sm:text-6xl lg:text-[6rem]",
+        xxxl: "text-5xl sm:text-6xl lg:text-[8rem]",
+      },
+      weight: {
+        default: "font-bold",
+        thin: "font-thin",
+        base: "font-base",
+        semi: "font-semibold",
+        bold: "font-bold",
+        black: "font-black",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+      weight: "default",
+    },
+  }
+)
+
+export interface HeadingProps extends VariantProps<typeof headingVariants> {
+  asChild?: boolean
+  children: React.ReactNode
+  className?: string
 }
 
-const variantStyles: Record<NonNullable<GradientHeadingProps["variant"]>, string> = {
-  default:
-    "bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 bg-clip-text text-transparent dark:from-white dark:via-slate-200 dark:to-slate-400",
-  secondary:
-    "bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-800 bg-clip-text text-transparent dark:from-emerald-400 dark:via-teal-300 dark:to-emerald-500",
-  emerald:
-    "bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 bg-clip-text text-transparent",
-  sunset:
-    "bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 bg-clip-text text-transparent",
-  amber:
-    "bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 bg-clip-text text-transparent",
-  light:
-    "bg-gradient-to-r from-slate-100 via-white to-slate-200 bg-clip-text text-transparent",
-};
-
-const sizeStyles: Record<NonNullable<GradientHeadingProps["size"]>, string> = {
-  default: "text-2xl sm:text-3xl",
-  sm: "text-lg sm:text-xl",
-  md: "text-2xl sm:text-3xl",
-  lg: "text-3xl sm:text-4xl",
-  xl: "text-4xl sm:text-5xl",
-  xxl: "text-4xl sm:text-5xl md:text-6xl lg:text-7xl",
-};
-
-const weightStyles: Record<NonNullable<GradientHeadingProps["weight"]>, string> = {
-  normal: "font-normal",
-  medium: "font-medium",
-  semibold: "font-semibold",
-  bold: "font-bold",
-  black: "font-black",
-};
-
-export const GradientHeading = React.forwardRef<
-  HTMLHeadingElement,
-  GradientHeadingProps
->(
-  (
-    {
-      className,
-      variant = "default",
-      size = "default",
-      weight = "bold",
-      as: Component = "h2",
-      children,
-      ...props
-    },
-    ref
-  ) => {
+const GradientHeading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
+  ({ asChild, variant, weight, size, className, children, ...props }, ref) => {
+    const Comp = asChild ? Slot : "h3"
     return (
-      <Component
-        ref={ref as any}
-        className={cn(
-          "tracking-tight font-display inline-block leading-tight",
-          variantStyles[variant],
-          sizeStyles[size],
-          weightStyles[weight],
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </Component>
-    );
+      <Comp ref={ref} {...props} className={className}>
+        <span className={cn(headingVariants({ variant, size, weight }))}>
+          {children}
+        </span>
+      </Comp>
+    )
   }
-);
+)
 
-GradientHeading.displayName = "GradientHeading";
+GradientHeading.displayName = "GradientHeading"
+
+export type Variant = "default" | "pink" | "light" | "secondary"
+export type Size =
+  | "default"
+  | "xxs"
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "xxl"
+  | "xxxl"
+export type Weight = "default" | "thin" | "base" | "semi" | "bold" | "black"
+
+export { GradientHeading, headingVariants }
+export default GradientHeading

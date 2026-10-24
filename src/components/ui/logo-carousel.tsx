@@ -1,263 +1,386 @@
-"use client";
+"use client"
 
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type SVGProps,
+} from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import Image from "next/image"
+import Link from "next/link"
 
-export interface LogoItem {
-  id: string;
-  name: string;
-  tagline: string;
-  category: string;
-  src: string;
-  href: string;
-  accent: string;
-  bgLight: string;
-  borderColor: string;
+// Define the structure for our logo objects
+export interface Logo {
+  name: string
+  id: number
+  img: React.ComponentType<{ className?: string }>
+  href?: string
 }
 
-export const DEFAULT_CLUBS: LogoItem[] = [
-  {
-    id: "jeevanam",
-    name: "Jeevanam",
-    tagline: "Voluntary Blood Donation Club",
-    category: "Health & Social Service",
-    src: "/clubs/jeevanam.jpg",
-    href: "/clubs/jeevanam",
-    accent: "#dc2626",
-    bgLight: "rgba(239, 68, 68, 0.08)",
-    borderColor: "rgba(239, 68, 68, 0.25)",
-  },
-  {
-    id: "praanah",
-    name: "Praanah",
-    tagline: "Fine Arts & Cultural Wing",
-    category: "Arts & Culture",
-    src: "/clubs/praanah.jpg",
-    href: "/clubs/praanah",
-    accent: "#d97706",
-    bgLight: "rgba(217, 119, 6, 0.08)",
-    borderColor: "rgba(217, 119, 6, 0.25)",
-  },
-  {
-    id: "godha",
-    name: "Godha",
-    tagline: "Sports & Athletics Council",
-    category: "Sports & Athletics",
-    src: "/clubs/godha.png",
-    href: "/clubs/godha",
-    accent: "#059669",
-    bgLight: "rgba(5, 150, 105, 0.08)",
-    borderColor: "rgba(5, 150, 105, 0.25)",
-  },
-  {
-    id: "ocha",
-    name: "Ocha",
-    tagline: "Literary, Quizzing & Debating Forum",
-    category: "Literary & Debate",
-    src: "/clubs/ocha.png",
-    href: "/clubs/ocha",
-    accent: "#7c3aed",
-    bgLight: "rgba(124, 58, 237, 0.08)",
-    borderColor: "rgba(124, 58, 237, 0.25)",
-  },
-];
-
-interface LogoCarouselProps {
-  columnCount?: number;
-  logos?: LogoItem[];
-  className?: string;
-  autoPlayInterval?: number;
+// Utility function to randomly shuffle an array
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
 }
 
-// Sub-component for individual animated column
-function LogoColumn({
-  items,
-  columnIndex,
-  autoPlayInterval = 3200,
-}: {
-  items: LogoItem[];
-  columnIndex: number;
-  autoPlayInterval?: number;
-}) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+// Utility function to distribute logos across multiple columns
+const distributeLogos = (allLogos: Logo[], columnCount: number): Logo[][] => {
+  const shuffled = shuffleArray(allLogos)
+  const columns: Logo[][] = Array.from({ length: columnCount }, () => [])
 
-  useEffect(() => {
-    if (items.length <= 1 || isPaused) return;
+  // Distribute logos evenly across columns
+  shuffled.forEach((logo, index) => {
+    columns[index % columnCount].push(logo)
+  })
 
-    // Stagger column start times so they don't change in lockstep
-    const staggerTimeout = setTimeout(() => {
-      const interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % items.length);
-      }, autoPlayInterval);
+  // Ensure all columns have the same number of logos by filling shorter columns
+  const maxLength = Math.max(...columns.map((col) => col.length))
+  columns.forEach((col) => {
+    while (col.length < maxLength) {
+      col.push(shuffled[Math.floor(Math.random() * shuffled.length)])
+    }
+  })
 
-      return () => clearInterval(interval);
-    }, columnIndex * 600);
+  return columns
+}
 
-    return () => clearTimeout(staggerTimeout);
-  }, [items.length, isPaused, columnIndex, autoPlayInterval]);
+// Props for the LogoColumn component
+interface LogoColumnProps {
+  logos: Logo[]
+  index: number
+  currentTime: number
+}
 
-  const activeItem = items[currentIndex];
-  if (!activeItem) return null;
+// LogoColumn component: Displays a single column of animated logos
+const LogoColumn: React.FC<LogoColumnProps> = React.memo(
+  ({ logos, index, currentTime }) => {
+    const cycleInterval = 2000 // Time each logo is displayed (in milliseconds)
+    const columnDelay = index * 200 // Stagger the start of each column's animation
+    // Calculate which logo should be displayed based on the current time
+    const adjustedTime =
+      (currentTime + columnDelay) % (cycleInterval * logos.length)
+    const currentIndex = Math.floor(adjustedTime / cycleInterval)
 
-  return (
-    <div
-      className="relative flex flex-col items-center justify-center w-full"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeItem.id}
-          initial={{ opacity: 0, y: 18, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -18, scale: 0.95 }}
-          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full"
-        >
-          <Link
-            href={activeItem.href}
-            className="group relative flex flex-col items-center justify-between rounded-2xl border bg-white/90 backdrop-blur-sm p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 overflow-hidden w-full min-h-[260px]"
-            style={{
-              borderColor: activeItem.borderColor,
+    const currentLogoObj = logos[currentIndex]
+
+    // Memoize the current logo component
+    const CurrentLogo = useMemo(
+      () => currentLogoObj.img,
+      [currentLogoObj]
+    )
+
+    return (
+      // Framer Motion component for the column container
+      <motion.div
+        className="relative h-16 w-28 overflow-hidden sm:h-20 sm:w-36 md:h-24 md:w-48"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: index * 0.1,
+          duration: 0.5,
+          ease: "easeOut",
+        }}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${currentLogoObj.id}-${currentIndex}`}
+            className="absolute inset-0 flex items-center justify-center cursor-pointer"
+            initial={{ y: "10%", opacity: 0, filter: "blur(8px)" }}
+            animate={{
+              y: "0%",
+              opacity: 1,
+              filter: "blur(0px)",
+              transition: {
+                type: "spring",
+                stiffness: 300,
+                damping: 20,
+                mass: 1,
+                bounce: 0.2,
+                duration: 0.5,
+              },
+            }}
+            exit={{
+              y: "-20%",
+              opacity: 0,
+              filter: "blur(6px)",
+              transition: {
+                type: "tween",
+                ease: "easeIn",
+                duration: 0.3,
+              },
             }}
           >
-            {/* Ambient background glow on hover */}
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-              style={{
-                background: `radial-gradient(circle at 50% 20%, ${activeItem.bgLight}, transparent 70%)`,
-              }}
-            />
-
-            {/* Top pill with Category */}
-            <div className="w-full flex items-center justify-between mb-3 z-10">
-              <span
-                className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border transition-colors"
-                style={{
-                  color: activeItem.accent,
-                  borderColor: activeItem.borderColor,
-                  backgroundColor: activeItem.bgLight,
-                }}
+            {currentLogoObj.href ? (
+              <Link
+                href={currentLogoObj.href}
+                className="group flex h-full w-full items-center justify-center p-1 transition-transform duration-200 hover:scale-105"
+                title={`Explore ${currentLogoObj.name}`}
               >
-                {activeItem.category}
-              </span>
-              <span className="flex items-center justify-center h-6 w-6 rounded-full bg-slate-100 text-slate-400 group-hover:bg-slate-900 group-hover:text-white transition-all">
-                <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </span>
-            </div>
-
-            {/* Logo Image in elevated rounded frame */}
-            <div className="relative my-auto flex items-center justify-center z-10 py-2">
-              <div
-                className="relative h-28 w-28 rounded-2xl p-2.5 flex items-center justify-center bg-white shadow-md border transition-transform duration-300 group-hover:scale-105"
-                style={{ borderColor: activeItem.borderColor }}
-              >
-                <div className="relative h-full w-full">
-                  <Image
-                    src={activeItem.src}
-                    alt={`${activeItem.name} logo`}
-                    fill
-                    className="object-contain"
-                    sizes="112px"
-                    priority
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Club Name & Tagline */}
-            <div className="w-full text-center mt-3 z-10">
-              <h4
-                className="font-display text-lg font-bold transition-colors"
-                style={{ color: activeItem.accent }}
-              >
-                {activeItem.name}
-              </h4>
-              <p className="text-xs text-slate-500 font-medium line-clamp-1 mt-0.5">
-                {activeItem.tagline}
-              </p>
-            </div>
-
-            {/* Hover indication bar at bottom */}
-            <div
-              className="absolute bottom-0 left-0 right-0 h-1 transition-all duration-300 opacity-60 group-hover:opacity-100"
-              style={{ backgroundColor: activeItem.accent }}
-            />
-          </Link>
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Pagination dots for this column */}
-      {items.length > 1 && (
-        <div className="flex items-center gap-1.5 mt-3">
-          {items.map((item, idx) => (
-            <button
-              key={item.id}
-              onClick={() => setCurrentIndex(idx)}
-              className={cn(
-                "h-1.5 rounded-full transition-all duration-300",
-                currentIndex === idx
-                  ? "w-5 bg-slate-800"
-                  : "w-1.5 bg-slate-300 hover:bg-slate-400"
-              )}
-              aria-label={`Show ${item.name}`}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-export default function LogoCarousel({
-  columnCount = 3,
-  logos = DEFAULT_CLUBS,
-  className,
-  autoPlayInterval = 3200,
-}: LogoCarouselProps) {
-  // Distribute logos into columnCount columns
-  // If logos <= columnCount, repeat or rotate so all columns have active cycling cards
-  const columns: LogoItem[][] = Array.from({ length: columnCount }, () => []);
-
-  if (logos.length <= columnCount) {
-    // With 4 items and 3 columns, distribute with staggered offset so each column shows different items
-    for (let c = 0; c < columnCount; c++) {
-      for (let i = 0; i < logos.length; i++) {
-        const offsetIndex = (i + c) % logos.length;
-        columns[c].push(logos[offsetIndex]);
-      }
-    }
-  } else {
-    logos.forEach((logo, idx) => {
-      columns[idx % columnCount].push(logo);
-    });
+                <CurrentLogo className="h-14 max-h-[80%] w-24 max-w-[80%] object-contain md:h-20 md:w-36 transition-opacity group-hover:opacity-80" />
+              </Link>
+            ) : (
+              <CurrentLogo className="h-14 max-h-[80%] w-24 max-w-[80%] object-contain md:h-20 md:w-36" />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+    )
   }
+)
 
+LogoColumn.displayName = "LogoColumn"
+
+// 1. Jeevanam Official Logo
+function JeevanamLogo({ className }: { className?: string }) {
   return (
-    <div className={cn("w-full", className)}>
-      <div
-        className={cn(
-          "grid gap-5 sm:gap-6",
-          columnCount === 1 && "grid-cols-1 max-w-sm mx-auto",
-          columnCount === 2 && "grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto",
-          columnCount === 3 && "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto",
-          columnCount >= 4 && "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto"
-        )}
-      >
-        {columns.map((columnItems, colIndex) => (
-          <LogoColumn
-            key={colIndex}
-            items={columnItems}
-            columnIndex={colIndex}
-            autoPlayInterval={autoPlayInterval}
-          />
-        ))}
+    <div className={`relative flex items-center justify-center h-full w-full ${className || ""}`}>
+      <div className="relative h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 rounded-2xl overflow-hidden bg-white shadow-xs border border-red-100 p-1">
+        <Image
+          src="/clubs/jeevanam.jpg"
+          alt="Jeevanam Blood Donation Club"
+          fill
+          className="object-contain"
+          sizes="80px"
+        />
       </div>
     </div>
-  );
+  )
 }
+
+// 2. Praanah Official Logo
+function PraanahLogo({ className }: { className?: string }) {
+  return (
+    <div className={`relative flex items-center justify-center h-full w-full ${className || ""}`}>
+      <div className="relative h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 rounded-2xl overflow-hidden bg-white shadow-xs border border-amber-100 p-1">
+        <Image
+          src="/clubs/praanah.jpg"
+          alt="Praanah Arts Club"
+          fill
+          className="object-contain"
+          sizes="80px"
+        />
+      </div>
+    </div>
+  )
+}
+
+// 3. Godha Official Logo
+function GodhaLogo({ className }: { className?: string }) {
+  return (
+    <div className={`relative flex items-center justify-center h-full w-full ${className || ""}`}>
+      <div className="relative h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 rounded-2xl overflow-hidden bg-white shadow-xs border border-emerald-100 p-1">
+        <Image
+          src="/clubs/godha.png"
+          alt="Godha Sports Club"
+          fill
+          className="object-contain"
+          sizes="80px"
+        />
+      </div>
+    </div>
+  )
+}
+
+// 4. Ocha Official Logo
+function OchaLogo({ className }: { className?: string }) {
+  return (
+    <div className={`relative flex items-center justify-center h-full w-full ${className || ""}`}>
+      <div className="relative h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 rounded-2xl overflow-hidden bg-white shadow-xs border border-violet-100 p-1">
+        <Image
+          src="/clubs/ocha.png"
+          alt="Ocha Literary Club"
+          fill
+          className="object-contain"
+          sizes="80px"
+        />
+      </div>
+    </div>
+  )
+}
+
+// Typography / Brand Badges for smooth alternating columns
+function JeevanamBadge({ className }: { className?: string }) {
+  return (
+    <div className={`flex flex-col items-center justify-center select-none ${className || ""}`}>
+      <span className="text-xl sm:text-2xl font-black tracking-tight text-red-600 font-display">
+        ജീവനം
+      </span>
+      <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+        Jeevanam Club
+      </span>
+    </div>
+  )
+}
+
+function PraanahBadge({ className }: { className?: string }) {
+  return (
+    <div className={`flex flex-col items-center justify-center select-none ${className || ""}`}>
+      <span className="text-xl sm:text-2xl font-black tracking-tight text-amber-600 font-display">
+        പ്രാണഃ
+      </span>
+      <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+        Praanah Arts
+      </span>
+    </div>
+  )
+}
+
+function GodhaBadge({ className }: { className?: string }) {
+  return (
+    <div className={`flex flex-col items-center justify-center select-none ${className || ""}`}>
+      <span className="text-xl sm:text-2xl font-black tracking-tight text-emerald-600 font-display">
+        ഗോദ
+      </span>
+      <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+        Godha Sports
+      </span>
+    </div>
+  )
+}
+
+function OchaBadge({ className }: { className?: string }) {
+  return (
+    <div className={`flex flex-col items-center justify-center select-none ${className || ""}`}>
+      <span className="text-xl sm:text-2xl font-black tracking-tight text-violet-600 font-display">
+        ഒച്ച
+      </span>
+      <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+        Ocha Literary
+      </span>
+    </div>
+  )
+}
+
+// Brand SVGs matching Cult UI demo
+function AppleIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="209"
+      height="256"
+      viewBox="0 0 814 1000"
+      className="fill-current text-slate-900 dark:text-white"
+      {...props}
+    >
+      <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z" />
+    </svg>
+  )
+}
+
+function VercelIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 256 222"
+      width="256"
+      height="222"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid"
+      className="fill-current text-slate-900 dark:text-white"
+      {...props}
+    >
+      <path d="m128 0 128 221.705H0z" />
+    </svg>
+  )
+}
+
+function NextjsIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      width={180}
+      height={180}
+      viewBox="0 0 180 180"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx={90} cy={90} r={87} fill="black" stroke="white" strokeWidth={6} />
+      <path
+        d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z"
+        fill="white"
+      />
+      <rect x={115} y={54} width={12} height={72} fill="white" />
+    </svg>
+  )
+}
+
+function TailwindCSSIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 54 33"
+      {...props}
+    >
+      <path
+        fill="#38bdf8"
+        fillRule="evenodd"
+        d="M27 0c-7.2 0-11.7 3.6-13.5 10.8 2.7-3.6 5.85-4.95 9.45-4.05 2.054.513 3.522 2.004 5.147 3.653C30.744 13.09 33.808 16.2 40.5 16.2c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C36.756 3.11 33.692 0 27 0zM13.5 16.2C6.3 16.2 1.8 19.8 0 27c2.7-3.6 5.85-4.95 9.45-4.05 2.054.514 3.522 2.004 5.147 3.653C17.244 29.29 20.308 32.4 27 32.4c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C23.256 19.31 20.192 16.2 13.5 16.2z"
+        clipRule="evenodd"
+      />
+    </svg>
+  )
+}
+
+// Main LogoCarousel component
+export function LogoCarousel({ columnCount = 2 }: { columnCount?: number }) {
+  const [logoSets, setLogoSets] = useState<Logo[][]>([])
+  const [currentTime, setCurrentTime] = useState(0)
+
+  // Memoize all logos: 4 authentic club logos, 4 Malayalam brand marks, and tech icons
+  const allLogos: Logo[] = useMemo(
+    () => [
+      { name: "Jeevanam (Blood Donation)", id: 1, img: JeevanamLogo, href: "/clubs/jeevanam" },
+      { name: "Praanah (Arts Club)", id: 2, img: PraanahLogo, href: "/clubs/praanah" },
+      { name: "Godha (Sports Club)", id: 3, img: GodhaLogo, href: "/clubs/godha" },
+      { name: "Ocha (Literary Club)", id: 4, img: OchaLogo, href: "/clubs/ocha" },
+      { name: "ജീവനം Blood Wing", id: 5, img: JeevanamBadge, href: "/clubs/jeevanam" },
+      { name: "പ്രാണഃ Arts Wing", id: 6, img: PraanahBadge, href: "/clubs/praanah" },
+      { name: "ഗോദ Sports Council", id: 7, img: GodhaBadge, href: "/clubs/godha" },
+      { name: "ഒച്ച Literary Forum", id: 8, img: OchaBadge, href: "/clubs/ocha" },
+      { name: "Apple", id: 9, img: AppleIcon },
+      { name: "Vercel", id: 10, img: VercelIcon },
+      { name: "Nextjs", id: 11, img: NextjsIcon },
+      { name: "Tailwind", id: 12, img: TailwindCSSIcon },
+    ],
+    []
+  )
+
+  // Distribute logos across columns when the component mounts
+  useEffect(() => {
+    const distributedLogos = distributeLogos(allLogos, columnCount)
+    setLogoSets(distributedLogos)
+  }, [allLogos, columnCount])
+
+  // Function to update the current time (used for logo cycling)
+  const updateTime = useCallback(() => {
+    setCurrentTime((prevTime) => prevTime + 100)
+  }, [])
+
+  // Set up an interval to update the time every 100ms
+  useEffect(() => {
+    const intervalId = setInterval(updateTime, 100)
+    return () => clearInterval(intervalId)
+  }, [updateTime])
+
+  // Render the logo columns matching Cult UI
+  return (
+    <div className="flex space-x-6 sm:space-x-8 md:space-x-12 items-center justify-center">
+      {logoSets.map((logos, index) => (
+        <LogoColumn
+          key={index}
+          logos={logos}
+          index={index}
+          currentTime={currentTime}
+        />
+      ))}
+    </div>
+  )
+}
+
+export default LogoCarousel
