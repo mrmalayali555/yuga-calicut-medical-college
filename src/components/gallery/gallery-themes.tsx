@@ -1,13 +1,22 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { GalleryLightbox } from "./gallery-lightbox";
 import { GalleryPhotoImg } from "@/components/ui/gallery-photo-img";
 
 /* ─── Types ─── */
-type Photo = { id: string; url: string; caption: string; position: number; zoom?: number; offsetX?: number; offsetY?: number; rotation?: number; };
-type GalleryData = {
+export type Photo = {
+  id: string;
+  url: string;
+  caption: string;
+  position: number;
+  zoom?: number;
+  offsetX?: number;
+  offsetY?: number;
+  rotation?: number;
+};
+
+export type GalleryData = {
   id: string;
   theme: string;
   titleLine1: string;
@@ -33,7 +42,9 @@ function Polaroid({
 }) {
   if (!photo) return null;
   return (
-    <figure data-photo-id={photo.id} className={`group relative bg-white p-2 pb-8 shadow-[2px_4px_16px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-105 hover:shadow-[4px_8px_32px_rgba(0,0,0,0.15)] hover:z-20 ${className}`}
+    <figure
+      data-photo-id={photo.id}
+      className={`group relative bg-white p-2.5 pb-8 shadow-[2px_4px_16px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-105 hover:shadow-[4px_8px_32px_rgba(0,0,0,0.15)] hover:z-20 rounded-xs border border-slate-200/80 ${className}`}
       style={{ transform: `rotate(${rotate})` }}
     >
       <GalleryPhotoImg
@@ -48,7 +59,7 @@ function Polaroid({
       />
       {photo.caption && (
         <figcaption
-          className={`mt-2 text-center text-sm text-ink-600 ${captionFont}`}
+          className={`mt-2 text-center text-xs font-medium text-slate-700 ${captionFont}`}
         >
           {photo.caption}
         </figcaption>
@@ -59,78 +70,44 @@ function Polaroid({
 
 /* ═══════════════════════════════════════════════════════════════════════════
    THEME 1 — BOHEMIAN
-   Scattered polaroids around center text on light background.
-   Matches the "The New Bohemian" reference image.
+   Scattered polaroids around center title with gentle offsets.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-// Unused in new responsive flex layout, but keeping variable for reference
 const BOHEMIAN_ROTATIONS = [
-  "-6deg", "4deg", "8deg", "-4deg", "-12deg", "10deg", "-3deg", "-5deg", "-8deg"
+  "-4deg", "3deg", "6deg", "-3deg", "-8deg", "5deg", "-2deg", "-5deg", "4deg",
 ];
 
 export function BohemianGallery({ gallery }: { gallery: GalleryData }) {
   return (
-    <div className="relative mx-auto my-12 w-full max-w-5xl rounded-2xl glass-card p-8 sm:p-12">
+    <div className="relative mx-auto my-12 w-full max-w-5xl rounded-3xl border border-emerald-100 bg-gradient-to-b from-emerald-50/40 via-white to-white p-6 sm:p-12 shadow-sm">
       {/* Center text */}
-      <div className="mx-auto max-w-2xl text-center mb-16">
+      <div className="mx-auto max-w-2xl text-center mb-12">
         {gallery.titleLine1 && (
-          <p
-            className="text-2xl text-on-surface-variant sm:text-3xl"
-            style={{ fontFamily: "'Caveat', cursive" }}
-          >
+          <p className="text-xl sm:text-2xl font-serif text-emerald-800 italic">
             {gallery.titleLine1}
           </p>
         )}
         {gallery.titleLine2 && (
-          <h2
-            className="mt-2 text-4xl font-bold text-on-surface sm:text-5xl"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
+          <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
             {gallery.titleLine2}
           </h2>
         )}
         {gallery.subtitle && (
-          <p className="mx-auto mt-6 text-base leading-relaxed text-on-surface-variant">
+          <p className="mx-auto mt-3 max-w-md text-sm text-slate-600 leading-relaxed font-normal">
             {gallery.subtitle}
           </p>
         )}
       </div>
 
-      {/* Scattered polaroids (flex wrap layout) */}
-      <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
-        {gallery.photos.map((photo, i) => {
-          const rotation = BOHEMIAN_ROTATIONS[i % BOHEMIAN_ROTATIONS.length];
-          return (
-            <div
-              key={photo.id}
-              className="w-40 sm:w-56"
-              style={{
-                transform: `rotate(${rotation})`,
-              }}
-            >
-              <figure data-photo-id={photo.id} className="group glass-card bg-surface/50 p-2 pb-8 sm:p-3 sm:pb-12 shadow-[2px_3px_10px_rgba(0,0,0,0.2)] transition-all duration-300 hover:scale-110 hover:shadow-[4px_8px_24px_rgba(120,0,255,0.25)] hover:z-20">
-                <GalleryPhotoImg
-                  src={photo.url}
-                  alt={photo.caption || ""}
-                  aspectRatio="3/4"
-                  zoom={photo.zoom || 1}
-                  offsetX={photo.offsetX || 0}
-                  offsetY={photo.offsetY || 0}
-                  rotation={photo.rotation || 0}
-                  className="rounded-sm"
-                />
-                {photo.caption && (
-                  <figcaption
-                    className="mt-3 text-center text-sm text-on-surface-variant"
-                    style={{ fontFamily: "'Caveat', cursive" }}
-                  >
-                    {photo.caption}
-                  </figcaption>
-                )}
-              </figure>
-            </div>
-          );
-        })}
+      {/* Scattered photos grid */}
+      <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+        {gallery.photos.map((photo, i) => (
+          <Polaroid
+            key={photo.id}
+            photo={photo}
+            rotate={BOHEMIAN_ROTATIONS[i % BOHEMIAN_ROTATIONS.length]}
+          />
+        ))}
       </div>
     </div>
   );
@@ -138,48 +115,40 @@ export function BohemianGallery({ gallery }: { gallery: GalleryData }) {
 
 /* ═══════════════════════════════════════════════════════════════════════════
    THEME 2 — SCRAPBOOK
-   Polaroids with washi tape on textured background.
-   Matches the "Brand Blitz" mockup reference.
+   Polaroids with colorful washi tape strips on a textured surface.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const TAPE_COLORS = [
-  "bg-amber-200/80",
-  "bg-pink-200/80",
-  "bg-blue-200/80",
-  "bg-green-200/80",
-  "bg-purple-200/80",
-  "bg-yellow-200/80",
+  "bg-emerald-200/90",
+  "bg-teal-200/90",
+  "bg-amber-200/90",
+  "bg-rose-200/90",
+  "bg-sky-200/90",
 ];
 
 const SCRAPBOOK_ROTATIONS = [
-  "-3deg", "2deg", "-5deg", "4deg", "-2deg", "6deg",
-  "-4deg", "3deg", "-1deg", "5deg",
+  "-3deg", "2deg", "-5deg", "4deg", "-2deg", "5deg",
+  "-4deg", "3deg", "-1deg", "4deg",
 ];
 
 export function ScrapbookGallery({ gallery }: { gallery: GalleryData }) {
   return (
-    <div className="mx-auto my-12 w-full max-w-4xl">
+    <div className="mx-auto my-12 w-full max-w-5xl">
       {/* Title */}
       {(gallery.titleLine1 || gallery.titleLine2) && (
         <div className="mb-8 text-center">
           {gallery.titleLine1 && (
-            <p
-              className="text-xl text-on-surface-variant"
-              style={{ fontFamily: "'Dancing Script', cursive" }}
-            >
+            <p className="text-xl text-emerald-800 font-serif italic">
               {gallery.titleLine1}
             </p>
           )}
           {gallery.titleLine2 && (
-            <h2
-              className="mt-1 text-3xl font-bold text-on-surface sm:text-4xl"
-              style={{ fontFamily: "'Dancing Script', cursive" }}
-            >
+            <h2 className="mt-1 text-3xl font-bold text-slate-900 sm:text-4xl">
               {gallery.titleLine2}
             </h2>
           )}
           {gallery.subtitle && (
-            <p className="mx-auto mt-3 max-w-md text-sm text-on-surface-variant">
+            <p className="mx-auto mt-2 max-w-md text-sm text-slate-600 font-normal">
               {gallery.subtitle}
             </p>
           )}
@@ -187,13 +156,7 @@ export function ScrapbookGallery({ gallery }: { gallery: GalleryData }) {
       )}
 
       {/* Polaroid grid with tape */}
-      <div
-        className="rounded-2xl p-6 sm:p-10 glass-card bg-surface/20"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0z' fill='none'/%3E%3Cpath d='M0 20h40M20 0v40' stroke='rgba(255,255,255,0.05)' stroke-width='0.5'/%3E%3C/svg%3E\")",
-        }}
-      >
+      <div className="rounded-3xl border border-slate-200 bg-[#f9faf9] p-6 sm:p-10 shadow-sm">
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
           {gallery.photos.map((photo, i) => (
             <div
@@ -205,11 +168,16 @@ export function ScrapbookGallery({ gallery }: { gallery: GalleryData }) {
             >
               {/* Washi tape strip */}
               <div
-                className={`absolute -top-2.5 left-1/2 z-10 h-5 w-14 -translate-x-1/2 rotate-[-2deg] ${TAPE_COLORS[i % TAPE_COLORS.length]}`}
+                className={`absolute -top-3 left-1/2 z-10 h-5 w-16 -translate-x-1/2 rotate-[-2deg] ${
+                  TAPE_COLORS[i % TAPE_COLORS.length]
+                } shadow-2xs border border-white/40`}
                 style={{ clipPath: "polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%)" }}
               />
 
-              <figure data-photo-id={photo.id} className="glass-card bg-surface/50 p-2 pb-7 shadow-[2px_3px_12px_rgba(0,0,0,0.4)]">
+              <figure
+                data-photo-id={photo.id}
+                className="bg-white p-2.5 pb-7 shadow-md border border-slate-200/90 rounded-sm"
+              >
                 <GalleryPhotoImg
                   src={photo.url}
                   alt={photo.caption || ""}
@@ -218,13 +186,10 @@ export function ScrapbookGallery({ gallery }: { gallery: GalleryData }) {
                   offsetX={photo.offsetX || 0}
                   offsetY={photo.offsetY || 0}
                   rotation={photo.rotation || 0}
-                  className="rounded-sm"
+                  className="rounded-xs"
                 />
                 {photo.caption && (
-                  <figcaption
-                    className="mt-2 text-center text-sm text-on-surface-variant"
-                    style={{ fontFamily: "'Dancing Script', cursive" }}
-                  >
+                  <figcaption className="mt-2 text-center text-xs font-medium text-slate-700">
                     {photo.caption}
                   </figcaption>
                 )}
@@ -239,77 +204,73 @@ export function ScrapbookGallery({ gallery }: { gallery: GalleryData }) {
 
 /* ═══════════════════════════════════════════════════════════════════════════
    THEME 3 — CORK BOARD
-   Exact replica of the user's HTML/CSS with Cedarville Cursive font.
-   Scattered polaroids on wood background with hover zoom.
+   Photos pinned to a warm corkboard texture with push pins.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const CORK_ROTATIONS = [
-  "-10deg", "15deg", "-25deg", "5deg", "5deg",
-  "-8deg", "2deg", "-13deg", "-7deg", "2deg", "-3deg",
+  "-4deg", "5deg", "-6deg", "3deg", "4deg",
+  "-3deg", "2deg", "-5deg", "4deg", "-2deg",
 ];
 
 export function CorkBoardGallery({ gallery }: { gallery: GalleryData }) {
   return (
-    <div className="mx-auto my-12 w-full max-w-4xl">
+    <div className="mx-auto my-12 w-full max-w-5xl">
       {/* Title */}
       {(gallery.titleLine1 || gallery.titleLine2) && (
-        <div className="mb-6 text-center">
+        <div className="mb-8 text-center">
           {gallery.titleLine1 && (
-            <p
-              className="text-xl text-on-surface-variant"
-              style={{ fontFamily: "'Cedarville Cursive', cursive" }}
-            >
+            <p className="text-xl font-serif text-emerald-800 italic">
               {gallery.titleLine1}
             </p>
           )}
           {gallery.titleLine2 && (
-            <h2
-              className="mt-1 text-3xl font-bold text-on-surface sm:text-4xl"
-              style={{ fontFamily: "'Cedarville Cursive', cursive" }}
-            >
+            <h2 className="mt-1 text-3xl font-bold text-slate-900 sm:text-4xl">
               {gallery.titleLine2}
             </h2>
+          )}
+          {gallery.subtitle && (
+            <p className="mx-auto mt-2 max-w-md text-sm text-slate-600 font-normal">
+              {gallery.subtitle}
+            </p>
           )}
         </div>
       )}
 
-      {/* Wood background board */}
-      <div
-        className="min-h-[500px] rounded-2xl p-5 sm:p-8"
-        style={{
-          background: "#3b2a09", // Darker wood for dark mode
-          backgroundImage:
-            "repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0,0,0,0.1) 20px, rgba(0,0,0,0.1) 21px), repeating-linear-gradient(0deg, transparent, transparent 5px, rgba(255,255,255,0.02) 5px, rgba(255,255,255,0.02) 6px)",
-        }}
-      >
-        <div className="flex flex-wrap justify-center gap-0">
+      {/* Corkboard canvas */}
+      <div className="rounded-3xl border-4 border-amber-900/40 bg-[#d9ab7b] p-6 sm:p-10 shadow-lg">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
           {gallery.photos.map((photo, i) => (
-            <figure
+            <div
               key={photo.id}
-              data-photo-id={photo.id}
-              className="relative m-2.5 glass-card bg-[#f4f0e6] p-2.5 text-center shadow-[1px_2px_12px_rgba(0,0,0,0.8)] transition-all duration-300 hover:scale-110 hover:shadow-[5px_10px_40px_rgba(0,0,0,0.9)] hover:z-20 text-ink-900"
+              className="group relative transition-all duration-300 hover:scale-105 hover:z-10"
               style={{
                 transform: `rotate(${CORK_ROTATIONS[i % CORK_ROTATIONS.length]})`,
-                fontFamily: "'Cedarville Cursive', cursive",
-                fontSize: "15px",
               }}
             >
-              <GalleryPhotoImg
-                src={photo.url}
-                alt={photo.caption || ""}
-                aspectRatio="4/3"
-                zoom={photo.zoom || 1}
-                offsetX={photo.offsetX || 0}
-                offsetY={photo.offsetY || 0}
-                rotation={photo.rotation || 0}
-                className="h-[150px] w-[200px]"
-              />
-              {photo.caption && (
-                <figcaption className="mt-1 text-ink-700">
-                  {photo.caption}
-                </figcaption>
-              )}
-            </figure>
+              {/* Push pin */}
+              <div className="absolute -top-2 left-1/2 z-10 h-4 w-4 -translate-x-1/2 rounded-full bg-red-600 shadow-md border-2 border-red-800 ring-1 ring-white/50" />
+
+              <figure
+                data-photo-id={photo.id}
+                className="bg-white p-2.5 pb-7 shadow-lg border border-amber-950/20 rounded-xs"
+              >
+                <GalleryPhotoImg
+                  src={photo.url}
+                  alt={photo.caption || ""}
+                  aspectRatio="1/1"
+                  zoom={photo.zoom || 1}
+                  offsetX={photo.offsetX || 0}
+                  offsetY={photo.offsetY || 0}
+                  rotation={photo.rotation || 0}
+                  className="rounded-xs"
+                />
+                {photo.caption && (
+                  <figcaption className="mt-2 text-center text-xs font-serif text-slate-800 italic">
+                    {photo.caption}
+                  </figcaption>
+                )}
+              </figure>
+            </div>
           ))}
         </div>
       </div>
@@ -318,41 +279,41 @@ export function CorkBoardGallery({ gallery }: { gallery: GalleryData }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   THEME 4 — NORMAL
-   Responsive masonry-like grid using CSS columns. Natural aspect ratios.
+   THEME 4 — CLEAN GRID / MASONRY
+   Modern responsive column grid with hover lift and caption pill.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export function NormalGallery({ gallery }: { gallery: GalleryData }) {
   return (
-    <div className="mx-auto my-12 w-full max-w-6xl px-4 sm:px-6">
+    <div className="mx-auto my-12 w-full max-w-6xl">
       {/* Title */}
-      {(gallery.titleLine1 || gallery.titleLine2 || gallery.subtitle) && (
+      {(gallery.titleLine1 || gallery.titleLine2) && (
         <div className="mb-8 text-center">
           {gallery.titleLine1 && (
-            <p className="text-xl text-on-surface-variant font-medium">
+            <p className="text-sm font-bold uppercase tracking-wider text-emerald-700">
               {gallery.titleLine1}
             </p>
           )}
           {gallery.titleLine2 && (
-            <h2 className="mt-1 text-3xl font-bold text-on-surface sm:text-4xl">
+            <h2 className="mt-1 text-3xl font-bold text-slate-900 sm:text-4xl">
               {gallery.titleLine2}
             </h2>
           )}
           {gallery.subtitle && (
-            <p className="mx-auto mt-3 max-w-2xl text-sm text-on-surface-variant">
+            <p className="mx-auto mt-2 max-w-md text-sm text-slate-600 font-normal">
               {gallery.subtitle}
             </p>
           )}
         </div>
       )}
 
-      {/* Masonry Grid */}
-      <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+      {/* Columns Grid */}
+      <div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
         {gallery.photos.map((photo) => (
           <figure
             key={photo.id}
             data-photo-id={photo.id}
-            className="mb-4 break-inside-avoid overflow-hidden rounded-xl border border-outline-variant/30 bg-surface/50 p-2 shadow-sm transition-all duration-300 hover:shadow-md hover:border-outline-variant glass-card group"
+            className="mb-6 break-inside-avoid overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-xs transition-all duration-300 hover:shadow-xl hover:border-emerald-300"
           >
             <GalleryPhotoImg
               src={photo.url}
@@ -361,10 +322,10 @@ export function NormalGallery({ gallery }: { gallery: GalleryData }) {
               offsetX={photo.offsetX || 0}
               offsetY={photo.offsetY || 0}
               rotation={photo.rotation || 0}
-              className="rounded-lg"
+              className="rounded-xl"
             />
             {photo.caption && (
-              <figcaption className="mt-2 px-1 text-sm text-on-surface-variant text-center">
+              <figcaption className="mt-2.5 px-2 py-1 text-xs text-slate-600 text-center font-medium">
                 {photo.caption}
               </figcaption>
             )}
@@ -375,7 +336,7 @@ export function NormalGallery({ gallery }: { gallery: GalleryData }) {
   );
 }
 
-/* ─── Renderer that picks the right theme ─── */
+/* ─── Master Renderer that switches theme dynamically ─── */
 export function EventGalleryRenderer({ gallery }: { gallery: GalleryData }) {
   const [showFullBlog, setShowFullBlog] = useState(false);
   const [lightboxPhoto, setLightboxPhoto] = useState<{
@@ -400,20 +361,24 @@ export function EventGalleryRenderer({ gallery }: { gallery: GalleryData }) {
   const needsExpand = plainText.length > 200;
 
   return (
-    <div className="mt-12">
-      <h2 className="mb-2 text-center text-2xl font-bold text-on-surface">
-        Event Memories
-      </h2>
+    <div className="mt-14 pt-10 border-t border-slate-200/80">
+      <div className="text-center mb-6">
+        <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+          Event Memories
+        </span>
+      </div>
 
-      {/* Wrap each theme to inject click handlers */}
+      {/* Intercept clicks on gallery items to open lightbox */}
       <GalleryClickWrapper onPhotoClick={setLightboxPhoto} gallery={gallery}>
         {gallery.theme === "bohemian" && <BohemianGallery gallery={gallery} />}
         {gallery.theme === "scrapbook" && <ScrapbookGallery gallery={gallery} />}
         {gallery.theme === "corkboard" && <CorkBoardGallery gallery={gallery} />}
-        {gallery.theme === "normal" && <NormalGallery gallery={gallery} />}
+        {gallery.theme !== "bohemian" &&
+          gallery.theme !== "scrapbook" &&
+          gallery.theme !== "corkboard" && <NormalGallery gallery={gallery} />}
       </GalleryClickWrapper>
 
-      {/* Lightbox */}
+      {/* Lightbox Modal */}
       {lightboxPhoto !== null && (
         <GalleryLightbox
           photos={[lightboxPhoto]}
@@ -422,33 +387,34 @@ export function EventGalleryRenderer({ gallery }: { gallery: GalleryData }) {
         />
       )}
 
-      {/* Blog Recap — preview + read more */}
+      {/* Blog & Event Story */}
       {gallery.blogText && plainText && (
-        <div className="mx-auto mt-8 max-w-2xl rounded-2xl glass-card p-6">
+        <div className="mx-auto mt-10 max-w-2xl rounded-2xl border border-emerald-100 bg-emerald-50/30 p-6 shadow-xs">
+          <h3 className="text-base font-bold text-slate-900 mb-2">Event Recap</h3>
           {!showFullBlog ? (
             <>
-              <p className="text-base leading-relaxed text-on-surface-variant">
+              <p className="text-sm leading-relaxed text-slate-600">
                 {previewText}
                 {needsExpand && "..."}
               </p>
               {needsExpand && (
                 <button
                   onClick={() => setShowFullBlog(true)}
-                  className="mt-3 text-sm font-medium text-purple-600 hover:text-purple-700"
+                  className="mt-3 text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors"
                 >
-                  Read more →
+                  Read full narrative →
                 </button>
               )}
             </>
           ) : (
             <>
               <div
-                className="prose prose-sm max-w-none text-on-surface-variant [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mb-2 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:mb-2 [&_p]:mb-2"
+                className="prose prose-sm max-w-none text-slate-700"
                 dangerouslySetInnerHTML={{ __html: gallery.blogText }}
               />
               <button
                 onClick={() => setShowFullBlog(false)}
-                className="mt-3 text-sm font-medium text-purple-600 hover:text-purple-700"
+                className="mt-4 text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors"
               >
                 Show less ←
               </button>
@@ -460,7 +426,7 @@ export function EventGalleryRenderer({ gallery }: { gallery: GalleryData }) {
   );
 }
 
-/* ─── Click wrapper: intercepts clicks on gallery images ─── */
+/* ─── Click Wrapper ─── */
 function GalleryClickWrapper({
   children,
   onPhotoClick,
@@ -484,10 +450,9 @@ function GalleryClickWrapper({
 
     const id = figure.getAttribute("data-photo-id");
     const img = figure.querySelector("img");
-    
-    // Find matching photo
+
     const photo = gallery.photos.find((p) => p.id === id);
-    
+
     if (photo) {
       e.preventDefault();
       onPhotoClick({
@@ -507,7 +472,7 @@ function GalleryClickWrapper({
           const orig = urlObj.searchParams.get("url");
           if (orig) src = orig;
         }
-      } catch (err) {}
+      } catch {}
       onPhotoClick({ url: src, caption: null });
     }
   }
@@ -518,4 +483,3 @@ function GalleryClickWrapper({
     </div>
   );
 }
-

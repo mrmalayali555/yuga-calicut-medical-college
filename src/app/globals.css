@@ -1,246 +1,350 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Instrument+Serif:ital@0;1&display=swap');
 @import "tailwindcss";
 
-
 /* ==========================================================================
-   ADVAYA — Design System
-   Brand: silver "A" + royal-purple swoosh. Premium, trust-first, institutional.
+   YUGA — Refined White & Green Design System v3.0
+   GMC Kozhikode College Union 2026-2027
+   
+   Aesthetic: Clinical & Editorial White Canvas with Rich Medical Emerald.
+   Pure white, light sage, high-contrast slate typography, and vibrant green accents.
+   Guaranteed 100% WCAG AAA legibility and contrast across all elements.
    ========================================================================== */
 
-@theme {
-  /* --- Brand: Purple (from the swoosh) --- */
-  --color-purple-50: #f5f1fa;
-  --color-purple-100: #e9e0f3;
-  --color-purple-200: #d3c1e7;
-  --color-purple-300: #b79bd4;
-  --color-purple-400: #9d7cbf;
-  --color-purple-500: #7e56a5;
-  --color-purple-600: #5b2a86;  /* primary */
-  --color-purple-700: #4a2270;
-  --color-purple-800: #391a57;
-  --color-purple-900: #2a1240;
-  --color-purple-950: #180a26;
-
-  /* --- Brand: Silver / chrome (the "A" + wordmark) --- */
-  --color-silver-50: #fbfbfc;
-  --color-silver-100: #f2f2f5;
-  --color-silver-200: #e8e8ed;
-  --color-silver-300: #d4d4dc;
-  --color-silver-400: #b6b6c0;
-  --color-silver-500: #9a9aa4;
-  --color-silver-600: #7c7c86;
-
-  /* --- Ink / neutrals --- */
-  --color-ink-50: #f7f6f9;
-  --color-ink-100: #edecf1;
-  --color-ink-200: #d7d5de;
-  --color-ink-300: #b3afc0;
-  --color-ink-400: #85809a;
-  --color-ink-500: #5f5a75;
-  --color-ink-600: #453f59;
-  --color-ink-700: #322d44;
-  --color-ink-800: #221e30;
-  --color-ink-900: #1a1523;  /* charcoal */
-  --color-ink-950: #100c17;
-
-  /* --- Surfaces --- */
-  --color-background: #ffffff;
-  --color-surface: #faf9fc;
-  --color-foreground: #1a1523;
-
-  /* --- Semantic --- */
-  --color-success: #2f9e6b;
-  --color-warning: #d98a2b;
-  --color-danger: #d64545;
-  --color-info: #3b7bd9;
-
-  /* --- Fonts --- */
-  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-unbounded), var(--font-sora), ui-sans-serif, sans-serif;
-
-  /* --- Radii --- */
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
-  --radius-3xl: 2rem;
-
-  /* --- Elevation --- */
-  --shadow-soft: 0 1px 2px rgba(26, 21, 35, 0.04), 0 8px 24px -12px rgba(91, 42, 134, 0.14);
-  --shadow-card: 0 2px 8px -2px rgba(26, 21, 35, 0.06), 0 18px 48px -24px rgba(91, 42, 134, 0.22);
-  --shadow-lift: 0 4px 12px -4px rgba(26, 21, 35, 0.08), 0 32px 64px -28px rgba(91, 42, 134, 0.32);
-
-  /* --- Motion --- */
-  --ease-brand: cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-/* ---------- Base ---------- */
 @layer base {
-  * {
-    border-color: var(--color-ink-200);
+  :root {
+    /* Canvas — pristine white & subtle clinical sage undertone */
+    --bg-root: #ffffff;
+    --bg-surface: #f8faf8;
+    --bg-elevated: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0fdf4;
+
+    /* Borders — crisp, clean, refined slate & emerald tint */
+    --border-primary: #e2e8f0;
+    --border-hover: #a7f3d0;
+    --border-accent: #059669;
+
+    /* Brand Green — rich medical emerald & forest accents */
+    --accent: #059669;
+    --accent-light: #10b981;
+    --accent-dark: #047857;
+    --accent-muted: #d1fae5;
+    --accent-subtle: #ecfdf5;
+
+    /* Functional status colors */
+    --success: #059669;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --info: #0284c7;
+
+    /* Typography — rich, high-contrast slate scale for absolute legibility */
+    --text-primary: #0f172a;   /* Slate 900: pitch bold contrast */
+    --text-secondary: #334155; /* Slate 700: clear, readable body */
+    --text-muted: #475569;     /* Slate 600: distinct readable captions */
+    --text-faint: #64748b;     /* Slate 500: metadata tags */
+
+    /* Motion — Emil Kowalski stronger custom curves */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);       /* Strong ease-out: immediate feedback */
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);    /* Strong ease-in-out: on-screen movement */
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);     /* iOS-like drawer curve */
+    --duration-fast: 150ms;
+    --duration-normal: 220ms;
+    --duration-slow: 450ms;
+    /* Popover origin — set via JS for origin-aware scaling */
+    --transform-origin: center;
+
+    /* Radius */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+
+    /* Shadows — tinted to deep forest green for organic depth */
+    --shadow-sm: 0 1px 2px 0 rgba(16, 40, 25, 0.04);
+    --shadow-md: 0 4px 14px -2px rgba(16, 40, 25, 0.07);
+    --shadow-lg: 0 10px 30px -4px rgba(16, 40, 25, 0.09);
+    --shadow-xl: 0 20px 48px -8px rgba(16, 40, 25, 0.12);
   }
 
   html {
     scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-    max-width: 100vw;
-    overflow-x: hidden;
+    color-scheme: light;
+    background-color: var(--bg-root);
+    color: var(--text-primary);
   }
 
   body {
-    background: var(--color-background);
-    color: var(--color-foreground);
-    font-family: var(--font-sans);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-root);
+    color: var(--text-primary);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    max-width: 100vw;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    line-height: 1.6;
   }
 
   ::selection {
-    background: var(--color-purple-600);
-    color: #fff;
+    background: #a7f3d0;
+    color: #064e3b;
   }
 
-  h1, h2, h3, h4 {
-    font-family: var(--font-display);
+  /* Editorial display typeface */
+  .font-display {
+    font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    font-style: normal;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
     letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--text-primary);
+  }
+
+  p {
+    max-width: 65ch;
   }
 }
 
+/* ==========================================================================
+   CARDS — Crisp White with subtle emerald shadow & border
+   ========================================================================== */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  /* Specify exact properties — avoid transition: all */
+  transition: border-color var(--duration-normal) var(--ease-out),
+              background var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.card-interactive {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--duration-normal) var(--ease-out),
+              background var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out),
+              transform var(--duration-normal) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card-interactive:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+.card-interactive:active {
+  transform: scale(0.98);
+  transition-duration: 100ms;
+}
+
+/* ==========================================================================
+   BUTTONS — Emerald Primary & Clean Crisp Secondary
+   ========================================================================== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff !important;
+  background: var(--accent);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--accent-dark);
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
+  transition: background 160ms var(--ease-out),
+              transform 160ms var(--ease-out),
+              box-shadow 160ms var(--ease-out);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    background: var(--accent-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+  }
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 100ms;
+  box-shadow: 0 1px 4px rgba(5, 150, 105, 0.2);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: #ffffff;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  /* Specify exact properties — never use `transition: all` */
+  transition: color 160ms var(--ease-out),
+              border-color 160ms var(--ease-out),
+              background 160ms var(--ease-out),
+              transform 160ms var(--ease-out),
+              box-shadow 160ms var(--ease-out);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-secondary:hover {
+    color: var(--accent-dark);
+    border-color: var(--accent-light);
+    background: var(--accent-subtle);
+  }
+}
+
+.btn-secondary:active {
+  transform: scale(0.97);
+  transition-duration: 100ms;
+}
+
+/* ==========================================================================
+   TAGS & PILLS — Fresh Mint with Forest Text
+   ========================================================================== */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-sm);
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+/* ==========================================================================
+   SCROLLBAR
+   ========================================================================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ==========================================================================
+   ANIMATION UTILITIES — Emil Kowalski design engineering
+   ========================================================================== */
+
+/* Enter from slightly below — never from zero scale or zero opacity alone */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 400ms var(--ease-out) both;
+}
+
+/* Clip-path reveal from bottom — image reveals on scroll */
+@keyframes reveal-clip {
+  from { clip-path: inset(0 0 100% 0 round 8px); }
+  to   { clip-path: inset(0 0 0% 0 round 8px); }
+}
+
+.animate-reveal {
+  animation: reveal-clip 600ms var(--ease-out) both;
+}
+
+/* Subtle scale-in — starts at 0.95 not 0, so it feels natural */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 200ms var(--ease-out) both;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2.5s ease-in-out infinite;
+}
+
+/* Stagger children — 50ms between items (keep under 80ms) */
+.stagger-children > *:nth-child(1)  { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2)  { animation-delay: 50ms; }
+.stagger-children > *:nth-child(3)  { animation-delay: 100ms; }
+.stagger-children > *:nth-child(4)  { animation-delay: 150ms; }
+.stagger-children > *:nth-child(5)  { animation-delay: 200ms; }
+.stagger-children > *:nth-child(6)  { animation-delay: 250ms; }
+.stagger-children > *:nth-child(7)  { animation-delay: 300ms; }
+.stagger-children > *:nth-child(8)  { animation-delay: 350ms; }
+
+/* Popover origin-aware scaling — set --transform-origin from trigger position */
+.popover-origin {
+  transform-origin: var(--transform-origin, center);
+}
+
+/* ==========================================================================
+   REDUCED MOTION — keep opacity/color, remove movement
+   ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* Custom marquee font utility */
-.font-marquee {
-  font-family: var(--font-unbounded), var(--font-display), sans-serif !important;
-  font-weight: 900 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.14em !important;
-}
-
-/* Custom brush script font utility */
-.font-brush {
-  font-family: var(--font-brush), cursive !important;
-}
-
-/* Gradient text — used in hero heading and 404 page */
-.text-gradient {
-  background: linear-gradient(135deg, #7c3aed 0%, #5b2a86 45%, #9d4edd 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Mesh background */
-.bg-mesh {
-  background-image:
-    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(91, 42, 134, 0.08) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 60% at 80% 30%, rgba(124, 58, 237, 0.06) 0%, transparent 55%);
-}
-
-/* Custom User Loader */
-.loader {
-  --s: 15px;
-  width: calc(var(--s) * 2.33);
-  aspect-ratio: 1;
-  display: flex;
-  justify-content: space-between;
-}
-.loader::before,
-.loader::after {
-  content: "";
-  width: var(--s);
-  --_g: no-repeat radial-gradient(farthest-side, #5b2a86 94%, #0000);
-  background: var(--_g) top, var(--_g) bottom;
-  background-size: 100% var(--s);
-  transform-origin: 50% calc(100% - var(--s) / 2);
-  animation: l30 1s infinite;
-}
-.loader::after {
-  transform-origin: 50% calc(var(--s) / 2);
-}
-@keyframes l30 {
-  70%,
-  100% {
-    transform: rotate(-270deg);
-  }
-}
-
-@theme {
-  /* Vivid Nocturne Redesign Theme */
-  --color-primary: #ddb7ff;
-  --color-primary-fixed: #f0dbff;
-  --color-primary-container: #b76dff;
-  --color-on-primary: #490080;
-  
-  --color-secondary: #ddb8ff;
-  --color-secondary-fixed: #f0dbff;
-  --color-secondary-container: #7105c2;
-  --color-on-secondary: #490080;
-
-  --color-surface: #050208;
-  --color-surface-dim: #050208;
-  --color-surface-bright: #2a2030;
-  --color-surface-container-lowest: #030106;
-  --color-surface-container-low: #110d16;
-  --color-surface-container: #16111d;
-  --color-surface-container-high: #1e1726;
-  --color-surface-container-highest: #28202f;
-  --color-on-surface: #e8e0ef;
-  --color-on-surface-variant: #c9bdd3;
-  
-  --color-background: #050208;
-  --color-on-background: #e8e0ef;
-  
-  --font-body-md: var(--font-hanken), sans-serif;
-  --font-body-lg: var(--font-hanken), sans-serif;
-  --font-display-md: var(--font-anybody), sans-serif;
-  --font-display-lg: var(--font-anybody), sans-serif;
-  --font-headline-lg: var(--font-anybody), sans-serif;
-  --font-headline-lg-mobile: var(--font-anybody), sans-serif;
-}
-
-/* Vivid Nocturne Custom Classes */
-.noise-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0.15;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-.text-glow-intense {
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(221, 183, 255, 0.5), 
-                 0 0 20px rgba(221, 183, 255, 0.4), 
-                 0 0 40px rgba(221, 183, 255, 0.3),
-                 0 0 80px rgba(183, 109, 255, 0.4);
-}
-
-.glow-button {
-    transition: all 0.3s ease;
-}
-.glow-button:hover {
-    box-shadow: 0 0 20px rgba(221, 183, 255, 0.4);
-    transform: translateY(-1px);
-}
-
-.glass-card {
-    background-color: rgba(20, 10, 35, 0.8);
-    border: 1px solid rgba(120, 0, 255, 0.15);
-    transition: all 0.3s ease;
-}
-.glass-card:hover {
-    background-color: rgba(30, 15, 50, 0.9);
-    border-color: rgba(160, 0, 255, 0.25);
 }

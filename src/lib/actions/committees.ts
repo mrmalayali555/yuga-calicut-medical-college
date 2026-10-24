@@ -30,8 +30,8 @@ export async function createCommittee(formData: FormData) {
       order: Number(formData.get("order") || 0),
     },
   });
-  revalidatePath("/adminahnuok/committees");
-  revalidatePath("/subcommittee");
+  revalidatePath("/admin/committees");
+  revalidatePath("/subcommittees");
 }
 
 export async function updateCommittee(id: string, formData: FormData) {
@@ -46,17 +46,17 @@ export async function updateCommittee(id: string, formData: FormData) {
       order: Number(formData.get("order") || 0),
     },
   });
-  revalidatePath("/adminahnuok/committees");
-  revalidatePath("/subcommittee");
-  redirect("/adminahnuok/committees");
+  revalidatePath("/admin/committees");
+  revalidatePath("/subcommittees");
+  redirect("/admin/committees");
 }
 
 export async function deleteCommittee(id: string) {
   await requireAdmin();
   await db.committee.delete({ where: { id } });
-  revalidatePath("/adminahnuok/committees");
-  revalidatePath("/subcommittee");
-  redirect("/adminahnuok/committees");
+  revalidatePath("/admin/committees");
+  revalidatePath("/subcommittees");
+  redirect("/admin/committees");
 }
 
 export async function addMember(committeeId: string, formData: FormData) {
@@ -73,14 +73,13 @@ export async function addMember(committeeId: string, formData: FormData) {
       order: Number(formData.get("order") || 0),
     },
   });
-  revalidatePath("/adminahnuok/committees");
-  revalidatePath("/subcommittee");
+  revalidatePath("/admin/committees");
+  revalidatePath("/subcommittees");
 }
 
 export async function deleteMember(id: string) {
   await requireAdmin();
   await db.committeeMember.delete({ where: { id } });
-  revalidatePath("/adminahnuok/committees");
-  revalidatePath("/subcommittee");
+  revalidatePath("/admin/committees");
+  revalidatePath("/subcommittees");
 }
-

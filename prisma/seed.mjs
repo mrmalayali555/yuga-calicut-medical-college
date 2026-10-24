@@ -13,9 +13,9 @@ async function main() {
   console.log("🌱 Seeding ADVAYA database…");
 
   // --- Admin ---
-  const email = process.env.ADMIN_EMAIL || "admin@advaya.local";
-  const password = process.env.ADMIN_PASSWORD || "advaya123";
-  const name = process.env.ADMIN_NAME || "ADVAYA Admin";
+  const email = process.env.ADMIN_EMAIL || "admin@yuga.local";
+  const password = process.env.ADMIN_PASSWORD || "yuga123";
+  const name = process.env.ADMIN_NAME || "YUGA Union Admin";
   const passwordHash = await bcrypt.hash(password, 12);
 
   await db.admin.upsert({
@@ -24,6 +24,15 @@ async function main() {
     create: { email, name, passwordHash, role: "superadmin" },
   });
   console.log(`   ✓ Admin: ${email} / ${password}`);
+
+  // Also support legacy fallback
+  const fallbackHash = await bcrypt.hash("advaya123", 12);
+  await db.admin.upsert({
+    where: { email: "admin@advaya.local" },
+    update: { passwordHash: fallbackHash, name: "YUGA Admin", role: "superadmin" },
+    create: { email: "admin@advaya.local", name: "YUGA Admin", passwordHash: fallbackHash, role: "superadmin" },
+  });
+
 
   // --- Marquee ---
   await db.marquee.deleteMany();
@@ -168,6 +177,79 @@ async function main() {
   ];
   for (const e of events) {
     await db.event.create({ data: e });
+  }
+
+  // --- Registration Forms ---
+  await db.registrationSubmission.deleteMany();
+  await db.registrationField.deleteMany();
+  await db.registrationForm.deleteMany();
+
+  const unionEvent = await db.event.findFirst({ where: { status: "upcoming" } });
+  if (unionEvent) {
+    const regForm = await db.registrationForm.create({
+      data: {
+        title: "YUGA Union Day 2026 — Delegate Pass Registration",
+        slug: "yuga-union-day-2026-delegate-pass",
+        description:
+          "Official delegate enrollment for YUGA Union Day celebrations. Please fill in your academic batch and contact details to generate your digital gate pass.",
+        eventId: unionEvent.id,
+        deadline: daysFromNow(18),
+        published: true,
+        fields: {
+          create: [
+            { label: "Full Name", type: "text", required: true, placeholder: "Dr. / Medico Full Name", order: 0 },
+            { label: "Email Address", type: "email", required: true, placeholder: "name@gmc.edu", order: 1 },
+            {
+              label: "Batch / Academic Year",
+              type: "radio",
+              required: true,
+              options: "MBBS 2021, MBBS 2022, MBBS 2023, MBBS 2024, MBBS 2025, House Surgeon / Intern, PG Resident",
+              order: 2,
+            },
+            { label: "WhatsApp Phone Number", type: "number", required: true, placeholder: "+91 98765 43210", order: 3 },
+            {
+              label: "Delegate Category",
+              type: "select",
+              required: false,
+              options: "Student Delegate, Stage Performer, Sports Team, Volunteer, Alumni Guest",
+              order: 4,
+            },
+          ],
+        },
+      },
+    });
+
+    // Seed 2 sample participant submissions
+    await db.registrationSubmission.create({
+      data: {
+        formId: regForm.id,
+        data: JSON.stringify({
+          _ticketRef: "YUG-842091",
+          _submittedAt: new Date().toISOString(),
+          "Full Name": "Dr. Rohit Menon",
+          "Email Address": "rohit.menon@gmck.edu",
+          "Batch / Academic Year": "MBBS 2022",
+          "WhatsApp Phone Number": "+91 98471 23456",
+          "Delegate Category": "Student Delegate",
+        }),
+      },
+    });
+
+    await db.registrationSubmission.create({
+      data: {
+        formId: regForm.id,
+        data: JSON.stringify({
+          _ticketRef: "YUG-319582",
+          _submittedAt: new Date().toISOString(),
+          "Full Name": "Dr. Ananya Varma",
+          "Email Address": "ananya.varma@gmck.edu",
+          "Batch / Academic Year": "House Surgeon / Intern",
+          "WhatsApp Phone Number": "+91 94470 65432",
+          "Delegate Category": "Stage Performer",
+        }),
+      },
+    });
+    console.log("   ✓ Registration Form & Sample Attendees seeded");
   }
 
   // --- Notifications ---

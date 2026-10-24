@@ -3,8 +3,13 @@
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { createSession, destroySession, verifyPassword } from "@/lib/auth";
-import { loginSchema } from "@/lib/validations";
 import { rateLimit } from "@/lib/rate-limit";
+import { z } from "zod";
+
+const loginSchema = z.object({
+  email: z.string().trim().email("Enter a valid email."),
+  password: z.string().min(1, "Password is required."),
+});
 
 export type LoginState = { error?: string };
 
@@ -15,7 +20,6 @@ export async function loginAction(
   const email = String(formData.get("email") || "");
   const password = String(formData.get("password") || "");
 
-  // Basic brute-force guard keyed by email.
   const { ok } = rateLimit(`login:${email.toLowerCase()}`, { max: 8, windowMs: 5 * 60_000 });
   if (!ok) return { error: "Too many attempts. Please wait a few minutes." };
 
@@ -27,29 +31,28 @@ export async function loginAction(
   const admin = await db.admin.findUnique({
     where: { email: parsed.data.email.toLowerCase() },
   });
-  // Constant-ish response to avoid user enumeration.
   if (!admin || !(await verifyPassword(parsed.data.password, admin.passwordHash))) {
     return { error: "Invalid email or password." };
   }
 
-  const headersList = await import("next/headers").then(m => m.headers());
+  const headersList = await import("next/headers").then((m) => m.headers());
   const ip = headersList.get("x-real-ip") || headersList.get("x-forwarded-for") || "Unknown";
   const city = headersList.get("x-vercel-ip-city");
   const country = headersList.get("x-vercel-ip-country");
   const location = city && country ? `${city}, ${country}` : country || "Unknown";
   const userAgent = headersList.get("user-agent") || "Unknown";
 
-  await createSession({
-    sub: admin.id,
-    name: admin.name,
-    email: admin.email,
-    role: admin.role,
-  }, ip, location, userAgent);
+  await createSession(
+    { sub: admin.id, name: admin.name, email: admin.email, role: admin.role },
+    ip,
+    location,
+    userAgent
+  );
 
-  redirect("/adminahnuok");
+  redirect("/admin");
 }
 
 export async function logoutAction() {
   await destroySession();
-  redirect("/adminahnuok/login");
+  redirect("/admin/login");
 }

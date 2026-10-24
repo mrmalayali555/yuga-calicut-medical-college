@@ -22,16 +22,35 @@ export async function createEmergency(formData: FormData) {
   const data = parse(formData);
   if (!data.name || !data.phone) return;
   await db.emergencyContact.create({ data });
-  revalidatePath("/adminahnuok/emergency");
+  revalidatePath("/admin/emergency");
   revalidatePath("/emergency");
 }
 
 export async function updateEmergency(id: string, formData: FormData) {
   await requireAdmin();
   await db.emergencyContact.update({ where: { id }, data: parse(formData) });
-  revalidatePath("/adminahnuok/emergency");
+  revalidatePath("/admin/emergency");
   revalidatePath("/emergency");
-  redirect("/adminahnuok/emergency");
+  redirect("/admin/emergency");
+}
+
+export async function deleteEmergency(id: string) {
+  await requireAdmin();
+  await db.emergencyContact.delete({ where: { id } });
+  revalidatePath("/admin/emergency");
+  revalidatePath("/emergency");
+}
+
+export async function toggleShowOnHomepage(id: string) {
+  await requireAdmin();
+  const contact = await db.emergencyContact.findUnique({ where: { id } });
+  if (!contact) return;
+  await db.emergencyContact.update({
+    where: { id },
+    data: { showOnHomepage: !contact.showOnHomepage },
+  });
+  revalidatePath("/admin/emergency");
+  revalidatePath("/");
 }
 
 export async function moveEmergency(id: string, direction: "up" | "down") {
@@ -48,106 +67,16 @@ export async function moveEmergency(id: string, direction: "up" | "down") {
   const current = contacts[index];
   const target = contacts[targetIndex];
 
-  // If their orders are equal or close, normalize sequential order then swap
   let currentNewOrder = target.order;
   let targetNewOrder = current.order;
 
   if (currentNewOrder === targetNewOrder) {
-    if (direction === "up") {
-      currentNewOrder = Math.max(0, target.order - 1);
-    } else {
-      currentNewOrder = target.order + 1;
-    }
+    currentNewOrder = direction === "up" ? Math.max(0, target.order - 1) : target.order + 1;
   }
 
-  await db.emergencyContact.update({
-    where: { id: current.id },
-    data: { order: currentNewOrder },
-  });
-  await db.emergencyContact.update({
-    where: { id: target.id },
-    data: { order: targetNewOrder },
-  });
+  await db.emergencyContact.update({ where: { id: current.id }, data: { order: currentNewOrder } });
+  await db.emergencyContact.update({ where: { id: target.id }, data: { order: targetNewOrder } });
 
-  revalidatePath("/adminahnuok/emergency");
+  revalidatePath("/admin/emergency");
   revalidatePath("/emergency");
 }
-
-export async function setEmergencyOrder(id: string, order: number) {
-  await requireAdmin();
-  await db.emergencyContact.update({
-    where: { id },
-    data: { order },
-  });
-  revalidatePath("/adminahnuok/emergency");
-  revalidatePath("/emergency");
-}
-
-export async function deleteEmergency(id: string) {
-  await requireAdmin();
-  await db.emergencyContact.delete({ where: { id } });
-  revalidatePath("/adminahnuok/emergency");
-  revalidatePath("/emergency");
-}
-
-export async function updateEmergencyPdf(url: string, name: string) {
-  await requireAdmin();
-  const value = JSON.stringify({ url, name, updatedAt: new Date().toISOString() });
-  await db.setting.upsert({
-    where: { key: "emergency_registry_pdf" },
-    update: { value },
-    create: { key: "emergency_registry_pdf", value },
-  });
-  revalidatePath("/adminahnuok/emergency");
-  revalidatePath("/emergency");
-}
-
-export async function deleteEmergencyPdf() {
-  await requireAdmin();
-  const value = JSON.stringify({ deleted: true, updatedAt: new Date().toISOString() });
-  await db.setting.upsert({
-    where: { key: "emergency_registry_pdf" },
-    update: { value },
-    create: { key: "emergency_registry_pdf", value },
-  });
-  revalidatePath("/adminahnuok/emergency");
-  revalidatePath("/emergency");
-}
-
-export async function toggleHomepageEmergencySection(enabled: boolean) {
-  await requireAdmin();
-  const value = JSON.stringify({ enabled });
-  await db.setting.upsert({
-    where: { key: "homepage_emergency_section" },
-    update: { value },
-    create: { key: "homepage_emergency_section", value },
-  });
-  revalidatePath("/adminahnuok/emergency");
-  revalidatePath("/");
-}
-
-export async function toggleShowOnHomepage(id: string) {
-  await requireAdmin();
-  const contact = await db.emergencyContact.findUnique({ where: { id } });
-  if (!contact) return;
-  await db.emergencyContact.update({
-    where: { id },
-    data: { showOnHomepage: !contact.showOnHomepage },
-  });
-  revalidatePath("/adminahnuok/emergency");
-  revalidatePath("/");
-}
-
-export async function updateWatchmenSchedule(schedule: import("@/lib/watchmen-schedule").WatchmenScheduleData) {
-  await requireAdmin();
-  const value = JSON.stringify(schedule);
-  await db.setting.upsert({
-    where: { key: "watchmen_schedule" },
-    update: { value },
-    create: { key: "watchmen_schedule", value },
-  });
-  revalidatePath("/adminahnuok/emergency");
-  revalidatePath("/emergency");
-}
-
-

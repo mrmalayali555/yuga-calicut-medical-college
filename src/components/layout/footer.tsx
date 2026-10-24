@@ -1,159 +1,146 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
-import {
-  InstagramIcon,
-  FacebookIcon,
-  YoutubeIcon,
-  XIcon,
-} from "@/components/ui/social-icons";
-import { Logo } from "@/components/ui/logo";
-import { Container } from "@/components/ui/primitives";
-import { SITE, NAV_LINKS } from "@/lib/site";
+import { MapPin, Phone, Mail } from "lucide-react";
+import { Logo } from "./logo";
+import { COLLEGE, YUGA, NAV_LINKS } from "@/lib/site";
 
-export function Footer({
-  contact = {
-    address: SITE.address,
-    phone: SITE.phone,
-    email: SITE.email,
-  },
-}: {
-  contact?: { address: string; phone: string; email: string };
-}) {
-  const year = new Date().getFullYear();
+const SOCIAL_LINKS = [
+  { label: "Instagram", href: YUGA.socials.instagram },
+  { label: "Telegram", href: YUGA.socials.telegram },
+  { label: "WhatsApp", href: YUGA.socials.whatsapp },
+  { label: "YouTube", href: YUGA.socials.youtube },
+];
+
+export function Footer() {
   return (
-    <footer className="relative mt-24 overflow-hidden bg-[#050208] text-white border-t border-[#7800ff]/10">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0015]/50 to-transparent" />
-
-
-      <Container className="relative py-16">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          <div className="lg:col-span-1">
-            <Logo variant="dark" />
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
-              {SITE.description}
+    <footer className="border-t border-slate-200 bg-[#f8faf8]">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Brand */}
+          <div className="space-y-4">
+            <Logo showTagline={false} />
+            <p className="text-sm text-slate-600 leading-relaxed max-w-xs font-normal">
+              Official student union portal for Government Medical College,
+              Kozhikode — academic epoch 2026–2027.
             </p>
-            <div className="mt-6 flex gap-2">
-              <Social href={SITE.socials.instagram} label="Instagram">
-                <InstagramIcon className="h-4 w-4" />
-              </Social>
-              <Social href={SITE.socials.facebook} label="Facebook">
-                <FacebookIcon className="h-4 w-4" />
-              </Social>
-              <Social href={SITE.socials.youtube} label="YouTube">
-                <YoutubeIcon className="h-4 w-4" />
-              </Social>
-              <Social href={SITE.socials.twitter} label="X (Twitter)">
-                <XIcon className="h-4 w-4" />
-              </Social>
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              {SOCIAL_LINKS.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:text-emerald-700 hover:border-emerald-300 transition-colors shadow-2xs"
+                  aria-label={`YUGA on ${social.label}`}
+                >
+                  {social.label}
+                </a>
+              ))}
             </div>
           </div>
 
+          {/* Navigation */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
+            <h4 className="text-xs font-bold tracking-widest uppercase text-emerald-800 mb-5">
               Navigation
-            </h3>
-            <ul className="mt-5 space-y-3 text-sm">
-              {NAV_LINKS.map((l) => (
-                <li key={l.label}>
+            </h4>
+            <ul className="space-y-2.5">
+              {NAV_LINKS.map((link) => (
+                <li key={link.href}>
                   <Link
-                    href={l.href}
-                    className="text-white/70 transition-colors hover:text-white"
+                    href={link.href}
+                    className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors"
                   >
-                    {l.label}
+                    {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Resources */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
-              Quick Links
-            </h3>
-            <ul className="mt-5 space-y-3 text-sm">
-              {["Search", "About Union", "Emergency", "Subcommittee"].map((label) => {
-                const href =
-                  label === "About Union"
-                    ? "/about"
-                    : `/${label.toLowerCase().replace(" ", "-")}`;
-                return (
-                  <li key={label}>
-                    <Link
-                      href={href}
-                      className="text-white/70 transition-colors hover:text-white"
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                );
-              })}
+            <h4 className="text-xs font-bold tracking-widest uppercase text-emerald-800 mb-5">
+              Resources & Hotlines
+            </h4>
+            <ul className="space-y-2.5">
+              <li>
+                <Link href="/complaints" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
+                  Campus Voice Grievance
+                </Link>
+              </li>
+              <li>
+                <Link href="/interventions" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
+                  Union Interventions
+                </Link>
+              </li>
+              <li>
+                <Link href="/finance" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
+                  Union Accounts & Finance
+                </Link>
+              </li>
+              <li>
+                <Link href="/notifications" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
+                  Official Notifications & Circulars
+                </Link>
+              </li>
+              <li>
+                <Link href="/emergency" className="text-sm font-semibold text-red-600 hover:text-red-700 transition-colors">
+                  Emergency Directory (24/7)
+                </Link>
+              </li>
+              <li>
+                <Link href="/calendar" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
+                  KUHS Examination Schedules
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
+                  Official Contact Desk
+                </Link>
+              </li>
             </ul>
           </div>
 
+          {/* Contact */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40">
-              Contact
-            </h3>
-            <ul className="mt-5 space-y-4 text-sm text-white/70">
-              <li className="flex gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-purple-300" strokeWidth={1.75} />
-                <span>{contact.address}</span>
-              </li>
-              <li className="flex gap-3">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-purple-300" strokeWidth={1.75} />
-                <a href={`tel:${contact.phone}`} className="hover:text-white">
-                  {contact.phone}
+            <h4 className="text-xs font-bold tracking-widest uppercase text-emerald-800 mb-5">
+              Campus Contact
+            </h4>
+            <div className="space-y-3 text-sm text-slate-600">
+              <div className="flex gap-2.5">
+                <MapPin className="h-4 w-4 shrink-0 text-emerald-600 mt-0.5" aria-hidden="true" />
+                <span>{COLLEGE.address}</span>
+              </div>
+              <div className="flex gap-2.5">
+                <Phone className="h-4 w-4 shrink-0 text-emerald-600 mt-0.5" aria-hidden="true" />
+                <a href={`tel:${COLLEGE.phone}`} className="hover:text-emerald-800 font-medium transition-colors">
+                  {COLLEGE.phone}
                 </a>
-              </li>
-              <li className="flex gap-3">
-                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-purple-300" strokeWidth={1.75} />
-                <a href={`mailto:${contact.email}`} className="hover:text-white">
-                  {contact.email}
+              </div>
+              <div className="flex gap-2.5">
+                <Mail className="h-4 w-4 shrink-0 text-emerald-600 mt-0.5" aria-hidden="true" />
+                <a href={`mailto:${YUGA.email}`} className="hover:text-emerald-800 font-medium transition-colors">
+                  {YUGA.email}
                 </a>
-              </li>
-            </ul>
+              </div>
+              <div className="mt-4 pt-3 border-t border-slate-200">
+                <div className="text-xs font-semibold text-slate-500 mb-1">Casualty Triage (24/7)</div>
+                <div className="text-sm font-bold text-red-600 font-mono">{COLLEGE.casualtyPhone}</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-white/50 sm:flex-row">
-          <p>
-            © {year} {SITE.name} — {SITE.college}. All rights reserved.
-          </p>
-          <p>
-            Developed by{" "}
-            <a
-              href="https://www.instagram.com/justinkjames.xyz/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-purple-300 transition-colors hover:text-purple-200"
-            >
-              JKJ
-            </a>
-          </p>
+        {/* Bottom bar */}
+        <div className="mt-14 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+          <span>
+            © {new Date().getFullYear()} {YUGA.name} · {COLLEGE.name}
+          </span>
+          <span className="font-mono text-[11px] text-emerald-800 font-medium">
+            Calicut Medical College Union
+          </span>
         </div>
-      </Container>
+      </div>
     </footer>
-  );
-}
-
-function Social({
-  href,
-  label,
-  children,
-}: {
-  href: string;
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label}
-      className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition-all hover:-translate-y-0.5 hover:border-purple-400/50 hover:bg-purple-500/20 hover:text-white"
-    >
-      {children}
-    </a>
   );
 }

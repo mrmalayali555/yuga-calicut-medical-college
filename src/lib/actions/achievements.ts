@@ -21,10 +21,11 @@ async function uniqueSlug(base: string, ignoreId?: string): Promise<string> {
 function parse(formData: FormData) {
   return {
     title: String(formData.get("title") || "").trim(),
-    category: String(formData.get("category") || "sports"),
+    category: String(formData.get("category") || "general"),
     description: String(formData.get("description") || "").trim(),
     date: new Date(String(formData.get("date") || Date.now())),
     coverImage: String(formData.get("coverImage") || "").trim() || null,
+    awardWinner: String(formData.get("awardWinner") || "").trim() || null,
     published: formData.get("published") ? true : false,
   };
 }
@@ -35,10 +36,10 @@ export async function createAchievement(formData: FormData) {
   if (!data.title) return;
   const slug = await uniqueSlug(data.title);
   await db.achievement.create({ data: { ...data, slug } });
-  revalidatePath("/adminahnuok/achievements");
+  revalidatePath("/admin/achievements");
   revalidatePath("/achievements");
   revalidatePath("/");
-  redirect("/adminahnuok/achievements");
+  redirect("/admin/achievements");
 }
 
 export async function updateAchievement(id: string, formData: FormData) {
@@ -46,18 +47,17 @@ export async function updateAchievement(id: string, formData: FormData) {
   const data = parse(formData);
   const slug = await uniqueSlug(data.title, id);
   await db.achievement.update({ where: { id }, data: { ...data, slug } });
-  revalidatePath("/adminahnuok/achievements");
+  revalidatePath("/admin/achievements");
   revalidatePath("/achievements");
   revalidatePath("/");
-  redirect("/adminahnuok/achievements");
+  redirect("/admin/achievements");
 }
 
 export async function deleteAchievement(id: string) {
   await requireAdmin();
   await db.achievement.delete({ where: { id } });
-  revalidatePath("/adminahnuok/achievements");
+  revalidatePath("/admin/achievements");
   revalidatePath("/achievements");
   revalidatePath("/");
-  redirect("/adminahnuok/achievements");
+  redirect("/admin/achievements");
 }
-

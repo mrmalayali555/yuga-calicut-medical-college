@@ -47,7 +47,9 @@ export function GalleryPhotoImg({
 
   return (
     <div
-      className={`relative overflow-hidden flex items-center justify-center [container-type:size] ${fitMode === "cover" ? "w-full bg-ink-100" : ""} ${className}`}
+      className={`relative overflow-hidden flex items-center justify-center [container-type:size] ${
+        fitMode === "cover" ? "w-full bg-slate-100" : ""
+      } ${className}`}
       style={{
         aspectRatio: computedAspectRatio,
         minHeight: fitMode === "cover" && !computedAspectRatio ? "220px" : undefined,
@@ -67,7 +69,9 @@ export function GalleryPhotoImg({
             h: e.currentTarget.naturalHeight,
           });
         }}
-        className={`absolute transition-all duration-200 ${fitMode === "cover" ? "object-cover" : "object-contain"}`}
+        className={`absolute transition-all duration-200 ${
+          fitMode === "cover" ? "object-cover" : "object-contain"
+        }`}
         style={{
           width: is90or270 ? "100cqh" : "100%",
           height: is90or270 ? "100cqw" : "100%",
@@ -75,14 +79,15 @@ export function GalleryPhotoImg({
         }}
         loading="lazy"
       />
-      
-      {/* Invisible spacer to provide intrinsic bounds for flex containers when fitMode="contain" */}
-      {fitMode === "contain" && (
-        naturalSize ? (
+
+      {fitMode === "contain" &&
+        (naturalSize ? (
           <svg
             width={is90or270 ? naturalSize.h : naturalSize.w}
             height={is90or270 ? naturalSize.w : naturalSize.h}
-            viewBox={`0 0 ${is90or270 ? naturalSize.h : naturalSize.w} ${is90or270 ? naturalSize.w : naturalSize.h}`}
+            viewBox={`0 0 ${is90or270 ? naturalSize.h : naturalSize.w} ${
+              is90or270 ? naturalSize.w : naturalSize.h
+            }`}
             className="block h-auto w-auto max-h-[85vh] max-w-[90vw] sm:max-w-[85vw] opacity-0 pointer-events-none"
             aria-hidden="true"
           />
@@ -93,9 +98,8 @@ export function GalleryPhotoImg({
             aria-hidden="true"
             alt=""
           />
-        )
-      )}
-      
+        ))}
+
       {children}
     </div>
   );

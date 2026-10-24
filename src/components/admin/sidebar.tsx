@@ -8,67 +8,61 @@ import {
   Trophy,
   CalendarDays,
   Bell,
-  Wallet,
   MessageSquareWarning,
   Siren,
   Users,
-  GraduationCap,
   FileText,
   Megaphone,
-  Settings,
   Images,
-  Mail,
   LogOut,
   Menu,
   X,
   ExternalLink,
   ClipboardList,
+  Wallet,
+  Settings,
+  BookOpen,
 } from "lucide-react";
-import { LogoMark } from "@/components/ui/logo";
 import { logoutAction } from "@/lib/actions/auth";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { section: "Overview", items: [{ href: "/adminahnuok", label: "Dashboard", icon: LayoutDashboard }] },
+  {
+    section: "Overview",
+    items: [{ href: "/admin", label: "Dashboard", icon: LayoutDashboard }],
+  },
   {
     section: "Content",
     items: [
-      { href: "/adminahnuok/interventions", label: "Interventions", icon: FileText },
-      { href: "/adminahnuok/events", label: "Events", icon: CalendarDays },
-      { href: "/adminahnuok/registrations", label: "Registrations", icon: ClipboardList },
-      { href: "/adminahnuok/achievements", label: "Achievements", icon: Trophy },
-      { href: "/adminahnuok/notifications", label: "Notifications", icon: Bell },
-      { href: "/adminahnuok/marquee", label: "Marquee", icon: Megaphone },
+      { href: "/admin/interventions", label: "Interventions", icon: FileText },
+      { href: "/admin/events", label: "Events", icon: CalendarDays },
+      { href: "/admin/forms", label: "Registration Forms", icon: ClipboardList },
+      { href: "/admin/achievements", label: "Achievements", icon: Trophy },
+      { href: "/admin/notifications", label: "Notifications", icon: Bell },
+      { href: "/admin/marquee", label: "Marquee", icon: Megaphone },
     ],
   },
   {
-    section: "Hospital & College",
+    section: "Modules",
     items: [
-      { href: "/adminahnuok/doctors", label: "Doctors & OP", icon: Users },
-      { href: "/adminahnuok/departments", label: "Departments", icon: GraduationCap },
-      { href: "/adminahnuok/academic-calendar", label: "Academic Calendar", icon: CalendarDays },
-    ],
-  },
-  {
-    section: "YUGA Union Modules",
-    items: [
-      { href: "/adminahnuok/emergency", label: "Emergency Directory", icon: Siren },
-      { href: "/adminahnuok/complaints", label: "Suggestions & Grievances", icon: MessageSquareWarning },
-      { href: "/adminahnuok/committees", label: "Subcommittees & Clubs", icon: Users },
-      { href: "/adminahnuok/pages", label: "Pages (About)", icon: GraduationCap },
+      { href: "/admin/emergency", label: "Emergency", icon: Siren },
+      { href: "/admin/complaints", label: "Complaints", icon: MessageSquareWarning },
+      { href: "/admin/committees", label: "Subcommittees", icon: Users },
+      { href: "/admin/pages", label: "Custom Pages", icon: BookOpen },
+      { href: "/admin/finance", label: "Union Accounts", icon: Wallet },
     ],
   },
   {
     section: "Site",
     items: [
-      { href: "/adminahnuok/media", label: "Media Library", icon: Images },
-      { href: "/adminahnuok/sessions", label: "Active Sessions", icon: Users },
-      { href: "/adminahnuok/settings", label: "Settings", icon: Settings },
+      { href: "/admin/media", label: "Media Library", icon: Images },
+      { href: "/admin/sessions", label: "Active Sessions", icon: Users },
+      { href: "/admin/settings", label: "Settings", icon: Settings },
     ],
   },
 ];
 
-export function Sidebar({ admin }: { admin: { name: string; email: string } }) {
+export function AdminSidebar({ admin }: { admin: { name: string; email: string } }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -76,19 +70,25 @@ export function Sidebar({ admin }: { admin: { name: string; email: string } }) {
     href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
 
   const nav = (
-    <div className="flex h-full flex-col">
-      <div className="flex items-center gap-2.5 px-5 py-5">
-        <LogoMark className="h-8 w-8" />
+    <div className="flex h-full flex-col bg-[var(--bg-surface)] border-r border-[var(--border-primary)]">
+      {/* Logo */}
+      <div className="flex items-center gap-3 px-5 py-5 border-b border-[var(--border-primary)]">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--accent)] text-white font-bold text-sm">
+          Y
+        </div>
         <div className="leading-none">
-          <div className="text-sm font-bold tracking-[0.2em] text-ink-900">ADVAYA</div>
-          <div className="text-[10px] font-medium tracking-wide text-ink-400">Admin Panel</div>
+          <div className="text-sm font-bold tracking-[0.15em] text-[var(--text-primary)]">YUGA</div>
+          <div className="text-[10px] font-medium tracking-wide text-[var(--text-muted)]">
+            Admin Panel
+          </div>
         </div>
       </div>
 
-      <nav className="flex-1 space-y-6 overflow-y-auto px-3 py-2">
+      {/* Navigation */}
+      <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4">
         {NAV.map((group) => (
           <div key={group.section}>
-            <div className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink-300">
+            <div className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--text-faint)]">
               {group.section}
             </div>
             <div className="space-y-0.5">
@@ -100,13 +100,13 @@ export function Sidebar({ admin }: { admin: { name: string; email: string } }) {
                     href={item.href}
                     onClick={() => setOpen(false)}
                     className={cn(
-                      "flex min-h-[44px] items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+                      "flex min-h-[42px] items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
                       isActive(item.href)
-                        ? "bg-purple-50 text-purple-700"
-                        : "text-ink-600 hover:bg-ink-50 hover:text-ink-900"
+                        ? "bg-[var(--accent-muted)] text-[var(--accent-light)] border border-[var(--border-accent)]"
+                        : "text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]"
                     )}
                   >
-                    <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                    <Icon className="h-[18px] w-[18px] shrink-0" strokeWidth={1.75} />
                     {item.label}
                   </Link>
                 );
@@ -116,29 +116,32 @@ export function Sidebar({ admin }: { admin: { name: string; email: string } }) {
         ))}
       </nav>
 
-      <div className="border-t border-ink-100 p-3">
+      {/* Footer */}
+      <div className="border-t border-[var(--border-primary)] p-3">
         <div className="mb-2 flex items-center gap-3 rounded-xl px-3 py-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-purple-100 text-sm font-bold text-purple-700">
-            {admin.name.slice(0, 1)}
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--accent)] text-xs font-bold text-white">
+            {admin.name.slice(0, 1).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <div className="truncate text-sm font-medium text-ink-900">{admin.name}</div>
-            <div className="truncate text-xs text-ink-400">{admin.email}</div>
+            <div className="truncate text-sm font-medium text-[var(--text-primary)]">{admin.name}</div>
+            <div className="truncate text-xs text-[var(--text-muted)]">{admin.email}</div>
           </div>
         </div>
         <Link
           href="/"
           target="_blank"
-          className="flex min-h-[44px] items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink-600 transition-colors hover:bg-ink-50"
+          className="flex min-h-[42px] items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-elevated)]"
         >
-          <ExternalLink className="h-[18px] w-[18px]" strokeWidth={1.75} /> View site
+          <ExternalLink className="h-[18px] w-[18px] shrink-0" strokeWidth={1.75} />
+          View site
         </Link>
         <form action={logoutAction}>
           <button
             type="submit"
-            className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
+            className="flex min-h-[42px] w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-400 transition-colors hover:bg-red-500/10"
           >
-            <LogOut className="h-[18px] w-[18px]" strokeWidth={1.75} /> Sign out
+            <LogOut className="h-[18px] w-[18px] shrink-0" strokeWidth={1.75} />
+            Sign out
           </button>
         </form>
       </div>
@@ -148,14 +151,18 @@ export function Sidebar({ admin }: { admin: { name: string; email: string } }) {
   return (
     <>
       {/* Mobile top bar */}
-      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-ink-100 bg-white/80 px-4 py-3 backdrop-blur lg:hidden">
-        <div className="flex items-center gap-2">
-          <LogoMark className="h-7 w-7" />
-          <span className="text-sm font-bold tracking-[0.18em] text-ink-900">ADVAYA</span>
+      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-[var(--border-primary)] bg-[var(--bg-surface)]/90 px-4 py-3 backdrop-blur lg:hidden">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--accent)] text-white font-bold text-xs">
+            Y
+          </div>
+          <span className="text-sm font-bold tracking-[0.15em] text-[var(--text-primary)]">
+            YUGA Admin
+          </span>
         </div>
         <button
           onClick={() => setOpen((v) => !v)}
-          className="flex touch-target items-center justify-center rounded-lg text-ink-700 hover:bg-ink-100"
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)]"
           aria-label="Menu"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -163,17 +170,16 @@ export function Sidebar({ admin }: { admin: { name: string; email: string } }) {
       </div>
 
       {/* Desktop sidebar */}
-      <aside className="fixed inset-y-0 left-0 hidden w-64 border-r border-ink-100 bg-white lg:block">
-        {nav}
-      </aside>
+      <aside className="fixed inset-y-0 left-0 hidden w-64 lg:block">{nav}</aside>
 
       {/* Mobile drawer */}
       {open && (
         <div className="fixed inset-0 z-40 lg:hidden">
-          <div className="absolute inset-0 bg-ink-900/20 backdrop-blur-sm" onClick={() => setOpen(false)} />
-          <aside className="absolute inset-y-0 left-0 w-72 max-w-[85vw] border-r border-ink-100 bg-white">
-            {nav}
-          </aside>
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+          />
+          <aside className="absolute inset-y-0 left-0 w-72 max-w-[85vw]">{nav}</aside>
         </div>
       )}
     </>

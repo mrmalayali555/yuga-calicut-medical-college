@@ -10,13 +10,11 @@ export async function deleteMedia(id: string) {
   await requireAdmin();
   const media = await db.media.findUnique({ where: { id } });
   if (media) {
-    // Best-effort remove the file from disk for local uploads.
     if (media.url.startsWith("/uploads/")) {
       const filePath = path.join(process.cwd(), "public", media.url);
       await unlink(filePath).catch(() => {});
     }
     await db.media.delete({ where: { id } });
   }
-  revalidatePath("/adminahnuok/media");
+  revalidatePath("/admin/media");
 }
-

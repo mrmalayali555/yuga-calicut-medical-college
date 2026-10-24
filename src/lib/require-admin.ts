@@ -8,10 +8,10 @@ export async function requireAdmin(): Promise<SessionPayload> {
   const session = await getSession();
   if (!session) {
     const store = await cookies();
-    if (store.has("advaya_session")) {
-      redirect("/adminahnuok/login?clear_session=1");
+    if (store.has("yuga_session")) {
+      redirect("/admin/login?clear_session=1");
     }
-    redirect("/adminahnuok/login");
+    redirect("/admin/login");
   }
   return session;
 }

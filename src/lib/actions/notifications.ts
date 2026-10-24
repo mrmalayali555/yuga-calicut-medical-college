@@ -35,10 +35,10 @@ export async function createNotification(formData: FormData) {
   if (!data.title) return;
   const slug = await uniqueSlug(data.title);
   await db.notification.create({ data: { ...data, slug } });
-  revalidatePath("/adminahnuok/notifications");
+  revalidatePath("/admin/notifications");
   revalidatePath("/notifications");
   revalidatePath("/");
-  redirect("/adminahnuok/notifications");
+  redirect("/admin/notifications");
 }
 
 export async function updateNotification(id: string, formData: FormData) {
@@ -46,18 +46,17 @@ export async function updateNotification(id: string, formData: FormData) {
   const data = parse(formData);
   const slug = await uniqueSlug(data.title, id);
   await db.notification.update({ where: { id }, data: { ...data, slug } });
-  revalidatePath("/adminahnuok/notifications");
+  revalidatePath("/admin/notifications");
   revalidatePath("/notifications");
   revalidatePath("/");
-  redirect("/adminahnuok/notifications");
+  redirect("/admin/notifications");
 }
 
 export async function deleteNotification(id: string) {
   await requireAdmin();
   await db.notification.delete({ where: { id } });
-  revalidatePath("/adminahnuok/notifications");
+  revalidatePath("/admin/notifications");
   revalidatePath("/notifications");
   revalidatePath("/");
-  redirect("/adminahnuok/notifications");
+  redirect("/admin/notifications");
 }
-

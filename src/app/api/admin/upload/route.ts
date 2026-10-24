@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { randomUUID } from "crypto";
+import { writeFile, mkdir } from "fs/promises";
+import path from "path";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { put } from "@vercel/blob";
@@ -9,6 +11,7 @@ const MAX = {
   video: 100 * 1024 * 1024, // 100 MB
   pdf: 20 * 1024 * 1024, // 20 MB
 };
+
 const ALLOWED: Record<string, string[]> = {
   image: ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"],
   video: ["video/mp4", "video/webm", "video/quicktime"],
@@ -47,9 +50,22 @@ export async function POST(req: NextRequest) {
   const filename = `${Date.now()}-${randomUUID().slice(0, 8)}.${ext}`;
 
   try {
-    // Upload to Vercel Blob
-    const blob = await put(filename, file, { access: 'public' });
-    const url = blob.url;
+    let url: string;
+
+    if (process.env.BLOB_READ_WRITE_TOKEN) {
+      // Use Vercel Blob in production
+      const blob = await put(filename, file, { access: "public" });
+      url = blob.url;
+    } else {
+      // Fallback to local public/uploads directory for local development
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      const uploadDir = path.join(process.cwd(), "public", "uploads");
+      await mkdir(uploadDir, { recursive: true });
+      const filePath = path.join(uploadDir, filename);
+      await writeFile(filePath, buffer);
+      url = `/uploads/${filename}`;
+    }
 
     const media = await db.media.create({
       data: {
@@ -62,13 +78,11 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ ok: true, url, id: media.id, type: kind }, { status: 201 });
-    } catch (error: any) {
+  } catch (error: any) {
     console.error("Upload error:", error);
-    if (error.message && error.message.includes("Vercel Blob storage is not configured")) {
-      return NextResponse.json({ 
-        error: "Vercel Blob is not configured. Please add BLOB_READ_WRITE_TOKEN to your Vercel Environment Variables." 
-      }, { status: 500 });
-    }
-    return NextResponse.json({ error: error.message || "Failed to upload file to storage." }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || "Failed to upload file to storage." },
+      { status: 500 }
+    );
   }
 }

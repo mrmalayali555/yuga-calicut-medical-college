@@ -9,37 +9,27 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/adminahnuok/", "/_next/", "/static/"],
+        disallow: ["/api/", "/admin/", "/_next/", "/static/"],
       },
       {
         userAgent: "Googlebot",
         allow: "/",
-        disallow: ["/api/", "/adminahnuok/"],
+        disallow: ["/api/", "/admin/"],
       },
       {
         userAgent: "Google-Extended",
         allow: "/",
-        disallow: ["/api/", "/adminahnuok/"],
+        disallow: ["/api/", "/admin/"],
       },
       {
         userAgent: "Bingbot",
         allow: "/",
-        disallow: ["/api/", "/adminahnuok/"],
-      },
-      {
-        userAgent: "PerplexityBot",
-        allow: "/",
-        disallow: ["/api/", "/adminahnuok/"],
-      },
-      {
-        userAgent: "ChatGPT-User",
-        allow: "/",
-        disallow: ["/api/", "/adminahnuok/"],
+        disallow: ["/api/", "/admin/"],
       },
       {
         userAgent: "Applebot",
         allow: "/",
-        disallow: ["/api/", "/adminahnuok/"],
+        disallow: ["/api/", "/admin/"],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

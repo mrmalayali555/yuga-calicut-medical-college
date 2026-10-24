@@ -13,14 +13,14 @@ export async function createGallery(eventId: string, theme: string) {
       eventId,
       theme,
       titleLine1: "Event Gallery",
-      subtitle: "Memories from the event",
+      subtitle: "Memories & Moments",
     },
   });
 
-  revalidatePath(`/adminahnuok/events/${eventId}`);
+  revalidatePath(`/admin/events/${eventId}`);
   revalidatePath("/events");
   
-  redirect(`/adminahnuok/events/${eventId}/gallery/customize`);
+  redirect(`/admin/events/${eventId}/gallery/customize`);
 }
 
 export async function updateGalleryText(galleryId: string, formData: FormData) {
@@ -41,8 +41,8 @@ export async function updateGalleryText(galleryId: string, formData: FormData) {
     },
   });
 
-  revalidatePath(`/adminahnuok/events/${gallery.eventId}`);
-  revalidatePath(`/adminahnuok/events/${gallery.eventId}/gallery/customize`);
+  revalidatePath(`/admin/events/${gallery.eventId}`);
+  revalidatePath(`/admin/events/${gallery.eventId}/gallery/customize`);
   revalidatePath("/events");
 }
 
@@ -52,6 +52,10 @@ export async function addGalleryPhoto(galleryId: string, formData: FormData) {
   const url = formData.get("url") as string;
   const caption = formData.get("caption") as string;
   const position = parseInt(formData.get("position") as string) || 0;
+  const zoom = parseFloat(formData.get("zoom") as string) || 1.0;
+  const offsetX = parseFloat(formData.get("offsetX") as string) || 0.0;
+  const offsetY = parseFloat(formData.get("offsetY") as string) || 0.0;
+  const rotation = parseInt(formData.get("rotation") as string) || 0;
 
   if (!url) {
     throw new Error("URL is required");
@@ -63,13 +67,17 @@ export async function addGalleryPhoto(galleryId: string, formData: FormData) {
       url,
       caption: caption || "",
       position,
+      zoom,
+      offsetX,
+      offsetY,
+      rotation,
     },
     include: {
-      gallery: true
-    }
+      gallery: true,
+    },
   });
 
-  revalidatePath(`/adminahnuok/events/${photo.gallery.eventId}/gallery/customize`);
+  revalidatePath(`/admin/events/${photo.gallery.eventId}/gallery/customize`);
   revalidatePath("/events");
 }
 
@@ -78,10 +86,10 @@ export async function removeGalleryPhoto(photoId: string) {
 
   const photo = await db.galleryPhoto.delete({
     where: { id: photoId },
-    include: { gallery: true }
+    include: { gallery: true },
   });
 
-  revalidatePath(`/adminahnuok/events/${photo.gallery.eventId}/gallery/customize`);
+  revalidatePath(`/admin/events/${photo.gallery.eventId}/gallery/customize`);
   revalidatePath("/events");
 }
 
@@ -89,16 +97,24 @@ export async function updateGalleryPhoto(photoId: string, formData: FormData) {
   await requireAdmin();
 
   const caption = formData.get("caption") as string;
+  const zoom = formData.has("zoom") ? parseFloat(formData.get("zoom") as string) : undefined;
+  const offsetX = formData.has("offsetX") ? parseFloat(formData.get("offsetX") as string) : undefined;
+  const offsetY = formData.has("offsetY") ? parseFloat(formData.get("offsetY") as string) : undefined;
+  const rotation = formData.has("rotation") ? parseInt(formData.get("rotation") as string) : undefined;
 
   const photo = await db.galleryPhoto.update({
     where: { id: photoId },
     data: {
-      caption: caption || "",
+      caption: caption !== undefined ? caption : undefined,
+      zoom,
+      offsetX,
+      offsetY,
+      rotation,
     },
-    include: { gallery: true }
+    include: { gallery: true },
   });
 
-  revalidatePath(`/adminahnuok/events/${photo.gallery.eventId}/gallery/customize`);
+  revalidatePath(`/admin/events/${photo.gallery.eventId}/gallery/customize`);
   revalidatePath("/events");
 }
 
@@ -109,8 +125,8 @@ export async function deleteGallery(galleryId: string) {
     where: { id: galleryId },
   });
 
-  revalidatePath(`/adminahnuok/events/${gallery.eventId}`);
+  revalidatePath(`/admin/events/${gallery.eventId}`);
   revalidatePath("/events");
 
-  redirect(`/adminahnuok/events/${gallery.eventId}`);
+  redirect(`/admin/events/${gallery.eventId}`);
 }
