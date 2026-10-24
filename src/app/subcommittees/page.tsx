@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   Palette,
   Trophy,
@@ -81,6 +82,41 @@ const WINGS = [
   },
 ];
 
+const FEATURED_CLUBS = [
+  {
+    slug: "jeevanam",
+    name: "Jeevanam",
+    tagline: "Blood Donation Club",
+    logo: "/clubs/jeevanam.jpg",
+    accent: "#dc2626",
+    badge: "bg-red-50 text-red-700 border-red-200",
+  },
+  {
+    slug: "praanah",
+    name: "Praanah",
+    tagline: "Arts Club",
+    logo: "/clubs/praanah.jpg",
+    accent: "#d97706",
+    badge: "bg-amber-50 text-amber-700 border-amber-200",
+  },
+  {
+    slug: "godha",
+    name: "Godha",
+    tagline: "Sports Club",
+    logo: "/clubs/godha.png",
+    accent: "#059669",
+    badge: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  },
+  {
+    slug: "ocha",
+    name: "Ocha",
+    tagline: "Literary Club",
+    logo: "/clubs/ocha.png",
+    accent: "#7c3aed",
+    badge: "bg-violet-50 text-violet-700 border-violet-200",
+  },
+];
+
 export default function SubcommitteesPage() {
   return (
     <div className="min-h-screen pt-28 pb-24">
@@ -90,19 +126,68 @@ export default function SubcommitteesPage() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          className="max-w-2xl mb-12"
+          className="max-w-2xl mb-10"
         >
           <p className="text-xs font-semibold tracking-wider uppercase text-emerald-700 mb-3">
             Student Wings
           </p>
           <h1 className="text-4xl sm:text-5xl font-display text-[var(--text-primary)]">
-            Clubs & Subcommittees
+            Clubs &amp; Subcommittees
           </h1>
           <p className="mt-4 text-base text-[var(--text-secondary)] leading-relaxed">
             Specialized student wings driving creative arts, athletic mastery,
             scientific research, and campus welfare under YUGA.
           </p>
         </motion.div>
+
+        {/* Featured 4 Clubs Banner */}
+        <div className="mb-14">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500">
+              Featured Sub-Committee Clubs
+            </h2>
+            <span className="text-xs text-slate-400">Click to visit dedicated portal</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {FEATURED_CLUBS.map((club) => (
+              <Link
+                key={club.slug}
+                href={`/clubs/${club.slug}`}
+                className="group flex items-center gap-4 p-4 rounded-2xl border border-slate-200 bg-white shadow-xs hover:shadow-md hover:border-slate-300 transition-all"
+              >
+                <div className="relative h-14 w-14 rounded-xl overflow-hidden bg-white shadow-inner border border-slate-100 shrink-0">
+                  <Image
+                    src={club.logo}
+                    alt={club.name}
+                    fill
+                    className="object-contain p-1.5"
+                    sizes="56px"
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <span
+                    className={`inline-block px-2 py-0.2 rounded-full text-[9px] font-bold uppercase tracking-wider border ${club.badge} mb-0.5`}
+                  >
+                    {club.tagline}
+                  </span>
+                  <h3
+                    className="text-base font-bold text-slate-900 group-hover:text-emerald-800 transition-colors truncate"
+                  >
+                    {club.name}
+                  </h3>
+                  <p className="text-[11px] text-slate-500">Dedicated Portal →</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500">
+            All Council Wings &amp; Portfolios
+          </h2>
+        </div>
 
         {/* Grid */}
         <motion.div
