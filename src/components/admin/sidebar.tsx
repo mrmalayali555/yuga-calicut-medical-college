@@ -25,6 +25,7 @@ import {
   BookOpen,
   History,
   QrCode,
+  ScanLine,
 } from "lucide-react";
 import { logoutAction } from "@/lib/actions/auth";
 import { cn } from "@/lib/utils";
@@ -37,6 +38,7 @@ const NAV = [
   {
     section: "Content",
     items: [
+      { href: "/admin/scanner", label: "QR Entry Scanner", icon: ScanLine },
       { href: "/admin/interventions", label: "Interventions", icon: FileText },
       { href: "/admin/events", label: "Events", icon: CalendarDays },
       { href: "/admin/forms", label: "Registration Forms", icon: ClipboardList },

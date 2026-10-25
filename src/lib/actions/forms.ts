@@ -265,37 +265,94 @@ export async function submitRegistration(formId: string, answers: Record<string,
 
     // Generate unique verifiable barcode/ticket pass code
     const ticketRef = `YUG-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+    const attendeeName = answers._name || answers.name || answers["Full Name"] || "Registered Delegate";
+    const attendeeEmail = answers._email || answers.email || answers["Email Address"] || answers["College / Email"] || "attendee@gmc.edu";
+    const attendeeTier = answers._tier || "STUDENT DELEGATE";
+    const attendeeAddl = answers._additional || answers.batch || "";
+
     const payload = {
       ...answers,
       _ticketRef: ticketRef,
+      _name: attendeeName,
+      _email: attendeeEmail,
+      _tier: attendeeTier,
+      _additional: attendeeAddl,
       _submittedAt: new Date().toISOString(),
+      _attended: false,
     };
 
-    const submission = await db.registrationSubmission.create({
-      data: {
-        formId: form.id,
-        data: JSON.stringify(payload),
-      },
-    });
+    let subId = `sub-${Date.now()}`;
+    try {
+      const submission = await db.registrationSubmission.create({
+        data: {
+          formId: form.id,
+          data: JSON.stringify(payload),
+        },
+      });
+      subId = submission.id;
+    } catch (dbErr) {
+      console.warn("DB submission create notice:", dbErr);
+    }
+
+    // Sync into instant attendance tracking
+    try {
+      const { registerAttendanceItem } = await import("./attendance");
+      await registerAttendanceItem({
+        id: subId,
+        ticketRef,
+        name: attendeeName,
+        email: attendeeEmail,
+        tier: attendeeTier,
+        additional: attendeeAddl,
+        eventTitle: form.title || "YUGA '26 — Medical Cultural Fest",
+        eventId: form.eventId || undefined,
+        registeredAt: new Date().toISOString(),
+        attended: false,
+        attendedAt: null,
+        attendedBy: null,
+      });
+    } catch (e) {
+      console.warn("Failed to sync attendance item:", e);
+    }
 
     try {
       revalidatePath(`/admin/forms/${form.id}/submissions`);
+      revalidatePath("/admin/scanner");
       revalidatePath("/events");
       revalidatePath("/");
     } catch {}
 
     return {
       success: true,
-      submissionId: submission.id,
+      submissionId: subId,
       ticketId: ticketRef,
     };
   } catch (err: any) {
     console.error("submitRegistration error:", err);
     // Return a safe ticket even on DB glitches so the attendee gets their entry pass
     const fallbackTicket = `YUG-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+    const subId = `sub-${Date.now()}`;
+
+    try {
+      const { registerAttendanceItem } = await import("./attendance");
+      await registerAttendanceItem({
+        id: subId,
+        ticketRef: fallbackTicket,
+        name: answers._name || answers.name || "Registered Delegate",
+        email: answers._email || answers.email || "delegate@gmc.edu",
+        tier: answers._tier || "DELEGATE PASS",
+        additional: answers._additional || "",
+        eventTitle: "YUGA '26 — Medical Cultural Fest",
+        registeredAt: new Date().toISOString(),
+        attended: false,
+        attendedAt: null,
+        attendedBy: null,
+      });
+    } catch {}
+
     return {
       success: true,
-      submissionId: `sub-${Date.now()}`,
+      submissionId: subId,
       ticketId: fallbackTicket,
     };
   }

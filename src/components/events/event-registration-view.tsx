@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { submitRegistration } from "@/lib/actions/forms";
 import { EventTicket } from "@/components/ovio/event-ticket/event-ticket";
+import { downloadTicketPdf } from "@/lib/ticket-pdf";
 
 interface FieldItem {
   id: string;
@@ -187,6 +188,25 @@ export function EventRegistrationView({
                 <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
                   <button
                     type="button"
+                    onClick={async () => {
+                      if (!confirmedTicket) return;
+                      await downloadTicketPdf({
+                        ticketId: confirmedTicket.ticketId,
+                        eventName: event.title,
+                        date: event.date,
+                        venue: event.venue || "Main Auditorium",
+                        tier: event.tier || "DELEGATE PASS",
+                        attendeeName: confirmedTicket.attendeeName,
+                        attendeeEmail: confirmedTicket.attendeeEmail,
+                      });
+                    }}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-white bg-[#ff2e56] hover:bg-[#e0264a] active:scale-[0.98] transition-all shadow-md cursor-pointer"
+                  >
+                    <Download className="h-3.5 w-3.5" />
+                    Download PDF Pass
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => window.print()}
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-[var(--text-primary)] bg-[var(--bg-surface)] hover:bg-[var(--bg-elevated)] border border-[var(--border-primary)] transition-colors cursor-pointer"
                   >
@@ -195,7 +215,7 @@ export function EventRegistrationView({
                   </button>
                   <Link
                     href="/events"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-white bg-[var(--accent)] hover:bg-[var(--accent-dark)] transition-colors shadow-sm"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-[var(--text-primary)] bg-white/5 hover:bg-white/10 border border-white/10 transition-colors shadow-sm"
                   >
                     Return to Campus Calendar
                   </Link>
