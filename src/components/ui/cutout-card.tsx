@@ -19,14 +19,14 @@ import { cn } from "@/lib/utils";
 // ============================================================================
 
 export const cutoutCardSurfaceShadowClassName = cn(
-  "border border-slate-200/90 bg-white",
-  "shadow-[0_1px_3px_0_rgba(16,40,25,0.05),0_6px_18px_-3px_rgba(16,40,25,0.06)]",
-  "transition-[box-shadow,border-color] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
-  "hover:border-emerald-300 hover:shadow-[0_4px_12px_-2px_rgba(16,40,25,0.08),0_12px_28px_-6px_rgba(16,40,25,0.1)]"
+  "border border-[var(--border-primary)] bg-[var(--bg-card)] text-[var(--text-primary)]",
+  "shadow-[var(--shadow-sm)]",
+  "transition-[box-shadow,border-color,background-color] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]",
+  "hover:border-[var(--accent)] hover:shadow-[var(--shadow-md)]"
 );
 
 export const cutoutCardSurfaceClassName = cn(
-  "group/cutout relative cursor-pointer overflow-hidden rounded-[28px] bg-white text-slate-900",
+  "group/cutout relative cursor-pointer overflow-hidden rounded-[28px] bg-[var(--bg-card)] text-[var(--text-primary)]",
   cutoutCardSurfaceShadowClassName
 );
 

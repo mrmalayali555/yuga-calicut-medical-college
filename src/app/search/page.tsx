@@ -40,39 +40,41 @@ export default async function SearchPage({
     : 0;
 
   return (
-    <div className="min-h-screen pt-28 pb-24 bg-gradient-to-b from-emerald-50/20 via-white to-white">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen pt-28 pb-24 bg-[var(--bg-root)] text-[var(--text-primary)] relative overflow-hidden transition-colors">
+      <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(var(--accent)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+
+      <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3.5 py-1 mb-4 shadow-2xs">
-            <Sparkles className="h-3.5 w-3.5 text-emerald-700" />
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--accent)]/20 bg-[var(--accent-subtle)] px-3.5 py-1 mb-4 shadow-2xs">
+            <Sparkles className="h-3.5 w-3.5 text-[var(--accent)]" />
+            <span className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">
               Campus Intelligence
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
             Search Portal
           </h1>
-          <p className="mt-2 text-sm text-slate-600">
+          <p className="mt-2 text-sm text-[var(--text-secondary)]">
             Find events, academic circulars, laurels, hotlines, and union initiatives.
           </p>
         </div>
 
         {/* Search Bar Form */}
         <form method="GET" action="/search" className="mb-10">
-          <div className="relative flex items-center shadow-sm rounded-2xl overflow-hidden border border-slate-200 bg-white focus-within:border-emerald-600 focus-within:ring-2 focus-within:ring-emerald-500/20">
-            <SearchIcon className="absolute left-4 h-5 w-5 text-slate-400" />
+          <div className="relative flex items-center shadow-sm rounded-2xl overflow-hidden border border-[var(--border-primary)] bg-[var(--bg-card)] focus-within:border-[var(--accent)] focus-within:ring-2 focus-within:ring-[var(--accent)]/20">
+            <SearchIcon className="absolute left-4 h-5 w-5 text-[var(--text-muted)]" />
             <input
               type="text"
               name="q"
               defaultValue={q}
               placeholder="Search by keywords, event name, batch, hotline, or committee..."
               autoFocus
-              className="w-full pl-12 pr-28 py-3.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none"
+              className="w-full pl-12 pr-28 py-3.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] bg-transparent focus:outline-none"
             />
             <button
               type="submit"
-              className="absolute right-2 rounded-xl bg-emerald-700 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-800 transition-colors"
+              className="absolute right-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white hover:brightness-110 transition-colors cursor-pointer"
             >
               Search
             </button>
@@ -81,14 +83,14 @@ export default async function SearchPage({
 
         {/* Results Count */}
         {q && (
-          <div className="mb-6 flex items-center justify-between text-xs text-slate-500 border-b border-slate-100 pb-3">
+          <div className="mb-6 flex items-center justify-between text-xs text-[var(--text-muted)] border-b border-[var(--border-primary)] pb-3">
             <span>
-              Found <strong className="text-slate-900">{total}</strong> match
+              Found <strong className="text-[var(--text-primary)]">{total}</strong> match
               {total === 1 ? "" : "es"} for &ldquo;{q}&rdquo;
             </span>
             <Link
               href="/search"
-              className="text-emerald-700 hover:text-emerald-800 font-semibold"
+              className="text-[var(--accent)] hover:underline font-semibold"
             >
               Clear search
             </Link>
@@ -97,23 +99,23 @@ export default async function SearchPage({
 
         {/* Empty State / Initial Prompt */}
         {!q && (
-          <div className="rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-xs">
-            <SearchIcon className="mx-auto h-10 w-10 text-slate-300 mb-3" />
-            <h3 className="text-base font-bold text-slate-800">Start typing to search</h3>
-            <p className="mt-1 text-xs text-slate-500">
-              Popular searches: <Link href="/search?q=kuhs" className="text-emerald-700 font-semibold hover:underline">KUHS Exam</Link>,{" "}
-              <Link href="/search?q=cmpl" className="text-emerald-700 font-semibold hover:underline">CMPL Cricket</Link>,{" "}
-              <Link href="/search?q=casualty" className="text-emerald-700 font-semibold hover:underline">Casualty</Link>,{" "}
-              <Link href="/search?q=blood" className="text-emerald-700 font-semibold hover:underline">Blood Bank</Link>
+          <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-12 text-center shadow-xs">
+            <SearchIcon className="mx-auto h-10 w-10 text-[var(--text-muted)] mb-3" />
+            <h3 className="text-base font-bold text-[var(--text-primary)]">Start typing to search</h3>
+            <p className="mt-1 text-xs text-[var(--text-secondary)]">
+              Popular searches: <Link href="/search?q=kuhs" className="text-[var(--accent)] font-semibold hover:underline">KUHS Exam</Link>,{" "}
+              <Link href="/search?q=cmpl" className="text-[var(--accent)] font-semibold hover:underline">CMPL Cricket</Link>,{" "}
+              <Link href="/search?q=casualty" className="text-[var(--accent)] font-semibold hover:underline">Casualty</Link>,{" "}
+              <Link href="/search?q=blood" className="text-[var(--accent)] font-semibold hover:underline">Blood Bank</Link>
             </p>
           </div>
         )}
 
         {/* Zero Results State */}
         {results && total === 0 && (
-          <div className="rounded-3xl border border-slate-200 bg-white p-12 text-center shadow-xs">
-            <h3 className="text-base font-bold text-slate-800">No matching results</h3>
-            <p className="mt-1 text-xs text-slate-500">
+          <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-12 text-center shadow-xs">
+            <h3 className="text-base font-bold text-[var(--text-primary)]">No matching results</h3>
+            <p className="mt-1 text-xs text-[var(--text-secondary)]">
               We couldn&apos;t find anything matching &ldquo;{q}&rdquo;. Try another term or check the navigation links.
             </p>
           </div>
@@ -228,25 +230,25 @@ function ResultCard({
   return (
     <Link
       href={href}
-      className="group flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs transition-all hover:border-emerald-300 hover:shadow-md"
+      className="group flex items-center justify-between gap-4 rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-4 shadow-xs transition-all hover:border-[var(--accent)] hover:shadow-md"
     >
       <div className="flex items-start gap-3.5 min-w-0">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white transition-colors">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors">
           {icon}
         </div>
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50/80 px-2 py-0.5 rounded-md">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--accent)] bg-[var(--accent-subtle)] px-2 py-0.5 rounded-md">
               {type}
             </span>
-            <h4 className="text-sm font-bold text-slate-900 group-hover:text-emerald-800 truncate">
+            <h4 className="text-sm font-bold text-[var(--text-primary)] group-hover:text-[var(--accent)] truncate">
               {title}
             </h4>
           </div>
-          <p className="mt-1 text-xs text-slate-500 truncate">{description}</p>
+          <p className="mt-1 text-xs text-[var(--text-muted)] truncate">{description}</p>
         </div>
       </div>
-      <ArrowRight className="h-4 w-4 text-slate-400 group-hover:text-emerald-700 shrink-0 transition-transform group-hover:translate-x-0.5" />
+      <ArrowRight className="h-4 w-4 text-[var(--text-muted)] group-hover:text-[var(--accent)] shrink-0 transition-transform group-hover:translate-x-0.5" />
     </Link>
   );
 }

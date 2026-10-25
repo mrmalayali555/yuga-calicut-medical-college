@@ -23,8 +23,10 @@ const STATS = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen pt-28 pb-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen pt-28 pb-24 bg-[var(--bg-root)] text-[var(--text-primary)] relative overflow-hidden transition-colors">
+      <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(var(--accent)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -32,7 +34,7 @@ export default function AboutPage() {
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
           className="max-w-2xl mb-16"
         >
-          <p className="text-xs font-semibold tracking-wider uppercase text-emerald-700 mb-3">
+          <p className="text-xs font-semibold tracking-wider uppercase text-[var(--accent)] mb-3">
             Heritage & Charter
           </p>
           <h1 className="text-4xl sm:text-5xl font-display text-[var(--text-primary)]">
@@ -55,7 +57,7 @@ export default function AboutPage() {
               <div className="text-3xl font-semibold text-[var(--text-primary)] tabular-nums">
                 {s.value}
               </div>
-              <div className="mt-2 text-sm font-semibold text-emerald-800">
+              <div className="mt-2 text-sm font-semibold text-[var(--accent)]">
                 {s.label}
               </div>
               <div className="mt-1 text-[11px] text-[var(--text-faint)] font-medium">
@@ -75,7 +77,7 @@ export default function AboutPage() {
             className="lg:col-span-7 card p-8 sm:p-10 flex flex-col justify-between"
           >
             <div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800 border border-emerald-200 mb-5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--accent)]/20 mb-5">
                 <History className="h-5 w-5" aria-hidden="true" />
               </div>
               <h2 className="text-2xl font-display text-[var(--text-primary)]">
@@ -98,12 +100,12 @@ export default function AboutPage() {
             </div>
             <div className="mt-6 pt-5 border-t border-[var(--border-primary)] flex flex-wrap items-center gap-5 text-xs text-[var(--text-muted)]">
               <div className="flex items-center gap-2">
-                <Building2 className="h-3.5 w-3.5 text-emerald-700" aria-hidden="true" />
-                <span className="font-medium text-slate-700">Affiliated to KUHS, Thrissur</span>
+                <Building2 className="h-3.5 w-3.5 text-[var(--accent)]" aria-hidden="true" />
+                <span className="font-medium text-[var(--text-secondary)]">Affiliated to KUHS, Thrissur</span>
               </div>
               <div className="flex items-center gap-2">
-                <Stethoscope className="h-3.5 w-3.5 text-emerald-700" aria-hidden="true" />
-                <span className="font-medium text-slate-700">NMC Recognised</span>
+                <Stethoscope className="h-3.5 w-3.5 text-[var(--accent)]" aria-hidden="true" />
+                <span className="font-medium text-[var(--text-secondary)]">NMC Recognised</span>
               </div>
             </div>
           </motion.div>
@@ -113,25 +115,25 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.08 }}
-            className="lg:col-span-5 card p-8 sm:p-10 flex flex-col justify-between border-emerald-200 bg-emerald-50/40"
+            className="lg:col-span-5 card p-8 sm:p-10 flex flex-col justify-between border-[var(--accent)]/20 bg-[var(--accent-subtle)]"
           >
             <div>
-              <Quote className="h-8 w-8 text-emerald-700 opacity-40 mb-5" aria-hidden="true" />
+              <Quote className="h-8 w-8 text-[var(--accent)] opacity-40 mb-5" aria-hidden="true" />
               <blockquote className="text-base font-display italic leading-relaxed text-[var(--text-primary)]">
                 &ldquo;Calicut Medicos have consistently proven that rigorous
                 clinical training and vibrant cultural, sporting, and societal
                 excellence are not contradictory — they fuel each other.&rdquo;
               </blockquote>
             </div>
-            <div className="mt-6 pt-5 border-t border-emerald-200 flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold text-sm">
+            <div className="mt-6 pt-5 border-t border-[var(--accent)]/20 flex items-center gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--accent)]/30 font-bold text-sm">
                 AN
               </div>
               <div>
                 <p className="text-sm font-semibold text-[var(--text-primary)]">
                   Dr. Arjun S. Nair
                 </p>
-                <p className="text-xs text-emerald-700 font-semibold">
+                <p className="text-xs text-[var(--accent)] font-semibold">
                   Chairperson, YUGA 2026–27
                 </p>
               </div>
@@ -148,7 +150,7 @@ export default function AboutPage() {
             transition={{ type: "spring", stiffness: 80, damping: 20 }}
             className="card p-8"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800 border border-emerald-200 mb-5">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--accent)]/20 mb-5">
               <Target className="h-5 w-5" aria-hidden="true" />
             </div>
             <h3 className="text-xl font-display text-[var(--text-primary)]">
@@ -168,7 +170,7 @@ export default function AboutPage() {
             transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.06 }}
             className="card p-8"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 text-sky-800 border border-sky-200 mb-5">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20 mb-5">
               <Eye className="h-5 w-5" aria-hidden="true" />
             </div>
             <h3 className="text-xl font-display text-[var(--text-primary)]">
@@ -185,7 +187,7 @@ export default function AboutPage() {
         {/* Leadership Grid */}
         <div className="mb-20">
           <div className="max-w-xl mb-12">
-            <p className="text-xs font-semibold tracking-wider uppercase text-emerald-700 mb-3">
+            <p className="text-xs font-semibold tracking-wider uppercase text-[var(--accent)] mb-3">
               Elected Representatives
             </p>
             <h2 className="text-3xl sm:text-4xl font-display text-[var(--text-primary)]">
@@ -224,22 +226,22 @@ export default function AboutPage() {
                   className="card p-6"
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold text-sm">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--accent)]/20 font-bold text-sm">
                       {initials}
                     </div>
                     <div>
                       <h3 className="text-base font-semibold text-[var(--text-primary)]">
                         {leader.name}
                       </h3>
-                      <p className="text-xs text-emerald-700 font-semibold">
+                      <p className="text-xs text-[var(--accent)] font-semibold">
                         {leader.role}
                       </p>
                     </div>
                   </div>
-                  <p className="text-xs text-slate-500 font-medium mb-3">
+                  <p className="text-xs text-[var(--text-muted)] font-medium mb-3">
                     {leader.portfolio}
                   </p>
-                  <blockquote className="text-sm text-[var(--text-secondary)] italic leading-relaxed border-l-2 border-emerald-500 pl-3">
+                  <blockquote className="text-sm text-[var(--text-secondary)] italic leading-relaxed border-l-2 border-[var(--accent)] pl-3">
                     &ldquo;{leader.quote}&rdquo;
                   </blockquote>
                   <div className="mt-3 text-[11px] text-[var(--text-faint)] font-mono font-medium">
@@ -257,7 +259,7 @@ export default function AboutPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 80, damping: 20 }}
-          className="card p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 border-emerald-200 bg-gradient-to-r from-emerald-50/70 via-white to-emerald-50/30"
+          className="card p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 border-[var(--border-primary)] bg-[var(--bg-card)] shadow-sm"
         >
           <div>
             <h3 className="text-xl font-display text-[var(--text-primary)]">

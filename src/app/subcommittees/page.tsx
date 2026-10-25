@@ -119,8 +119,9 @@ const FEATURED_CLUBS = [
 
 export default function SubcommitteesPage() {
   return (
-    <div className="min-h-screen pt-28 pb-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen pt-28 pb-24 bg-[var(--bg-root)] text-[var(--text-primary)] relative overflow-hidden transition-colors">
+      <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(var(--accent)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -128,7 +129,7 @@ export default function SubcommitteesPage() {
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
           className="max-w-2xl mb-10"
         >
-          <p className="text-xs font-semibold tracking-wider uppercase text-emerald-700 mb-3">
+          <p className="text-xs font-semibold tracking-wider uppercase text-[var(--accent)] mb-3">
             Student Wings
           </p>
           <h1 className="text-4xl sm:text-5xl font-display text-[var(--text-primary)]">
@@ -143,10 +144,10 @@ export default function SubcommitteesPage() {
         {/* Featured 4 Clubs Banner */}
         <div className="mb-14">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[var(--text-muted)]">
               Featured Sub-Committee Clubs
             </h2>
-            <span className="text-xs text-slate-400">Click to visit dedicated portal</span>
+            <span className="text-xs text-[var(--text-faint)]">Click to visit dedicated portal</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -154,7 +155,7 @@ export default function SubcommitteesPage() {
               <Link
                 key={club.slug}
                 href={`/clubs/${club.slug}`}
-                className="group flex items-center gap-4 p-4 rounded-2xl border border-slate-200 bg-white shadow-xs hover:shadow-md hover:border-slate-300 transition-all"
+                className="group flex items-center gap-4 p-4 rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-xs hover:shadow-md hover:border-[var(--accent)] transition-all"
               >
                 <div className="relative h-14 w-14 rounded-xl overflow-hidden bg-white shadow-inner border border-slate-100 shrink-0">
                   <Image
@@ -172,11 +173,11 @@ export default function SubcommitteesPage() {
                     {club.tagline}
                   </span>
                   <h3
-                    className="text-base font-bold text-slate-900 group-hover:text-emerald-800 transition-colors truncate"
+                    className="text-base font-bold text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors truncate"
                   >
                     {club.name}
                   </h3>
-                  <p className="text-[11px] text-slate-500">Dedicated Portal →</p>
+                  <p className="text-[11px] text-[var(--text-muted)]">Dedicated Portal →</p>
                 </div>
               </Link>
             ))}
@@ -184,7 +185,7 @@ export default function SubcommitteesPage() {
         </div>
 
         <div className="mb-6">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-[var(--text-muted)]">
             All Council Wings &amp; Portfolios
           </h2>
         </div>
@@ -212,25 +213,25 @@ export default function SubcommitteesPage() {
                     transition: { type: "spring", stiffness: 120, damping: 20 },
                   },
                 }}
-                className="card p-6 flex flex-col justify-between"
+                className="card p-6 flex flex-col justify-between border-[var(--border-primary)] bg-[var(--bg-card)] hover:border-[var(--accent)] transition-colors"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800 border border-emerald-200">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--border-primary)]">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-faint)]">
                       {wing.category}
                     </span>
                   </div>
 
                   <Link href={`/subcommittees/${wing.slug}`} className="block group/link">
-                    <h3 className="text-base font-semibold text-[var(--text-primary)] leading-snug group-hover/link:text-emerald-700 transition-colors">
+                    <h3 className="text-base font-semibold text-[var(--text-primary)] leading-snug group-hover/link:text-[var(--accent)] transition-colors">
                       {wing.name}
                     </h3>
                   </Link>
 
-                  <p className="mt-1 text-xs text-emerald-700 font-semibold">
+                  <p className="mt-1 text-xs text-[var(--accent)] font-semibold">
                     Lead: {wing.convenor}
                   </p>
 
@@ -242,12 +243,12 @@ export default function SubcommitteesPage() {
                 <div className="mt-4 pt-3 border-t border-[var(--border-primary)] flex items-center justify-between text-xs">
                   <Link
                     href={`/subcommittees/${wing.slug}`}
-                    className="font-semibold text-emerald-800 hover:underline"
+                    className="font-semibold text-[var(--accent)] hover:underline"
                   >
                     View Wing & Events →
                   </Link>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--accent)] bg-[var(--accent-subtle)] border border-[var(--border-primary)] px-2 py-0.5 rounded-full">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
                     Active
                   </span>
                 </div>
@@ -262,7 +263,7 @@ export default function SubcommitteesPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 80, damping: 20 }}
-          className="mt-16 card p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 border-emerald-200 bg-gradient-to-r from-emerald-50/70 via-white to-emerald-50/30"
+          className="mt-16 card p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 border-[var(--border-primary)] bg-[var(--bg-card)]"
         >
           <div>
             <h3 className="text-xl font-display text-[var(--text-primary)]">

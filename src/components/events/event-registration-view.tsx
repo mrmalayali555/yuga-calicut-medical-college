@@ -136,13 +136,14 @@ export function EventRegistrationView({
   };
 
   return (
-    <div className="min-h-screen pt-28 pb-24 bg-gradient-to-b from-slate-50 via-white to-emerald-50/20">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen pt-28 pb-24 bg-[var(--bg-root)] text-[var(--text-primary)] relative overflow-hidden transition-colors">
+      <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(var(--accent)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Navigation Breadcrumb */}
         <div className="mb-6">
           <Link
             href="/events"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-emerald-700 transition-colors uppercase tracking-wider"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors uppercase tracking-wider"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             Back to Events
@@ -160,18 +161,18 @@ export function EventRegistrationView({
               className="space-y-8"
             >
               {/* Success Banner */}
-              <div className="rounded-3xl border border-emerald-200 bg-white p-6 sm:p-8 shadow-sm text-center space-y-4">
-                <div className="h-16 w-16 mx-auto rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shadow-inner">
+              <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 sm:p-8 shadow-sm text-center space-y-4">
+                <div className="h-16 w-16 mx-auto rounded-full bg-[var(--accent-subtle)] flex items-center justify-center text-[var(--accent)] shadow-inner">
                   <CheckCircle2 className="h-9 w-9" />
                 </div>
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">
                     Registration Confirmed
                   </span>
-                  <h1 className="text-3xl font-display font-bold text-slate-900 mt-1">
+                  <h1 className="text-3xl font-display font-bold text-[var(--text-primary)] mt-1">
                     You&apos;re Officially Booked!
                   </h1>
-                  <p className="mt-2 text-sm text-slate-600 max-w-md mx-auto">
+                  <p className="mt-2 text-sm text-[var(--text-secondary)] max-w-md mx-auto">
                     Your spot for <strong>{event.title}</strong> has been secured. Your digital pass and QR gate verification code are rendered below.
                   </p>
                 </div>
@@ -180,14 +181,14 @@ export function EventRegistrationView({
                   <button
                     type="button"
                     onClick={() => window.print()}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-slate-700 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-[var(--text-primary)] bg-[var(--bg-surface)] hover:bg-[var(--bg-elevated)] border border-[var(--border-primary)] transition-colors cursor-pointer"
                   >
                     <Printer className="h-3.5 w-3.5" />
                     Print Ticket Pass
                   </button>
                   <Link
                     href="/events"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-white bg-emerald-600 hover:bg-emerald-700 transition-colors shadow-sm"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-white bg-[var(--accent)] hover:bg-[var(--accent-dark)] transition-colors shadow-sm"
                   >
                     Return to Campus Calendar
                   </Link>
@@ -224,45 +225,45 @@ export function EventRegistrationView({
               className="space-y-8"
             >
               {/* Event Header Banner */}
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+              <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 sm:p-8 shadow-sm">
                 <div className="flex flex-wrap items-center gap-2 mb-3">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--border-primary)]">
                     Official Registration
                   </span>
-                  <span className="text-xs font-mono text-slate-400 font-semibold">
+                  <span className="text-xs font-mono text-[var(--text-faint)] font-semibold">
                     YUGA Union Conclave
                   </span>
                 </div>
 
-                <h1 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
+                <h1 className="text-3xl sm:text-4xl font-display font-bold text-[var(--text-primary)] tracking-tight">
                   {event.title}
                 </h1>
 
-                <div className="mt-4 flex flex-wrap items-center gap-5 text-xs text-slate-600 font-medium pb-4 border-b border-slate-100">
+                <div className="mt-4 flex flex-wrap items-center gap-5 text-xs text-[var(--text-muted)] font-medium pb-4 border-b border-[var(--border-primary)]">
                   <span className="flex items-center gap-1.5">
-                    <Calendar className="h-4 w-4 text-emerald-600" />
+                    <Calendar className="h-4 w-4 text-[var(--accent)]" />
                     {event.date}
                   </span>
                   {event.time && (
                     <span className="flex items-center gap-1.5">
-                      <Clock className="h-4 w-4 text-emerald-600" />
+                      <Clock className="h-4 w-4 text-[var(--accent)]" />
                       {event.time}
                     </span>
                   )}
                   {event.venue && (
                     <span className="flex items-center gap-1.5">
-                      <MapPin className="h-4 w-4 text-emerald-600" />
+                      <MapPin className="h-4 w-4 text-[var(--accent)]" />
                       {event.venue}
                     </span>
                   )}
                 </div>
 
                 {form.description ? (
-                  <p className="mt-4 text-sm text-slate-600 leading-relaxed font-normal">
+                  <p className="mt-4 text-sm text-[var(--text-secondary)] leading-relaxed font-normal">
                     {form.description}
                   </p>
                 ) : (
-                  <p className="mt-4 text-sm text-slate-600 leading-relaxed font-normal">
+                  <p className="mt-4 text-sm text-[var(--text-secondary)] leading-relaxed font-normal">
                     Please fill out the delegate registration details below to reserve your entry pass for this event.
                   </p>
                 )}
@@ -270,12 +271,12 @@ export function EventRegistrationView({
 
               {/* Dynamic Google-Form-Style Question Card */}
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm space-y-7">
-                  <div className="border-b border-slate-100 pb-4">
-                    <h2 className="text-lg font-display font-bold text-slate-900">
+                <div className="rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 sm:p-8 shadow-sm space-y-7">
+                  <div className="border-b border-[var(--border-primary)] pb-4">
+                    <h2 className="text-lg font-display font-bold text-[var(--text-primary)]">
                       Participant Details
                     </h2>
-                    <p className="text-xs text-slate-500 mt-1">
+                    <p className="text-xs text-[var(--text-muted)] mt-1">
                       Fields marked with <span className="text-rose-500 font-bold">*</span> are required.
                     </p>
                   </div>
@@ -316,9 +317,9 @@ export function EventRegistrationView({
                     return (
                       <div
                         key={field.id}
-                        className="p-5 rounded-2xl bg-slate-50/50 border border-slate-200/80 hover:border-emerald-300 transition-colors space-y-2.5"
+                        className="p-5 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-primary)] hover:border-[var(--accent)] transition-colors space-y-2.5"
                       >
-                        <label className="block text-sm font-bold text-slate-900">
+                        <label className="block text-sm font-bold text-[var(--text-primary)]">
                           {field.label}{" "}
                           {field.required && (
                             <span className="text-rose-500">*</span>
@@ -335,7 +336,7 @@ export function EventRegistrationView({
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
                             }
-                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-[var(--border-primary)] bg-[var(--bg-root)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-colors"
                           />
                         )}
 
@@ -349,7 +350,7 @@ export function EventRegistrationView({
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
                             }
-                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-[var(--border-primary)] bg-[var(--bg-root)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-colors"
                           />
                         )}
 
@@ -363,7 +364,7 @@ export function EventRegistrationView({
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
                             }
-                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-[var(--border-primary)] bg-[var(--bg-root)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-colors"
                           />
                         )}
 
@@ -377,7 +378,7 @@ export function EventRegistrationView({
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
                             }
-                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-[var(--border-primary)] bg-[var(--bg-root)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-colors"
                           />
                         )}
 
@@ -390,7 +391,7 @@ export function EventRegistrationView({
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
                             }
-                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-[var(--border-primary)] bg-[var(--bg-root)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-colors"
                           />
                         )}
 
@@ -403,7 +404,7 @@ export function EventRegistrationView({
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
                             }
-                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-[var(--border-primary)] bg-[var(--bg-root)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-colors"
                           />
                         )}
 
@@ -416,7 +417,7 @@ export function EventRegistrationView({
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
                             }
-                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-[var(--border-primary)] bg-[var(--bg-root)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-colors"
                           />
                         )}
 
@@ -430,7 +431,7 @@ export function EventRegistrationView({
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
                             }
-                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-[var(--border-primary)] bg-[var(--bg-root)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-colors"
                           />
                         )}
 
@@ -442,13 +443,13 @@ export function EventRegistrationView({
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
                             }
-                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 cursor-pointer"
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-[var(--border-primary)] bg-[var(--bg-root)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-colors cursor-pointer"
                           >
-                            <option value="">
+                            <option value="" className="bg-[var(--bg-card)] text-[var(--text-primary)]">
                               {field.type === "batch" ? "-- Choose Academic Batch --" : "-- Select an option --"}
                             </option>
                             {parsedOptions.map((opt, i) => (
-                              <option key={i} value={opt}>
+                              <option key={i} value={opt} className="bg-[var(--bg-card)] text-[var(--text-primary)]">
                                 {opt}
                               </option>
                             ))}
@@ -461,7 +462,7 @@ export function EventRegistrationView({
                             {parsedOptions.map((opt, i) => (
                               <label
                                 key={i}
-                                className="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200 hover:border-emerald-400 cursor-pointer transition-colors"
+                                className="flex items-center gap-3 p-3 rounded-xl bg-[var(--bg-root)] border border-[var(--border-primary)] hover:border-[var(--accent)] cursor-pointer transition-colors"
                               >
                                 <input
                                   type="radio"
@@ -470,9 +471,9 @@ export function EventRegistrationView({
                                   required={field.required}
                                   checked={answers[field.id] === opt}
                                   onChange={() => handleFieldChange(field.id, opt)}
-                                  className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                                  className="h-4 w-4 text-[var(--accent)] focus:ring-[var(--accent)] cursor-pointer"
                                 />
-                                <span className="text-sm font-medium text-slate-800">
+                                <span className="text-sm font-medium text-[var(--text-primary)]">
                                   {opt}
                                 </span>
                               </label>
@@ -492,8 +493,8 @@ export function EventRegistrationView({
                                   onClick={() => handleFieldChange(field.id, opt)}
                                   className={`p-3 rounded-xl border text-xs font-bold uppercase tracking-wider text-center transition-all cursor-pointer ${
                                     isSelected
-                                      ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                                      : "bg-white text-slate-700 border-slate-200 hover:border-emerald-400"
+                                      ? "bg-[var(--accent)] text-white border-[var(--accent)] shadow-sm"
+                                      : "bg-[var(--bg-root)] text-[var(--text-secondary)] border-[var(--border-primary)] hover:border-[var(--accent)]"
                                   }`}
                                 >
                                   {opt}
@@ -516,9 +517,9 @@ export function EventRegistrationView({
                                   className={`px-6 py-2.5 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                                     isSelected
                                       ? opt === "Yes"
-                                        ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                                        : "bg-slate-700 text-white border-slate-700 shadow-sm"
-                                      : "bg-white text-slate-700 border-slate-200 hover:border-slate-400"
+                                        ? "bg-[var(--accent)] text-white border-[var(--accent)] shadow-sm"
+                                        : "bg-[var(--bg-elevated)] text-[var(--text-primary)] border-[var(--border-primary)] shadow-sm"
+                                      : "bg-[var(--bg-root)] text-[var(--text-secondary)] border-[var(--border-primary)] hover:border-[var(--accent)]"
                                   }`}
                                 >
                                   {opt}
@@ -537,7 +538,7 @@ export function EventRegistrationView({
                               return (
                                 <label
                                   key={i}
-                                  className="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200 hover:border-emerald-400 cursor-pointer transition-colors"
+                                  className="flex items-center gap-3 p-3 rounded-xl bg-[var(--bg-root)] border border-[var(--border-primary)] hover:border-[var(--accent)] cursor-pointer transition-colors"
                                 >
                                   <input
                                     type="checkbox"
@@ -545,9 +546,9 @@ export function EventRegistrationView({
                                     onChange={() =>
                                       handleCheckboxToggle(field.id, opt)
                                     }
-                                    className="h-4 w-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                                    className="h-4 w-4 rounded text-[var(--accent)] focus:ring-[var(--accent)] cursor-pointer"
                                   />
-                                  <span className="text-sm font-medium text-slate-800">
+                                  <span className="text-sm font-medium text-[var(--text-primary)]">
                                     {opt}
                                   </span>
                                 </label>
@@ -566,7 +567,7 @@ export function EventRegistrationView({
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
                             }
-                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-[var(--border-primary)] bg-[var(--bg-root)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-colors"
                           />
                         )}
 
@@ -581,9 +582,9 @@ export function EventRegistrationView({
                               onChange={(e) =>
                                 handleFieldChange(field.id, e.target.value)
                               }
-                              className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                              className="w-full px-4 py-2.5 text-sm rounded-xl border border-[var(--border-primary)] bg-[var(--bg-root)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-colors"
                             />
-                            <p className="text-[11px] text-slate-500">
+                            <p className="text-[11px] text-[var(--text-muted)]">
                               Upload your file/screenshot to Google Drive, Imgur, or iCloud and paste the sharing link here.
                             </p>
                           </div>
@@ -593,21 +594,21 @@ export function EventRegistrationView({
                   })}
 
                   {errorMsg && (
-                    <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-center gap-2">
+                    <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold flex items-center gap-2">
                       <AlertCircle className="h-4 w-4 shrink-0" />
                       {errorMsg}
                     </div>
                   )}
 
-                  <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <p className="text-xs text-slate-500">
+                  <div className="pt-4 border-t border-[var(--border-primary)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <p className="text-xs text-[var(--text-muted)]">
                       By submitting, you agree to official GMC Kozhikode union event protocols.
                     </p>
 
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider text-white bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] transition-all shadow-md cursor-pointer disabled:opacity-50"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider text-white bg-[var(--accent)] hover:bg-[var(--accent-dark)] active:scale-[0.98] transition-all shadow-md cursor-pointer disabled:opacity-50"
                     >
                       {isSubmitting ? (
                         <>

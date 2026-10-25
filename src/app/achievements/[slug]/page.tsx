@@ -31,12 +31,14 @@ export default async function AchievementDetailPage({
   if (!item) notFound();
 
   return (
-    <div className="min-h-screen pt-28 pb-24 bg-gradient-to-b from-emerald-50/20 via-white to-white">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen pt-28 pb-24 bg-[var(--bg-root)] text-[var(--text-primary)] relative overflow-hidden transition-colors">
+      <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(var(--accent)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+
+      <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Back Link */}
         <Link
           href="/achievements"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-emerald-800 transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors mb-8"
         >
           <ArrowLeft className="h-4 w-4" />
           <span>Back to all laurels</span>
@@ -44,37 +46,37 @@ export default async function AchievementDetailPage({
 
         {/* Category Pill */}
         <div className="flex items-center gap-2 mb-4">
-          <span className="rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-bold uppercase tracking-wider text-emerald-800">
+          <span className="rounded-full bg-[var(--accent-subtle)] border border-[var(--accent)]/20 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--accent)]">
             {item.category.toUpperCase()}
           </span>
-          <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500">
-            <Trophy className="h-3.5 w-3.5 text-emerald-700" />
+          <span className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--text-secondary)]">
+            <Trophy className="h-3.5 w-3.5 text-[var(--accent)]" />
             <span>Official College Laurel</span>
           </span>
         </div>
 
         {/* Title */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-slate-900 tracking-tight leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-[var(--text-primary)] tracking-tight leading-tight">
           {item.title}
         </h1>
 
         {/* Recipient & Date Tile */}
-        <div className="mt-6 flex flex-wrap items-center gap-6 text-xs text-slate-500 border-b border-slate-100 pb-6">
+        <div className="mt-6 flex flex-wrap items-center gap-6 text-xs text-[var(--text-secondary)] border-b border-[var(--border-primary)] pb-6">
           {item.awardWinner && (
-            <div className="flex items-center gap-1.5 font-semibold text-slate-900">
-              <User className="h-4 w-4 text-emerald-700" />
+            <div className="flex items-center gap-1.5 font-semibold text-[var(--text-primary)]">
+              <User className="h-4 w-4 text-[var(--accent)]" />
               <span>Conferred to: {item.awardWinner}</span>
             </div>
           )}
           <div className="flex items-center gap-1.5">
-            <Calendar className="h-4 w-4 text-emerald-700" />
+            <Calendar className="h-4 w-4 text-[var(--accent)]" />
             <span>Achieved on {formatDate(item.date)}</span>
           </div>
         </div>
 
         {/* Cover Image */}
         {item.coverImage && (
-          <div className="mt-8 overflow-hidden rounded-3xl border border-slate-200 bg-slate-100 shadow-sm">
+          <div className="mt-8 overflow-hidden rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-sm">
             <img
               src={item.coverImage}
               alt={item.title}
@@ -84,17 +86,17 @@ export default async function AchievementDetailPage({
         )}
 
         {/* Narrative Card */}
-        <div className="mt-8 rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-10 shadow-xs">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">
+        <div className="mt-8 rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 sm:p-10 shadow-xs">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-[var(--text-muted)] mb-4">
             Achievement Narrative
           </h2>
-          <div className="whitespace-pre-line text-sm sm:text-base leading-relaxed text-slate-700 font-normal">
+          <div className="whitespace-pre-line text-sm sm:text-base leading-relaxed text-[var(--text-secondary)] font-normal">
             {item.description}
           </div>
 
-          <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+          <div className="mt-8 pt-6 border-t border-[var(--border-primary)] flex items-center justify-between text-xs text-[var(--text-muted)]">
             <span>Institution: {COLLEGE.name}</span>
-            <span className="font-semibold text-emerald-800">Verified by YUGA Union</span>
+            <span className="font-semibold text-[var(--accent)]">Verified by YUGA Union</span>
           </div>
         </div>
       </div>
