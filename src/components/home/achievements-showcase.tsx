@@ -266,7 +266,8 @@ export function AchievementsShowcase({
 
   return (
     <section
-      className="py-16 sm:py-24 lg:py-32 border-t border-[var(--border-primary)] overflow-hidden bg-[#07080a]"
+      id="honors"
+      className="scroll-mt-16 sm:scroll-mt-20 py-6 sm:py-10 lg:py-32 border-t border-[var(--border-primary)] overflow-hidden bg-[#07080a]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -480,12 +481,12 @@ export function AchievementsShowcase({
         {/* ========================================================================= */}
         <div className="block lg:hidden">
           {/* Header with Title & Counter */}
-          <div className="flex items-baseline justify-between gap-4 mb-3">
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white tracking-tight">
+          <div className="flex items-baseline justify-between gap-4 mb-2">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
               Honors &amp; Laurels
             </h2>
-            <div className="font-mono text-sm tracking-widest shrink-0">
-              <span className="font-bold text-white text-base">
+            <div className="font-mono text-xs sm:text-sm tracking-widest shrink-0">
+              <span className="font-bold text-white text-sm sm:text-base">
                 {String(k + 1).padStart(2, "0")}
               </span>
               <span className="text-white/40 font-medium"> / {String(n).padStart(2, "0")}</span>
@@ -493,7 +494,7 @@ export function AchievementsShowcase({
           </div>
 
           {/* Segmented Progress Bar */}
-          <div className="flex items-center gap-2 mb-8 w-full max-w-sm">
+          <div className="flex items-center gap-1.5 mb-3 w-full max-w-xs">
             {items.map((_, idx) => (
               <button
                 key={idx}
@@ -509,30 +510,30 @@ export function AchievementsShowcase({
 
           {/* Layered Card Stack Visual */}
           <div
-            className="relative px-2 pt-4 pb-2"
+            className="relative px-1 pt-2 pb-1"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
             {/* Background Layer 1 (Deepest rim) */}
             <div
-              className="absolute -top-1 left-7 right-7 h-20 rounded-3xl border border-[#ff2e56]/20 bg-white/[0.015] transform -rotate-2 pointer-events-none transition-transform duration-500"
+              className="absolute -top-1 left-5 right-5 h-14 rounded-2xl border border-[#ff2e56]/20 bg-white/[0.015] transform -rotate-2 pointer-events-none transition-transform duration-500"
               aria-hidden="true"
             />
             {/* Background Layer 2 (Middle rim) */}
             <div
-              className="absolute top-1.5 left-4 right-4 h-20 rounded-3xl border border-[#ff2e56]/35 bg-white/[0.025] transform rotate-1.5 pointer-events-none transition-transform duration-500"
+              className="absolute top-1 left-3 right-3 h-14 rounded-2xl border border-[#ff2e56]/35 bg-white/[0.025] transform rotate-1.5 pointer-events-none transition-transform duration-500"
               aria-hidden="true"
             />
 
             {/* Main Interactive Top Card */}
-            <div className="relative z-10 w-full rounded-3xl overflow-hidden border border-white/15 bg-[#090b11] shadow-2xl shadow-black/90 aspect-[4/4.6] sm:aspect-square">
+            <div className="relative z-10 w-full h-[175px] sm:h-[210px] rounded-2xl overflow-hidden border border-white/15 bg-[#090b11] shadow-xl shadow-black/80">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeItem.id}
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   className="relative w-full h-full flex flex-col justify-between"
                 >
                   {/* Full image */}
@@ -547,40 +548,40 @@ export function AchievementsShowcase({
                   />
 
                   {/* Gradient overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/25 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/25 pointer-events-none" />
 
                   {/* Top Badges */}
-                  <div className="relative z-10 p-5 flex items-center justify-between gap-2">
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-amber-500/40 shadow-sm">
+                  <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between gap-2">
+                    <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-amber-500/40 shadow-sm">
                       <Trophy className="h-3 w-3 text-amber-400" aria-hidden="true" />
                       {activeItem.medal}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-white/80 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15 shadow-sm">
+                    <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-white/80 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15 shadow-sm">
                       <Calendar className="h-3 w-3 text-white/60" aria-hidden="true" />
                       {activeItem.date}
                     </span>
                   </div>
 
                   {/* Bottom Text Overlay with Floating Circular Button */}
-                  <div className="relative z-10 p-5 sm:p-6 flex items-end justify-between gap-4">
-                    <div className="space-y-1.5 pr-2">
+                  <div className="relative z-10 p-3 sm:p-4 flex items-end justify-between gap-3">
+                    <div className="space-y-0.5 pr-2 min-w-0">
                       <div className="inline-block">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#ff2e56] block">
+                        <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#ff2e56] block truncate">
                           {activeItem.recipient}
                         </span>
-                        <div className="h-0.5 w-8 bg-[#ff2e56] mt-0.5 rounded-full" />
+                        <div className="h-0.5 w-6 bg-[#ff2e56] mt-0.5 rounded-full" />
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-serif font-bold text-white leading-tight line-clamp-3">
+                      <h3 className="text-sm sm:text-base font-serif font-bold text-white leading-snug line-clamp-2">
                         {activeItem.title}
                       </h3>
                     </div>
 
                     <Link
                       href={`/achievements/${activeItem.slug}`}
-                      className="w-12 h-12 rounded-full bg-[#ff2e56]/20 border border-[#ff2e56]/50 text-white flex items-center justify-center shrink-0 hover:bg-[#ff2e56] transition-all shadow-lg active:scale-95"
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#ff2e56]/20 border border-[#ff2e56]/50 text-white flex items-center justify-center shrink-0 hover:bg-[#ff2e56] transition-all shadow-md active:scale-95"
                       aria-label={`View achievement ${activeItem.title}`}
                     >
-                      <ArrowRight className="h-5 w-5" />
+                      <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
                 </motion.div>
@@ -589,72 +590,72 @@ export function AchievementsShowcase({
           </div>
 
           {/* Details Section Below the Card */}
-          <div className="mt-6 space-y-4 px-1">
+          <div className="mt-3 sm:mt-4 space-y-2 sm:space-y-2.5 px-0.5">
             {/* Metadata badges row */}
-            <div className="flex items-center gap-3 text-xs">
-              <span className="font-bold uppercase tracking-wider text-amber-400 inline-flex items-center gap-1.5">
-                <Trophy className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" />
+            <div className="flex items-center gap-2.5 text-[11px]">
+              <span className="font-bold uppercase tracking-wider text-amber-400 inline-flex items-center gap-1">
+                <Trophy className="h-3 w-3 text-amber-400" aria-hidden="true" />
                 {activeItem.medal}
               </span>
               <span className="text-white/20">|</span>
-              <span className="font-mono text-white/70 inline-flex items-center gap-1.5 uppercase tracking-wide">
-                <Calendar className="h-3.5 w-3.5 text-white/40" aria-hidden="true" />
+              <span className="font-mono text-white/70 inline-flex items-center gap-1 uppercase tracking-wide">
+                <Calendar className="h-3 w-3 text-white/40" aria-hidden="true" />
                 {activeItem.date}
               </span>
             </div>
 
             {/* Headline */}
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white leading-tight tracking-tight">
+            <h3 className="text-lg sm:text-xl font-serif font-bold text-white leading-tight tracking-tight line-clamp-1">
               {activeItem.title}
             </h3>
 
             {/* Recipient & Batch */}
-            <div className="flex flex-wrap items-center gap-3 pt-0.5">
-              <span className="text-base font-bold text-[#ff2e56]">
+            <div className="flex flex-wrap items-center gap-2 pt-0.5">
+              <span className="text-xs sm:text-sm font-bold text-[#ff2e56]">
                 {activeItem.recipient}
               </span>
-              <span className="text-xs font-medium px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70">
+              <span className="text-[10px] font-medium px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-white/70">
                 {activeItem.batch}
               </span>
             </div>
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed pt-1">
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-2">
               {activeItem.description}
             </p>
 
             {/* Official Event Card Pill */}
             <Link
               href={`/achievements/${activeItem.slug}`}
-              className="rounded-2xl bg-white/[0.04] border border-white/10 p-4 flex items-center justify-between hover:border-white/20 transition-all cursor-pointer group block"
+              className="rounded-xl bg-white/[0.04] border border-white/10 p-2.5 flex items-center justify-between hover:border-white/20 transition-all cursor-pointer group block"
             >
-              <div className="flex items-center gap-3">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#ff2e56] ring-4 ring-[#ff2e56]/20 shrink-0" />
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-0.5">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <span className="h-2 w-2 rounded-full bg-[#ff2e56] ring-4 ring-[#ff2e56]/20 shrink-0" />
+                <div className="min-w-0">
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400 block leading-none mb-1">
                     Official Event
                   </span>
-                  <span className="text-sm font-semibold text-white group-hover:text-[#ff2e56] transition-colors line-clamp-1">
+                  <span className="text-xs font-semibold text-white group-hover:text-[#ff2e56] transition-colors truncate block">
                     {activeItem.event}
                   </span>
                 </div>
               </div>
-              <ChevronRight className="h-4 w-4 text-white/40 group-hover:text-white transition-colors shrink-0 ml-2" />
+              <ChevronRight className="h-3.5 w-3.5 text-white/40 group-hover:text-white transition-colors shrink-0 ml-2" />
             </Link>
 
             {/* Bottom Navigation & Dots */}
-            <div className="flex items-center justify-center gap-6 pt-6 pb-2">
+            <div className="flex items-center justify-center gap-4 pt-3 pb-1">
               <button
                 type="button"
                 aria-label="Previous achievement"
                 onClick={() => navigate(-1)}
-                className="w-12 h-12 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white hover:border-[#ff2e56] hover:bg-[#ff2e56]/20 active:scale-95 transition-all shadow-md"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white hover:border-[#ff2e56] hover:bg-[#ff2e56]/20 active:scale-95 transition-all shadow-md"
               >
-                <ArrowLeft className="h-5 w-5" />
+                <ArrowLeft className="h-4 w-4" />
               </button>
 
               {/* Centered Dots */}
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2">
                 {items.map((_, idx) => (
                   <button
                     key={idx}
@@ -663,8 +664,8 @@ export function AchievementsShowcase({
                     aria-label={`Go to slide ${idx + 1}`}
                     className={`rounded-full transition-all duration-300 ${
                       k === idx
-                        ? "w-3 h-3 bg-[#ff2e56] shadow-sm shadow-[#ff2e56]/50"
-                        : "w-2.5 h-2.5 bg-white/20 hover:bg-white/40"
+                        ? "w-2.5 h-2.5 bg-[#ff2e56] shadow-sm shadow-[#ff2e56]/50"
+                        : "w-2 h-2 bg-white/20 hover:bg-white/40"
                     }`}
                   />
                 ))}
@@ -674,9 +675,9 @@ export function AchievementsShowcase({
                 type="button"
                 aria-label="Next achievement"
                 onClick={() => navigate(1)}
-                className="w-12 h-12 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white hover:border-[#ff2e56] hover:bg-[#ff2e56]/20 active:scale-95 transition-all shadow-md"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white hover:border-[#ff2e56] hover:bg-[#ff2e56]/20 active:scale-95 transition-all shadow-md"
               >
-                <ArrowRight className="h-5 w-5" />
+                <ArrowRight className="h-4 w-4" />
               </button>
             </div>
           </div>
