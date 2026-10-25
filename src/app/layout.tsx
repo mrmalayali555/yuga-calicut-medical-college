@@ -8,6 +8,7 @@ import { getActiveTheme } from "@/lib/queries";
 import { ThemeProvider } from "@/components/theme/theme-context";
 import { AdminEditProvider } from "@/components/admin/inline/admin-edit-context";
 import { AdminToolbar } from "@/components/admin/inline/admin-toolbar";
+import { UniversalInlineEditor } from "@/components/admin/inline/universal-editor";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -151,6 +152,7 @@ export default async function RootLayout({
             </main>
             <Footer />
             <AdminToolbar />
+            <UniversalInlineEditor />
           </AdminEditProvider>
         </ThemeProvider>
       </body>

@@ -17,10 +17,33 @@ export async function GET(request: NextRequest) {
 
   try {
     const blocks = await db.contentBlock.findMany({
-      where: { pageId },
-      select: { pageId: true, blockId: true, content: true, type: true },
+      where: {
+        OR: [{ pageId }, { pageId: "global" }],
+      },
+      select: {
+        id: true,
+        pageId: true,
+        blockId: true,
+        content: true,
+        type: true,
+        edits: {
+          orderBy: { createdAt: "desc" },
+          take: 1,
+          select: { previousValue: true, fieldLabel: true },
+        },
+      },
     });
-    return NextResponse.json({ blocks });
+
+    const formatted = blocks.map((b) => ({
+      pageId: b.pageId,
+      blockId: b.blockId,
+      content: b.content,
+      type: b.type,
+      previousValue: b.edits[0]?.previousValue ?? "",
+      label: b.edits[0]?.fieldLabel ?? b.blockId,
+    }));
+
+    return NextResponse.json({ blocks: formatted });
   } catch {
     // DB not ready or schema not pushed yet — return empty
     return NextResponse.json({ blocks: [] });
@@ -30,7 +53,7 @@ export async function GET(request: NextRequest) {
 /**
  * POST /api/content
  * Save a content block edit. Admin-only.
- * Body: { pageId, blockId, content, previousValue, label?, pageName? }
+ * Body: { pageId, blockId, content, previousValue, label?, pageName?, type? }
  */
 export async function POST(request: NextRequest) {
   const session = await getSession();
@@ -40,7 +63,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { pageId, blockId, content, previousValue, label, pageName } = body;
+    const { pageId, blockId, content, previousValue, label, pageName, type } = body;
 
     if (!pageId || !blockId || content === undefined) {
       return NextResponse.json(
@@ -56,10 +79,11 @@ export async function POST(request: NextRequest) {
         pageId,
         blockId,
         content,
-        type: "text",
+        type: type || "text",
       },
       update: {
         content,
+        type: type || "text",
       },
     });
 

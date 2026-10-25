@@ -89,10 +89,19 @@ export function AdminToolbar() {
             </button>
 
             {editMode && (
-              <div className="mb-3 px-1">
-                <p className="text-[11px] text-blue-300/70 leading-relaxed">
-                  Click any highlighted text to edit it. Press <kbd className="px-1 py-0.5 bg-white/10 rounded text-[10px]">Enter</kbd> to save, <kbd className="px-1 py-0.5 bg-white/10 rounded text-[10px]">Esc</kbd> to cancel.
+              <div className="mb-3 px-2 py-2 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <div className="text-[11px] font-bold text-blue-300 flex items-center gap-1.5 mb-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+                  Universal Visual Editor Active
+                </div>
+                <p className="text-[11px] text-blue-200/85 leading-relaxed">
+                  Hover and click <strong>ANY text, card, or element</strong> on <strong>ANY page</strong> to edit or hide it.
                 </p>
+                <div className="mt-2 flex items-center gap-1.5 text-[10px] text-blue-300/80 font-medium">
+                  <span className="bg-white/10 px-1.5 py-0.5 rounded font-mono">Enter</span> Save
+                  <span className="opacity-40">•</span>
+                  <span className="bg-white/10 px-1.5 py-0.5 rounded font-mono">Esc</span> Cancel
+                </div>
               </div>
             )}
 

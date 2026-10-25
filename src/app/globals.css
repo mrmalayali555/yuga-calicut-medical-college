@@ -523,3 +523,14 @@
 .font-label-md { font-size: 12px; line-height: 16px; letter-spacing: 0.04em; font-weight: 600; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
 .font-label-sm { font-size: 11px; line-height: 14px; letter-spacing: 0.08em; font-weight: 700; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
 
+/* Universal Inline Admin Visual Editor */
+.universal-editing-active {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 4px !important;
+  border-radius: 4px !important;
+  background-color: rgba(59, 130, 246, 0.08) !important;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.25) !important;
+  cursor: text !important;
+}
+
+

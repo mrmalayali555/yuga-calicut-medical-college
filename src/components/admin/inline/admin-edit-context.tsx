@@ -35,7 +35,8 @@ interface AdminEditContextType {
     blockId: string,
     newValue: string,
     oldValue: string,
-    label?: string
+    label?: string,
+    type?: string
   ) => Promise<boolean>;
   /** Refresh content blocks for the current page */
   refreshContent: () => void;
@@ -143,7 +144,8 @@ export function AdminEditProvider({ children }: { children: ReactNode }) {
       blockId: string,
       newValue: string,
       oldValue: string,
-      label?: string
+      label?: string,
+      type?: string
     ): Promise<boolean> => {
       const resolvedPageId =
         pageId === "auto" ? pathnameToPageId(pathname) : pageId;
@@ -159,6 +161,7 @@ export function AdminEditProvider({ children }: { children: ReactNode }) {
             previousValue: oldValue,
             label: label || blockId,
             pageName: resolvedPageId,
+            type: type || "text",
           }),
         });
 
