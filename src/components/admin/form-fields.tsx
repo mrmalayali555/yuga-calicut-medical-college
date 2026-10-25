@@ -250,7 +250,7 @@ export function UploadField({
               </div>
             ) : (
               <div className="relative aspect-[16/9] w-full bg-[var(--bg-surface)]">
-                <Image src={url} alt="Cover preview" fill className="object-cover" />
+                <Image src={url} alt="Cover preview" fill className="object-cover" unoptimized />
                 
                 {/* Visual badge overlay */}
                 <div className="absolute bottom-2 left-2 flex items-center gap-1.5 rounded-lg bg-black/70 backdrop-blur-xs px-2.5 py-1 text-[10px] font-semibold text-white/90">
