@@ -20,6 +20,7 @@ export interface HeroCardConfig {
   venue?: string;
   btnText?: string;
   btnLink?: string;
+  image?: string;
 }
 
 export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
@@ -39,6 +40,7 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
   const cardVenue = heroCard?.venue || "Silver Jubilee Auditorium, GMC";
   const cardBtnText = heroCard?.btnText || "Explore event →";
   const cardBtnLink = heroCard?.btnLink || "/events";
+  const cardImage = heroCard?.image || "/pulse-stage.jpg";
 
   return (
     <section className="relative min-h-[96dvh] lg:min-h-screen flex flex-col justify-between pt-24 sm:pt-32 pb-8 sm:pb-14 overflow-hidden bg-[#07080a] text-white">
@@ -192,8 +194,23 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.26 }}
-                className="block lg:hidden mt-6 w-full rounded-2xl border border-white/15 bg-[#090b11]/85 backdrop-blur-xl p-4 shadow-xl"
+                className="relative block lg:hidden mt-6 w-full rounded-2xl border border-white/15 bg-[#090b11]/85 backdrop-blur-xl p-4 shadow-xl"
               >
+                {/* Admin Mode Badge on Mobile */}
+                {isAdmin && editMode && (
+                  <div className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1 bg-black/85 border border-white/20 rounded-md px-2 py-0.5 text-[9px] font-semibold text-white backdrop-blur shadow-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span>Hero Card</span>
+                    <Link
+                      href="/admin/settings"
+                      className="ml-1 text-rose-400 hover:text-rose-300 underline inline-flex items-center gap-0.5"
+                    >
+                      <span>Settings</span>
+                      <ArrowUpRight className="h-2 w-2" />
+                    </Link>
+                  </div>
+                )}
+
                 <div className="flex items-center justify-between gap-2 pb-2.5 mb-2.5 border-b border-white/10">
                   <span className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white uppercase">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#ff2e56] animate-pulse" />
@@ -208,8 +225,8 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
                 <div className="flex items-center gap-3">
                   <div className="relative w-14 h-14 rounded-lg overflow-hidden border border-white/15 shrink-0 bg-black/50">
                     <Image
-                      src="/pulse-stage.jpg"
-                      alt="Event Stage Preview"
+                      src={cardImage}
+                      alt={cardTitle}
                       fill
                       className="object-cover"
                     />
@@ -317,8 +334,8 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
                   {/* Stage Image Thumbnail (PULSE 2026 Auditorium Stage) */}
                   <div className="relative w-28 sm:w-36 h-20 sm:h-24 rounded-xl overflow-hidden border border-white/15 shadow-md shrink-0 bg-black/40">
                     <Image
-                      src="/pulse-stage.jpg"
-                      alt="PULSE 2026 Medical Colloquium Stage Preview"
+                      src={cardImage}
+                      alt={cardTitle}
                       fill
                       className="object-cover transition-transform duration-500 hover:scale-105"
                     />

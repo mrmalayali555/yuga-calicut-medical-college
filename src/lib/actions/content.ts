@@ -167,6 +167,7 @@ export async function saveSettingsForm(formData: FormData) {
       venue: String(formData.get("hero_card_venue") || "").trim(),
       btnText: String(formData.get("hero_card_btn_text") || "").trim(),
       btnLink: String(formData.get("hero_card_btn_link") || "").trim(),
+      image: String(formData.get("hero_card_image") || "").trim(),
     };
 
     const eventsColumns = Number(formData.get("events_columns") || 3);
