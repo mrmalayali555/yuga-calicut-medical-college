@@ -19,15 +19,15 @@ export default async function DashboardPage() {
     interventions,
     emergencyContacts,
   ] = await Promise.all([
-    db.achievement.count(),
-    db.event.count(),
-    db.notification.count(),
-    db.complaint.count(),
-    db.complaint.count({ where: { status: "new" } }),
-    db.complaint.findMany({ orderBy: { createdAt: "desc" }, take: 5 }),
-    db.event.findMany({ orderBy: { createdAt: "desc" }, take: 5 }),
-    db.intervention.count(),
-    db.emergencyContact.count(),
+    db.achievement.count().catch(() => 0),
+    db.event.count().catch(() => 0),
+    db.notification.count().catch(() => 0),
+    db.complaint.count().catch(() => 0),
+    db.complaint.count({ where: { status: "new" } }).catch(() => 0),
+    db.complaint.findMany({ orderBy: { createdAt: "desc" }, take: 5 }).catch(() => []),
+    db.event.findMany({ orderBy: { createdAt: "desc" }, take: 5 }).catch(() => []),
+    db.intervention.count().catch(() => 0),
+    db.emergencyContact.count().catch(() => 0),
   ]);
 
   return (

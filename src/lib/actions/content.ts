@@ -52,11 +52,15 @@ export async function setSiteThemeAction(theme: SiteTheme) {
   await requireAdmin();
   const validTheme: SiteTheme = theme === "obsidian-crimson" ? "obsidian-crimson" : "emerald";
 
-  await db.setting.upsert({
-    where: { key: "theme" },
-    update: { value: JSON.stringify({ active: validTheme }) },
-    create: { key: "theme", value: JSON.stringify({ active: validTheme }) },
-  });
+  try {
+    await db.setting.upsert({
+      where: { key: "theme" },
+      update: { value: JSON.stringify({ active: validTheme }) },
+      create: { key: "theme", value: JSON.stringify({ active: validTheme }) },
+    });
+  } catch (err) {
+    console.warn("Notice: could not save theme setting to DB (using cookie):", err);
+  }
 
   try {
     const cookieStore = await cookies();

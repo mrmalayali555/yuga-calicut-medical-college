@@ -7,8 +7,8 @@ import { ThemeSwitcher } from "@/components/admin/theme-switcher";
 import type { SiteTheme } from "@/lib/queries";
 
 async function getSetting<T>(key: string, fallback: T): Promise<T> {
-  const row = await db.setting.findUnique({ where: { key } });
   try {
+    const row = await db.setting.findUnique({ where: { key } });
     return row?.value ? (JSON.parse(row.value) as T) : fallback;
   } catch {
     return fallback;

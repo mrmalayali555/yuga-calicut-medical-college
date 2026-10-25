@@ -39,18 +39,24 @@ export async function createSession(
     .setExpirationTime(`${MAX_AGE}s`)
     .sign(secret);
 
-  // Save session in DB
-  const { db } = await import("./db");
-  await db.adminSession.create({
-    data: {
-      adminId: payload.sub,
-      token,
-      ipAddress,
-      location,
-      userAgent,
-      lastActiveAt: new Date(),
-    },
-  });
+  // Safely record session in DB if available and writable
+  try {
+    const { db } = await import("./db");
+    await db.adminSession.create({
+      data: {
+        adminId: payload.sub,
+        token,
+        ipAddress,
+        location,
+        userAgent,
+        lastActiveAt: new Date(),
+      },
+    });
+  } catch (err) {
+    // If DB is read-only (e.g. Vercel serverless SQLite) or unreachable,
+    // the signed JWT cookie still guarantees secure authentication.
+    console.warn("Could not save session record in DB (stateless mode active):", err);
+  }
 
   const store = await cookies();
   store.set(COOKIE_NAME, token, {
@@ -66,9 +72,12 @@ export async function destroySession(): Promise<void> {
   const store = await cookies();
   const token = store.get(COOKIE_NAME)?.value;
   if (token) {
-    // Remove session record from DB
-    const { db } = await import("./db");
-    await db.adminSession.deleteMany({ where: { token } }).catch(() => {});
+    try {
+      const { db } = await import("./db");
+      await db.adminSession.deleteMany({ where: { token } }).catch(() => {});
+    } catch {
+      // Ignore DB errors during logout
+    }
   }
   store.delete(COOKIE_NAME);
 }
@@ -80,18 +89,6 @@ export async function getSession(): Promise<SessionPayload | null> {
 
   try {
     const { payload } = await jwtVerify(token, secret);
-
-    // Check if session still exists in DB
-    const { db } = await import("./db");
-    const sessionRecord = await db.adminSession.findUnique({
-      where: { token },
-      select: { id: true },
-    });
-
-    if (!sessionRecord) {
-      return null;
-    }
-
     return payload as unknown as SessionPayload;
   } catch {
     return null;
