@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import {
-  CalendarDays,
   Sparkles,
   Trophy,
   FileText,
@@ -17,10 +16,10 @@ import { EditableText } from "@/components/admin/inline/editable-text";
 const PORTALS = [
   {
     title: "Circulars & Notices",
-    desc: "Academic directives, KUHS exam timetables, and union communications.",
+    desc: "Academic directives, circulars, and executive council notifications.",
     href: "/notifications",
     icon: FileText,
-    span: "sm:col-span-2",
+    span: "",
   },
   {
     title: "Emergency Registry",
@@ -38,13 +37,6 @@ const PORTALS = [
     span: "",
   },
   {
-    title: "Academic Hub",
-    desc: "KUHS exam timetables, clinical posting rotations, and assessment dates.",
-    href: "/calendar",
-    icon: CalendarDays,
-    span: "",
-  },
-  {
     title: "Laurels & Hall of Fame",
     desc: "State championship shields, research grants, and athletic gold.",
     href: "/achievements",
@@ -52,17 +44,17 @@ const PORTALS = [
     span: "",
   },
   {
-    title: "Student Grievance Desk",
-    desc: "Confidential feedback loop and representation to Union Executive Council.",
-    href: "/complaints",
-    icon: MessageSquareWarning,
-    span: "sm:col-span-2",
-  },
-  {
     title: "Subcommittees & Wings",
     desc: "16 active student councils across fine arts, sports, literary, and social aid.",
     href: "/subcommittees",
     icon: Users,
+    span: "",
+  },
+  {
+    title: "Student Grievance Desk",
+    desc: "Confidential feedback loop and representation to Union Executive Council.",
+    href: "/complaints",
+    icon: MessageSquareWarning,
     span: "",
   },
 ];

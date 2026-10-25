@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
   Search,
-  Calendar,
   Sparkles,
   Trophy,
   Bell,
@@ -83,14 +82,6 @@ const COMMANDS: CommandItem[] = [
     badge: "Official",
   },
   {
-    id: "calendar-academic",
-    title: "Academic Calendar & Timetables",
-    subtitle: "MBBS Phase 1, Phase 2, Final Year & PG exam schedules",
-    category: "Academic",
-    href: "/calendar",
-    icon: Calendar,
-  },
-  {
     id: "achievements-hall",
     title: "Medicos Hall of Fame & Laurels",
     subtitle: "Inter-medical trophies, research grants & gold medals",
@@ -117,7 +108,7 @@ const COMMANDS: CommandItem[] = [
   },
   {
     id: "subcommittees-wings",
-    title: "Clubs & Subcommittees Directory",
+    title: "Subcommittees & Student Councils",
     subtitle: "16 active student wings: Arts, Sports, CMRS Research, Media",
     category: "Navigation",
     href: "/subcommittees",

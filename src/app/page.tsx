@@ -5,7 +5,6 @@ import { CircularsFeed } from "@/components/home/circulars-feed";
 import { AchievementsShowcase } from "@/components/home/achievements-showcase";
 import { HeritageMonument3D } from "@/components/home/heritage-monument-3d";
 import { LeadershipSection } from "@/components/home/leadership-section";
-import { ClubsShowcase } from "@/components/home/clubs-showcase";
 import { EmergencyStrip } from "@/components/home/emergency-strip";
 import { CampusVoiceCTA } from "@/components/home/campus-voice-cta";
 import { db } from "@/lib/db";
@@ -62,10 +61,20 @@ export default async function HomePage() {
     dbFeaturedEvent = null;
   }
 
+  let heroCard = null;
+  try {
+    const row = await db.setting.findUnique({ where: { key: "hero_card" } });
+    if (row?.value) {
+      heroCard = JSON.parse(row.value);
+    }
+  } catch {
+    heroCard = null;
+  }
+
   return (
     <>
       {/* 1. Hero with Live Metrics & Announcement Marquee */}
-      <Hero />
+      <Hero heroCard={heroCard} />
 
       {/* 2. Bento Portals to Core Modules */}
       <QuickPortals />
@@ -84,9 +93,6 @@ export default async function HomePage() {
 
       {/* 7. Executive Council Leadership */}
       <LeadershipSection />
-
-      {/* 7.5 Sub-Committee Clubs & Logo Carousel */}
-      <ClubsShowcase />
 
       {/* 8. Emergency Hospital & Casualty Hotline Strip */}
       <EmergencyStrip />

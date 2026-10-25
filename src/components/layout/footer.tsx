@@ -51,8 +51,8 @@ export function Footer() {
               </div>
               <ul className="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant">
                 <li>
-                  <Link className="hover:text-on-surface transition-colors" href="/calendar">
-                    Academic Senate &amp; KUHS
+                  <Link className="hover:text-on-surface transition-colors" href="/notifications">
+                    Academic Senate &amp; KUHS Directives
                   </Link>
                 </li>
                 <li>
@@ -80,8 +80,8 @@ export function Footer() {
               </div>
               <ul className="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant">
                 <li>
-                  <Link className="hover:text-on-surface transition-colors" href="/calendar">
-                    Duty Hours Telemetry
+                  <Link className="hover:text-on-surface transition-colors" href="/events">
+                    Conclaves &amp; Symposiums
                   </Link>
                 </li>
                 <li>
@@ -222,8 +222,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/calendar" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
-                  KUHS Examination Schedules
+                <Link href="/interventions" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
+                  Union Interventions &amp; Charters
                 </Link>
               </li>
               <li>

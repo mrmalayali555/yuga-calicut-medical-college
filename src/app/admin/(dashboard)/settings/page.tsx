@@ -16,7 +16,7 @@ async function getSetting<T>(key: string, fallback: T): Promise<T> {
 }
 
 export default async function AdminSettingsPage() {
-  const [hero, identity, contact, stats, socials, navSearch, themeSetting] = await Promise.all([
+  const [hero, identity, contact, stats, socials, navSearch, themeSetting, heroCard] = await Promise.all([
     getSetting("hero", {
       badge: COLLEGE.name,
       title: "The Voice of Calicut Medicos",
@@ -49,6 +49,18 @@ export default async function AdminSettingsPage() {
     }),
     getSetting("nav_search", { showMobile: true, showDesktop: true }),
     getSetting<{ active: SiteTheme }>("theme", { active: "obsidian-crimson" }),
+    getSetting("hero_card", {
+      visible: true,
+      cardStyle: "white",
+      tag: "ALL-KERALA CONCLAVE",
+      date: "MARCH 27–29, 2026",
+      category: "Annual Intercollegiate Medical Colloquium",
+      title: "PULSE 2026: The Sovereign Vanguard",
+      description: "Featuring 42 clinical hackathons, state surgical simulation leagues, national med-law panels, and Calicut's landmark cultural gala.",
+      venue: "Silver Jubilee Auditorium, GMC",
+      btnText: "Delegate Pass →",
+      btnLink: "/events",
+    }),
   ]);
 
   return (
@@ -128,6 +140,105 @@ export default async function AdminSettingsPage() {
               defaultValue={hero.subtitle}
               rows={2}
             />
+          </div>
+        </AdminCard>
+
+        {/* Homepage Featured Event Card (Top-Right Conclave Card) */}
+        <AdminCard>
+          <div className="flex items-start justify-between border-b border-[var(--border-primary)] pb-4 mb-4 gap-4">
+            <div>
+              <h3 className="text-base font-bold text-[var(--text-primary)]">
+                Homepage Featured Event Card (Top-Right Conclave Banner)
+              </h3>
+              <p className="mt-1 text-xs text-[var(--text-secondary)]">
+                The highlighted card located on the top-right of the homepage hero (the white/contrast card). You can customize all its content, switch between crisp white and dark obsidian glass, or completely remove/hide it from the website.
+              </p>
+            </div>
+            <label className="flex items-center gap-2 cursor-pointer bg-[var(--bg-surface-elevated)] border border-[var(--border-primary)] px-3 py-1.5 rounded-lg shrink-0">
+              <input
+                type="checkbox"
+                name="hero_card_visible"
+                defaultChecked={heroCard.visible !== false}
+                className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+              />
+              <span className="text-xs font-bold text-[var(--text-primary)]">
+                Card Visible
+              </span>
+            </label>
+          </div>
+
+          <div className="space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-1">
+                  Card Aesthetic Style
+                </label>
+                <select
+                  name="hero_card_style"
+                  defaultValue={heroCard.cardStyle || "white"}
+                  className="w-full rounded-lg border border-[var(--border-primary)] bg-[var(--bg-surface)] px-3 py-2 text-xs font-medium text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                >
+                  <option value="white">High-Contrast White (Default)</option>
+                  <option value="dark">Stealth Obsidian Glass (Dark)</option>
+                </select>
+                <p className="mt-1 text-[11px] text-[var(--text-faint)]">
+                  Choose &quot;Stealth Obsidian Glass&quot; to blend into dark backgrounds, or &quot;High-Contrast White&quot; for stark presence.
+                </p>
+              </div>
+
+              <Field
+                label="Header Badge / Tag"
+                name="hero_card_tag"
+                defaultValue={heroCard.tag || "ALL-KERALA CONCLAVE"}
+                hint="e.g. ALL-KERALA CONCLAVE, ANNUAL FEST, NATIONAL SYMPOSIUM"
+              />
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field
+                label="Date & Schedule"
+                name="hero_card_date"
+                defaultValue={heroCard.date || "MARCH 27–29, 2026"}
+              />
+              <Field
+                label="Sub-Category Label"
+                name="hero_card_category"
+                defaultValue={heroCard.category || "Annual Intercollegiate Medical Colloquium"}
+              />
+            </div>
+
+            <Field
+              label="Headline / Event Title"
+              name="hero_card_title"
+              defaultValue={heroCard.title || "PULSE 2026: The Sovereign Vanguard"}
+            />
+
+            <TextArea
+              label="Event Description"
+              name="hero_card_description"
+              defaultValue={heroCard.description || "Featuring 42 clinical hackathons, state surgical simulation leagues, national med-law panels, and Calicut's landmark cultural gala."}
+              rows={2}
+            />
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field
+                label="Venue / Campus Location"
+                name="hero_card_venue"
+                defaultValue={heroCard.venue || "Silver Jubilee Auditorium, GMC"}
+              />
+              <div className="grid grid-cols-2 gap-2">
+                <Field
+                  label="Button Text"
+                  name="hero_card_btn_text"
+                  defaultValue={heroCard.btnText || "Delegate Pass →"}
+                />
+                <Field
+                  label="Button Link URL"
+                  name="hero_card_btn_link"
+                  defaultValue={heroCard.btnLink || "/events"}
+                />
+              </div>
+            </div>
           </div>
         </AdminCard>
 

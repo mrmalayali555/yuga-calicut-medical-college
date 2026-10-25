@@ -8,6 +8,20 @@ import { motion } from "framer-motion";
 import { AnimatedCounter } from "@/components/home/animated-counter";
 import { useTheme } from "@/components/theme/theme-context";
 import { EditableText } from "@/components/admin/inline/editable-text";
+import { useAdminEdit } from "@/components/admin/inline/admin-edit-context";
+
+export interface HeroCardConfig {
+  visible?: boolean;
+  cardStyle?: "white" | "dark";
+  tag?: string;
+  date?: string;
+  category?: string;
+  title?: string;
+  description?: string;
+  venue?: string;
+  btnText?: string;
+  btnLink?: string;
+}
 
 const STATS = [
   { value: 3000, suffix: "+", label: "Medicos", isStatic: false },
@@ -16,10 +30,25 @@ const STATS = [
   { raw: "24/7", label: "Casualty Care", isStatic: true },
 ];
 
-export function Hero() {
+export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
   const { theme } = useTheme();
+  const { isAdmin, editMode } = useAdminEdit();
   const isObsidian = theme === "obsidian-crimson";
   const featuredEvent = EVENTS[0];
+
+  const isCardVisible = heroCard?.visible !== false;
+  const isDarkCard = heroCard?.cardStyle === "dark";
+
+  const cardTag = heroCard?.tag || "ALL-KERALA CONCLAVE";
+  const cardDate = heroCard?.date || "MARCH 27–29, 2026";
+  const cardCategory = heroCard?.category || "Annual Intercollegiate Medical Colloquium";
+  const cardTitle = heroCard?.title || "PULSE 2026: The Sovereign Vanguard";
+  const cardDesc =
+    heroCard?.description ||
+    "Featuring 42 clinical hackathons, state surgical simulation leagues, national med-law panels, and Calicut's landmark cultural gala.";
+  const cardVenue = heroCard?.venue || "Silver Jubilee Auditorium, GMC";
+  const cardBtnText = heroCard?.btnText || "Delegate Pass →";
+  const cardBtnLink = heroCard?.btnLink || "/events";
 
   if (isObsidian) {
     return (
@@ -162,68 +191,151 @@ export function Hero() {
 
             {/* Right Column: Bento Architectural Composition */}
             <div className="lg:col-span-5 flex flex-col gap-space-md mt-space-md lg:mt-0">
-              {/* Stark White Primary Event Conclave Card */}
-              <motion.div
-                initial={{ opacity: 0, y: 24, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="relative bg-inverse-surface text-inverse-on-surface rounded p-space-lg shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_35px_rgba(255,255,255,0.08)] overflow-hidden"
-              >
-                {/* Subtle Structural Header Bar */}
-                <div className="flex items-center justify-between pb-space-sm mb-space-md border-b border-black/10">
-                  <span className="inline-flex items-center gap-1.5 bg-[#090a0f] text-on-primary-container px-space-sm py-0.5 rounded font-label-sm text-label-sm tracking-widest font-black uppercase">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary-container" />
-                    ALL-KERALA CONCLAVE
-                  </span>
-                  <div className="flex items-center gap-1 font-label-sm text-label-sm font-bold text-primary-container uppercase tracking-wider">
-                    <span className="material-symbols-outlined text-[16px]">calendar_today</span>
-                    <span>MARCH 27–29, 2026</span>
-                  </div>
-                </div>
+              {/* Primary Event Conclave Card (Configurable / Removable) */}
+              {isCardVisible ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 24, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                  className={`relative rounded p-space-lg overflow-hidden ${
+                    isDarkCard
+                      ? "bg-[#0d0f16]/95 text-white border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_35px_rgba(225,29,72,0.18)] backdrop-blur-xl"
+                      : "bg-inverse-surface text-inverse-on-surface shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_35px_rgba(255,255,255,0.08)]"
+                  }`}
+                >
+                  {/* Admin Control Badge in Edit Mode */}
+                  {isAdmin && editMode && (
+                    <div className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5 bg-black/85 border border-white/20 rounded-md px-2 py-0.5 text-[10px] font-semibold text-white backdrop-blur shadow-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <span>Hero Card</span>
+                      <Link
+                        href="/admin/settings"
+                        className="ml-1 text-rose-400 hover:text-rose-300 underline inline-flex items-center gap-0.5"
+                        title="Configure or Hide Card in Admin Settings"
+                      >
+                        <span>Settings</span>
+                        <ArrowUpRight className="h-2.5 w-2.5" />
+                      </Link>
+                    </div>
+                  )}
 
-                {/* Card Content Body */}
-                <div className="space-y-space-xs">
-                  <EditableText
-                    blockId="hero-card-category"
-                    defaultContent="Annual Intercollegiate Medical Colloquium"
-                    pageId="home"
-                    label="Featured Card Category"
-                    as="span"
-                    className="font-label-sm text-label-sm tracking-widest uppercase text-black/60 font-bold"
-                  />
-                  <EditableText
-                    blockId="hero-card-title"
-                    defaultContent="PULSE 2026: The Sovereign Vanguard"
-                    pageId="home"
-                    label="Featured Card Title"
-                    as="h3"
-                    className="font-headline-md text-headline-md font-extrabold text-[#090a0f] tracking-tight leading-tight"
-                  />
-                  <EditableText
-                    blockId="hero-card-description"
-                    defaultContent="Featuring 42 clinical hackathons, state surgical simulation leagues, national med-law panels, and Calicut&apos;s landmark cultural gala."
-                    pageId="home"
-                    label="Featured Card Description"
-                    as="p"
-                    className="font-body-md text-body-md text-black/75 pt-space-xs"
-                    multiline
-                  />
-                </div>
-
-                {/* Venue & Direct RSVP Action Ribbon */}
-                <div className="mt-space-md pt-space-md border-t border-black/10 flex items-center justify-between">
-                  <div className="flex items-center gap-space-xs text-black/90">
-                    <span className="material-symbols-outlined text-primary-container text-[20px]">location_on</span>
-                    <span className="font-label-md text-label-md font-bold uppercase tracking-tight">Silver Jubilee Auditorium, GMC</span>
-                  </div>
-                  <Link
-                    href="/events"
-                    className="bg-primary-container text-on-primary-container px-space-md py-space-xs rounded font-label-md text-label-md font-bold uppercase tracking-wider shadow-[0_0_12px_rgba(225,29,72,0.4)] hover:bg-tertiary-container transition-colors"
+                  {/* Structural Header Bar */}
+                  <div
+                    className={`flex items-center justify-between pb-space-sm mb-space-md border-b ${
+                      isDarkCard ? "border-white/10" : "border-black/10"
+                    }`}
                   >
-                    Delegate Pass →
+                    <span
+                      className={`inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded font-label-sm text-label-sm tracking-widest font-black uppercase ${
+                        isDarkCard
+                          ? "bg-primary-container/20 text-on-primary-container border border-primary-container/30"
+                          : "bg-[#090a0f] text-on-primary-container"
+                      }`}
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary-container" />
+                      <EditableText
+                        blockId="hero-card-tag"
+                        defaultContent={cardTag}
+                        pageId="home"
+                        label="Featured Card Tag"
+                        as="span"
+                      />
+                    </span>
+                    <div className="flex items-center gap-1 font-label-sm text-label-sm font-bold text-primary-container uppercase tracking-wider">
+                      <span className="material-symbols-outlined text-[16px]">calendar_today</span>
+                      <EditableText
+                        blockId="hero-card-date"
+                        defaultContent={cardDate}
+                        pageId="home"
+                        label="Featured Card Date"
+                        as="span"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Card Content Body */}
+                  <div className="space-y-space-xs">
+                    <EditableText
+                      blockId="hero-card-category"
+                      defaultContent={cardCategory}
+                      pageId="home"
+                      label="Featured Card Category"
+                      as="span"
+                      className={`font-label-sm text-label-sm tracking-widest uppercase font-bold ${
+                        isDarkCard ? "text-white/60" : "text-black/60"
+                      }`}
+                    />
+                    <EditableText
+                      blockId="hero-card-title"
+                      defaultContent={cardTitle}
+                      pageId="home"
+                      label="Featured Card Title"
+                      as="h3"
+                      className={`font-headline-md text-headline-md font-extrabold tracking-tight leading-tight ${
+                        isDarkCard ? "text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]" : "text-[#090a0f]"
+                      }`}
+                    />
+                    <EditableText
+                      blockId="hero-card-description"
+                      defaultContent={cardDesc}
+                      pageId="home"
+                      label="Featured Card Description"
+                      as="p"
+                      className={`font-body-md text-body-md pt-space-xs ${
+                        isDarkCard ? "text-white/80" : "text-black/75"
+                      }`}
+                      multiline
+                    />
+                  </div>
+
+                  {/* Venue & Direct RSVP Action Ribbon */}
+                  <div
+                    className={`mt-space-md pt-space-md border-t flex items-center justify-between ${
+                      isDarkCard ? "border-white/10" : "border-black/10"
+                    }`}
+                  >
+                    <div
+                      className={`flex items-center gap-space-xs ${
+                        isDarkCard ? "text-white/90" : "text-black/90"
+                      }`}
+                    >
+                      <span className="material-symbols-outlined text-primary-container text-[20px]">
+                        location_on
+                      </span>
+                      <EditableText
+                        blockId="hero-card-venue"
+                        defaultContent={cardVenue}
+                        pageId="home"
+                        label="Featured Card Venue"
+                        as="span"
+                        className="font-label-md text-label-md font-bold uppercase tracking-tight"
+                      />
+                    </div>
+                    <Link
+                      href={cardBtnLink}
+                      className="bg-primary-container text-on-primary-container px-space-md py-space-xs rounded font-label-md text-label-md font-bold uppercase tracking-wider shadow-[0_0_12px_rgba(225,29,72,0.4)] hover:bg-tertiary-container transition-colors"
+                    >
+                      {cardBtnText}
+                    </Link>
+                  </div>
+                </motion.div>
+              ) : isAdmin && editMode ? (
+                <div className="rounded border-2 border-dashed border-rose-500/40 bg-rose-500/5 p-space-md text-center">
+                  <div className="flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-400">
+                    <span className="material-symbols-outlined text-base">visibility_off</span>
+                    Featured Conclave Card Hidden
+                  </div>
+                  <p className="mt-1 text-[11px] text-white/60">
+                    This card is currently hidden from visitors. You can enable or edit it in Admin Settings.
+                  </p>
+                  <Link
+                    href="/admin/settings"
+                    className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-semibold text-rose-400 hover:text-rose-300 underline"
+                  >
+                    Configure in Admin Settings →
                   </Link>
                 </div>
-              </motion.div>
+              ) : null}
 
               {/* Metrics Bento Panel: High-Impact Glass Obsidian */}
               <motion.div
@@ -383,38 +495,40 @@ export function Hero() {
           {/* Right: Featured Event Card + Stats */}
           <div className="lg:col-span-5">
             {/* Featured Event Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 24, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.65, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -4, transition: { duration: 0.22, ease: [0.23, 1, 0.32, 1] } }}
-            >
-              <Link
-                href="/events"
-                className="group block card p-6 sm:p-8 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 bg-white"
+            {isCardVisible ? (
+              <motion.div
+                initial={{ opacity: 0, y: 24, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.65, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -4, transition: { duration: 0.22, ease: [0.23, 1, 0.32, 1] } }}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <span className="tag">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse-soft" />
-                    Upcoming Conclave
-                  </span>
-                  <ArrowUpRight className="h-4 w-4 text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" aria-hidden="true" />
-                </div>
+                <Link
+                  href={cardBtnLink}
+                  className="group block card p-6 sm:p-8 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 bg-white"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="tag">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse-soft" />
+                      {cardTag}
+                    </span>
+                    <ArrowUpRight className="h-4 w-4 text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" aria-hidden="true" />
+                  </div>
 
-                <h3 className="text-xl font-bold text-slate-900 leading-snug group-hover:text-emerald-700 transition-colors">
-                  {featuredEvent.title}
-                </h3>
+                  <h3 className="text-xl font-bold text-slate-900 leading-snug group-hover:text-emerald-700 transition-colors">
+                    {cardTitle}
+                  </h3>
 
-                <p className="mt-2 text-sm text-slate-600 line-clamp-2 leading-relaxed">
-                  {featuredEvent.subtitle}
-                </p>
+                  <p className="mt-2 text-sm text-slate-600 line-clamp-2 leading-relaxed">
+                    {cardDesc}
+                  </p>
 
-                <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
-                  <span className="font-semibold text-emerald-800">{featuredEvent.date}</span>
-                  <span>{featuredEvent.venue}</span>
-                </div>
-              </Link>
-            </motion.div>
+                  <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span className="font-semibold text-emerald-800">{cardDate}</span>
+                    <span>{cardVenue}</span>
+                  </div>
+                </Link>
+              </motion.div>
+            ) : null}
 
             {/* Stats strip with live numeric countup */}
             <motion.div

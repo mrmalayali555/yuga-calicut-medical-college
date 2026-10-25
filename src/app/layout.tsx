@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "Government Medical College Kozhikode",
     "Calicut Medicos",
     "YUGA Fest",
-    "KUHS Examination Calendar",
+    "KUHS Notifications & Directives",
     "CMC Kozhikode Student Union",
     "Medical College Union Kerala",
   ],

@@ -121,6 +121,18 @@ export async function saveSettingsForm(formData: FormData) {
       showMobile: formData.get("search_show_mobile") === "on",
       showDesktop: formData.get("search_show_desktop") === "on",
     };
+    const heroCard = {
+      visible: formData.get("hero_card_visible") === "on",
+      cardStyle: String(formData.get("hero_card_style") || "white"),
+      tag: String(formData.get("hero_card_tag") || "").trim(),
+      date: String(formData.get("hero_card_date") || "").trim(),
+      category: String(formData.get("hero_card_category") || "").trim(),
+      title: String(formData.get("hero_card_title") || "").trim(),
+      description: String(formData.get("hero_card_description") || "").trim(),
+      venue: String(formData.get("hero_card_venue") || "").trim(),
+      btnText: String(formData.get("hero_card_btn_text") || "").trim(),
+      btnLink: String(formData.get("hero_card_btn_link") || "").trim(),
+    };
 
     const activeThemeRaw = formData.get("active_theme");
     const promises: Promise<unknown>[] = [
@@ -130,6 +142,7 @@ export async function saveSettingsForm(formData: FormData) {
       saveSetting("stats", stats),
       saveSetting("socials", socials),
       saveSetting("nav_search", navSearch),
+      saveSetting("hero_card", heroCard),
     ];
 
     if (activeThemeRaw) {

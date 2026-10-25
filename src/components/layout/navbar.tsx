@@ -12,9 +12,7 @@ import {
   ChevronDown,
   User,
   Bell,
-  Calendar,
   Users,
-  Layers,
   ShieldAlert,
   Landmark,
   HelpCircle,
@@ -39,22 +37,10 @@ const MORE_LINKS = [
     icon: Bell,
   },
   {
-    label: "Academic Calendar",
-    href: "/calendar",
-    description: "KUHS exam schedule, holidays & timings",
-    icon: Calendar,
-  },
-  {
     label: "Subcommittees & Wings",
     href: "/subcommittees",
     description: "Arts, sports, magazine, library & health wings",
     icon: Users,
-  },
-  {
-    label: "Campus Clubs",
-    href: "/clubs/jeevanam",
-    description: "Jeevanam, literary, music & specialized collectives",
-    icon: Layers,
   },
   {
     label: "Union Interventions",
