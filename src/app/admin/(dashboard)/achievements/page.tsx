@@ -32,12 +32,32 @@ export default async function AdminAchievementsPage() {
               {items.map((a) => (
                 <tr key={a.id} className="transition-colors hover:bg-[var(--bg-elevated)]">
                   <td className="px-5 py-4">
-                    <Link
-                      href={`/admin/achievements/${a.id}`}
-                      className="font-medium text-[var(--text-primary)] hover:text-[var(--accent)]"
-                    >
-                      {a.title}
-                    </Link>
+                    <div className="flex items-center gap-3">
+                      {a.coverImage ? (
+                        <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-[var(--border-primary)] bg-[var(--bg-elevated)]">
+                          <img
+                            src={a.coverImage}
+                            alt=""
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-dashed border-[var(--border-primary)] text-[var(--text-muted)] text-[10px] font-bold">
+                          NO IMG
+                        </div>
+                      )}
+                      <div>
+                        <Link
+                          href={`/admin/achievements/${a.id}`}
+                          className="font-medium text-[var(--text-primary)] hover:text-[var(--accent)]"
+                        >
+                          {a.title}
+                        </Link>
+                        {a.awardWinner && (
+                          <p className="text-xs text-[var(--text-muted)]">{a.awardWinner}</p>
+                        )}
+                      </div>
+                    </div>
                   </td>
                   <td className="px-5 py-4">
                     <StatusPill status={a.category} />

@@ -17,6 +17,14 @@ import {
   CheckSquare,
   Sparkles,
   Info,
+  Calendar,
+  Clock,
+  Phone,
+  GraduationCap,
+  UserCheck,
+  Users,
+  UploadCloud,
+  Globe,
 } from "lucide-react";
 import { FieldDefinition } from "@/lib/actions/forms";
 
@@ -41,14 +49,24 @@ interface FormBuilderProps {
   deleteAction?: (formData: FormData) => void;
 }
 
-const FIELD_TYPES = [
-  { value: "text", label: "Short Answer", icon: Type },
-  { value: "textarea", label: "Paragraph", icon: AlignLeft },
+export const FIELD_TYPES = [
+  { value: "text", label: "Short Answer (Single Line)", icon: Type },
+  { value: "textarea", label: "Paragraph (Long Answer)", icon: AlignLeft },
+  { value: "date", label: "Date Selection (Calendar Picker)", icon: Calendar },
+  { value: "time", label: "Time Selection (Clock Picker)", icon: Clock },
+  { value: "datetime-local", label: "Date & Time Combined", icon: Calendar },
+  { value: "tel", label: "Phone / WhatsApp Number", icon: Phone },
   { value: "email", label: "Email Address", icon: Mail },
-  { value: "number", label: "Number / Phone", icon: Hash },
-  { value: "radio", label: "Multiple Choice (Radio)", icon: CircleDot },
+  { value: "number", label: "Number / Quantity / Age", icon: Hash },
   { value: "select", label: "Dropdown Menu", icon: ListFilter },
-  { value: "checkbox", label: "Checkboxes", icon: CheckSquare },
+  { value: "radio", label: "Multiple Choice (Single Option)", icon: CircleDot },
+  { value: "checkbox", label: "Checkboxes (Multi-Select)", icon: CheckSquare },
+  { value: "batch", label: "Academic Batch / Year (GMC Kozhikode)", icon: GraduationCap },
+  { value: "roll_number", label: "Roll No / Student Admission ID", icon: UserCheck },
+  { value: "gender", label: "Gender Selection", icon: Users },
+  { value: "file", label: "Document / ID / Payment Screenshot", icon: UploadCloud },
+  { value: "url", label: "Website / Portfolio / Drive Link", icon: Globe },
+  { value: "yes_no", label: "Yes / No Confirmation", icon: CheckCircle2 },
 ];
 
 export function RegistrationFormBuilder({
@@ -343,12 +361,12 @@ export function RegistrationFormBuilder({
                   </div>
                 </div>
 
-                {/* Multiple choice options editor */}
+                {/* Field-specific options & placeholder editor */}
                 {hasOptions ? (
                   <div className="space-y-1.5 p-3.5 rounded-xl bg-white border border-slate-200/90">
                     <div className="flex items-center justify-between">
                       <label className="block text-[11px] font-bold uppercase tracking-wider text-emerald-800">
-                        Options (Separate choices with commas or newlines)
+                        Choices / Options (Separate with commas or new lines)
                       </label>
                       <span className="text-[10px] text-slate-400 font-mono">
                         e.g. Option 1, Option 2, Option 3
@@ -362,6 +380,68 @@ export function RegistrationFormBuilder({
                       className="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 font-mono text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
                     />
                   </div>
+                ) : field.type === "batch" ? (
+                  <div className="space-y-1.5 p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-200/80">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-[11px] font-bold uppercase tracking-wider text-emerald-900">
+                        Academic Batches (GMC Kozhikode Presets)
+                      </label>
+                      <span className="text-[10px] text-emerald-700 font-semibold">
+                        Customizable
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-600">
+                      Default: MBBS 2021, MBBS 2022, MBBS 2023, MBBS 2024, MBBS 2025, House Surgeon / Intern, PG Resident, Alumni, Faculty.
+                    </p>
+                    <textarea
+                      rows={2}
+                      value={field.options || ""}
+                      onChange={(e) => updateField(idx, { options: e.target.value })}
+                      placeholder="Leave blank to use default GMC batches, or enter custom batches separated by commas..."
+                      className="w-full px-3 py-1.5 text-xs rounded-lg border border-emerald-200 bg-white font-mono text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                    />
+                  </div>
+                ) : field.type === "gender" ? (
+                  <div className="p-3 rounded-xl bg-slate-100/80 border border-slate-200 text-xs text-slate-600 flex items-center gap-2">
+                    <Users className="h-4 w-4 text-emerald-700 shrink-0" />
+                    <span>Preset options: <strong>Male</strong>, <strong>Female</strong>, <strong>Other</strong>, <strong>Prefer not to say</strong></span>
+                  </div>
+                ) : field.type === "yes_no" ? (
+                  <div className="p-3 rounded-xl bg-slate-100/80 border border-slate-200 text-xs text-slate-600 flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-700 shrink-0" />
+                    <span>Preset binary choices: <strong>Yes</strong> / <strong>No</strong> confirmation buttons</span>
+                  </div>
+                ) : field.type === "date" || field.type === "time" || field.type === "datetime-local" ? (
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-600">
+                        Help Hint / Description (Optional)
+                      </label>
+                      <span className="text-[10px] text-emerald-700 font-medium">
+                        Renders native {field.type === "date" ? "calendar date picker" : field.type === "time" ? "time picker" : "date & time picker"}
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      value={field.placeholder || ""}
+                      onChange={(e) => updateField(idx, { placeholder: e.target.value })}
+                      placeholder={`e.g. Choose your ${field.type === "date" ? "date of birth or attendance date" : "slot time"}...`}
+                      className="w-full px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                    />
+                  </div>
+                ) : field.type === "file" ? (
+                  <div className="space-y-1.5">
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-600">
+                      Upload Prompt / Instructions
+                    </label>
+                    <input
+                      type="text"
+                      value={field.placeholder || ""}
+                      onChange={(e) => updateField(idx, { placeholder: e.target.value })}
+                      placeholder="e.g. Attach payment screenshot, college ID, or document link..."
+                      className="w-full px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                    />
+                  </div>
                 ) : (
                   <div className="space-y-1.5">
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500">
@@ -371,7 +451,7 @@ export function RegistrationFormBuilder({
                       type="text"
                       value={field.placeholder || ""}
                       onChange={(e) => updateField(idx, { placeholder: e.target.value })}
-                      placeholder="Hint shown inside the text box..."
+                      placeholder="Hint shown inside the input box..."
                       className="w-full px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
                     />
                   </div>

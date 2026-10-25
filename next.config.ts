@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
     // Add your Supabase/Cloudinary host here when you connect cloud storage.
     remotePatterns: [
       { protocol: "https", hostname: "**.public.blob.vercel-storage.com" },
+      { protocol: "https", hostname: "**.blob.vercel-storage.com" },
+      { protocol: "https", hostname: "blob.vercel-storage.com" },
       { protocol: "https", hostname: "**.supabase.co" },
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "images.unsplash.com" },

@@ -281,12 +281,37 @@ export function EventRegistrationView({
                   </div>
 
                   {form.fields.map((field) => {
-                    const parsedOptions = field.options
-                      ? field.options
-                          .split(/[\n,]+/)
-                          .map((opt) => opt.trim())
-                          .filter(Boolean)
-                      : [];
+                    const defaultBatches = [
+                      "MBBS 2021",
+                      "MBBS 2022",
+                      "MBBS 2023",
+                      "MBBS 2024",
+                      "MBBS 2025",
+                      "House Surgeon / Intern",
+                      "PG Resident",
+                      "Alumni",
+                      "Faculty / Staff",
+                    ];
+                    const defaultGender = ["Male", "Female", "Other", "Prefer not to say"];
+                    const defaultYesNo = ["Yes", "No"];
+
+                    let parsedOptions: string[] = [];
+                    if (field.type === "batch") {
+                      parsedOptions = field.options && field.options.trim().length > 0
+                        ? field.options.split(/[\n,]+/).map((o) => o.trim()).filter(Boolean)
+                        : defaultBatches;
+                    } else if (field.type === "gender") {
+                      parsedOptions = field.options && field.options.trim().length > 0
+                        ? field.options.split(/[\n,]+/).map((o) => o.trim()).filter(Boolean)
+                        : defaultGender;
+                    } else if (field.type === "yes_no") {
+                      parsedOptions = defaultYesNo;
+                    } else if (field.options) {
+                      parsedOptions = field.options
+                        .split(/[\n,]+/)
+                        .map((opt) => opt.trim())
+                        .filter(Boolean);
+                    }
 
                     return (
                       <div
@@ -300,12 +325,12 @@ export function EventRegistrationView({
                           )}
                         </label>
 
-                        {/* 1. Short Text */}
-                        {field.type === "text" && (
+                        {/* 1. Short Text & Roll Number */}
+                        {(field.type === "text" || field.type === "roll_number") && (
                           <input
                             type="text"
                             required={field.required}
-                            placeholder={field.placeholder || "Your answer"}
+                            placeholder={field.placeholder || (field.type === "roll_number" ? "e.g. 21010045 / Admission ID" : "Your answer")}
                             value={answers[field.id] || ""}
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
@@ -328,12 +353,12 @@ export function EventRegistrationView({
                           />
                         )}
 
-                        {/* 3. Number */}
-                        {field.type === "number" && (
+                        {/* 3. Phone / WhatsApp */}
+                        {field.type === "tel" && (
                           <input
-                            type="number"
+                            type="tel"
                             required={field.required}
-                            placeholder={field.placeholder || "e.g. Phone or Year"}
+                            placeholder={field.placeholder || "+91 98765 43210"}
                             value={answers[field.id] || ""}
                             onChange={(e) =>
                               handleFieldChange(field.id, e.target.value)
@@ -342,7 +367,60 @@ export function EventRegistrationView({
                           />
                         )}
 
-                        {/* 4. Textarea */}
+                        {/* 4. Number */}
+                        {field.type === "number" && (
+                          <input
+                            type="number"
+                            required={field.required}
+                            placeholder={field.placeholder || "e.g. Age, Quantity, or Year"}
+                            value={answers[field.id] || ""}
+                            onChange={(e) =>
+                              handleFieldChange(field.id, e.target.value)
+                            }
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                          />
+                        )}
+
+                        {/* 5. Date Selection */}
+                        {field.type === "date" && (
+                          <input
+                            type="date"
+                            required={field.required}
+                            value={answers[field.id] || ""}
+                            onChange={(e) =>
+                              handleFieldChange(field.id, e.target.value)
+                            }
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                          />
+                        )}
+
+                        {/* 6. Time Selection */}
+                        {field.type === "time" && (
+                          <input
+                            type="time"
+                            required={field.required}
+                            value={answers[field.id] || ""}
+                            onChange={(e) =>
+                              handleFieldChange(field.id, e.target.value)
+                            }
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                          />
+                        )}
+
+                        {/* 7. Date & Time Combined */}
+                        {field.type === "datetime-local" && (
+                          <input
+                            type="datetime-local"
+                            required={field.required}
+                            value={answers[field.id] || ""}
+                            onChange={(e) =>
+                              handleFieldChange(field.id, e.target.value)
+                            }
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                          />
+                        )}
+
+                        {/* 8. Textarea */}
                         {field.type === "textarea" && (
                           <textarea
                             rows={3}
@@ -356,7 +434,28 @@ export function EventRegistrationView({
                           />
                         )}
 
-                        {/* 5. Radio Buttons (Multiple Choice) */}
+                        {/* 9. Dropdown Select & Batch Preset */}
+                        {(field.type === "select" || field.type === "batch") && (
+                          <select
+                            required={field.required}
+                            value={answers[field.id] || ""}
+                            onChange={(e) =>
+                              handleFieldChange(field.id, e.target.value)
+                            }
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 cursor-pointer"
+                          >
+                            <option value="">
+                              {field.type === "batch" ? "-- Choose Academic Batch --" : "-- Select an option --"}
+                            </option>
+                            {parsedOptions.map((opt, i) => (
+                              <option key={i} value={opt}>
+                                {opt}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+
+                        {/* 10. Radio Buttons */}
                         {field.type === "radio" && (
                           <div className="space-y-2 pt-1">
                             {parsedOptions.map((opt, i) => (
@@ -381,26 +480,55 @@ export function EventRegistrationView({
                           </div>
                         )}
 
-                        {/* 6. Dropdown Select */}
-                        {field.type === "select" && (
-                          <select
-                            required={field.required}
-                            value={answers[field.id] || ""}
-                            onChange={(e) =>
-                              handleFieldChange(field.id, e.target.value)
-                            }
-                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 cursor-pointer"
-                          >
-                            <option value="">-- Select an option --</option>
-                            {parsedOptions.map((opt, i) => (
-                              <option key={i} value={opt}>
-                                {opt}
-                              </option>
-                            ))}
-                          </select>
+                        {/* 11. Gender Selection (Interactive Pills) */}
+                        {field.type === "gender" && (
+                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                            {parsedOptions.map((opt, i) => {
+                              const isSelected = answers[field.id] === opt;
+                              return (
+                                <button
+                                  type="button"
+                                  key={i}
+                                  onClick={() => handleFieldChange(field.id, opt)}
+                                  className={`p-3 rounded-xl border text-xs font-bold uppercase tracking-wider text-center transition-all cursor-pointer ${
+                                    isSelected
+                                      ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                                      : "bg-white text-slate-700 border-slate-200 hover:border-emerald-400"
+                                  }`}
+                                >
+                                  {opt}
+                                </button>
+                              );
+                            })}
+                          </div>
                         )}
 
-                        {/* 7. Checkboxes */}
+                        {/* 12. Yes / No Confirmation (Interactive Switch Pills) */}
+                        {field.type === "yes_no" && (
+                          <div className="flex items-center gap-3 pt-1">
+                            {parsedOptions.map((opt, i) => {
+                              const isSelected = answers[field.id] === opt;
+                              return (
+                                <button
+                                  type="button"
+                                  key={i}
+                                  onClick={() => handleFieldChange(field.id, opt)}
+                                  className={`px-6 py-2.5 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                                    isSelected
+                                      ? opt === "Yes"
+                                        ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                                        : "bg-slate-700 text-white border-slate-700 shadow-sm"
+                                      : "bg-white text-slate-700 border-slate-200 hover:border-slate-400"
+                                  }`}
+                                >
+                                  {opt}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
+
+                        {/* 13. Checkboxes (Multi-select) */}
                         {field.type === "checkbox" && (
                           <div className="space-y-2 pt-1">
                             {parsedOptions.map((opt, i) => {
@@ -425,6 +553,39 @@ export function EventRegistrationView({
                                 </label>
                               );
                             })}
+                          </div>
+                        )}
+
+                        {/* 14. URL / Link */}
+                        {field.type === "url" && (
+                          <input
+                            type="url"
+                            required={field.required}
+                            placeholder={field.placeholder || "https://example.com/link"}
+                            value={answers[field.id] || ""}
+                            onChange={(e) =>
+                              handleFieldChange(field.id, e.target.value)
+                            }
+                            className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                          />
+                        )}
+
+                        {/* 15. File / Attachment / Screenshot URL */}
+                        {field.type === "file" && (
+                          <div className="space-y-2">
+                            <input
+                              type="text"
+                              required={field.required}
+                              placeholder={field.placeholder || "Google Drive link, Cloudinary URL, or transaction ID..."}
+                              value={answers[field.id] || ""}
+                              onChange={(e) =>
+                                handleFieldChange(field.id, e.target.value)
+                              }
+                              className="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600"
+                            />
+                            <p className="text-[11px] text-slate-500">
+                              Upload your file/screenshot to Google Drive, Imgur, or iCloud and paste the sharing link here.
+                            </p>
                           </div>
                         )}
                       </div>
