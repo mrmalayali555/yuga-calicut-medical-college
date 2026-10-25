@@ -23,6 +23,7 @@ import {
   Wallet,
   Settings,
   BookOpen,
+  History,
 } from "lucide-react";
 import { logoutAction } from "@/lib/actions/auth";
 import { cn } from "@/lib/utils";
@@ -57,6 +58,7 @@ const NAV = [
     section: "Site",
     items: [
       { href: "/admin/media", label: "Media Library", icon: Images },
+      { href: "/admin/changes", label: "Changes History", icon: History },
       { href: "/admin/sessions", label: "Active Sessions", icon: Users },
       { href: "/admin/settings", label: "Settings", icon: Settings },
     ],

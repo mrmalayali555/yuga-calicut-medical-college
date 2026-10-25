@@ -413,3 +413,39 @@ model Media {
 
   @@index([type])
 }
+
+// ---------------------------------------------------------------------------
+// Inline CMS — Editable content blocks for admin visual editing
+// Each block is keyed by page + blockId so admins can edit any text on the
+// public site without touching code.
+// ---------------------------------------------------------------------------
+model ContentBlock {
+  id        String        @id @default(cuid())
+  pageId    String        // "home", "about", "events", etc.
+  blockId   String        // "hero-title", "hero-subtitle", "stats-medicos", etc.
+  content   String        // The actual edited content
+  type      String        @default("text") // text | richtext | image | html
+  updatedAt DateTime      @updatedAt
+  edits     ContentEdit[]
+
+  @@unique([pageId, blockId])
+  @@index([pageId])
+}
+
+model ContentEdit {
+  id             String       @id @default(cuid())
+  contentBlock   ContentBlock @relation(fields: [contentBlockId], references: [id], onDelete: Cascade)
+  contentBlockId String
+  adminId        String       // Who made the change
+  adminName      String       // Denormalized for display
+  previousValue  String       // What it was before
+  newValue       String       // What it changed to
+  fieldLabel     String?      // Human-readable label (e.g. "Hero Title")
+  pageName       String?      // Human-readable page name (e.g. "Homepage")
+  reverted       Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+
+  @@index([contentBlockId])
+  @@index([createdAt])
+  @@index([adminId])
+}

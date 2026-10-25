@@ -7,6 +7,7 @@ import { EVENTS } from "@/lib/data";
 import { motion } from "framer-motion";
 import { AnimatedCounter } from "@/components/home/animated-counter";
 import { useTheme } from "@/components/theme/theme-context";
+import { EditableText } from "@/components/admin/inline/editable-text";
 
 const STATS = [
   { value: 3000, suffix: "+", label: "Medicos", isStatic: false },
@@ -56,9 +57,14 @@ export function Hero() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-container" />
                 </span>
-                <span className="font-label-sm text-label-sm tracking-widest uppercase font-extrabold text-[#090a0f]">
-                  LIVE TENURE 2026–2027 &nbsp;|&nbsp; GMC KOZHIKODE
-                </span>
+                <EditableText
+                  blockId="hero-status-pill"
+                  defaultContent="LIVE TENURE 2026–2027 &nbsp;|&nbsp; GMC KOZHIKODE"
+                  pageId="home"
+                  label="Status Pill Text"
+                  as="span"
+                  className="font-label-sm text-label-sm tracking-widest uppercase font-extrabold text-[#090a0f]"
+                />
               </motion.div>
 
               {/* Dominant Typographic Anchor */}
@@ -68,25 +74,42 @@ export function Hero() {
                 transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-space-xs"
               >
-                <h1 className="font-headline-xl text-headline-xl text-on-primary-container tracking-tight uppercase">
-                  THE EPOCH OF
-                </h1>
+                <EditableText
+                  blockId="hero-title-line1"
+                  defaultContent="THE EPOCH OF"
+                  pageId="home"
+                  label="Hero Title Line 1"
+                  as="h1"
+                  className="font-headline-xl text-headline-xl text-on-primary-container tracking-tight uppercase"
+                />
                 <div className="font-headline-xl text-headline-xl tracking-tighter italic font-serif">
-                  <span className="bg-gradient-to-r from-[#ff2e56] via-primary-container to-tertiary-container bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(225,29,72,0.4)]">
-                    Renewal &amp; Care
-                  </span>
+                  <EditableText
+                    blockId="hero-title-line2"
+                    defaultContent="Renewal &amp; Care"
+                    pageId="home"
+                    label="Hero Title Line 2"
+                    as="span"
+                    className="bg-gradient-to-r from-[#ff2e56] via-primary-container to-tertiary-container bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(225,29,72,0.4)]"
+                  />
                 </div>
               </motion.div>
 
               {/* Collegiate Union Manifesto */}
-              <motion.p
+              <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-                className="font-body-lg text-body-lg text-on-surface/90 max-w-2xl leading-relaxed"
               >
-                The sovereign collective voice of Calicut Medical College medicos, house surgeons, and clinical residents. Forged in sixty-eight years of militant solidarity, clinical supremacy, and uncompromising public health stewardship.
-              </motion.p>
+                <EditableText
+                  blockId="hero-manifesto"
+                  defaultContent="The sovereign collective voice of Calicut Medical College medicos, house surgeons, and clinical residents. Forged in sixty-eight years of militant solidarity, clinical supremacy, and uncompromising public health stewardship."
+                  pageId="home"
+                  label="Hero Manifesto Paragraph"
+                  as="p"
+                  className="font-body-lg text-body-lg text-on-surface/90 max-w-2xl leading-relaxed"
+                  multiline
+                />
+              </motion.div>
 
               {/* Command Dual Action Array */}
               <motion.div
@@ -160,15 +183,31 @@ export function Hero() {
 
                 {/* Card Content Body */}
                 <div className="space-y-space-xs">
-                  <span className="font-label-sm text-label-sm tracking-widest uppercase text-black/60 font-bold">
-                    Annual Intercollegiate Medical Colloquium
-                  </span>
-                  <h3 className="font-headline-md text-headline-md font-extrabold text-[#090a0f] tracking-tight leading-tight">
-                    PULSE 2026: The Sovereign Vanguard
-                  </h3>
-                  <p className="font-body-md text-body-md text-black/75 pt-space-xs">
-                    Featuring 42 clinical hackathons, state surgical simulation leagues, national med-law panels, and Calicut&apos;s landmark cultural gala.
-                  </p>
+                  <EditableText
+                    blockId="hero-card-category"
+                    defaultContent="Annual Intercollegiate Medical Colloquium"
+                    pageId="home"
+                    label="Featured Card Category"
+                    as="span"
+                    className="font-label-sm text-label-sm tracking-widest uppercase text-black/60 font-bold"
+                  />
+                  <EditableText
+                    blockId="hero-card-title"
+                    defaultContent="PULSE 2026: The Sovereign Vanguard"
+                    pageId="home"
+                    label="Featured Card Title"
+                    as="h3"
+                    className="font-headline-md text-headline-md font-extrabold text-[#090a0f] tracking-tight leading-tight"
+                  />
+                  <EditableText
+                    blockId="hero-card-description"
+                    defaultContent="Featuring 42 clinical hackathons, state surgical simulation leagues, national med-law panels, and Calicut&apos;s landmark cultural gala."
+                    pageId="home"
+                    label="Featured Card Description"
+                    as="p"
+                    className="font-body-md text-body-md text-black/75 pt-space-xs"
+                    multiline
+                  />
                 </div>
 
                 {/* Venue & Direct RSVP Action Ribbon */}

@@ -12,6 +12,7 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { EditableText } from "@/components/admin/inline/editable-text";
 
 const PORTALS = [
   {
@@ -78,15 +79,30 @@ export function QuickPortals() {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-xl mb-12"
         >
-          <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] mb-3">
-            Campus Portals
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-display text-[var(--text-primary)] font-normal">
-            Everything in one place.
-          </h2>
-          <p className="mt-2 text-sm text-[var(--text-secondary)]">
-            Direct navigation across medical student welfare, academics, and culture.
-          </p>
+          <EditableText
+            blockId="portals-label"
+            defaultContent="Campus Portals"
+            pageId="home"
+            label="Portals Section Label"
+            as="p"
+            className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] mb-3"
+          />
+          <EditableText
+            blockId="portals-title"
+            defaultContent="Everything in one place."
+            pageId="home"
+            label="Portals Section Title"
+            as="h2"
+            className="text-3xl sm:text-4xl font-display text-[var(--text-primary)] font-normal"
+          />
+          <EditableText
+            blockId="portals-subtitle"
+            defaultContent="Direct navigation across medical student welfare, academics, and culture."
+            pageId="home"
+            label="Portals Section Subtitle"
+            as="p"
+            className="mt-2 text-sm text-[var(--text-secondary)]"
+          />
         </motion.div>
 
         {/* Grid */}

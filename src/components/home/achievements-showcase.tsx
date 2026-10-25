@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Trophy, ArrowRight } from "lucide-react";
 import { ACHIEVEMENTS } from "@/lib/data";
 import { motion } from "framer-motion";
+import { EditableText } from "@/components/admin/inline/editable-text";
 
 export function AchievementsShowcase() {
   const spotlight = ACHIEVEMENTS.slice(0, 3);
@@ -20,12 +21,22 @@ export function AchievementsShowcase() {
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12"
         >
           <div>
-            <p className="text-xs font-semibold tracking-wider uppercase text-[var(--accent)] mb-3">
-              Hall of Fame
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-display text-[var(--text-primary)]">
-              Honors &amp; Laurels
-            </h2>
+            <EditableText
+              blockId="achievements-label"
+              defaultContent="Hall of Fame"
+              pageId="home"
+              label="Achievements Label"
+              as="p"
+              className="text-xs font-semibold tracking-wider uppercase text-[var(--accent)] mb-3"
+            />
+            <EditableText
+              blockId="achievements-title"
+              defaultContent="Honors &amp; Laurels"
+              pageId="home"
+              label="Achievements Title"
+              as="h2"
+              className="text-3xl sm:text-4xl font-display text-[var(--text-primary)]"
+            />
           </div>
 
           <Link href="/achievements" className="btn-secondary text-sm group">

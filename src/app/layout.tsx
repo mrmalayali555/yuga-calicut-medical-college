@@ -6,6 +6,8 @@ import { Footer } from "@/components/layout/footer";
 import { SITE, COLLEGE, YUGA } from "@/lib/site";
 import { getActiveTheme } from "@/lib/queries";
 import { ThemeProvider } from "@/components/theme/theme-context";
+import { AdminEditProvider } from "@/components/admin/inline/admin-edit-context";
+import { AdminToolbar } from "@/components/admin/inline/admin-toolbar";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -142,11 +144,14 @@ export default async function RootLayout({
       </head>
       <body className="min-h-screen bg-[var(--bg-root)] text-[var(--text-primary)] flex flex-col selection:bg-emerald-200 selection:text-emerald-900">
         <ThemeProvider initialTheme={activeTheme}>
-          <Navbar />
-          <main id="main-content" className="flex-1">
-            {children}
-          </main>
-          <Footer />
+          <AdminEditProvider>
+            <Navbar />
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+            <AdminToolbar />
+          </AdminEditProvider>
         </ThemeProvider>
       </body>
     </html>
