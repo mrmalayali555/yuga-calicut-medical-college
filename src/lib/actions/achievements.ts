@@ -49,15 +49,20 @@ export async function updateAchievement(id: string, formData: FormData) {
   await db.achievement.update({ where: { id }, data: { ...data, slug } });
   revalidatePath("/admin/achievements");
   revalidatePath("/achievements");
+  revalidatePath(`/achievements/${slug}`);
   revalidatePath("/");
   redirect("/admin/achievements");
 }
 
 export async function deleteAchievement(id: string) {
   await requireAdmin();
+  const existing = await db.achievement.findUnique({ where: { id }, select: { slug: true } });
   await db.achievement.delete({ where: { id } });
   revalidatePath("/admin/achievements");
   revalidatePath("/achievements");
+  if (existing?.slug) {
+    revalidatePath(`/achievements/${existing.slug}`);
+  }
   revalidatePath("/");
   redirect("/admin/achievements");
 }

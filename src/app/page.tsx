@@ -9,10 +9,18 @@ import { EmergencyStrip } from "@/components/home/emergency-strip";
 import { CampusVoiceCTA } from "@/components/home/campus-voice-cta";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
+import { ensureInitialEvents } from "@/lib/initial-sync";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function HomePage() {
+  await ensureInitialEvents();
+
   // Check if there is an active upcoming event in DB with a linked registration form
   let dbFeaturedEvent = null;
+  let dbRestEvents = null;
+
   try {
     let event = await db.event.findFirst({
       where: {
@@ -56,9 +64,31 @@ export default async function HomePage() {
         fieldsCount: event.registrationForm?._count?.fields ?? 0,
       };
     }
+
+    const otherEvents = await db.event.findMany({
+      where: {
+        published: true,
+        ...(event ? { id: { not: event.id } } : {}),
+      },
+      orderBy: { date: "asc" },
+      take: 3,
+    });
+
+    if (otherEvents.length > 0) {
+      dbRestEvents = otherEvents.map((e) => ({
+        id: e.id,
+        title: e.title,
+        slug: e.slug,
+        description: e.description,
+        date: formatDate(e.date),
+        time: e.time,
+        venue: e.venue,
+      }));
+    }
   } catch (e) {
     // Graceful fallback to static/mock
     dbFeaturedEvent = null;
+    dbRestEvents = null;
   }
 
   let heroCard = null;
@@ -80,7 +110,7 @@ export default async function HomePage() {
       <QuickPortals />
 
       {/* 3. Featured Event Pass & Fest Spotlight with Ovio Ticket */}
-      <EventShowcase dbFeaturedEvent={dbFeaturedEvent} />
+      <EventShowcase dbFeaturedEvent={dbFeaturedEvent} dbRestEvents={dbRestEvents} />
 
       {/* 4. Official Circulars & Notices Feed */}
       <CircularsFeed />

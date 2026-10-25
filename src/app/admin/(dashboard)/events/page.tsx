@@ -4,7 +4,13 @@ import { AdminHeader, EmptyRow, StatusPill } from "@/components/admin/admin-ui";
 import { db } from "@/lib/db";
 import { formatDateRange } from "@/lib/utils";
 
+import { ensureInitialEvents } from "@/lib/initial-sync";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function AdminEventsPage() {
+  await ensureInitialEvents();
   const events = await db.event.findMany({ orderBy: { date: "desc" } }).catch(() => []);
 
   return (
@@ -33,12 +39,32 @@ export default async function AdminEventsPage() {
               {events.map((e) => (
                 <tr key={e.id} className="transition-colors hover:bg-[var(--bg-elevated)]">
                   <td className="px-5 py-4">
-                    <Link
-                      href={`/admin/events/${e.id}`}
-                      className="font-medium text-[var(--text-primary)] hover:text-[var(--accent)]"
-                    >
-                      {e.title}
-                    </Link>
+                    <div className="flex items-center gap-3">
+                      {e.poster ? (
+                        <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-[var(--border-primary)] bg-[var(--bg-elevated)]">
+                          <img
+                            src={e.poster}
+                            alt=""
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-dashed border-[var(--border-primary)] text-[var(--text-muted)] text-[10px] font-bold">
+                          NO IMG
+                        </div>
+                      )}
+                      <div>
+                        <Link
+                          href={`/admin/events/${e.id}`}
+                          className="font-medium text-[var(--text-primary)] hover:text-[var(--accent)]"
+                        >
+                          {e.title}
+                        </Link>
+                        {e.venue && (
+                          <p className="text-xs text-[var(--text-muted)] truncate max-w-[240px]">{e.venue}</p>
+                        )}
+                      </div>
+                    </div>
                   </td>
                   <td className="hidden px-5 py-4 text-[var(--text-muted)] sm:table-cell">
                     {formatDateRange(e.date, e.endDate)}

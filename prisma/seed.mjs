@@ -100,83 +100,117 @@ async function main() {
   }
 
   // --- Achievements ---
-  await db.achievementMedia.deleteMany();
-  await db.achievement.deleteMany();
   const achievements = [
     {
-      title: "Inter-Medical Football Championship 2026",
-      slug: "inter-medical-football-2026",
-      category: "sports",
-      description:
-        "Our team lifted the state inter-medical football trophy after a thrilling final, defeating the hosts 2–1 in extra time.",
-      date: daysFromNow(-20),
-    },
-    {
-      title: "First Prize — State Youth Festival (Music)",
-      slug: "state-youth-festival-music",
+      title: "Overall Champions — KUHS Inter-Zone Arts Festival 2026",
+      slug: "kuhs-arts-champions",
       category: "arts",
+      awardWinner: "Calicut Medicos Arts Contingent (All Batches)",
       description:
-        "ADVAYA's music troupe secured first place in the group song category at the state medical youth festival.",
-      date: daysFromNow(-40),
+        "Lifted the prestigious Ever-Rolling Golden Trophy for the 4th consecutive year with 18 first prizes across competitive disciplines.",
+      date: daysFromNow(-20),
+      coverImage:
+        "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80",
     },
     {
-      title: "Best Research Paper — National Med Conclave",
-      slug: "best-research-paper-med-conclave",
-      category: "academics",
-      description:
-        "A final-year student's research on rural healthcare access won best paper at the national medical students' conclave.",
-      date: daysFromNow(-8),
-    },
-    {
-      title: "Gold in Inter-College Athletics Meet",
-      slug: "gold-inter-college-athletics",
+      title: "State Inter-Medical Football Championship Winners",
+      slug: "intermed-football-trophy",
       category: "sports",
+      awardWinner: "CMC Kozhikode Football Team (UG & PG)",
       description:
-        "Three golds and a new meet record in the 4x100m relay at the university athletics meet.",
+        "Defeated the tournament hosts 3-1 in a nail-biting final under floodlights to secure the championship trophy.",
+      date: daysFromNow(-40),
+      coverImage:
+        "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80",
+    },
+    {
+      title: "14 ICMR Short-Term Studentship (STS) Research Awards",
+      slug: "icmr-sts-grants",
+      category: "academics",
+      awardWinner: "Undergraduate Scholars (MBBS Phase 2 & 3)",
+      description:
+        "Highest number of ICMR research grants bagged by any single medical institution in Kerala for student-led biomedical inquiries.",
+      date: daysFromNow(-8),
+      coverImage:
+        "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80",
+    },
+    {
+      title: "First Prize — National Pharmacology Conclave Quiz",
+      slug: "national-quiz-gold",
+      category: "academics",
+      awardWinner: "Dr. Rohith Krishna & Dr. Sneha Paul (Final MBBS)",
+      description:
+        "Secured top position competing against 64 premier medical colleges across India in clinical therapeutics and pharmacology.",
       date: daysFromNow(-60),
+      coverImage:
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
     },
   ];
   for (const a of achievements) {
-    await db.achievement.create({ data: a });
+    await db.achievement.upsert({
+      where: { slug: a.slug },
+      update: {},
+      create: a,
+    });
   }
 
   // --- Events ---
-  await db.eventMedia.deleteMany();
-  await db.event.deleteMany();
   const events = [
     {
-      title: "ADVAYA Union Day 2026",
-      slug: "advaya-union-day-2026",
+      title: "YUGA Arts Fest 2026 — Rhythms of GMC",
+      slug: "yuga-arts-fest",
       description:
-        "The flagship celebration of the year — cultural performances, awards, food stalls and a night of music.",
-      date: daysFromNow(21),
-      time: "5:00 PM",
-      venue: "College Main Auditorium",
+        "Annual inter-batch cultural battle across 42 competitive disciplines including music, dance, literary arts, and theatrical performances.",
+      date: daysFromNow(5),
+      time: "9:00 AM onwards",
+      venue: "Main Auditorium & Open Air Stage",
       status: "upcoming",
+      poster:
+        "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80",
     },
     {
-      title: "Blood Donation Camp",
+      title: "Calicut Medicos Premier League (CMPL VIII)",
+      slug: "calicut-medicos-premier-league",
+      description:
+        "Under-floodlights night cricket tournament with 12 franchise batches competing for the coveted Calicut Medicos Cup.",
+      date: daysFromNow(12),
+      time: "5:00 PM – 11:00 PM",
+      venue: "GMC Stadium Ground",
+      status: "live",
+      poster:
+        "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1200&q=80",
+    },
+    {
+      title: "Caduceus Acoustic Night & Unplugged Jam",
+      slug: "caduceus-music-night",
+      description:
+        "Soulful musical journey curated by the GMC Fine Arts Club featuring indie melodies, violin overtures, and acoustic medleys.",
+      date: daysFromNow(20),
+      time: "6:30 PM",
+      venue: "OAT Amphitheatre",
+      status: "upcoming",
+      poster:
+        "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=1200&q=80",
+    },
+    {
+      title: "Mega Voluntary Blood Donation Drive",
       slug: "blood-donation-camp",
       description:
-        "In association with the district blood bank. Every donor counts — be a lifesaver.",
-      date: daysFromNow(9),
-      time: "9:00 AM",
-      venue: "OPD Block, Ground Floor",
-      status: "upcoming",
-    },
-    {
-      title: "Freshers' Welcome 2026",
-      slug: "freshers-welcome-2026",
-      description:
-        "A warm welcome to the incoming batch with performances, games and mentorship pairing.",
-      date: daysFromNow(-15),
-      time: "6:00 PM",
-      venue: "Open Air Theatre",
+        "Organised in association with CMC Blood Bank & Red Cross. Every donor counts — be a lifesaver for patients across North Kerala.",
+      date: daysFromNow(-10),
+      time: "9:00 AM – 1:00 PM",
+      venue: "OPD Complex Ground Floor",
       status: "completed",
+      poster:
+        "https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=1200&q=80",
     },
   ];
   for (const e of events) {
-    await db.event.create({ data: e });
+    await db.event.upsert({
+      where: { slug: e.slug },
+      update: {},
+      create: e,
+    });
   }
 
   // --- Registration Forms ---

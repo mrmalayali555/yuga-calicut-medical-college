@@ -3,8 +3,13 @@ import { Pencil } from "lucide-react";
 import { AdminHeader, EmptyRow, StatusPill } from "@/components/admin/admin-ui";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
+import { ensureInitialAchievements } from "@/lib/initial-sync";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function AdminAchievementsPage() {
+  await ensureInitialAchievements();
   const items = await db.achievement.findMany({ orderBy: { date: "desc" } }).catch(() => []);
 
   return (

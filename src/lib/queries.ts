@@ -64,6 +64,7 @@ export async function getMarquee() {
 
 // --- Achievements ---
 export async function getAchievements(opts?: { category?: string; take?: number }) {
+  await ensureInitialAchievements();
   try {
     const dbAchievements = await db.achievement.findMany({
       where: {
@@ -76,7 +77,8 @@ export async function getAchievements(opts?: { category?: string; take?: number 
       take: opts?.take,
       include: { media: { orderBy: { order: "asc" } } },
     });
-    if (dbAchievements.length > 0) return dbAchievements;
+    const totalCount = await db.achievement.count();
+    if (totalCount > 0) return dbAchievements;
   } catch (err) {
     console.error("Error querying achievements from db:", err);
   }
@@ -137,7 +139,10 @@ export async function getAchievement(slug: string) {
 }
 
 // --- Events ---
+import { ensureInitialEvents, ensureInitialAchievements } from "@/lib/initial-sync";
+
 export async function getEvents(opts?: { status?: string; take?: number }) {
+  await ensureInitialEvents();
   try {
     const dbEvents = await db.event.findMany({
       where: {
@@ -152,9 +157,11 @@ export async function getEvents(opts?: { status?: string; take?: number }) {
         gallery: { include: { photos: { orderBy: { position: "asc" } } } },
         committee: { select: { id: true, name: true, slug: true } },
         committees: { select: { id: true, name: true, slug: true } },
+        registrationForm: { select: { id: true, title: true, slug: true, published: true, deadline: true } },
       },
     });
-    if (dbEvents.length > 0) return dbEvents;
+    const totalCount = await db.event.count();
+    if (totalCount > 0) return dbEvents;
   } catch (err) {
     console.error("Error querying events from db:", err);
   }

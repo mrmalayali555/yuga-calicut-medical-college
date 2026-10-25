@@ -26,9 +26,20 @@ interface EventShowcaseProps {
     venue?: string | null;
     fieldsCount?: number;
   } | null;
+  dbRestEvents?: {
+    id: string;
+    title: string;
+    slug?: string;
+    subtitle?: string;
+    description?: string;
+    date: string;
+    time?: string | null;
+    venue?: string | null;
+    category?: string;
+  }[] | null;
 }
 
-export function EventShowcase({ dbFeaturedEvent }: EventShowcaseProps) {
+export function EventShowcase({ dbFeaturedEvent, dbRestEvents }: EventShowcaseProps) {
   // Use DB event if available, otherwise fallback to first event in mock
   const fallback = EVENTS[0];
   const featured = dbFeaturedEvent || {
@@ -42,7 +53,9 @@ export function EventShowcase({ dbFeaturedEvent }: EventShowcaseProps) {
     fieldsCount: 5, // Triggers Google-Form 2-step registration
   };
 
-  const rest = EVENTS.slice(1, 4);
+  const rest = (dbRestEvents && dbRestEvents.length > 0)
+    ? dbRestEvents
+    : (EVENTS.slice(1, 4) as any[]);
 
   return (
     <section className="py-24 sm:py-32 border-t border-[var(--border-primary)] bg-[var(--bg-root)] relative overflow-hidden transition-colors">
@@ -147,13 +160,13 @@ export function EventShowcase({ dbFeaturedEvent }: EventShowcaseProps) {
                 whileTap={{ scale: 0.98 }}
               >
                 <Link
-                  href={`/events/${event.id}/register`}
+                  href={`/events/${event.slug || event.id}/register`}
                   className="group block p-6 rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] hover:border-[var(--accent)] hover:shadow-lg transition-[border-color,box-shadow] duration-[180ms] h-full flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-3">
                       <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--accent)] bg-[var(--accent-subtle)] px-2 py-0.5 rounded-md border border-[var(--border-primary)]">
-                        {event.category}
+                        {event.category || "CAMPUS"}
                       </span>
                       <span className="text-xs text-[var(--text-faint)] font-mono font-medium">
                         {event.date}
@@ -165,7 +178,7 @@ export function EventShowcase({ dbFeaturedEvent }: EventShowcaseProps) {
                     </h4>
 
                     <p className="mt-2 text-xs text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
-                      {event.subtitle}
+                      {event.subtitle || event.description}
                     </p>
                   </div>
 

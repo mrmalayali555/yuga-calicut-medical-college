@@ -52,15 +52,20 @@ export async function updateEvent(id: string, formData: FormData) {
   await db.event.update({ where: { id }, data: { ...data, slug } });
   revalidatePath("/admin/events");
   revalidatePath("/events");
+  revalidatePath(`/events/${slug}`);
   revalidatePath("/");
   redirect("/admin/events");
 }
 
 export async function deleteEvent(id: string) {
   await requireAdmin();
+  const existing = await db.event.findUnique({ where: { id }, select: { slug: true } });
   await db.event.delete({ where: { id } });
   revalidatePath("/admin/events");
   revalidatePath("/events");
+  if (existing?.slug) {
+    revalidatePath(`/events/${existing.slug}`);
+  }
   revalidatePath("/");
   redirect("/admin/events");
 }
