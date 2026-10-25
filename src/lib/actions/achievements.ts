@@ -66,3 +66,40 @@ export async function deleteAchievement(id: string) {
   revalidatePath("/");
   redirect("/admin/achievements");
 }
+
+export async function updateAchievementsSliderAction(data: { autoplay: boolean; interval: number }) {
+  await requireAdmin();
+  let interval = Number(data.interval);
+  if (isNaN(interval) || interval < 2) interval = 2;
+  if (interval > 30) interval = 30;
+  const autoplay = Boolean(data.autoplay);
+
+  await db.setting.upsert({
+    where: { key: "achievements_slider" },
+    update: { value: JSON.stringify({ autoplay, interval }) },
+    create: { key: "achievements_slider", value: JSON.stringify({ autoplay, interval }) },
+  });
+
+  revalidatePath("/");
+  revalidatePath("/admin/settings");
+  revalidatePath("/admin/achievements");
+  return { success: true, autoplay, interval };
+}
+
+export async function saveAchievementsSliderForm(formData: FormData) {
+  await requireAdmin();
+  const autoplay = formData.get("achievements_autoplay") === "on" || formData.get("autoplay") === "true";
+  let interval = Number(formData.get("achievements_interval") || formData.get("interval") || 3);
+  if (isNaN(interval) || interval < 2) interval = 2;
+  if (interval > 30) interval = 30;
+
+  await db.setting.upsert({
+    where: { key: "achievements_slider" },
+    update: { value: JSON.stringify({ autoplay, interval }) },
+    create: { key: "achievements_slider", value: JSON.stringify({ autoplay, interval }) },
+  });
+
+  revalidatePath("/");
+  revalidatePath("/admin/settings");
+  revalidatePath("/admin/achievements");
+}

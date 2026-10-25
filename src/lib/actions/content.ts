@@ -180,6 +180,17 @@ export async function saveSettingsForm(formData: FormData) {
     };
 
     const activeThemeRaw = formData.get("active_theme");
+
+    const achievementsAutoplay = formData.get("achievements_autoplay") === "on";
+    let achievementsInterval = Number(formData.get("achievements_interval") || 3);
+    if (isNaN(achievementsInterval) || achievementsInterval < 2) achievementsInterval = 2;
+    if (achievementsInterval > 30) achievementsInterval = 30;
+
+    const achievementsSlider = {
+      autoplay: achievementsAutoplay,
+      interval: achievementsInterval,
+    };
+
     const promises: Promise<unknown>[] = [
       saveSetting("hero", hero),
       saveSetting("identity", identity),
@@ -189,6 +200,7 @@ export async function saveSettingsForm(formData: FormData) {
       saveSetting("nav_search", navSearch),
       saveSetting("hero_card", heroCard),
       saveSetting("grid_layouts", gridLayouts),
+      saveSetting("achievements_slider", achievementsSlider),
     ];
 
     if (activeThemeRaw) {

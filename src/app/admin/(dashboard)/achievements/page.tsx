@@ -4,13 +4,18 @@ import { AdminHeader, EmptyRow, StatusPill } from "@/components/admin/admin-ui";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
 import { ensureInitialAchievements } from "@/lib/initial-sync";
+import { AchievementsSliderControl } from "@/components/admin/achievements-slider-control";
+import { getAchievementsSliderSettings } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function AdminAchievementsPage() {
   await ensureInitialAchievements();
-  const items = await db.achievement.findMany({ orderBy: { date: "desc" } }).catch(() => []);
+  const [items, sliderSettings] = await Promise.all([
+    db.achievement.findMany({ orderBy: { date: "desc" } }).catch(() => []),
+    getAchievementsSliderSettings(),
+  ]);
 
   return (
     <>
@@ -19,6 +24,11 @@ export default async function AdminAchievementsPage() {
         description="Celebrate wins and records across sports tournaments, arts fests, and medical academic conferences."
         action={{ label: "New achievement", href: "/admin/achievements/new" }}
       />
+
+      <div className="mb-8">
+        <AchievementsSliderControl initialSettings={sliderSettings} />
+      </div>
+
       {items.length === 0 ? (
         <EmptyRow>No achievements recorded yet. Click &apos;New achievement&apos; to add one.</EmptyRow>
       ) : (

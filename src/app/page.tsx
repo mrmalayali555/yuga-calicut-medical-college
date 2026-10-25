@@ -10,7 +10,7 @@ import { CampusVoiceCTA } from "@/components/home/campus-voice-cta";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
 import { ensureInitialEvents } from "@/lib/initial-sync";
-import { getNotifications } from "@/lib/queries";
+import { getNotifications, getAchievements, getAchievementsSliderSettings } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -109,6 +109,19 @@ export default async function HomePage() {
     dbCirculars = [];
   }
 
+  let dbAchievements: any[] = [];
+  let sliderSettings = { autoplay: true, interval: 3 };
+  try {
+    const [achievementsRes, settingsRes] = await Promise.all([
+      getAchievements({ take: 6 }),
+      getAchievementsSliderSettings(),
+    ]);
+    dbAchievements = achievementsRes;
+    sliderSettings = settingsRes;
+  } catch (err) {
+    console.warn("Could not fetch achievements or slider settings:", err);
+  }
+
   return (
     <>
       {/* 1. Hero with Live Metrics & Announcement Marquee */}
@@ -124,7 +137,7 @@ export default async function HomePage() {
       <CircularsFeed initialCirculars={dbCirculars} />
 
       {/* 5. Calicut Medicos Hall of Fame */}
-      <AchievementsShowcase />
+      <AchievementsShowcase initialAchievements={dbAchievements} sliderSettings={sliderSettings} />
 
       {/* 6. Interactive 3D Heritage Monument (Tenshu Growth Study) */}
       <HeritageMonument3D />

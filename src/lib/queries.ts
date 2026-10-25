@@ -41,6 +41,20 @@ export interface GridLayoutSettings {
   notificationsColumns: 1 | 2 | 3;
 }
 
+export interface AchievementsSliderSettings {
+  autoplay: boolean;
+  interval: number; // in seconds, 2 to 30
+}
+
+export async function getAchievementsSliderSettings(): Promise<AchievementsSliderSettings> {
+  const settings = await getSetting<Partial<AchievementsSliderSettings>>("achievements_slider", {});
+  const autoplay = settings?.autoplay !== undefined ? Boolean(settings.autoplay) : true;
+  let interval = typeof settings?.interval === "number" ? settings.interval : 3;
+  if (isNaN(interval) || interval < 2) interval = 2;
+  if (interval > 30) interval = 30;
+  return { autoplay, interval };
+}
+
 export async function getGridLayoutSettings(): Promise<GridLayoutSettings> {
   const settings = await getSetting<Partial<GridLayoutSettings>>("grid_layouts", {});
   return {

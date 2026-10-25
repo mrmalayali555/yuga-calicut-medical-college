@@ -5,7 +5,8 @@ import { saveSettingsForm } from "@/lib/actions/content";
 import { COLLEGE, YUGA, SITE } from "@/lib/site";
 import { ThemeSwitcher } from "@/components/admin/theme-switcher";
 import { GridLayoutControl } from "@/components/admin/grid-layout-control";
-import { getGridLayoutSettings, type SiteTheme } from "@/lib/queries";
+import { AchievementsSliderControl } from "@/components/admin/achievements-slider-control";
+import { getGridLayoutSettings, getAchievementsSliderSettings, type SiteTheme } from "@/lib/queries";
 
 async function getSetting<T>(key: string, fallback: T): Promise<T> {
   try {
@@ -17,7 +18,7 @@ async function getSetting<T>(key: string, fallback: T): Promise<T> {
 }
 
 export default async function AdminSettingsPage() {
-  const [hero, identity, contact, stats, socials, navSearch, themeSetting, heroCard, gridLayout] = await Promise.all([
+  const [hero, identity, contact, stats, socials, navSearch, themeSetting, heroCard, gridLayout, sliderSettings] = await Promise.all([
     getSetting("hero", {
       badge: COLLEGE.name,
       title: "The Voice of Calicut Medicos",
@@ -64,6 +65,7 @@ export default async function AdminSettingsPage() {
       image: "/pulse-stage.jpg",
     }),
     getGridLayoutSettings(),
+    getAchievementsSliderSettings(),
   ]);
 
   return (
@@ -72,6 +74,10 @@ export default async function AdminSettingsPage() {
         title="Site Branding & Configuration"
         description="Central site configuration system. Change theme aesthetic, union identity, college name, branding, contact hotlines, social channels, and public visibility without rewriting code."
       />
+
+      <div className="mb-8 space-y-6">
+        <AchievementsSliderControl initialSettings={sliderSettings} />
+      </div>
 
       <form action={saveSettingsForm} className="space-y-8">
         {/* Dynamic Theme Switcher */}
