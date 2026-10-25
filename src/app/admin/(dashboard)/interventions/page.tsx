@@ -9,23 +9,33 @@ import {
   togglePublishIntervention,
   togglePinIntervention,
 } from "@/lib/actions/interventions";
+import { ensureInitialInterventions } from "@/lib/initial-sync";
+import { getGridLayoutSettings } from "@/lib/queries";
+import { GridLayoutControl } from "@/components/admin/grid-layout-control";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function AdminInterventionsPage({
   searchParams,
 }: {
   searchParams: Promise<{ status?: string; q?: string }>;
 }) {
+  await ensureInitialInterventions();
   const { status = "all", q = "" } = await searchParams;
 
-  const items = await db.intervention.findMany({
-    where: {
-      ...(status === "published" ? { published: true } : {}),
-      ...(status === "draft" ? { published: false } : {}),
-      ...(status === "pinned" ? { pinned: true } : {}),
-      ...(q ? { OR: [{ title: { contains: q } }, { description: { contains: q } }] } : {}),
-    },
-    orderBy: [{ pinned: "desc" }, { date: "desc" }],
-  }).catch(() => []);
+  const [items, gridLayout] = await Promise.all([
+    db.intervention.findMany({
+      where: {
+        ...(status === "published" ? { published: true } : {}),
+        ...(status === "draft" ? { published: false } : {}),
+        ...(status === "pinned" ? { pinned: true } : {}),
+        ...(q ? { OR: [{ title: { contains: q } }, { description: { contains: q } }] } : {}),
+      },
+      orderBy: [{ pinned: "desc" }, { date: "desc" }],
+    }).catch(() => []),
+    getGridLayoutSettings(),
+  ]);
 
   const tabs = [
     { key: "all", label: "All" },
@@ -41,6 +51,14 @@ export default async function AdminInterventionsPage({
         description="Official representations, charter submissions, and institutional memoranda submitted to university and college administrations."
         action={{ label: "Add intervention", href: "/admin/interventions/new" }}
       />
+
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <GridLayoutControl
+          compact
+          type="interventions"
+          initialColumns={gridLayout.interventionsColumns}
+        />
+      </div>
 
       {/* Tabs */}
       <div className="mb-6 flex flex-wrap items-center gap-2">

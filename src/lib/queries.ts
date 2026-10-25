@@ -35,6 +35,27 @@ export async function getActiveTheme(): Promise<SiteTheme> {
   return themeSetting?.active === "emerald" ? "emerald" : "obsidian-crimson";
 }
 
+export interface GridLayoutSettings {
+  eventsColumns: 1 | 2 | 3;
+  interventionsColumns: 1 | 2 | 3;
+  notificationsColumns: 1 | 2 | 3;
+}
+
+export async function getGridLayoutSettings(): Promise<GridLayoutSettings> {
+  const settings = await getSetting<Partial<GridLayoutSettings>>("grid_layouts", {});
+  return {
+    eventsColumns: (settings?.eventsColumns === 1 || settings?.eventsColumns === 2 || settings?.eventsColumns === 3)
+      ? settings.eventsColumns
+      : 3,
+    interventionsColumns: (settings?.interventionsColumns === 1 || settings?.interventionsColumns === 2 || settings?.interventionsColumns === 3)
+      ? settings.interventionsColumns
+      : 2,
+    notificationsColumns: (settings?.notificationsColumns === 1 || settings?.notificationsColumns === 2 || settings?.notificationsColumns === 3)
+      ? settings.notificationsColumns
+      : 1,
+  };
+}
+
 
 export async function getPage(key: string) {
   try {
@@ -139,7 +160,12 @@ export async function getAchievement(slug: string) {
 }
 
 // --- Events ---
-import { ensureInitialEvents, ensureInitialAchievements } from "@/lib/initial-sync";
+import {
+  ensureInitialEvents,
+  ensureInitialAchievements,
+  ensureInitialInterventions,
+  ensureInitialNotifications,
+} from "@/lib/initial-sync";
 
 export async function getEvents(opts?: { status?: string; take?: number }) {
   await ensureInitialEvents();
@@ -263,13 +289,15 @@ export async function getEvent(slug: string) {
 
 // --- Notifications ---
 export async function getNotifications(take?: number) {
+  await ensureInitialNotifications();
   try {
     const dbNotifs = await db.notification.findMany({
       where: { published: true },
       orderBy: { date: "desc" },
       take,
     });
-    if (dbNotifs.length > 0) return dbNotifs;
+    const totalCount = await db.notification.count();
+    if (totalCount > 0) return dbNotifs;
   } catch (err) {
     console.error("Error querying notifications:", err);
   }
@@ -320,13 +348,15 @@ export async function getNotification(slug: string) {
 
 // --- Interventions ---
 export async function getInterventions(take?: number) {
+  await ensureInitialInterventions();
   try {
     const dbItems = await db.intervention.findMany({
       where: { published: true },
       orderBy: [{ pinned: "desc" }, { date: "desc" }],
       take,
     });
-    if (dbItems.length > 0) return dbItems;
+    const totalCount = await db.intervention.count();
+    if (totalCount > 0) return dbItems;
   } catch (err) {
     console.error("Error querying interventions:", err);
   }

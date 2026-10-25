@@ -10,6 +10,7 @@ import { CampusVoiceCTA } from "@/components/home/campus-voice-cta";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
 import { ensureInitialEvents } from "@/lib/initial-sync";
+import { getNotifications } from "@/lib/queries";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -101,6 +102,13 @@ export default async function HomePage() {
     heroCard = null;
   }
 
+  let dbCirculars: any[] = [];
+  try {
+    dbCirculars = await getNotifications(4);
+  } catch {
+    dbCirculars = [];
+  }
+
   return (
     <>
       {/* 1. Hero with Live Metrics & Announcement Marquee */}
@@ -113,7 +121,7 @@ export default async function HomePage() {
       <EventShowcase dbFeaturedEvent={dbFeaturedEvent} dbRestEvents={dbRestEvents} />
 
       {/* 4. Official Circulars & Notices Feed */}
-      <CircularsFeed />
+      <CircularsFeed initialCirculars={dbCirculars} />
 
       {/* 5. Calicut Medicos Hall of Fame */}
       <AchievementsShowcase />

@@ -181,3 +181,135 @@ export async function ensureInitialAchievements() {
     // Graceful fallback
   }
 }
+
+export const INITIAL_YUGA_INTERVENTIONS = [
+  {
+    title: "Petition for 24/7 Air-Conditioned Central Reading Rooms in Men's & Women's Hostels",
+    slug: "inv-reading-rooms",
+    category: "Hostel & Living",
+    description: "Secured sanction for high-speed Wi-Fi, ergonomic seating, and air-conditioning in both hostel reading halls before regular exams. Submitted to Principal & DME Kerala.",
+    date: new Date("2026-10-10T10:00:00.000Z"),
+    image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1200&q=80",
+    pinned: true,
+  },
+  {
+    title: "Urgent Memorandum on Elevator Repair & Wheelchair Access in New OPD Block",
+    slug: "inv-opd-ramp",
+    category: "Hospital & Clinical",
+    description: "Highlighted difficulties faced by elderly patients and clinical students due to elevator outages in the multi-tier OPD block. Addressed to Medical Superintendent.",
+    date: new Date("2026-09-28T11:00:00.000Z"),
+    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
+    pinned: true,
+  },
+  {
+    title: "Representation on Predictable Monthly Credit Schedule for House Surgeons & PGs",
+    slug: "inv-stipend-timely",
+    category: "Welfare",
+    description: "Ensured recurring automatic credit of monthly stipends on or before the 5th of every calendar month through direct treasury pipeline.",
+    date: new Date("2026-09-15T09:00:00.000Z"),
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80",
+    pinned: false,
+  },
+  {
+    title: "Proposal for Extended Night Canteen Hours Near Casualty for On-Call Doctors",
+    slug: "inv-canteen-night",
+    category: "Hostel & Living",
+    description: "Requested hot meals and clean beverage availability past 11:00 PM for night-shift medicos, interns, and patient bystanders near Main Casualty.",
+    date: new Date("2026-10-02T16:00:00.000Z"),
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
+    pinned: false,
+  },
+];
+
+export async function ensureInitialInterventions() {
+  try {
+    const syncSetting = await db.setting.findUnique({
+      where: { key: "yuga_initial_interventions_synced" },
+    }).catch(() => null);
+
+    if (syncSetting?.value === "true") {
+      return;
+    }
+
+    for (const item of INITIAL_YUGA_INTERVENTIONS) {
+      await db.intervention.upsert({
+        where: { slug: item.slug },
+        update: {},
+        create: {
+          title: item.title,
+          slug: item.slug,
+          category: item.category,
+          description: item.description,
+          date: item.date,
+          image: item.image,
+          pinned: item.pinned,
+          published: true,
+        },
+      });
+    }
+
+    await db.setting.upsert({
+      where: { key: "yuga_initial_interventions_synced" },
+      update: { value: "true" },
+      create: { key: "yuga_initial_interventions_synced", value: "true" },
+    });
+  } catch (err) {
+    // Graceful fallback
+  }
+}
+
+export const INITIAL_YUGA_NOTIFICATIONS = [
+  {
+    title: "KUHS Final Professional MBBS Part II Regular Exam Timetable Despatch",
+    slug: "kuhs-nov-exams-2026",
+    description: "Theory examinations for Medicine, Surgery, Pediatrics, and OBG begin Nov 16, 2026. Hall tickets available through the respective department academic coordinators.",
+    date: new Date("2026-10-15T09:00:00.000Z"),
+  },
+  {
+    title: "24/7 Air-Conditioned Central Reading Room Operational Hours for Exam Term",
+    slug: "hostel-wifi-reading-room",
+    description: "Reading rooms in Men's and Women's hostels remain open 24 hours with dedicated high-speed Wi-Fi and power backup facilities for all professional batches.",
+    date: new Date("2026-10-12T14:00:00.000Z"),
+  },
+  {
+    title: "Call for Organizing Committee Volunteers for YUGA '26 Cultural Fest",
+    slug: "yuga-volunteers-call",
+    description: "Applications open for Stage Coordination, Media Coverage, Guest Relations, and Technical Hospitality Wings. Register via the union portal.",
+    date: new Date("2026-10-08T11:00:00.000Z"),
+  },
+];
+
+export async function ensureInitialNotifications() {
+  try {
+    const syncSetting = await db.setting.findUnique({
+      where: { key: "yuga_initial_notifications_synced" },
+    }).catch(() => null);
+
+    if (syncSetting?.value === "true") {
+      return;
+    }
+
+    for (const item of INITIAL_YUGA_NOTIFICATIONS) {
+      await db.notification.upsert({
+        where: { slug: item.slug },
+        update: {},
+        create: {
+          title: item.title,
+          slug: item.slug,
+          description: item.description,
+          date: item.date,
+          published: true,
+        },
+      });
+    }
+
+    await db.setting.upsert({
+      where: { key: "yuga_initial_notifications_synced" },
+      update: { value: "true" },
+      create: { key: "yuga_initial_notifications_synced", value: "true" },
+    });
+  } catch (err) {
+    // Graceful fallback
+  }
+}
+

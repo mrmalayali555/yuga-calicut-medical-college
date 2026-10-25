@@ -4,8 +4,19 @@ import { AdminHeader, EmptyRow, StatusPill } from "@/components/admin/admin-ui";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
 
+import { ensureInitialNotifications } from "@/lib/initial-sync";
+import { getGridLayoutSettings } from "@/lib/queries";
+import { GridLayoutControl } from "@/components/admin/grid-layout-control";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function AdminNotificationsPage() {
-  const items = await db.notification.findMany({ orderBy: { date: "desc" } }).catch(() => []);
+  await ensureInitialNotifications();
+  const [items, gridLayout] = await Promise.all([
+    db.notification.findMany({ orderBy: { date: "desc" } }).catch(() => []),
+    getGridLayoutSettings(),
+  ]);
 
   return (
     <>
@@ -14,6 +25,14 @@ export default async function AdminNotificationsPage() {
         description="Publish official university orders, union circulars, and academic notifications."
         action={{ label: "New notification", href: "/admin/notifications/new" }}
       />
+
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <GridLayoutControl
+          compact
+          type="notifications"
+          initialColumns={gridLayout.notificationsColumns}
+        />
+      </div>
       {items.length === 0 ? (
         <EmptyRow>No notifications posted yet. Click &apos;New notification&apos; to publish one.</EmptyRow>
       ) : (

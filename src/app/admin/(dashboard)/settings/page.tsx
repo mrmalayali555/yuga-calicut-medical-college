@@ -4,7 +4,8 @@ import { db } from "@/lib/db";
 import { saveSettingsForm } from "@/lib/actions/content";
 import { COLLEGE, YUGA, SITE } from "@/lib/site";
 import { ThemeSwitcher } from "@/components/admin/theme-switcher";
-import type { SiteTheme } from "@/lib/queries";
+import { GridLayoutControl } from "@/components/admin/grid-layout-control";
+import { getGridLayoutSettings, type SiteTheme } from "@/lib/queries";
 
 async function getSetting<T>(key: string, fallback: T): Promise<T> {
   try {
@@ -16,7 +17,7 @@ async function getSetting<T>(key: string, fallback: T): Promise<T> {
 }
 
 export default async function AdminSettingsPage() {
-  const [hero, identity, contact, stats, socials, navSearch, themeSetting, heroCard] = await Promise.all([
+  const [hero, identity, contact, stats, socials, navSearch, themeSetting, heroCard, gridLayout] = await Promise.all([
     getSetting("hero", {
       badge: COLLEGE.name,
       title: "The Voice of Calicut Medicos",
@@ -61,6 +62,7 @@ export default async function AdminSettingsPage() {
       btnText: "Delegate Pass →",
       btnLink: "/events",
     }),
+    getGridLayoutSettings(),
   ]);
 
   return (
@@ -74,6 +76,36 @@ export default async function AdminSettingsPage() {
         {/* Dynamic Theme Switcher */}
         <AdminCard>
           <ThemeSwitcher initialTheme={themeSetting.active || "emerald"} />
+        </AdminCard>
+
+        {/* Public Grid Layouts & Display Columns */}
+        <AdminCard>
+          <div className="mb-4">
+            <h3 className="text-base font-bold text-[var(--text-primary)]">
+              Public Page Grid Layouts &amp; Card Columns
+            </h3>
+            <p className="text-xs text-[var(--text-muted)] mt-0.5">
+              Admin control to switch between 1 card per row, 2 cards per row, or 3 cards per row across public pages.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            <GridLayoutControl
+              type="events"
+              label="Public Events Listing"
+              initialColumns={gridLayout.eventsColumns}
+            />
+            <GridLayoutControl
+              type="interventions"
+              label="Public Union Interventions Listing"
+              initialColumns={gridLayout.interventionsColumns}
+            />
+            <GridLayoutControl
+              type="notifications"
+              label="Public Circulars &amp; Notifications Listing"
+              initialColumns={gridLayout.notificationsColumns}
+            />
+          </div>
         </AdminCard>
 
         {/* Union Identity */}

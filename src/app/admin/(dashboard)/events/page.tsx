@@ -5,21 +5,36 @@ import { db } from "@/lib/db";
 import { formatDateRange } from "@/lib/utils";
 
 import { ensureInitialEvents } from "@/lib/initial-sync";
+import { getGridLayoutSettings } from "@/lib/queries";
+import { GridLayoutControl } from "@/components/admin/grid-layout-control";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function AdminEventsPage() {
   await ensureInitialEvents();
-  const events = await db.event.findMany({ orderBy: { date: "desc" } }).catch(() => []);
+  const [events, gridLayout] = await Promise.all([
+    db.event.findMany({ orderBy: { date: "desc" } }).catch(() => []),
+    getGridLayoutSettings(),
+  ]);
 
   return (
     <>
-      <AdminHeader
-        title="Events"
-        description="Create and manage union events, workshops, cultural fests, and sports meets."
-        action={{ label: "New event", href: "/admin/events/new" }}
-      />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+        <AdminHeader
+          title="Events"
+          description="Create and manage union events, workshops, cultural fests, and sports meets."
+          action={{ label: "New event", href: "/admin/events/new" }}
+        />
+      </div>
+
+      <div className="mb-6 flex items-center justify-between">
+        <GridLayoutControl
+          compact
+          type="events"
+          initialColumns={gridLayout.eventsColumns}
+        />
+      </div>
 
       {events.length === 0 ? (
         <EmptyRow>No events created yet. Click &apos;New event&apos; to add one.</EmptyRow>

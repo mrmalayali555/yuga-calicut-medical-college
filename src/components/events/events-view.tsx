@@ -70,8 +70,10 @@ export interface DynamicEventItem {
 
 export function EventsView({
   initialEvents,
+  columns = 3,
 }: {
   initialEvents: DynamicEventItem[];
+  columns?: 1 | 2 | 3;
 }) {
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -171,7 +173,16 @@ export function EventsView({
       </div>
 
       {/* Cutout Events Grid */}
-      <motion.div layout className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        layout
+        className={
+          columns === 1
+            ? "grid gap-8 grid-cols-1 max-w-3xl mx-auto"
+            : columns === 2
+            ? "grid gap-8 grid-cols-1 md:grid-cols-2"
+            : "grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+        }
+      >
         <AnimatePresence mode="popLayout">
           {filtered.map((item) => {
             const itemKey = item.slug || item.id;

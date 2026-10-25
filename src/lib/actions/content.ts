@@ -83,6 +83,41 @@ export async function setSiteThemeAction(theme: SiteTheme) {
   return { success: true, theme: validTheme };
 }
 
+/** Update page grid columns (1, 2, or 3 per row) for events, interventions, notifications. */
+export async function updateGridLayoutAction(
+  type: "events" | "interventions" | "notifications",
+  columns: 1 | 2 | 3
+) {
+  await requireAdmin();
+  const validCol: 1 | 2 | 3 = columns === 1 ? 1 : columns === 2 ? 2 : 3;
+
+  try {
+    const current = await db.setting.findUnique({ where: { key: "grid_layouts" } }).catch(() => null);
+    const parsed = current?.value ? JSON.parse(current.value) : {};
+
+    if (type === "events") parsed.eventsColumns = validCol;
+    if (type === "interventions") parsed.interventionsColumns = validCol;
+    if (type === "notifications") parsed.notificationsColumns = validCol;
+
+    await db.setting.upsert({
+      where: { key: "grid_layouts" },
+      update: { value: JSON.stringify(parsed) },
+      create: { key: "grid_layouts", value: JSON.stringify(parsed) },
+    });
+
+    revalidatePath("/events");
+    revalidatePath("/interventions");
+    revalidatePath("/notifications");
+    revalidatePath("/admin/events");
+    revalidatePath("/admin/interventions");
+    revalidatePath("/admin/settings");
+    return { success: true, columns: validCol };
+  } catch (err) {
+    console.error("Error updating grid layout:", err);
+    return { success: false, error: "Failed to update layout." };
+  }
+}
+
 export async function saveSettingsForm(formData: FormData) {
   try {
     await requireAdmin();
@@ -134,6 +169,15 @@ export async function saveSettingsForm(formData: FormData) {
       btnLink: String(formData.get("hero_card_btn_link") || "").trim(),
     };
 
+    const eventsColumns = Number(formData.get("events_columns") || 3);
+    const interventionsColumns = Number(formData.get("interventions_columns") || 2);
+    const notificationsColumns = Number(formData.get("notifications_columns") || 1);
+    const gridLayouts = {
+      eventsColumns: eventsColumns === 1 || eventsColumns === 2 ? eventsColumns : 3,
+      interventionsColumns: interventionsColumns === 1 || interventionsColumns === 3 ? interventionsColumns : 2,
+      notificationsColumns: notificationsColumns === 2 || notificationsColumns === 3 ? notificationsColumns : 1,
+    };
+
     const activeThemeRaw = formData.get("active_theme");
     const promises: Promise<unknown>[] = [
       saveSetting("hero", hero),
@@ -143,6 +187,7 @@ export async function saveSettingsForm(formData: FormData) {
       saveSetting("socials", socials),
       saveSetting("nav_search", navSearch),
       saveSetting("hero_card", heroCard),
+      saveSetting("grid_layouts", gridLayouts),
     ];
 
     if (activeThemeRaw) {
