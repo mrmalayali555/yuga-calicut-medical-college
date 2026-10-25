@@ -40,6 +40,11 @@ export const metadata: Metadata = {
     title: `${YUGA.name} · ${COLLEGE.shortName}`,
     description: YUGA.description,
   },
+  icons: {
+    icon: "/yuga-logo.png",
+    shortcut: "/yuga-logo.png",
+    apple: "/yuga-logo.png",
+  },
   robots: {
     index: true,
     follow: true,

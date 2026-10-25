@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -73,8 +74,14 @@ export function AdminSidebar({ admin }: { admin: { name: string; email: string }
     <div className="flex h-full flex-col bg-[var(--bg-surface)] border-r border-[var(--border-primary)]">
       {/* Logo */}
       <div className="flex items-center gap-3 px-5 py-5 border-b border-[var(--border-primary)]">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--accent)] text-white font-bold text-sm">
-          Y
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--accent)] p-1.5 shadow-sm shadow-[var(--accent)]/30">
+          <Image
+            src="/yuga-logo-white.png"
+            alt="YUGA"
+            width={32}
+            height={32}
+            className="w-full h-full object-contain"
+          />
         </div>
         <div className="leading-none">
           <div className="text-sm font-bold tracking-[0.15em] text-[var(--text-primary)]">YUGA</div>

@@ -1,6 +1,6 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import { LoginForm } from "./login-form";
-import { ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Admin Login",
@@ -15,8 +15,15 @@ export default function AdminLoginPage() {
 
       <div className="relative w-full max-w-md">
         <div className="mb-8 text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] backdrop-blur">
-            <ShieldCheck className="h-8 w-8 text-[var(--accent)]" />
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-3 backdrop-blur shadow-2xl">
+            <Image
+              src="/yuga-logo-emerald.png"
+              alt="YUGA Emblem"
+              width={64}
+              height={64}
+              className="w-full h-full object-contain"
+              priority
+            />
           </div>
           <h1 className="mt-6 text-2xl font-bold tracking-tight text-[var(--text-primary)]">YUGA Admin Portal</h1>
           <p className="mt-1 text-sm text-[var(--text-muted)]">Calicut Medical College Union Command Center</p>

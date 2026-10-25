@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { Logo } from "./logo";
@@ -25,11 +26,17 @@ export function Footer() {
             {/* Col 1: Brand & Union Authority */}
             <div className="space-y-space-sm">
               <div className="flex items-center gap-space-sm">
-                <span className="bg-primary-container text-on-primary-container font-headline-sm text-sm px-2.5 py-1 rounded font-bold shadow-[0_0_12px_rgba(225,29,72,0.4)]">
-                  YUGA
-                </span>
+                <div className="w-8 h-8 p-1 rounded bg-primary-container flex items-center justify-center shadow-[0_0_12px_rgba(225,29,72,0.4)]">
+                  <Image
+                    src="/yuga-logo-white.png"
+                    alt="YUGA Logo"
+                    width={28}
+                    height={28}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
                 <span className="font-headline-sm text-base text-on-surface uppercase font-bold tracking-tight">
-                  Union
+                  YUGA Union
                 </span>
               </div>
               <p className="font-body-sm text-body-sm text-on-surface-variant max-w-xs leading-relaxed">

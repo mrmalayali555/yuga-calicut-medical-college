@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -81,8 +82,16 @@ export function Navbar() {
             {/* Left: Logo */}
             {isObsidian ? (
               <Link href="/" aria-label="YUGA Home" className="flex items-center gap-2 sm:gap-3 group">
-                <div className="bg-primary-container text-on-primary-container font-headline-sm text-sm px-2.5 py-1 rounded tracking-wider flex items-center justify-center font-extrabold shadow-[0_0_16px_rgba(225,29,72,0.45)]">
-                  YUGA
+                <div className="bg-primary-container text-on-primary-container font-headline-sm text-sm px-2 py-1 rounded tracking-wider flex items-center justify-center gap-1.5 font-extrabold shadow-[0_0_16px_rgba(225,29,72,0.45)] transition-transform duration-200 group-hover:scale-105">
+                  <Image
+                    src="/yuga-logo-white.png"
+                    alt="YUGA Logo"
+                    width={20}
+                    height={20}
+                    className="h-4.5 w-auto object-contain brightness-150"
+                    priority
+                  />
+                  <span>YUGA</span>
                 </div>
                 <div className="flex items-baseline gap-1.5">
                   <span className="font-bold text-sm sm:text-base text-on-surface uppercase tracking-tight">
