@@ -48,7 +48,7 @@ export default async function AdminSettingsPage() {
       telegram: YUGA.socials.telegram,
     }),
     getSetting("nav_search", { showMobile: true, showDesktop: true }),
-    getSetting<{ active: SiteTheme }>("theme", { active: "emerald" }),
+    getSetting<{ active: SiteTheme }>("theme", { active: "obsidian-crimson" }),
   ]);
 
   return (

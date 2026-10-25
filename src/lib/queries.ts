@@ -31,8 +31,8 @@ export async function getSetting<T>(key: string, fallback: T): Promise<T> {
 export type SiteTheme = "emerald" | "obsidian-crimson";
 
 export async function getActiveTheme(): Promise<SiteTheme> {
-  const themeSetting = await getSetting<{ active: SiteTheme }>("theme", { active: "emerald" });
-  return themeSetting?.active === "obsidian-crimson" ? "obsidian-crimson" : "emerald";
+  const themeSetting = await getSetting<{ active: SiteTheme }>("theme", { active: "obsidian-crimson" });
+  return themeSetting?.active === "emerald" ? "emerald" : "obsidian-crimson";
 }
 
 
