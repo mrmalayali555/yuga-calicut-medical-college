@@ -17,13 +17,16 @@ import { motion, AnimatePresence } from "framer-motion";
 export function AdminToolbar() {
   const { isAdmin, adminInfo, editMode, toggleEditMode } = useAdminEdit();
   const [expanded, setExpanded] = useState(false);
-  const [dismissed, setDismissed] = useState(false);
 
   // Only render for logged-in admins on public pages
-  if (!isAdmin || dismissed) return null;
+  if (!isAdmin) return null;
 
   return (
-    <div className="fixed bottom-5 right-5 z-[9999] flex flex-col items-end gap-2">
+    <div
+      data-admin-ui="true"
+      data-admin-toolbar="true"
+      className="admin-toolbar-root fixed bottom-5 right-5 z-[999999] flex flex-col items-end gap-2"
+    >
       <AnimatePresence>
         {expanded && (
           <motion.div
@@ -49,9 +52,9 @@ export function AdminToolbar() {
                 </div>
               </div>
               <button
-                onClick={() => setDismissed(true)}
-                className="text-white/40 hover:text-white/80 transition-colors"
-                aria-label="Dismiss toolbar"
+                onClick={() => setExpanded(false)}
+                className="text-white/40 hover:text-white/80 transition-colors p-1 rounded-lg hover:bg-white/10"
+                aria-label="Close toolbar"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -126,37 +129,50 @@ export function AdminToolbar() {
         )}
       </AnimatePresence>
 
-      {/* Main FAB Button */}
-      <motion.button
-        type="button"
-        onClick={() => setExpanded((prev) => !prev)}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className={`group relative flex items-center gap-2 rounded-full px-4 py-3 text-white text-sm font-bold shadow-[0_8px_32px_rgba(0,0,0,0.5)] transition-all ${
-          editMode
-            ? "bg-blue-600 shadow-[0_0_24px_rgba(59,130,246,0.5)]"
-            : "bg-[#e11d48] shadow-[0_0_24px_rgba(225,29,72,0.45)]"
-        }`}
-      >
-        {editMode ? (
-          <Pencil className="h-4.5 w-4.5 animate-pulse" />
-        ) : (
-          <Pencil className="h-4.5 w-4.5" />
-        )}
-        <span className="hidden sm:inline">
-          {editMode ? "Editing" : "Admin"}
-        </span>
-        {expanded ? (
-          <ChevronDown className="h-3.5 w-3.5" />
-        ) : (
-          <ChevronUp className="h-3.5 w-3.5" />
+      {/* Main Buttons Bar: In Edit Mode shows instant Stop button + Pencil FAB */}
+      <div className="flex items-center gap-2">
+        {editMode && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            type="button"
+            onClick={toggleEditMode}
+            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3.5 py-2.5 rounded-full shadow-[0_4px_16px_rgba(37,99,235,0.45)] transition-all active:scale-95 border border-blue-400/30"
+          >
+            <Eye className="h-3.5 w-3.5" />
+            <span>Stop Editing</span>
+          </motion.button>
         )}
 
-        {/* Pulsing ring when in edit mode */}
-        {editMode && (
-          <span className="absolute inset-0 rounded-full animate-ping bg-blue-500/30 pointer-events-none" />
-        )}
-      </motion.button>
+        <motion.button
+          type="button"
+          onClick={() => setExpanded((prev) => !prev)}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          title={editMode ? "Edit Mode Active (Click to menu)" : "Admin Visual Editor"}
+          className={`group relative flex items-center gap-2 rounded-full px-4 py-3 text-white text-sm font-bold shadow-[0_8px_32px_rgba(0,0,0,0.5)] transition-all ${
+            editMode
+              ? "bg-blue-600 shadow-[0_0_24px_rgba(59,130,246,0.5)] ring-2 ring-blue-400/50"
+              : "bg-[#e11d48] shadow-[0_0_24px_rgba(225,29,72,0.45)]"
+          }`}
+        >
+          <Pencil className={`h-4.5 w-4.5 ${editMode ? "animate-pulse" : ""}`} />
+          <span className="hidden sm:inline">
+            {editMode ? "Editing" : "Admin"}
+          </span>
+          {expanded ? (
+            <ChevronDown className="h-3.5 w-3.5" />
+          ) : (
+            <ChevronUp className="h-3.5 w-3.5" />
+          )}
+
+          {/* Pulsing ring when in edit mode */}
+          {editMode && (
+            <span className="absolute inset-0 rounded-full animate-ping bg-blue-500/30 pointer-events-none" />
+          )}
+        </motion.button>
+      </div>
     </div>
   );
 }

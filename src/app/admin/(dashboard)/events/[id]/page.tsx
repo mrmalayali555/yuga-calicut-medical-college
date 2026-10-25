@@ -15,8 +15,14 @@ export default async function EditEventPage({
   const { id } = await params;
   const event = await db.event.findUnique({
     where: { id },
+    include: { registrationForm: true },
   });
   if (!event) notFound();
+
+  const forms = await db.registrationForm.findMany({
+    select: { id: true, title: true },
+    orderBy: { createdAt: "desc" },
+  });
 
   const gallery = await db.eventGallery.findUnique({ where: { eventId: id } });
 
@@ -26,7 +32,13 @@ export default async function EditEventPage({
   return (
     <>
       <AdminHeader title="Edit event" description={event.title} />
-      <EventForm event={event} action={update} deleteAction={remove} />
+      <EventForm
+        event={event}
+        forms={forms}
+        currentFormId={event.registrationForm?.id}
+        action={update}
+        deleteAction={remove}
+      />
 
       {/* ── Photo Gallery Section ── */}
       <div className="mt-8 rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-surface)] p-6 shadow-xs">

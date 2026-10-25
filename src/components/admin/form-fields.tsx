@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useFormStatus } from "react-dom";
-import { Loader2, Upload, X, FileText, Trash2 } from "lucide-react";
+import { Loader2, Upload, X, FileText, Trash2, Crop, CheckCircle2, Sparkles } from "lucide-react";
+import { ImageCropperModal } from "@/components/admin/image-cropper-modal";
 
 const inputCls =
   "w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-card)] px-4 py-3 text-sm text-[var(--text-primary)] outline-none transition-colors placeholder:text-[var(--text-muted)] focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] min-w-0 max-w-full";
@@ -148,24 +149,28 @@ export function Toggle({
   );
 }
 
-/** Single-file upload that stores the resulting URL in a hidden input. */
+/** Single-file upload that stores the resulting URL in a hidden input, with live framing and crop studio. */
 export function UploadField({
   label,
   name,
   defaultUrl,
   accept = "image/*",
   hint,
+  aspectRatio = 16 / 9,
 }: {
   label: string;
   name: string;
   defaultUrl?: string | null;
   accept?: string;
   hint?: string;
+  aspectRatio?: number;
 }) {
   const [url, setUrl] = useState(defaultUrl || "");
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [cropperOpen, setCropperOpen] = useState(false);
+  const [cropSuccess, setCropSuccess] = useState(false);
 
   useEffect(() => {
     setUrl(defaultUrl || "");
@@ -177,6 +182,7 @@ export function UploadField({
     setBusy(true);
     setError(null);
     setProgress(0);
+    setCropSuccess(false);
     try {
       const data = await new Promise<{ url: string; error?: string }>((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -219,36 +225,91 @@ export function UploadField({
   }
 
   return (
-    <div>
-      <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
-        {label}
-      </label>
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
+          {label}
+        </label>
+        {url && !isPdf && (
+          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400">
+            <CheckCircle2 className="h-3 w-3" />
+            <span>Image Attached</span>
+          </span>
+        )}
+      </div>
+
       <input type="hidden" name={name} value={url} />
 
       {url ? (
-        <div className="relative overflow-hidden rounded-xl border border-[var(--border-primary)] bg-[var(--bg-elevated)]">
-          {isPdf ? (
-            <div className="flex items-center gap-3 p-4">
-              <FileText className="h-8 w-8 text-[var(--accent)]" />
-              <span className="truncate text-sm text-[var(--text-primary)]">{url.split("/").pop()}</span>
+        <div className="space-y-2">
+          <div className="relative overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-elevated)] shadow-sm">
+            {isPdf ? (
+              <div className="flex items-center gap-3 p-4">
+                <FileText className="h-8 w-8 text-[var(--accent)]" />
+                <span className="truncate text-sm text-[var(--text-primary)]">{url.split("/").pop()}</span>
+              </div>
+            ) : (
+              <div className="relative aspect-[16/9] w-full bg-[var(--bg-surface)]">
+                <Image src={url} alt="Cover preview" fill className="object-cover" />
+                
+                {/* Visual badge overlay */}
+                <div className="absolute bottom-2 left-2 flex items-center gap-1.5 rounded-lg bg-black/70 backdrop-blur-xs px-2.5 py-1 text-[10px] font-semibold text-white/90">
+                  <Sparkles className="h-3 w-3 text-[var(--accent)]" />
+                  <span>Public Viewport Simulation</span>
+                </div>
+              </div>
+            )}
+
+            {/* Quick action buttons in top-right */}
+            <div className="absolute right-2.5 top-2.5 flex items-center gap-1.5">
+              {!isPdf && (
+                <button
+                  type="button"
+                  onClick={() => setCropperOpen(true)}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-black/75 px-3 py-1.5 text-xs font-bold text-white shadow hover:bg-black transition-colors backdrop-blur-xs border border-white/10"
+                  title="Adjust Framing / Crop"
+                >
+                  <Crop className="h-3.5 w-3.5 text-[var(--accent)]" />
+                  <span>Adjust Framing</span>
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  setUrl("");
+                  setCropSuccess(false);
+                }}
+                className="flex h-7 w-7 items-center justify-center rounded-lg bg-red-500/80 text-white shadow hover:bg-red-600 transition-colors"
+                title="Remove image"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
             </div>
-          ) : (
-            <div className="relative aspect-[16/9] w-full bg-[var(--bg-surface)]">
-              <Image src={url} alt="preview" fill className="object-contain" />
+          </div>
+
+          {/* Cropper Modal */}
+          {!isPdf && (
+            <ImageCropperModal
+              isOpen={cropperOpen}
+              imageUrl={url}
+              initialAspectRatio={aspectRatio}
+              onClose={() => setCropperOpen(false)}
+              onCropComplete={(newUrl) => {
+                setUrl(newUrl);
+                setCropSuccess(true);
+              }}
+            />
+          )}
+
+          {cropSuccess && (
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              <span>Framing applied &amp; saved! Ready for publication.</span>
             </div>
           )}
-          <div className="absolute right-2 top-2 flex items-center gap-1.5">
-            <button
-              type="button"
-              onClick={() => setUrl("")}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500/80 text-white shadow hover:bg-red-600 transition-colors"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
         </div>
       ) : (
-        <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] px-4 py-8 text-center transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-subtle)]">
+        <label className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] px-4 py-8 text-center transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent-subtle)]">
           {busy ? (
             <div className="flex flex-col items-center gap-2">
               <Loader2 className="h-6 w-6 animate-spin text-[var(--accent)]" />
@@ -256,11 +317,16 @@ export function UploadField({
             </div>
           ) : (
             <>
-              <Upload className="h-6 w-6 text-[var(--text-muted)]" />
-              <span className="mt-2 text-sm font-medium text-[var(--text-primary)]">
-                Click to upload
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] mb-1">
+                <Upload className="h-5 w-5" />
+              </div>
+              <span className="mt-2 text-sm font-bold text-[var(--text-primary)]">
+                Click to upload cover photo / document
               </span>
               <span className="mt-0.5 text-xs text-[var(--text-muted)]">{hint || accept}</span>
+              <span className="mt-2 text-[10px] uppercase font-bold tracking-wider text-[var(--accent)]">
+                Supports High-Res Images &amp; Interactive Framing
+              </span>
             </>
           )}
           <input

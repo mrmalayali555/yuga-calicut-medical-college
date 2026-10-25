@@ -17,6 +17,7 @@ import {
   Compass,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "@/components/theme/theme-context";
 
 interface CommandItem {
   id: string;
@@ -134,6 +135,8 @@ export function CommandPalette({
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const router = useRouter();
+  const { theme } = useTheme();
+  const isObsidian = theme === "obsidian-crimson";
 
   const filtered = COMMANDS.filter((cmd) => {
     const q = query.toLowerCase();
@@ -208,7 +211,9 @@ export function CommandPalette({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm"
+            className={`fixed inset-0 backdrop-blur-md ${
+              isObsidian ? "bg-black/75" : "bg-slate-900/40"
+            }`}
           />
 
           {/* Palette Box */}
@@ -217,11 +222,26 @@ export function CommandPalette({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -10 }}
             transition={{ type: "spring", stiffness: 350, damping: 30 }}
-            className="relative z-10 w-full max-w-2xl rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden"
+            className={`relative z-10 w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border transition-colors ${
+              isObsidian
+                ? "bg-[#0d0e14]/98 border-white/15 text-white shadow-[0_25px_60px_rgba(0,0,0,0.9),0_0_30px_rgba(225,29,72,0.18)]"
+                : "border-slate-200 bg-white text-slate-900"
+            }`}
           >
             {/* Search Input Bar */}
-            <div className="flex items-center gap-3 border-b border-slate-200 px-4 py-3.5 bg-slate-50/80">
-              <Search className="h-5 w-5 text-emerald-600 shrink-0" aria-hidden="true" />
+            <div
+              className={`flex items-center gap-3 border-b px-4 py-3.5 ${
+                isObsidian
+                  ? "border-white/10 bg-white/[0.03]"
+                  : "border-slate-200 bg-slate-50/80"
+              }`}
+            >
+              <Search
+                className={`h-5 w-5 shrink-0 ${
+                  isObsidian ? "text-[#e11d48]" : "text-emerald-600"
+                }`}
+                aria-hidden="true"
+              />
               <input
                 type="text"
                 value={query}
@@ -229,19 +249,33 @@ export function CommandPalette({
                 placeholder="Type a command, festival, notice, or casualty hotline…"
                 spellCheck={false}
                 autoFocus
-                className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-400 focus:outline-none font-medium"
+                className={`w-full bg-transparent text-sm focus:outline-none font-medium ${
+                  isObsidian
+                    ? "text-white placeholder-white/40"
+                    : "text-slate-900 placeholder-slate-400"
+                }`}
               />
               {query && (
                 <button
                   type="button"
                   onClick={() => setQuery("")}
                   aria-label="Clear search input"
-                  className="rounded p-1 text-slate-400 hover:text-slate-700"
+                  className={`rounded p-1 transition-colors ${
+                    isObsidian
+                      ? "text-white/40 hover:text-white"
+                      : "text-slate-400 hover:text-slate-700"
+                  }`}
                 >
                   <X className="h-4 w-4" aria-hidden="true" />
                 </button>
               )}
-              <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono text-[11px] text-slate-500">
+              <kbd
+                className={`hidden sm:inline-flex items-center gap-0.5 rounded border px-1.5 py-0.5 font-mono text-[11px] ${
+                  isObsidian
+                    ? "border-white/15 bg-white/10 text-white/60"
+                    : "border-slate-200 bg-white text-slate-500"
+                }`}
+              >
                 ESC
               </kbd>
             </div>
@@ -249,7 +283,11 @@ export function CommandPalette({
             {/* Results List */}
             <div className="max-h-[380px] overflow-y-auto p-2 scrollbar-thin">
               {filtered.length === 0 ? (
-                <div className="py-12 text-center text-sm text-slate-500">
+                <div
+                  className={`py-12 text-center text-sm ${
+                    isObsidian ? "text-white/40" : "text-slate-500"
+                  }`}
+                >
                   No matching commands or resources found for &ldquo;{query}&rdquo;.
                 </div>
               ) : (
@@ -264,7 +302,11 @@ export function CommandPalette({
                         onClick={() => handleSelect(item.href)}
                         onMouseEnter={() => setSelectedIndex(index)}
                         className={`group flex w-full items-center justify-between rounded-xl px-3.5 py-3 text-left transition-all ${
-                          isSelected
+                          isObsidian
+                            ? isSelected
+                              ? "bg-white/10 border border-[#e11d48]/50 text-white shadow-sm"
+                              : "border border-transparent text-white/80 hover:bg-white/[0.05] hover:text-white"
+                            : isSelected
                             ? "bg-emerald-50 border border-emerald-200/90 text-emerald-950 shadow-2xs"
                             : "border border-transparent text-slate-700 hover:bg-slate-50"
                         }`}
@@ -272,7 +314,11 @@ export function CommandPalette({
                         <div className="flex items-center gap-3.5 min-w-0">
                           <div
                             className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors ${
-                              isSelected
+                              isObsidian
+                                ? isSelected
+                                  ? "bg-[#e11d48] border-[#ff2e56] text-white shadow-[0_0_12px_rgba(225,29,72,0.5)]"
+                                  : "bg-white/[0.06] border-white/10 text-white/70"
+                                : isSelected
                                 ? "bg-emerald-100 border-emerald-300 text-emerald-800"
                                 : "bg-slate-100 border-slate-200 text-slate-600"
                             }`}
@@ -281,28 +327,50 @@ export function CommandPalette({
                           </div>
                           <div className="min-w-0">
                             <div className="flex items-center gap-2">
-                              <span className="truncate text-sm font-semibold text-slate-900">
+                              <span
+                                className={`truncate text-sm font-semibold ${
+                                  isObsidian ? "text-white" : "text-slate-900"
+                                }`}
+                              >
                                 {item.title}
                               </span>
                               {item.badge && (
-                                <span className="rounded-full bg-emerald-100 border border-emerald-200 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-800">
+                                <span
+                                  className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                                    isObsidian
+                                      ? "bg-[#e11d48]/20 border-[#e11d48]/40 text-[#ff2e56]"
+                                      : "bg-emerald-100 border-emerald-200 text-emerald-800"
+                                  }`}
+                                >
                                   {item.badge}
                                 </span>
                               )}
                             </div>
-                            <div className="truncate text-xs text-slate-600 mt-0.5 font-normal">
+                            <div
+                              className={`truncate text-xs mt-0.5 font-normal ${
+                                isObsidian ? "text-white/55" : "text-slate-600"
+                              }`}
+                            >
                               {item.subtitle}
                             </div>
                           </div>
                         </div>
 
-                        <div className="shrink-0 flex items-center gap-2 text-xs text-slate-500">
+                        <div
+                          className={`shrink-0 flex items-center gap-2 text-xs ${
+                            isObsidian ? "text-white/40" : "text-slate-500"
+                          }`}
+                        >
                           <span className="text-[11px] font-mono uppercase tracking-wider hidden sm:inline">
                             {item.category}
                           </span>
                           <ArrowRight
                             className={`h-4 w-4 transition-transform ${
-                              isSelected ? "text-emerald-700 translate-x-0.5" : "opacity-0"
+                              isSelected
+                                ? isObsidian
+                                  ? "text-[#ff2e56] translate-x-0.5 opacity-100"
+                                  : "text-emerald-700 translate-x-0.5 opacity-100"
+                                : "opacity-0"
                             }`}
                             aria-hidden="true"
                           />
@@ -315,19 +383,53 @@ export function CommandPalette({
             </div>
 
             {/* Footer Bar */}
-            <div className="flex items-center justify-between border-t border-slate-200 bg-slate-50 px-4 py-2.5 text-[11px] text-slate-600">
+            <div
+              className={`flex items-center justify-between border-t px-4 py-2.5 text-[11px] ${
+                isObsidian
+                  ? "border-white/10 bg-white/[0.02] text-white/50"
+                  : "border-slate-200 bg-slate-50 text-slate-600"
+              }`}
+            >
               <div className="flex items-center gap-3">
                 <span className="flex items-center gap-1">
-                  <kbd className="rounded border border-slate-200 bg-white px-1 py-0.5 font-mono shadow-2xs">↑</kbd>
-                  <kbd className="rounded border border-slate-200 bg-white px-1 py-0.5 font-mono shadow-2xs">↓</kbd>
+                  <kbd
+                    className={`rounded border px-1 py-0.5 font-mono shadow-2xs ${
+                      isObsidian
+                        ? "border-white/15 bg-white/10 text-white/70"
+                        : "border-slate-200 bg-white"
+                    }`}
+                  >
+                    ↑
+                  </kbd>
+                  <kbd
+                    className={`rounded border px-1 py-0.5 font-mono shadow-2xs ${
+                      isObsidian
+                        ? "border-white/15 bg-white/10 text-white/70"
+                        : "border-slate-200 bg-white"
+                    }`}
+                  >
+                    ↓
+                  </kbd>
                   to navigate
                 </span>
                 <span className="flex items-center gap-1">
-                  <kbd className="rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono shadow-2xs">↵</kbd>
+                  <kbd
+                    className={`rounded border px-1.5 py-0.5 font-mono shadow-2xs ${
+                      isObsidian
+                        ? "border-white/15 bg-white/10 text-white/70"
+                        : "border-slate-200 bg-white"
+                    }`}
+                  >
+                    ↵
+                  </kbd>
                   to select
                 </span>
               </div>
-              <div className="flex items-center gap-1 font-mono text-[10px] text-emerald-800 font-semibold">
+              <div
+                className={`flex items-center gap-1 font-mono text-[10px] font-semibold ${
+                  isObsidian ? "text-[#ff2e56]" : "text-emerald-800"
+                }`}
+              >
                 <Command className="h-3 w-3" aria-hidden="true" />
                 <span>YUGA Command Hub</span>
               </div>

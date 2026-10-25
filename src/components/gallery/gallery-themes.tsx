@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { GalleryLightbox } from "./gallery-lightbox";
 import { GalleryPhotoImg } from "@/components/ui/gallery-photo-img";
+import { useTheme } from "@/components/theme/theme-context";
 
 /* ─── Types ─── */
 export type Photo = {
@@ -33,18 +34,24 @@ function Polaroid({
   className = "",
   imgClassName = "",
   captionFont = "font-sans",
+  isObsidian = false,
 }: {
   photo?: Photo;
   rotate: string;
   className?: string;
   imgClassName?: string;
   captionFont?: string;
+  isObsidian?: boolean;
 }) {
   if (!photo) return null;
   return (
     <figure
       data-photo-id={photo.id}
-      className={`group relative bg-white p-2.5 pb-8 shadow-[2px_4px_16px_rgba(0,0,0,0.08)] transition-all duration-300 hover:scale-105 hover:shadow-[4px_8px_32px_rgba(0,0,0,0.15)] hover:z-20 rounded-xs border border-slate-200/80 ${className}`}
+      className={`group relative p-2.5 pb-8 transition-all duration-300 hover:scale-105 hover:z-20 rounded-xs border ${
+        isObsidian
+          ? "bg-[#141624] text-white border-white/15 shadow-[0_12px_32px_rgba(0,0,0,0.7),0_0_16px_rgba(225,29,72,0.12)] hover:border-[#e11d48]/50"
+          : "bg-white text-slate-800 border-slate-200/80 shadow-[2px_4px_16px_rgba(0,0,0,0.08)] hover:shadow-[4px_8px_32px_rgba(0,0,0,0.15)]"
+      } ${className}`}
       style={{ transform: `rotate(${rotate})` }}
     >
       <GalleryPhotoImg
@@ -59,7 +66,9 @@ function Polaroid({
       />
       {photo.caption && (
         <figcaption
-          className={`mt-2 text-center text-xs font-medium text-slate-700 ${captionFont}`}
+          className={`mt-2 text-center text-xs font-medium ${
+            isObsidian ? "text-white/80" : "text-slate-700"
+          } ${captionFont}`}
         >
           {photo.caption}
         </figcaption>
@@ -78,22 +87,43 @@ const BOHEMIAN_ROTATIONS = [
 ];
 
 export function BohemianGallery({ gallery }: { gallery: GalleryData }) {
+  const { theme } = useTheme();
+  const isObsidian = theme === "obsidian-crimson";
+
   return (
-    <div className="relative mx-auto my-12 w-full max-w-5xl rounded-3xl border border-emerald-100 bg-gradient-to-b from-emerald-50/40 via-white to-white p-6 sm:p-12 shadow-sm">
+    <div
+      className={`relative mx-auto my-12 w-full max-w-5xl rounded-3xl border p-6 sm:p-12 shadow-sm transition-colors ${
+        isObsidian
+          ? "border-white/10 bg-gradient-to-b from-[#131623]/95 via-[#0c0e16]/98 to-[#090a10] shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_30px_rgba(225,29,72,0.1)]"
+          : "border-emerald-100 bg-gradient-to-b from-emerald-50/40 via-white to-white"
+      }`}
+    >
       {/* Center text */}
       <div className="mx-auto max-w-2xl text-center mb-12">
         {gallery.titleLine1 && (
-          <p className="text-xl sm:text-2xl font-serif text-emerald-800 italic">
+          <p
+            className={`text-xl sm:text-2xl font-serif italic ${
+              isObsidian ? "text-[#ff2e56]" : "text-emerald-800"
+            }`}
+          >
             {gallery.titleLine1}
           </p>
         )}
         {gallery.titleLine2 && (
-          <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          <h2
+            className={`mt-1 text-3xl font-bold tracking-tight sm:text-4xl ${
+              isObsidian ? "text-white" : "text-slate-900"
+            }`}
+          >
             {gallery.titleLine2}
           </h2>
         )}
         {gallery.subtitle && (
-          <p className="mx-auto mt-3 max-w-md text-sm text-slate-600 leading-relaxed font-normal">
+          <p
+            className={`mx-auto mt-3 max-w-md text-sm leading-relaxed font-normal ${
+              isObsidian ? "text-white/65" : "text-slate-600"
+            }`}
+          >
             {gallery.subtitle}
           </p>
         )}
@@ -105,6 +135,7 @@ export function BohemianGallery({ gallery }: { gallery: GalleryData }) {
           <Polaroid
             key={photo.id}
             photo={photo}
+            isObsidian={isObsidian}
             rotate={BOHEMIAN_ROTATIONS[i % BOHEMIAN_ROTATIONS.length]}
           />
         ))}
@@ -132,23 +163,38 @@ const SCRAPBOOK_ROTATIONS = [
 ];
 
 export function ScrapbookGallery({ gallery }: { gallery: GalleryData }) {
+  const { theme } = useTheme();
+  const isObsidian = theme === "obsidian-crimson";
+
   return (
     <div className="mx-auto my-12 w-full max-w-5xl">
       {/* Title */}
       {(gallery.titleLine1 || gallery.titleLine2) && (
         <div className="mb-8 text-center">
           {gallery.titleLine1 && (
-            <p className="text-xl text-emerald-800 font-serif italic">
+            <p
+              className={`text-xl font-serif italic ${
+                isObsidian ? "text-[#ff2e56]" : "text-emerald-800"
+              }`}
+            >
               {gallery.titleLine1}
             </p>
           )}
           {gallery.titleLine2 && (
-            <h2 className="mt-1 text-3xl font-bold text-slate-900 sm:text-4xl">
+            <h2
+              className={`mt-1 text-3xl font-bold sm:text-4xl ${
+                isObsidian ? "text-white" : "text-slate-900"
+              }`}
+            >
               {gallery.titleLine2}
             </h2>
           )}
           {gallery.subtitle && (
-            <p className="mx-auto mt-2 max-w-md text-sm text-slate-600 font-normal">
+            <p
+              className={`mx-auto mt-2 max-w-md text-sm font-normal ${
+                isObsidian ? "text-white/65" : "text-slate-600"
+              }`}
+            >
               {gallery.subtitle}
             </p>
           )}
@@ -156,7 +202,13 @@ export function ScrapbookGallery({ gallery }: { gallery: GalleryData }) {
       )}
 
       {/* Polaroid grid with tape */}
-      <div className="rounded-3xl border border-slate-200 bg-[#f9faf9] p-6 sm:p-10 shadow-sm">
+      <div
+        className={`rounded-3xl border p-6 sm:p-10 shadow-sm transition-colors ${
+          isObsidian
+            ? "border-white/10 bg-[#0e1018]/95 shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
+            : "border-slate-200 bg-[#f9faf9]"
+        }`}
+      >
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
           {gallery.photos.map((photo, i) => (
             <div
@@ -176,7 +228,11 @@ export function ScrapbookGallery({ gallery }: { gallery: GalleryData }) {
 
               <figure
                 data-photo-id={photo.id}
-                className="bg-white p-2.5 pb-7 shadow-md border border-slate-200/90 rounded-sm"
+                className={`p-2.5 pb-7 rounded-sm border transition-colors ${
+                  isObsidian
+                    ? "bg-[#141624] text-white border-white/15 shadow-[0_10px_28px_rgba(0,0,0,0.6)]"
+                    : "bg-white text-slate-800 border-slate-200/90 shadow-md"
+                }`}
               >
                 <GalleryPhotoImg
                   src={photo.url}
@@ -189,7 +245,11 @@ export function ScrapbookGallery({ gallery }: { gallery: GalleryData }) {
                   className="rounded-xs"
                 />
                 {photo.caption && (
-                  <figcaption className="mt-2 text-center text-xs font-medium text-slate-700">
+                  <figcaption
+                    className={`mt-2 text-center text-xs font-medium ${
+                      isObsidian ? "text-white/80" : "text-slate-700"
+                    }`}
+                  >
                     {photo.caption}
                   </figcaption>
                 )}
@@ -204,7 +264,7 @@ export function ScrapbookGallery({ gallery }: { gallery: GalleryData }) {
 
 /* ═══════════════════════════════════════════════════════════════════════════
    THEME 3 — CORK BOARD
-   Photos pinned to a warm corkboard texture with push pins.
+   Photos pinned to a warm or dark luxury corkboard texture with push pins.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const CORK_ROTATIONS = [
@@ -213,23 +273,38 @@ const CORK_ROTATIONS = [
 ];
 
 export function CorkBoardGallery({ gallery }: { gallery: GalleryData }) {
+  const { theme } = useTheme();
+  const isObsidian = theme === "obsidian-crimson";
+
   return (
     <div className="mx-auto my-12 w-full max-w-5xl">
       {/* Title */}
       {(gallery.titleLine1 || gallery.titleLine2) && (
         <div className="mb-8 text-center">
           {gallery.titleLine1 && (
-            <p className="text-xl font-serif text-emerald-800 italic">
+            <p
+              className={`text-xl font-serif italic ${
+                isObsidian ? "text-[#ff2e56]" : "text-emerald-800"
+              }`}
+            >
               {gallery.titleLine1}
             </p>
           )}
           {gallery.titleLine2 && (
-            <h2 className="mt-1 text-3xl font-bold text-slate-900 sm:text-4xl">
+            <h2
+              className={`mt-1 text-3xl font-bold sm:text-4xl ${
+                isObsidian ? "text-white" : "text-slate-900"
+              }`}
+            >
               {gallery.titleLine2}
             </h2>
           )}
           {gallery.subtitle && (
-            <p className="mx-auto mt-2 max-w-md text-sm text-slate-600 font-normal">
+            <p
+              className={`mx-auto mt-2 max-w-md text-sm font-normal ${
+                isObsidian ? "text-white/65" : "text-slate-600"
+              }`}
+            >
               {gallery.subtitle}
             </p>
           )}
@@ -237,7 +312,13 @@ export function CorkBoardGallery({ gallery }: { gallery: GalleryData }) {
       )}
 
       {/* Corkboard canvas */}
-      <div className="rounded-3xl border-4 border-amber-900/40 bg-[#d9ab7b] p-6 sm:p-10 shadow-lg">
+      <div
+        className={`rounded-3xl p-6 sm:p-10 shadow-lg border-4 transition-colors ${
+          isObsidian
+            ? "border-white/10 bg-gradient-to-br from-[#1a1418] via-[#120f16] to-[#0c0a0f] shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
+            : "border-amber-900/40 bg-[#d9ab7b]"
+        }`}
+      >
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
           {gallery.photos.map((photo, i) => (
             <div
@@ -252,7 +333,11 @@ export function CorkBoardGallery({ gallery }: { gallery: GalleryData }) {
 
               <figure
                 data-photo-id={photo.id}
-                className="bg-white p-2.5 pb-7 shadow-lg border border-amber-950/20 rounded-xs"
+                className={`p-2.5 pb-7 shadow-lg rounded-xs border transition-colors ${
+                  isObsidian
+                    ? "bg-[#161826] text-white border-white/15"
+                    : "bg-white text-slate-800 border-amber-950/20"
+                }`}
               >
                 <GalleryPhotoImg
                   src={photo.url}
@@ -265,7 +350,11 @@ export function CorkBoardGallery({ gallery }: { gallery: GalleryData }) {
                   className="rounded-xs"
                 />
                 {photo.caption && (
-                  <figcaption className="mt-2 text-center text-xs font-serif text-slate-800 italic">
+                  <figcaption
+                    className={`mt-2 text-center text-xs font-serif italic ${
+                      isObsidian ? "text-white/80" : "text-slate-800"
+                    }`}
+                  >
                     {photo.caption}
                   </figcaption>
                 )}
@@ -284,23 +373,38 @@ export function CorkBoardGallery({ gallery }: { gallery: GalleryData }) {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export function NormalGallery({ gallery }: { gallery: GalleryData }) {
+  const { theme } = useTheme();
+  const isObsidian = theme === "obsidian-crimson";
+
   return (
     <div className="mx-auto my-12 w-full max-w-6xl">
       {/* Title */}
       {(gallery.titleLine1 || gallery.titleLine2) && (
         <div className="mb-8 text-center">
           {gallery.titleLine1 && (
-            <p className="text-sm font-bold uppercase tracking-wider text-emerald-700">
+            <p
+              className={`text-sm font-bold uppercase tracking-wider ${
+                isObsidian ? "text-[#ff2e56]" : "text-emerald-700"
+              }`}
+            >
               {gallery.titleLine1}
             </p>
           )}
           {gallery.titleLine2 && (
-            <h2 className="mt-1 text-3xl font-bold text-slate-900 sm:text-4xl">
+            <h2
+              className={`mt-1 text-3xl font-bold sm:text-4xl ${
+                isObsidian ? "text-white" : "text-slate-900"
+              }`}
+            >
               {gallery.titleLine2}
             </h2>
           )}
           {gallery.subtitle && (
-            <p className="mx-auto mt-2 max-w-md text-sm text-slate-600 font-normal">
+            <p
+              className={`mx-auto mt-2 max-w-md text-sm font-normal ${
+                isObsidian ? "text-white/65" : "text-slate-600"
+              }`}
+            >
               {gallery.subtitle}
             </p>
           )}
@@ -313,7 +417,11 @@ export function NormalGallery({ gallery }: { gallery: GalleryData }) {
           <figure
             key={photo.id}
             data-photo-id={photo.id}
-            className="mb-6 break-inside-avoid overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-xs transition-all duration-300 hover:shadow-xl hover:border-emerald-300"
+            className={`mb-6 break-inside-avoid overflow-hidden rounded-2xl p-2.5 transition-all duration-300 border ${
+              isObsidian
+                ? "bg-[#121420] border-white/10 text-white shadow-[0_12px_32px_rgba(0,0,0,0.6)] hover:border-[#e11d48]/50 hover:shadow-[0_16px_40px_rgba(225,29,72,0.15)]"
+                : "border-slate-200 bg-white shadow-xs hover:shadow-xl hover:border-emerald-300"
+            }`}
           >
             <GalleryPhotoImg
               src={photo.url}
@@ -325,7 +433,11 @@ export function NormalGallery({ gallery }: { gallery: GalleryData }) {
               className="rounded-xl"
             />
             {photo.caption && (
-              <figcaption className="mt-2.5 px-2 py-1 text-xs text-slate-600 text-center font-medium">
+              <figcaption
+                className={`mt-2.5 px-2 py-1 text-xs text-center font-medium ${
+                  isObsidian ? "text-white/80" : "text-slate-600"
+                }`}
+              >
                 {photo.caption}
               </figcaption>
             )}
@@ -348,6 +460,9 @@ export function EventGalleryRenderer({ gallery }: { gallery: GalleryData }) {
     rotation?: number;
   } | null>(null);
 
+  const { theme } = useTheme();
+  const isObsidian = theme === "obsidian-crimson";
+
   // Strip HTML for preview
   const plainText = gallery.blogText
     ? gallery.blogText
@@ -361,9 +476,19 @@ export function EventGalleryRenderer({ gallery }: { gallery: GalleryData }) {
   const needsExpand = plainText.length > 200;
 
   return (
-    <div className="mt-14 pt-10 border-t border-slate-200/80">
+    <div
+      className={`mt-14 pt-10 border-t ${
+        isObsidian ? "border-white/10" : "border-slate-200/80"
+      }`}
+    >
       <div className="text-center mb-6">
-        <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+        <span
+          className={`text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full border ${
+            isObsidian
+              ? "text-[#ff2e56] bg-[#e11d48]/15 border-[#e11d48]/35 shadow-[0_0_15px_rgba(225,29,72,0.3)]"
+              : "text-emerald-800 bg-emerald-50 border-emerald-200"
+          }`}
+        >
           Event Memories
         </span>
       </div>
@@ -389,18 +514,38 @@ export function EventGalleryRenderer({ gallery }: { gallery: GalleryData }) {
 
       {/* Blog & Event Story */}
       {gallery.blogText && plainText && (
-        <div className="mx-auto mt-10 max-w-2xl rounded-2xl border border-emerald-100 bg-emerald-50/30 p-6 shadow-xs">
-          <h3 className="text-base font-bold text-slate-900 mb-2">Event Recap</h3>
+        <div
+          className={`mx-auto mt-10 max-w-2xl rounded-2xl border p-6 shadow-xs transition-colors ${
+            isObsidian
+              ? "border-white/10 bg-[#0f111c]/95 text-white/90 shadow-[0_16px_40px_rgba(0,0,0,0.7)]"
+              : "border-emerald-100 bg-emerald-50/30 text-slate-700"
+          }`}
+        >
+          <h3
+            className={`text-base font-bold mb-2 ${
+              isObsidian ? "text-white" : "text-slate-900"
+            }`}
+          >
+            Event Recap
+          </h3>
           {!showFullBlog ? (
             <>
-              <p className="text-sm leading-relaxed text-slate-600">
+              <p
+                className={`text-sm leading-relaxed ${
+                  isObsidian ? "text-white/70" : "text-slate-600"
+                }`}
+              >
                 {previewText}
                 {needsExpand && "..."}
               </p>
               {needsExpand && (
                 <button
                   onClick={() => setShowFullBlog(true)}
-                  className="mt-3 text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors"
+                  className={`mt-3 text-xs font-bold transition-colors ${
+                    isObsidian
+                      ? "text-[#ff2e56] hover:text-white"
+                      : "text-emerald-700 hover:text-emerald-800"
+                  }`}
                 >
                   Read full narrative →
                 </button>
@@ -409,12 +554,18 @@ export function EventGalleryRenderer({ gallery }: { gallery: GalleryData }) {
           ) : (
             <>
               <div
-                className="prose prose-sm max-w-none text-slate-700"
+                className={`prose prose-sm max-w-none ${
+                  isObsidian ? "prose-invert text-white/80" : "text-slate-700"
+                }`}
                 dangerouslySetInnerHTML={{ __html: gallery.blogText }}
               />
               <button
                 onClick={() => setShowFullBlog(false)}
-                className="mt-4 text-xs font-bold text-emerald-700 hover:text-emerald-800 transition-colors"
+                className={`mt-4 text-xs font-bold transition-colors ${
+                  isObsidian
+                    ? "text-[#ff2e56] hover:text-white"
+                    : "text-emerald-700 hover:text-emerald-800"
+                }`}
               >
                 Show less ←
               </button>

@@ -123,8 +123,9 @@ export default async function EventDetailPage({
           </div>
         )}
 
-        {/* Registration Banner (if form exists or open) */}
-        {(event.status === "upcoming" || event.status === "live") && (
+        {/* Registration Banner (only if registration is required & active) */}
+        {(event.status === "upcoming" || event.status === "live") &&
+          Boolean(event.registrationForm && event.registrationForm.published) && (
           <div className="mt-8 rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
             <div>
               <h3 className="text-base font-bold text-[var(--text-primary)]">

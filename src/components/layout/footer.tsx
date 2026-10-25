@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { Logo } from "./logo";
 import { COLLEGE, YUGA, NAV_LINKS } from "@/lib/site";
@@ -15,8 +16,13 @@ const SOCIAL_LINKS = [
 ];
 
 export function Footer() {
+  const pathname = usePathname();
   const { theme } = useTheme();
   const isObsidian = theme === "obsidian-crimson";
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   if (isObsidian) {
     return (

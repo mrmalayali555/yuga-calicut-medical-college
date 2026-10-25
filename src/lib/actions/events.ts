@@ -38,7 +38,32 @@ export async function createEvent(formData: FormData) {
   const data = parse(formData);
   if (!data.title) return;
   const slug = await uniqueSlug(data.title);
-  await db.event.create({ data: { ...data, slug } });
+  const event = await db.event.create({ data: { ...data, slug } });
+
+  const registrationFormId = String(formData.get("registrationFormId") || "").trim();
+  const requiresRegistration = formData.get("requiresRegistration") === "on" || formData.get("requiresRegistration") === "true";
+
+  if (requiresRegistration) {
+    if (registrationFormId && registrationFormId !== "none" && registrationFormId !== "create_default") {
+      await db.registrationForm.update({
+        where: { id: registrationFormId },
+        data: { eventId: event.id },
+      });
+    } else {
+      // Auto-create standard pass form
+      const formSlug = await uniqueSlug(event.title + "-reg");
+      await db.registrationForm.create({
+        data: {
+          title: `${event.title} Registration`,
+          slug: formSlug,
+          description: "Official registration and entry pass enrollment.",
+          eventId: event.id,
+          published: true,
+        },
+      });
+    }
+  }
+
   revalidatePath("/admin/events");
   revalidatePath("/events");
   revalidatePath("/");
@@ -50,6 +75,37 @@ export async function updateEvent(id: string, formData: FormData) {
   const data = parse(formData);
   const slug = await uniqueSlug(data.title, id);
   await db.event.update({ where: { id }, data: { ...data, slug } });
+
+  const registrationFormId = String(formData.get("registrationFormId") || "").trim();
+  const requiresRegistration = formData.get("requiresRegistration") === "on" || formData.get("requiresRegistration") === "true";
+
+  // First unlink any previously linked form
+  await db.registrationForm.updateMany({
+    where: { eventId: id },
+    data: { eventId: null },
+  });
+
+  if (requiresRegistration) {
+    if (registrationFormId && registrationFormId !== "none" && registrationFormId !== "create_default") {
+      await db.registrationForm.update({
+        where: { id: registrationFormId },
+        data: { eventId: id },
+      });
+    } else {
+      // Create new pass form if none existed
+      const formSlug = await uniqueSlug(data.title + "-reg");
+      await db.registrationForm.create({
+        data: {
+          title: `${data.title} Registration`,
+          slug: formSlug,
+          description: "Official registration and entry pass enrollment.",
+          eventId: id,
+          published: true,
+        },
+      });
+    }
+  }
+
   revalidatePath("/admin/events");
   revalidatePath("/events");
   revalidatePath(`/events/${slug}`);

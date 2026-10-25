@@ -123,11 +123,18 @@ export function EventRegistrationView({
       setIsSubmitting(true);
       const res = await submitRegistration(form.id, answers);
 
-      setConfirmedTicket({
-        ticketId: res.ticketId,
-        attendeeName: attendeeName || "Registered Delegate",
-        attendeeEmail: attendeeEmail || "Verified Attendee",
-      });
+      if (res && (!res.success || (res as any).error)) {
+        setErrorMsg((res as any).error || "Failed to submit registration. Please check required fields.");
+        return;
+      }
+
+      if (res && res.ticketId) {
+        setConfirmedTicket({
+          ticketId: res.ticketId,
+          attendeeName: attendeeName || "Registered Delegate",
+          attendeeEmail: attendeeEmail || "Verified Attendee",
+        });
+      }
     } catch (err: any) {
       setErrorMsg(err?.message || "Failed to submit registration. Please check required fields.");
     } finally {

@@ -24,6 +24,7 @@ import {
   Settings,
   BookOpen,
   History,
+  QrCode,
 } from "lucide-react";
 import { logoutAction } from "@/lib/actions/auth";
 import { cn } from "@/lib/utils";
@@ -47,6 +48,7 @@ const NAV = [
   {
     section: "Modules",
     items: [
+      { href: "/admin/tools", label: "Admin Tools (Links & QR)", icon: QrCode },
       { href: "/admin/emergency", label: "Emergency", icon: Siren },
       { href: "/admin/complaints", label: "Complaints", icon: MessageSquareWarning },
       { href: "/admin/committees", label: "Subcommittees", icon: Users },

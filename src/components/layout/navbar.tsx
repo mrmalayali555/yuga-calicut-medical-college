@@ -86,6 +86,11 @@ export function Navbar() {
   const { theme } = useTheme();
   const isObsidian = theme === "obsidian-crimson";
 
+  // Hide the public navbar on admin pages
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   const isMoreActive = MORE_LINKS.some(
     (item) => pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))
   );
@@ -289,7 +294,7 @@ export function Navbar() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 6, scale: 0.98 }}
                       transition={{ duration: 0.16, ease: "easeOut" }}
-                      className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[480px] sm:w-[520px] rounded-2xl p-2.5 z-50 transition-all ${
+                      className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[420px] rounded-2xl p-2 z-50 transition-all ${
                         isObsidian
                           ? "bg-[#0e1017]/98 backdrop-blur-2xl border border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.85),0_0_24px_rgba(225,29,72,0.12)]"
                           : "bg-white/98 backdrop-blur-xl border border-slate-200 shadow-[0_20px_45px_rgba(15,23,42,0.12)]"
@@ -304,7 +309,7 @@ export function Navbar() {
                               key={item.href}
                               href={item.href}
                               onClick={() => setMoreOpen(false)}
-                              className={`flex items-start gap-2.5 p-2.5 rounded-xl transition-all duration-150 group border ${
+                              className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all duration-150 group border ${
                                 isObsidian
                                   ? isActive
                                     ? "bg-white/10 border-white/15 text-white"
@@ -315,7 +320,7 @@ export function Navbar() {
                               }`}
                             >
                               <div
-                                className={`h-8 w-8 shrink-0 rounded-lg flex items-center justify-center transition-colors ${
+                                className={`h-7 w-7 shrink-0 rounded-lg flex items-center justify-center transition-colors ${
                                   isObsidian
                                     ? isActive
                                       ? "bg-[#e11d48] text-white shadow-[0_0_12px_rgba(225,29,72,0.5)]"
@@ -327,26 +332,15 @@ export function Navbar() {
                               >
                                 <Icon className="h-4 w-4" />
                               </div>
-                              <div className="flex flex-col min-w-0">
-                                <span
-                                  className={`text-[13px] font-semibold transition-colors truncate ${
-                                    isObsidian
-                                      ? "text-white/90 group-hover:text-white"
-                                      : "text-slate-800 group-hover:text-emerald-800"
-                                  }`}
-                                >
-                                  {item.label}
-                                </span>
-                                <span
-                                  className={`text-[11px] line-clamp-1 leading-tight mt-0.5 ${
-                                    isObsidian
-                                      ? "text-white/45 group-hover:text-white/70"
-                                      : "text-slate-500 group-hover:text-slate-600"
-                                  }`}
-                                >
-                                  {item.description}
-                                </span>
-                              </div>
+                              <span
+                                className={`text-[13px] font-semibold transition-colors truncate ${
+                                  isObsidian
+                                    ? "text-white/90 group-hover:text-white"
+                                    : "text-slate-800 group-hover:text-emerald-800"
+                                }`}
+                              >
+                                {item.label}
+                              </span>
                             </Link>
                           );
                         })}
@@ -373,41 +367,6 @@ export function Navbar() {
               >
                 <Search className="h-4 w-4" aria-hidden="true" />
               </button>
-
-              {/* Icon-only Admin / Profile */}
-              <Link
-                href="/admin"
-                aria-label="Admin Portal"
-                title="Admin Portal"
-                className={`hidden sm:flex h-9 w-9 items-center justify-center rounded-lg border transition-all duration-200 active:scale-95 ${
-                  isObsidian
-                    ? "border-white/10 text-white/80 hover:text-white hover:border-[#e11d48]/50 hover:bg-white/[0.06] shadow-xs"
-                    : "border-slate-200 text-slate-700 hover:text-emerald-700 hover:border-emerald-300 hover:bg-emerald-50/70 shadow-xs"
-                }`}
-              >
-                <User className="h-4 w-4" aria-hidden="true" />
-              </Link>
-
-              {/* Emergency SOS Button */}
-              {isObsidian ? (
-                <Link
-                  href="/emergency"
-                  className="bg-[#e11d48] text-white text-xs px-3 sm:px-3.5 py-2 rounded-lg flex items-center gap-1.5 shadow-[0_0_16px_rgba(225,29,72,0.4)] hover:bg-[#ff2e56] transition-all active:scale-95 font-bold uppercase tracking-wider"
-                >
-                  <Phone className="h-3.5 w-3.5" aria-hidden="true" />
-                  <span className="hidden sm:inline">Emergency SOS</span>
-                  <span className="sm:hidden">SOS</span>
-                </Link>
-              ) : (
-                <Link
-                  href="/emergency"
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-red-50 border border-red-200/80 px-3 sm:px-3.5 py-2 text-xs font-bold text-red-600 hover:bg-red-100 transition-colors uppercase tracking-wider"
-                >
-                  <Phone className="h-3.5 w-3.5" aria-hidden="true" />
-                  <span className="hidden sm:inline">Emergency SOS</span>
-                  <span className="sm:hidden">SOS</span>
-                </Link>
-              )}
 
               {/* Mobile Menu Toggle Button */}
               <button
@@ -531,44 +490,11 @@ export function Navbar() {
                         }`}
                       >
                         <Icon className={`h-4 w-4 shrink-0 ${isObsidian ? "text-[#e11d48]" : "text-emerald-600"}`} />
-                        <div className="flex flex-col min-w-0">
-                          <span className="font-medium text-[13px]">{item.label}</span>
-                          <span className={`text-[11px] truncate ${isObsidian ? "text-white/40" : "text-slate-500"}`}>
-                            {item.description}
-                          </span>
-                        </div>
+                        <span className="font-medium text-[13px]">{item.label}</span>
                       </Link>
                     );
                   })}
                 </div>
-              </div>
-
-              {/* Bottom Quick Actions (SOS & Admin) */}
-              <div className="flex items-center gap-3 pt-3 pb-6 border-t border-white/5">
-                <Link
-                  href="/emergency"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex-1 flex items-center justify-center gap-2 rounded-xl py-3 text-xs font-bold uppercase tracking-wider ${
-                    isObsidian
-                      ? "bg-[#e11d48] text-white shadow-[0_0_16px_rgba(225,29,72,0.4)]"
-                      : "bg-red-50 text-red-600 border border-red-200"
-                  }`}
-                >
-                  <Phone className="h-4 w-4" />
-                  <span>Emergency SOS</span>
-                </Link>
-                <Link
-                  href="/admin"
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-xs font-bold border transition-colors ${
-                    isObsidian
-                      ? "border-white/15 bg-white/[0.05] text-white hover:bg-white/10"
-                      : "border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
-                  }`}
-                >
-                  <User className="h-4 w-4" />
-                  <span>Admin</span>
-                </Link>
               </div>
             </div>
           </motion.div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Field, TextArea, Select, Toggle, UploadField, SubmitBtn, DeleteBtn } from "./form-fields";
 
@@ -22,13 +23,19 @@ function toDateInput(d: Date) {
 
 export function EventForm({
   event,
+  forms = [],
+  currentFormId,
   action,
   deleteAction,
 }: {
   event?: EventData;
+  forms?: { id: string; title: string }[];
+  currentFormId?: string | null;
   action: (formData: FormData) => void;
   deleteAction?: (formData: FormData) => void;
 }) {
+  const [hasReg, setHasReg] = useState(Boolean(currentFormId));
+
   return (
     <div className="space-y-6">
       <form action={action} className="space-y-6">
@@ -88,6 +95,65 @@ export function EventForm({
             accept="image/*"
             hint="JPG, PNG, WebP up to 8MB"
           />
+
+          {/* Registration Requirement Toggle */}
+          <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-surface)] p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)]">
+                  Require Delegate Registration Pass?
+                </span>
+                <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                  If disabled, this event will be published as an <strong>Announcement Only</strong> with no entry pass required.
+                </p>
+              </div>
+              <input type="hidden" name="requiresRegistration" value={hasReg ? "true" : "false"} />
+              <button
+                type="button"
+                onClick={() => setHasReg(!hasReg)}
+                className={`relative h-6 w-11 rounded-full transition-colors ${
+                  hasReg ? "bg-[var(--accent)]" : "bg-[var(--border-primary)]"
+                }`}
+                aria-pressed={hasReg}
+              >
+                <span
+                  className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${
+                    hasReg ? "left-[22px]" : "left-0.5"
+                  }`}
+                />
+              </button>
+            </div>
+
+            {hasReg && (
+              <div className="pt-2 border-t border-[var(--border-subtle)] space-y-2">
+                <label className="block text-xs font-semibold text-[var(--text-secondary)]">
+                  Attached Registration Form
+                </label>
+                <select
+                  name="registrationFormId"
+                  defaultValue={currentFormId || (forms.length > 0 ? forms[0].id : "create_default")}
+                  className="w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-card)] px-4 py-2.5 text-xs text-[var(--text-primary)] outline-none"
+                >
+                  <option value="create_default">
+                    Auto-create standard delegate entry pass form
+                  </option>
+                  {forms.map((f) => (
+                    <option key={f.id} value={f.id}>
+                      {f.title}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-[11px] text-[var(--text-faint)]">
+                  You can design custom questions, batches, and fields in the{" "}
+                  <Link href="/admin/forms" className="text-[var(--accent)] underline" target="_blank">
+                    Registration Forms Builder
+                  </Link>
+                  .
+                </p>
+              </div>
+            )}
+          </div>
+
           <Toggle
             label="Published"
             name="published"
