@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
 
 export default async function AdminAchievementsPage() {
-  const items = await db.achievement.findMany({ orderBy: { date: "desc" } });
+  const items = await db.achievement.findMany({ orderBy: { date: "desc" } }).catch(() => []);
 
   return (
     <>

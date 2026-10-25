@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { formatDateRange } from "@/lib/utils";
 
 export default async function AdminEventsPage() {
-  const events = await db.event.findMany({ orderBy: { date: "desc" } });
+  const events = await db.event.findMany({ orderBy: { date: "desc" } }).catch(() => []);
 
   return (
     <>

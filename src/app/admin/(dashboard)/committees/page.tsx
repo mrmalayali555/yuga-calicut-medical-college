@@ -10,7 +10,7 @@ export default async function AdminCommitteesPage() {
   const committees = await db.committee.findMany({
     orderBy: { order: "asc" },
     include: { members: { orderBy: { order: "asc" } } },
-  });
+  }).catch(() => []);
 
   return (
     <>

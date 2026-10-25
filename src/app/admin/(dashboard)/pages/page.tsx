@@ -5,7 +5,7 @@ import { savePage } from "@/lib/actions/content";
 import { COLLEGE, YUGA } from "@/lib/site";
 
 async function getAboutData() {
-  const p = await db.page.findUnique({ where: { key: "about" } });
+  const p = await db.page.findUnique({ where: { key: "about" } }).catch(() => null);
   let data: Record<string, string> = {};
   try {
     data = p?.content ? JSON.parse(p.content) : {};

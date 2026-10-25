@@ -19,7 +19,7 @@ export default async function AdminSessionsPage() {
   const sessions = await db.adminSession.findMany({
     orderBy: { lastActiveAt: "desc" },
     include: { admin: { select: { email: true, name: true } } },
-  });
+  }).catch(() => []);
 
   return (
     <>

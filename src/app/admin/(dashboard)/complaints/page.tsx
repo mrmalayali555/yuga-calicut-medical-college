@@ -15,7 +15,7 @@ export default async function AdminComplaintsPage({
       ...(q ? { message: { contains: q } } : {}),
     },
     orderBy: { createdAt: "desc" },
-  });
+  }).catch(() => []);
 
   const tabs = [
     { key: "all", label: "All" },

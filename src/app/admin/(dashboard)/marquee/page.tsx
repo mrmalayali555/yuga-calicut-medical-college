@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { saveMarquee } from "@/lib/actions/marquee";
 
 export default async function AdminMarqueePage() {
-  const marquee = await db.marquee.findFirst({ orderBy: { updatedAt: "desc" } });
+  const marquee = await db.marquee.findFirst({ orderBy: { updatedAt: "desc" } }).catch(() => null);
 
   return (
     <>

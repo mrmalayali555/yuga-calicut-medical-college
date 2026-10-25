@@ -5,7 +5,7 @@ import { formatDate } from "@/lib/utils";
 import { createFinance, deleteFinance } from "@/lib/actions/finance";
 
 export default async function AdminFinancePage() {
-  const entries = await db.financeEntry.findMany({ orderBy: { date: "desc" } });
+  const entries = await db.financeEntry.findMany({ orderBy: { date: "desc" } }).catch(() => []);
   const totalIncome = entries
     .filter((e) => e.kind === "income")
     .reduce((s, e) => s + e.amount, 0);

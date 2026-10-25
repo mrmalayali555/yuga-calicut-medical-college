@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 import { deleteMedia } from "@/lib/actions/media";
 
 export default async function AdminMediaPage() {
-  const media = await db.media.findMany({ orderBy: { createdAt: "desc" } });
+  const media = await db.media.findMany({ orderBy: { createdAt: "desc" } }).catch(() => []);
 
   return (
     <>

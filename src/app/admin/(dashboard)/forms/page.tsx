@@ -12,7 +12,7 @@ export default async function AdminFormsPage() {
       fields: { select: { id: true } },
       _count: { select: { submissions: true } },
     },
-  });
+  }).catch(() => []);
 
   return (
     <>

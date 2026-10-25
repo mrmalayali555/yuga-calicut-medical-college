@@ -25,7 +25,7 @@ export default async function AdminInterventionsPage({
       ...(q ? { OR: [{ title: { contains: q } }, { description: { contains: q } }] } : {}),
     },
     orderBy: [{ pinned: "desc" }, { date: "desc" }],
-  });
+  }).catch(() => []);
 
   const tabs = [
     { key: "all", label: "All" },

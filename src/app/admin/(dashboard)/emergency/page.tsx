@@ -7,7 +7,7 @@ import { createEmergency } from "@/lib/actions/emergency";
 export default async function AdminEmergencyPage() {
   const items = await db.emergencyContact.findMany({
     orderBy: [{ order: "asc" }, { id: "asc" }],
-  });
+  }).catch(() => []);
 
   const nextOrder = items.length > 0 ? Math.max(...items.map((i) => i.order)) + 1 : 0;
 
