@@ -224,144 +224,201 @@ export function Navbar() {
             </div>
 
             {/* Center: Clean Minimal Desktop Nav (Home, Events, Achievements, More) */}
-            <div className="hidden lg:flex items-center gap-1.5">
-              {PRIMARY_LINKS.map((link) => {
-                const isActive = pathname === link.href;
-                if (isObsidian) {
-                  return (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className={`relative px-4 py-2 text-[13.5px] transition-all duration-200 rounded-lg select-none ${
-                        isActive
-                          ? "bg-white/10 text-[#fffaf9] font-bold shadow-[0_0_14px_rgba(225,29,72,0.18)] border border-white/15"
+            <div className="hidden lg:flex items-center">
+              {isObsidian ? (
+                <div className="flex items-center gap-1 rounded-full border border-white/10 bg-[#07080d]/65 backdrop-blur-md p-1 shadow-lg">
+                  {PRIMARY_LINKS.map((link) => {
+                    const isActive = pathname === link.href;
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className={`relative px-5 py-1.5 text-xs transition-all duration-200 rounded-full select-none ${
+                          isActive
+                            ? "bg-gradient-to-r from-[#e11d48]/25 to-[#ff2e56]/25 text-[#fffaf9] font-bold shadow-[0_0_12px_rgba(225,29,72,0.3)] border border-[#e11d48]/40"
+                            : "text-white/70 hover:text-[#fffaf9] hover:bg-white/[0.06] font-medium"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    );
+                  })}
+
+                  {/* More Dropdown (Hover + Click) */}
+                  <div
+                    ref={moreRef}
+                    className="relative"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setMoreOpen((prev) => !prev)}
+                      aria-expanded={moreOpen}
+                      aria-haspopup="true"
+                      className={`flex items-center gap-1.5 px-4 py-1.5 text-xs rounded-full transition-all duration-200 select-none ${
+                        moreOpen || isMoreActive
+                          ? "bg-gradient-to-r from-[#e11d48]/25 to-[#ff2e56]/25 text-[#fffaf9] font-bold border border-[#e11d48]/40 shadow-[0_0_12px_rgba(225,29,72,0.3)]"
                           : "text-white/70 hover:text-[#fffaf9] hover:bg-white/[0.06] font-medium"
                       }`}
                     >
-                      {link.label}
-                    </Link>
-                  );
-                }
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`relative px-4 py-2 text-[13.5px] transition-all duration-200 rounded-lg select-none ${
-                      isActive
-                        ? "text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold shadow-xs"
-                        : "text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/60 font-medium"
-                    }`}
+                      <span>More</span>
+                      <ChevronDown
+                        className={`h-3 w-3 transition-transform duration-200 ${
+                          moreOpen ? "rotate-180 text-[#ff2e56]" : "opacity-70"
+                        }`}
+                      />
+                    </button>
+
+                    <AnimatePresence>
+                      {moreOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                          transition={{ duration: 0.16, ease: "easeOut" }}
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[420px] rounded-2xl p-2 z-50 bg-[#0e1017]/98 backdrop-blur-2xl border border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.85),0_0_24px_rgba(225,29,72,0.12)]"
+                        >
+                          <div className="grid grid-cols-2 gap-1.5">
+                            {MORE_LINKS.map((item) => {
+                              const Icon = item.icon;
+                              const isActive = pathname === item.href;
+                              return (
+                                <Link
+                                  key={item.href}
+                                  href={item.href}
+                                  onClick={() => setMoreOpen(false)}
+                                  className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all duration-150 group border ${
+                                    isActive
+                                      ? "bg-white/10 border-white/15 text-white"
+                                      : "border-transparent hover:border-white/10 hover:bg-white/[0.06] text-white/80"
+                                  }`}
+                                >
+                                  <div
+                                    className={`h-7 w-7 shrink-0 rounded-lg flex items-center justify-center transition-colors ${
+                                      isActive
+                                        ? "bg-[#e11d48] text-white shadow-[0_0_12px_rgba(225,29,72,0.5)]"
+                                        : "bg-white/[0.05] text-white/70 group-hover:bg-[#e11d48]/20 group-hover:text-[#ff2e56]"
+                                    }`}
+                                  >
+                                    <Icon className="h-4 w-4" />
+                                  </div>
+                                  <span className="text-[13px] font-semibold text-white/90 group-hover:text-white truncate">
+                                    {item.label}
+                                  </span>
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1.5">
+                  {PRIMARY_LINKS.map((link) => {
+                    const isActive = pathname === link.href;
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className={`relative px-4 py-2 text-[13.5px] transition-all duration-200 rounded-lg select-none ${
+                          isActive
+                            ? "text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold shadow-xs"
+                            : "text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/60 font-medium"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    );
+                  })}
+
+                  {/* More Dropdown (Emerald) */}
+                  <div
+                    ref={moreRef}
+                    className="relative"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                   >
-                    {link.label}
-                  </Link>
-                );
-              })}
-
-              {/* More Dropdown (Hover + Click) */}
-              <div
-                ref={moreRef}
-                className="relative"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                <button
-                  type="button"
-                  onClick={() => setMoreOpen((prev) => !prev)}
-                  aria-expanded={moreOpen}
-                  aria-haspopup="true"
-                  className={`flex items-center gap-1.5 px-4 py-2 text-[13.5px] rounded-lg transition-all duration-200 select-none ${
-                    isObsidian
-                      ? moreOpen || isMoreActive
-                        ? "bg-white/10 text-[#fffaf9] font-bold border border-white/15 shadow-[0_0_14px_rgba(225,29,72,0.18)]"
-                        : "text-white/70 hover:text-[#fffaf9] hover:bg-white/[0.06] font-medium"
-                      : moreOpen || isMoreActive
-                      ? "text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold shadow-xs"
-                      : "text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/60 font-medium"
-                  }`}
-                >
-                  <span>More</span>
-                  <ChevronDown
-                    className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                      moreOpen ? "rotate-180 text-[#e11d48]" : "opacity-70"
-                    }`}
-                  />
-                </button>
-
-                <AnimatePresence>
-                  {moreOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                      transition={{ duration: 0.16, ease: "easeOut" }}
-                      className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[420px] rounded-2xl p-2 z-50 transition-all ${
-                        isObsidian
-                          ? "bg-[#0e1017]/98 backdrop-blur-2xl border border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.85),0_0_24px_rgba(225,29,72,0.12)]"
-                          : "bg-white/98 backdrop-blur-xl border border-slate-200 shadow-[0_20px_45px_rgba(15,23,42,0.12)]"
+                    <button
+                      type="button"
+                      onClick={() => setMoreOpen((prev) => !prev)}
+                      aria-expanded={moreOpen}
+                      aria-haspopup="true"
+                      className={`flex items-center gap-1.5 px-4 py-2 text-[13.5px] rounded-lg transition-all duration-200 select-none ${
+                        moreOpen || isMoreActive
+                          ? "text-emerald-800 bg-emerald-50 border border-emerald-200/80 font-bold shadow-xs"
+                          : "text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/60 font-medium"
                       }`}
                     >
-                      <div className="grid grid-cols-2 gap-1.5">
-                        {MORE_LINKS.map((item) => {
-                          const Icon = item.icon;
-                          const isActive = pathname === item.href;
-                          return (
-                            <Link
-                              key={item.href}
-                              href={item.href}
-                              onClick={() => setMoreOpen(false)}
-                              className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all duration-150 group border ${
-                                isObsidian
-                                  ? isActive
-                                    ? "bg-white/10 border-white/15 text-white"
-                                    : "border-transparent hover:border-white/10 hover:bg-white/[0.06] text-white/80"
-                                  : isActive
-                                  ? "bg-emerald-50 border-emerald-200 text-emerald-900"
-                                  : "border-transparent hover:border-slate-200/80 hover:bg-emerald-50/50 text-slate-700"
-                              }`}
-                            >
-                              <div
-                                className={`h-7 w-7 shrink-0 rounded-lg flex items-center justify-center transition-colors ${
-                                  isObsidian
-                                    ? isActive
-                                      ? "bg-[#e11d48] text-white shadow-[0_0_12px_rgba(225,29,72,0.5)]"
-                                      : "bg-white/[0.05] text-white/70 group-hover:bg-[#e11d48]/20 group-hover:text-[#ff2e56]"
-                                    : isActive
-                                    ? "bg-emerald-600 text-white"
-                                    : "bg-slate-100 text-slate-600 group-hover:bg-emerald-100 group-hover:text-emerald-700"
-                                }`}
-                              >
-                                <Icon className="h-4 w-4" />
-                              </div>
-                              <span
-                                className={`text-[13px] font-semibold transition-colors truncate ${
-                                  isObsidian
-                                    ? "text-white/90 group-hover:text-white"
-                                    : "text-slate-800 group-hover:text-emerald-800"
-                                }`}
-                              >
-                                {item.label}
-                              </span>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                      <span>More</span>
+                      <ChevronDown
+                        className={`h-3.5 w-3.5 transition-transform duration-200 ${
+                          moreOpen ? "rotate-180 text-emerald-600" : "opacity-70"
+                        }`}
+                      />
+                    </button>
+
+                    <AnimatePresence>
+                      {moreOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                          transition={{ duration: 0.16, ease: "easeOut" }}
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[420px] rounded-2xl p-2 z-50 bg-white/98 backdrop-blur-xl border border-slate-200 shadow-[0_20px_45px_rgba(15,23,42,0.12)]"
+                        >
+                          <div className="grid grid-cols-2 gap-1.5">
+                            {MORE_LINKS.map((item) => {
+                              const Icon = item.icon;
+                              const isActive = pathname === item.href;
+                              return (
+                                <Link
+                                  key={item.href}
+                                  href={item.href}
+                                  onClick={() => setMoreOpen(false)}
+                                  className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all duration-150 group border ${
+                                    isActive
+                                      ? "bg-emerald-50 border-emerald-200 text-emerald-900"
+                                      : "border-transparent hover:border-slate-200/80 hover:bg-emerald-50/50 text-slate-700"
+                                  }`}
+                                >
+                                  <div
+                                    className={`h-7 w-7 shrink-0 rounded-lg flex items-center justify-center transition-colors ${
+                                      isActive
+                                        ? "bg-emerald-600 text-white"
+                                        : "bg-slate-100 text-slate-600 group-hover:bg-emerald-100 group-hover:text-emerald-700"
+                                    }`}
+                                  >
+                                    <Icon className="h-4 w-4" />
+                                  </div>
+                                  <span className="text-[13px] font-semibold text-slate-800 group-hover:text-emerald-800 truncate">
+                                    {item.label}
+                                  </span>
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Right: Icon-only Search + User/Admin + Emergency SOS + Mobile Toggle */}
-            <div className="flex items-center gap-2 sm:gap-2.5">
-              {/* Icon-only Search */}
+            {/* Right: Circular Search + Mobile Toggle */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Circular Search Button */}
               <button
                 type="button"
                 onClick={() => setCommandPaletteOpen(true)}
                 aria-label="Search site (⌘K)"
                 title="Search site (⌘K)"
-                className={`flex h-9 w-9 items-center justify-center rounded-lg border transition-all duration-200 active:scale-95 ${
+                className={`flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-200 active:scale-95 ${
                   isObsidian
-                    ? "border-white/10 text-white/80 hover:text-white hover:border-[#e11d48]/50 hover:bg-white/[0.06] shadow-xs"
+                    ? "border-white/15 bg-white/[0.04] text-white/85 hover:text-white hover:border-[#ff2e56]/50 hover:bg-white/[0.08] shadow-[0_0_12px_rgba(255,46,86,0.15)]"
                     : "border-slate-200 text-slate-700 hover:text-emerald-700 hover:border-emerald-300 hover:bg-emerald-50/70 shadow-xs"
                 }`}
               >
@@ -374,9 +431,9 @@ export function Navbar() {
                 onClick={() => setIsOpen(!isOpen)}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
-                className={`lg:hidden flex h-9 w-9 items-center justify-center rounded-lg border transition-colors ${
+                className={`lg:hidden flex h-10 w-10 items-center justify-center rounded-full border transition-all active:scale-95 ${
                   isObsidian
-                    ? "border-white/10 text-white hover:bg-white/[0.06]"
+                    ? "border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08]"
                     : "border-slate-200 text-slate-700 hover:text-emerald-700 hover:border-emerald-300"
                 }`}
               >

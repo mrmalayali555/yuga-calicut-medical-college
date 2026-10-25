@@ -1,9 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { COLLEGE } from "@/lib/site";
-import { EVENTS } from "@/lib/data";
+import { ArrowRight, Calendar, MapPin, Users, BookOpen, Headphones, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { AnimatedCounter } from "@/components/home/animated-counter";
 import { useTheme } from "@/components/theme/theme-context";
@@ -23,537 +22,438 @@ export interface HeroCardConfig {
   btnLink?: string;
 }
 
-const STATS = [
-  { value: 3000, suffix: "+", label: "Medicos", isStatic: false },
-  { value: 68, suffix: "", label: "Years of Legacy", isStatic: false },
-  { value: 16, suffix: "", label: "Subcommittees", isStatic: false },
-  { raw: "24/7", label: "Casualty Care", isStatic: true },
-];
-
 export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
   const { theme } = useTheme();
   const { isAdmin, editMode } = useAdminEdit();
   const isObsidian = theme === "obsidian-crimson";
-  const featuredEvent = EVENTS[0];
 
   const isCardVisible = heroCard?.visible !== false;
-  const isDarkCard = heroCard?.cardStyle === "dark";
 
-  const cardTag = heroCard?.tag || "ALL-KERALA CONCLAVE";
-  const cardDate = heroCard?.date || "MARCH 27–29, 2026";
-  const cardCategory = heroCard?.category || "Annual Intercollegiate Medical Colloquium";
-  const cardTitle = heroCard?.title || "PULSE 2026: The Sovereign Vanguard";
+  const cardTag = heroCard?.tag || "FEATURED EVENT";
+  const cardDate = heroCard?.date || "MARCH 27 – 29, 2026";
+  const cardCategory = heroCard?.category || "ANNUAL INTERCOLLEGIATE MEDICAL COLLOQUIUM";
+  const cardTitle = heroCard?.title || "PULSE 2026";
   const cardDesc =
     heroCard?.description ||
-    "Featuring 42 clinical hackathons, state surgical simulation leagues, national med-law panels, and Calicut's landmark cultural gala.";
+    "Featuring clinical hackathons, state surgical simulation leagues, national med-law panels, and a landmark cultural gala.";
   const cardVenue = heroCard?.venue || "Silver Jubilee Auditorium, GMC";
-  const cardBtnText = heroCard?.btnText || "Delegate Pass →";
+  const cardBtnText = heroCard?.btnText || "Explore event →";
   const cardBtnLink = heroCard?.btnLink || "/events";
 
-  if (isObsidian) {
-    return (
-      <section className="relative overflow-hidden bg-[#07080a] text-on-surface pt-24 sm:pt-28 pb-16 lg:pb-24">
-        {/* Architectural Red Coordinate Vector Grid */}
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          <svg className="w-full h-full stroke-primary-container" fill="none" strokeWidth="0.75" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern height="64" id="medical-grid" patternUnits="userSpaceOnUse" width="64">
-                <path d="M 64 0 L 0 0 0 64" />
-                <circle className="fill-primary-container" cx="64" cy="64" r="1.5" />
-              </pattern>
-            </defs>
-            <rect fill="url(#medical-grid)" height="100%" width="100%" />
-          </svg>
+  return (
+    <section className="relative min-h-[96dvh] lg:min-h-screen flex flex-col justify-between pt-24 sm:pt-32 pb-8 sm:pb-14 overflow-hidden bg-[#07080a] text-white">
+      {/* 1. Real Golden-Hour GMC Clocktower Campus Photographs (Desktop Landscape & Mobile Portrait) */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0">
+        {/* Desktop & Tablet Background: Landscape Golden-Hour Clocktower */}
+        <div className="hidden sm:block absolute inset-0">
+          <Image
+            src="/hero-clocktower.png"
+            alt="Government Medical College Kozhikode Clocktower during Golden Hour Sunset"
+            fill
+            priority
+            quality={95}
+            className="object-cover object-[78%_38%] sm:object-[80%_40%] lg:object-[82%_42%] transition-transform duration-1000 scale-[1.01]"
+          />
         </div>
 
-        {/* Ambient Focal Radiance */}
-        <div className="absolute top-1/4 -left-48 w-96 h-96 bg-primary-container/20 rounded-full blur-[130px] pointer-events-none" />
-        <div className="absolute bottom-10 right-1/4 w-[500px] h-[500px] bg-tertiary-container/15 rounded-full blur-[160px] pointer-events-none" />
+        {/* Mobile-Only Background: Portrait Golden-Hour Clocktower */}
+        <div className="block sm:hidden absolute inset-0">
+          <Image
+            src="/hero-clocktower-mobile.png"
+            alt="Government Medical College Kozhikode Clocktower during Golden Hour Sunset - Mobile Portrait"
+            fill
+            priority
+            quality={95}
+            className="object-cover object-[50%_35%] transition-transform duration-1000 scale-[1.01]"
+          />
+        </div>
 
-        {/* Primary Bento Matrix Container */}
-        <div className="relative z-10 max-w-[1440px] w-full mx-auto px-margin-sm md:px-margin lg:px-margin-lg py-space-lg lg:py-space-xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-center">
-            {/* Left Column: Manifesto & Command Console */}
-            <div className="lg:col-span-7 flex flex-col items-start gap-space-lg">
-              {/* Status Pill with Pulsing Core */}
-              <motion.div
-                initial={{ opacity: 0, y: -12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-flex items-center gap-space-sm bg-inverse-surface text-inverse-on-surface px-space-md py-space-xs rounded-full shadow-[0_0_24px_rgba(255,255,255,0.15)]"
-              >
-                <span className="relative flex h-2.5 w-2.5 items-center justify-center">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-container" />
-                </span>
+        {/* Cinematic Vignette & Deep Contrast Gradient Overlays */}
+        {/* Base dark wash */}
+        <div className="absolute inset-0 bg-[#07080a]/50 sm:bg-[#07080a]/45" />
+
+        {/* Directional left-to-right wash ensuring pristine headline & copy legibility on desktop */}
+        <div className="hidden sm:block absolute inset-0 bg-gradient-to-r from-[#07080a] via-[#07080a]/92 to-transparent lg:w-[62%]" />
+        <div className="hidden sm:block absolute inset-0 bg-gradient-to-r from-[#07080a] via-[#07080a]/65 to-[#07080a]/15" />
+
+        {/* Mobile-specific top-to-bottom wash keeping tower prominent in lower center */}
+        <div className="block sm:hidden absolute inset-0 bg-gradient-to-b from-[#07080a]/92 via-[#07080a]/60 to-[#07080a]/75" />
+
+        {/* Top-down fade for navbar integration */}
+        <div className="absolute inset-x-0 top-0 h-40 sm:h-44 bg-gradient-to-b from-[#07080a]/98 via-[#07080a]/60 to-transparent" />
+
+        {/* Bottom fade for seamless transition to subsequent sections */}
+        <div className="absolute inset-x-0 bottom-0 h-40 sm:h-48 bg-gradient-to-t from-[#07080a] via-[#07080a]/85 to-transparent" />
+
+        {/* Subtle Ambient Crimson Glows matching YUGA identity */}
+        <div className="absolute top-1/4 left-1/4 w-[320px] sm:w-[450px] h-[320px] sm:h-[450px] bg-[#e11d48]/12 rounded-full blur-[120px] sm:blur-[140px] pointer-events-none" />
+        <div className="absolute top-1/3 right-1/4 w-[280px] sm:w-[380px] h-[280px] sm:h-[380px] bg-[#ff2e56]/15 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none" />
+      </div>
+
+      {/* 2. Main Hero Content Matrix */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full my-auto py-6 sm:py-8 lg:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column: Bold Typographic Identity */}
+          <div className="lg:col-span-7 flex flex-col items-start">
+            {/* Eyebrow: College Union Identity */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="flex items-center gap-2 sm:gap-2.5 mb-3.5 sm:mb-5 select-none"
+            >
+              <span className="h-1 w-5 sm:w-7 bg-[#ff2e56] rounded-full inline-block shadow-[0_0_10px_rgba(255,46,86,0.8)]" />
+              <EditableText
+                blockId="hero-eyebrow"
+                defaultContent="CALICUT MEDICAL COLLEGE UNION"
+                pageId="home"
+                label="Hero Eyebrow Text"
+                as="span"
+                className="text-[11px] sm:text-[13px] font-bold tracking-[0.2em] sm:tracking-[0.22em] text-white/85 uppercase font-['Plus_Jakarta_Sans',sans-serif]"
+              />
+            </motion.div>
+
+            {/* Dominant Headline */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="space-y-0.5 sm:space-y-1 mb-4 sm:mb-6"
+            >
+              <h1 className="text-[32px] xs:text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-black text-white leading-[1.06] sm:leading-[1.03] tracking-tight uppercase font-['Plus_Jakarta_Sans',sans-serif]">
                 <EditableText
-                  blockId="hero-status-pill"
-                  defaultContent="LIVE TENURE 2026–2027 &nbsp;|&nbsp; GMC KOZHIKODE"
+                  blockId="hero-title-main"
+                  defaultContent="A VOICE FOR CHANGE."
                   pageId="home"
-                  label="Status Pill Text"
+                  label="Hero Main Headline"
                   as="span"
-                  className="font-label-sm text-label-sm tracking-widest uppercase font-extrabold text-[#090a0f]"
+                  className="block drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]"
                 />
-              </motion.div>
+              </h1>
 
-              {/* Dominant Typographic Anchor */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-space-xs"
-              >
+              <div className="text-[32px] xs:text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-serif italic leading-[1.12] sm:leading-[1.1] pt-0.5 sm:pt-1">
                 <EditableText
-                  blockId="hero-title-line1"
-                  defaultContent="THE EPOCH OF"
+                  blockId="hero-title-sub"
+                  defaultContent="Built by students."
                   pageId="home"
-                  label="Hero Title Line 1"
-                  as="h1"
-                  className="font-headline-xl text-headline-xl text-on-primary-container tracking-tight uppercase"
+                  label="Hero Cursive Subheadline"
+                  as="span"
+                  className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff2e56] via-[#ff4d6d] to-[#ff758f] drop-shadow-[0_0_35px_rgba(255,46,86,0.45)] inline-block"
                 />
-                <div className="font-headline-xl text-headline-xl tracking-tighter italic font-serif">
-                  <EditableText
-                    blockId="hero-title-line2"
-                    defaultContent="Renewal &amp; Care"
-                    pageId="home"
-                    label="Hero Title Line 2"
-                    as="span"
-                    className="bg-gradient-to-r from-[#ff2e56] via-primary-container to-tertiary-container bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(225,29,72,0.4)]"
-                  />
-                </div>
-              </motion.div>
+              </div>
+            </motion.div>
 
-              {/* Collegiate Union Manifesto */}
+            {/* Narrative Supporting Paragraph */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-6 sm:mb-8 max-w-xl"
+            >
+              <EditableText
+                blockId="hero-description"
+                defaultContent="Student representation, a vibrant campus life, and a stronger community — working together for a better tomorrow at Calicut Medical College."
+                pageId="home"
+                label="Hero Supporting Paragraph"
+                as="p"
+                className="text-sm sm:text-lg text-white/80 font-normal leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
+                multiline
+              />
+            </motion.div>
+
+            {/* Call to Action Buttons (Stacked on mobile, row on tablet/desktop) */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col xs:flex-row items-stretch xs:items-center gap-3 sm:gap-4 w-full sm:w-auto"
+            >
+              {/* Primary Action Button */}
+              <Link
+                href="/events"
+                className="group relative inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#ff2e56] text-white px-6 sm:px-7 py-3 sm:py-3.5 text-sm font-bold tracking-wide shadow-[0_0_24px_rgba(225,29,72,0.5)] hover:shadow-[0_0_36px_rgba(255,46,86,0.75)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 select-none text-center"
+              >
+                <span>Explore Campus</span>
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+              </Link>
+
+              {/* Secondary Action Button */}
+              <Link
+                href="/about"
+                className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/[0.06] hover:bg-white/10 hover:border-white/35 text-white px-6 sm:px-7 py-3 sm:py-3.5 text-sm font-semibold backdrop-blur-md active:scale-[0.98] transition-all duration-200 select-none shadow-[0_4px_16px_rgba(0,0,0,0.3)] text-center"
+              >
+                <span>Discover YUGA</span>
+              </Link>
+            </motion.div>
+
+            {/* Mobile-Only Compact Featured Event Teaser */}
+            {isCardVisible && (
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.5, delay: 0.26 }}
+                className="block lg:hidden mt-6 w-full rounded-2xl border border-white/15 bg-[#090b11]/85 backdrop-blur-xl p-4 shadow-xl"
               >
-                <EditableText
-                  blockId="hero-manifesto"
-                  defaultContent="The sovereign collective voice of Calicut Medical College medicos, house surgeons, and clinical residents. Forged in sixty-eight years of militant solidarity, clinical supremacy, and uncompromising public health stewardship."
-                  pageId="home"
-                  label="Hero Manifesto Paragraph"
-                  as="p"
-                  className="font-body-lg text-body-lg text-on-surface/90 max-w-2xl leading-relaxed"
-                  multiline
-                />
-              </motion.div>
-
-              {/* Command Dual Action Array */}
-              <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-wrap items-center gap-space-md pt-space-xs w-full sm:w-auto"
-              >
-                {/* Button 1: Stark White High-Contrast */}
-                <Link
-                  href="/events"
-                  className="group relative inline-flex items-center justify-center gap-space-sm bg-on-primary-container text-[#07080a] font-label-lg text-label-lg px-space-xl py-space-md rounded transition-all duration-300 hover:scale-[1.02] shadow-[0_0_30px_rgba(255,255,255,0.3)]"
-                >
-                  <span className="tracking-wide uppercase font-bold">Explore Events &amp; Fests</span>
-                  <span className="material-symbols-outlined text-[18px] transition-transform duration-300 group-hover:translate-x-1">
-                    arrow_forward
+                <div className="flex items-center justify-between gap-2 pb-2.5 mb-2.5 border-b border-white/10">
+                  <span className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-wider text-white uppercase">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#ff2e56] animate-pulse" />
+                    {cardTag}
                   </span>
-                </Link>
-
-                {/* Button 2: Deep Obsidian with Arterial Crimson Resonance */}
-                <Link
-                  href="/complaints"
-                  className="inline-flex items-center justify-center gap-space-sm bg-surface-container-lowest text-primary font-label-lg text-label-lg px-space-lg py-space-md rounded shadow-[0_0_20px_rgba(225,29,72,0.18)] hover:bg-surface-container-low hover:text-on-primary-container transition-all duration-200"
-                >
-                  <span className="material-symbols-outlined text-primary-container text-[20px]">
-                    shield_person
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#ff4d6d]">
+                    <Calendar className="h-3 w-3" />
+                    {cardDate}
                   </span>
-                  <span className="tracking-wider uppercase font-semibold">Student Grievance Desk</span>
-                </Link>
-              </motion.div>
-
-              {/* Supplementary Institutional Telemetry Bar */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.32 }}
-                className="flex items-center gap-space-lg pt-space-sm text-secondary-fixed-dim"
-              >
-                <div className="flex items-center gap-space-xs">
-                  <span className="material-symbols-outlined text-primary text-[18px]">verified</span>
-                  <span className="font-label-md text-label-md uppercase tracking-wider font-medium">Democratically Ratified</span>
                 </div>
-                <span className="w-1.5 h-1.5 rounded-full bg-surface-variant" />
-                <div className="flex items-center gap-space-xs">
-                  <span className="material-symbols-outlined text-primary-container text-[18px]">local_hospital</span>
-                  <span className="font-label-md text-label-md uppercase tracking-wider font-medium">Apex Medical Campus</span>
-                </div>
-              </motion.div>
-            </div>
 
-            {/* Right Column: Bento Architectural Composition */}
-            <div className="lg:col-span-5 flex flex-col gap-space-md mt-space-md lg:mt-0">
-              {/* Primary Event Conclave Card (Configurable / Removable) */}
-              {isCardVisible ? (
-                <motion.div
-                  initial={{ opacity: 0, y: 24, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                  className={`relative rounded p-space-lg overflow-hidden ${
-                    isDarkCard
-                      ? "bg-[#0d0f16]/95 text-white border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_35px_rgba(225,29,72,0.18)] backdrop-blur-xl"
-                      : "bg-inverse-surface text-inverse-on-surface shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_35px_rgba(255,255,255,0.08)]"
-                  }`}
-                >
-                  {/* Admin Control Badge in Edit Mode */}
-                  {isAdmin && editMode && (
-                    <div className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5 bg-black/85 border border-white/20 rounded-md px-2 py-0.5 text-[10px] font-semibold text-white backdrop-blur shadow-sm">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                      <span>Hero Card</span>
-                      <Link
-                        href="/admin/settings"
-                        className="ml-1 text-rose-400 hover:text-rose-300 underline inline-flex items-center gap-0.5"
-                        title="Configure or Hide Card in Admin Settings"
-                      >
-                        <span>Settings</span>
-                        <ArrowUpRight className="h-2.5 w-2.5" />
-                      </Link>
-                    </div>
-                  )}
-
-                  {/* Structural Header Bar */}
-                  <div
-                    className={`flex items-center justify-between pb-space-sm mb-space-md border-b ${
-                      isDarkCard ? "border-white/10" : "border-black/10"
-                    }`}
-                  >
-                    <span
-                      className={`inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded font-label-sm text-label-sm tracking-widest font-black uppercase ${
-                        isDarkCard
-                          ? "bg-primary-container/20 text-on-primary-container border border-primary-container/30"
-                          : "bg-[#090a0f] text-on-primary-container"
-                      }`}
+                <div className="flex items-center gap-3">
+                  <div className="relative w-14 h-14 rounded-lg overflow-hidden border border-white/15 shrink-0 bg-black/50">
+                    <Image
+                      src="/pulse-stage.jpg"
+                      alt="Event Stage Preview"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-sm font-bold text-white uppercase tracking-tight truncate">
+                      {cardTitle}
+                    </h4>
+                    <p className="text-[11px] text-white/60 truncate">
+                      {cardCategory}
+                    </p>
+                    <Link
+                      href={cardBtnLink}
+                      className="inline-flex items-center gap-1 text-xs font-bold text-[#ff2e56] hover:text-[#ff4d6d] pt-1 transition-colors"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary-container" />
-                      <EditableText
-                        blockId="hero-card-tag"
-                        defaultContent={cardTag}
-                        pageId="home"
-                        label="Featured Card Tag"
-                        as="span"
-                      />
-                    </span>
-                    <div className="flex items-center gap-1 font-label-sm text-label-sm font-bold text-primary-container uppercase tracking-wider">
-                      <span className="material-symbols-outlined text-[16px]">calendar_today</span>
-                      <EditableText
-                        blockId="hero-card-date"
-                        defaultContent={cardDate}
-                        pageId="home"
-                        label="Featured Card Date"
-                        as="span"
-                      />
-                    </div>
+                      <span>{cardBtnText}</span>
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </div>
+
+          {/* Right Column (Desktop & Tablet): Floating Glassmorphic Featured Event Card */}
+          <div className="hidden lg:flex lg:col-span-5 flex-col justify-center">
+            {isCardVisible ? (
+              <motion.div
+                initial={{ opacity: 0, y: 22, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                className="relative rounded-2xl border border-white/15 bg-[#090b11]/85 backdrop-blur-xl p-6 sm:p-7 shadow-[0_24px_60px_rgba(0,0,0,0.85),0_0_30px_rgba(225,29,72,0.15)] overflow-hidden"
+              >
+                {/* Admin Mode Badge */}
+                {isAdmin && editMode && (
+                  <div className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5 bg-black/85 border border-white/20 rounded-md px-2 py-0.5 text-[10px] font-semibold text-white backdrop-blur shadow-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span>Hero Card</span>
+                    <Link
+                      href="/admin/settings"
+                      className="ml-1 text-rose-400 hover:text-rose-300 underline inline-flex items-center gap-0.5"
+                    >
+                      <span>Settings</span>
+                      <ArrowUpRight className="h-2.5 w-2.5" />
+                    </Link>
+                  </div>
+                )}
+
+                {/* Card Top Row: Badge & Date */}
+                <div className="flex items-center justify-between gap-2 pb-4 mb-4 border-b border-white/10">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] border border-white/10 px-3 py-1 text-[11px] font-bold tracking-wider text-white uppercase select-none">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#ff2e56] animate-pulse" />
+                    <EditableText
+                      blockId="hero-card-tag"
+                      defaultContent={cardTag}
+                      pageId="home"
+                      label="Featured Card Tag"
+                      as="span"
+                    />
                   </div>
 
-                  {/* Card Content Body */}
-                  <div className="space-y-space-xs">
+                  <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#ff4d6d] tracking-wide uppercase">
+                    <Calendar className="h-3.5 w-3.5" />
                     <EditableText
-                      blockId="hero-card-category"
-                      defaultContent={cardCategory}
+                      blockId="hero-card-date"
+                      defaultContent={cardDate}
                       pageId="home"
-                      label="Featured Card Category"
+                      label="Featured Card Date"
                       as="span"
-                      className={`font-label-sm text-label-sm tracking-widest uppercase font-bold ${
-                        isDarkCard ? "text-white/60" : "text-black/60"
-                      }`}
                     />
+                  </div>
+                </div>
+
+                {/* Card Main Section: Text Info + Stage Photo Thumbnail */}
+                <div className="flex items-start justify-between gap-4 mb-5">
+                  <div className="min-w-0 flex-1 space-y-1">
                     <EditableText
                       blockId="hero-card-title"
                       defaultContent={cardTitle}
                       pageId="home"
                       label="Featured Card Title"
                       as="h3"
-                      className={`font-headline-md text-headline-md font-extrabold tracking-tight leading-tight ${
-                        isDarkCard ? "text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]" : "text-[#090a0f]"
-                      }`}
+                      className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight uppercase leading-none"
                     />
+
+                    <EditableText
+                      blockId="hero-card-category"
+                      defaultContent={cardCategory}
+                      pageId="home"
+                      label="Featured Card Category"
+                      as="p"
+                      className="text-[11px] font-bold tracking-wider text-white/60 uppercase pt-1"
+                    />
+
                     <EditableText
                       blockId="hero-card-description"
                       defaultContent={cardDesc}
                       pageId="home"
                       label="Featured Card Description"
                       as="p"
-                      className={`font-body-md text-body-md pt-space-xs ${
-                        isDarkCard ? "text-white/80" : "text-black/75"
-                      }`}
+                      className="text-xs sm:text-sm text-white/70 leading-relaxed pt-2 line-clamp-3"
                       multiline
                     />
                   </div>
 
-                  {/* Venue & Direct RSVP Action Ribbon */}
-                  <div
-                    className={`mt-space-md pt-space-md border-t flex items-center justify-between ${
-                      isDarkCard ? "border-white/10" : "border-black/10"
-                    }`}
-                  >
-                    <div
-                      className={`flex items-center gap-space-xs ${
-                        isDarkCard ? "text-white/90" : "text-black/90"
-                      }`}
-                    >
-                      <span className="material-symbols-outlined text-primary-container text-[20px]">
-                        location_on
-                      </span>
-                      <EditableText
-                        blockId="hero-card-venue"
-                        defaultContent={cardVenue}
-                        pageId="home"
-                        label="Featured Card Venue"
-                        as="span"
-                        className="font-label-md text-label-md font-bold uppercase tracking-tight"
-                      />
-                    </div>
-                    <Link
-                      href={cardBtnLink}
-                      className="bg-primary-container text-on-primary-container px-space-md py-space-xs rounded font-label-md text-label-md font-bold uppercase tracking-wider shadow-[0_0_12px_rgba(225,29,72,0.4)] hover:bg-tertiary-container transition-colors"
-                    >
-                      {cardBtnText}
-                    </Link>
+                  {/* Stage Image Thumbnail (PULSE 2026 Auditorium Stage) */}
+                  <div className="relative w-28 sm:w-36 h-20 sm:h-24 rounded-xl overflow-hidden border border-white/15 shadow-md shrink-0 bg-black/40">
+                    <Image
+                      src="/pulse-stage.jpg"
+                      alt="PULSE 2026 Medical Colloquium Stage Preview"
+                      fill
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
                   </div>
-                </motion.div>
-              ) : isAdmin && editMode ? (
-                <div className="rounded border-2 border-dashed border-rose-500/40 bg-rose-500/5 p-space-md text-center">
-                  <div className="flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-400">
-                    <span className="material-symbols-outlined text-base">visibility_off</span>
-                    Featured Conclave Card Hidden
+                </div>
+
+                {/* Card Footer: Venue & Action Button */}
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-1.5 text-white/85 text-xs font-medium truncate">
+                    <MapPin className="h-4 w-4 text-[#ff2e56] shrink-0" />
+                    <EditableText
+                      blockId="hero-card-venue"
+                      defaultContent={cardVenue}
+                      pageId="home"
+                      label="Featured Card Venue"
+                      as="span"
+                      className="truncate"
+                    />
                   </div>
-                  <p className="mt-1 text-[11px] text-white/60">
-                    This card is currently hidden from visitors. You can enable or edit it in Admin Settings.
-                  </p>
+
                   <Link
-                    href="/admin/settings"
-                    className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-semibold text-rose-400 hover:text-rose-300 underline"
+                    href={cardBtnLink}
+                    className="shrink-0 inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#ff2e56] text-white px-5 py-2 text-xs font-bold shadow-[0_0_16px_rgba(225,29,72,0.4)] hover:brightness-110 active:scale-95 transition-all select-none"
                   >
-                    Configure in Admin Settings →
+                    <span>{cardBtnText}</span>
                   </Link>
                 </div>
-              ) : null}
-
-              {/* Metrics Bento Panel: High-Impact Glass Obsidian */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="bg-surface-container-low/95 rounded p-space-md shadow-xl backdrop-blur-md"
-              >
-                <div className="grid grid-cols-2 gap-space-sm">
-                  {/* Metric 1: Medicos */}
-                  <div className="bg-surface-container-lowest/80 p-space-md rounded flex flex-col justify-between">
-                    <div className="flex items-center justify-between text-secondary">
-                      <span className="font-label-sm text-label-sm tracking-wider uppercase">Active Caucus</span>
-                      <span className="material-symbols-outlined text-[16px]">groups</span>
-                    </div>
-                    <div className="pt-space-xs">
-                      <div className="font-headline-lg text-headline-lg font-extrabold text-on-primary-container tracking-tight">
-                        <AnimatedCounter value={3000} suffix="+" />
-                      </div>
-                      <div className="font-label-sm text-label-sm text-primary tracking-wider uppercase font-semibold">Undergrads &amp; Residents</div>
-                    </div>
-                  </div>
-
-                  {/* Metric 2: Legacy */}
-                  <div className="bg-surface-container-lowest/80 p-space-md rounded flex flex-col justify-between">
-                    <div className="flex items-center justify-between text-secondary">
-                      <span className="font-label-sm text-label-sm tracking-wider uppercase">Heritage</span>
-                      <span className="material-symbols-outlined text-[16px]">history_edu</span>
-                    </div>
-                    <div className="pt-space-xs">
-                      <div className="font-headline-lg text-headline-lg font-extrabold text-primary-container tracking-tight drop-shadow-[0_0_14px_rgba(225,29,72,0.35)]">
-                        <AnimatedCounter value={68} suffix="" />
-                      </div>
-                      <div className="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase font-semibold">Years of Supremacy</div>
-                    </div>
-                  </div>
-
-                  {/* Metric 3: Subcommittees */}
-                  <div className="bg-surface-container-lowest/80 p-space-md rounded flex flex-col justify-between">
-                    <div className="flex items-center justify-between text-secondary">
-                      <span className="font-label-sm text-label-sm tracking-wider uppercase">Operational</span>
-                      <span className="material-symbols-outlined text-[16px]">account_tree</span>
-                    </div>
-                    <div className="pt-space-xs">
-                      <div className="font-headline-lg text-headline-lg font-extrabold text-on-primary-container tracking-tight">
-                        <AnimatedCounter value={16} suffix="" />
-                      </div>
-                      <div className="font-label-sm text-label-sm text-secondary-fixed-dim tracking-wider uppercase font-semibold">Active Subcommittees</div>
-                    </div>
-                  </div>
-
-                  {/* Metric 4: Rapid Response */}
-                  <div className="bg-surface-container-lowest/80 p-space-md rounded flex flex-col justify-between">
-                    <div className="flex items-center justify-between text-primary">
-                      <span className="font-label-sm text-label-sm tracking-wider uppercase font-bold text-primary">SOS Net</span>
-                      <span className="material-symbols-outlined text-[16px] text-primary-container animate-pulse">crisis_alert</span>
-                    </div>
-                    <div className="pt-space-xs">
-                      <div className="font-headline-lg text-headline-lg font-extrabold text-primary-container tracking-tight drop-shadow-[0_0_15px_rgba(225,29,72,0.5)]">
-                        24/7
-                      </div>
-                      <div className="font-label-sm text-label-sm text-primary tracking-wider uppercase font-bold">Emergency Duty Net</div>
-                    </div>
-                  </div>
-                </div>
               </motion.div>
+            ) : isAdmin && editMode ? (
+              <div className="rounded-2xl border-2 border-dashed border-rose-500/40 bg-rose-500/5 p-6 text-center">
+                <p className="text-xs font-bold uppercase tracking-wider text-rose-400">
+                  Featured Conclave Card Hidden
+                </p>
+                <Link
+                  href="/admin/settings"
+                  className="mt-2 inline-flex items-center gap-1 text-xs text-rose-400 hover:text-rose-300 underline"
+                >
+                  Configure in Admin Settings →
+                </Link>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
 
-              {/* Union Credentials Ticker Footer within Bento Stack */}
-              <div className="bg-surface-container-high px-space-md py-space-xs rounded flex items-center justify-between text-secondary">
-                <div className="flex items-center gap-space-xs">
-                  <span className="w-2 h-2 rounded-full bg-primary-container" />
-                  <span className="font-label-sm text-label-sm text-on-surface uppercase tracking-widest font-semibold">YUGA Executive Senate Council</span>
+      {/* 3. Hero Bottom Statistics Strip (Responsive Layout) */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full mt-2 sm:mt-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-2xl border border-white/10 bg-[#090b11]/80 backdrop-blur-xl px-4 sm:px-12 py-3.5 sm:py-5 shadow-2xl"
+        >
+          {/* Desktop & Tablet Stats View (sm:grid) */}
+          <div className="hidden sm:grid grid-cols-3 gap-6 sm:gap-8 divide-x divide-white/10 items-center">
+            {/* Metric 1 */}
+            <div className="flex items-center gap-4 sm:justify-start">
+              <div className="h-12 w-12 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0">
+                <Users className="h-6 w-6 text-[#ff2e56]" />
+              </div>
+              <div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-['Plus_Jakarta_Sans',sans-serif]">
+                  <AnimatedCounter value={3020} suffix="+" />
                 </div>
-                <span className="font-label-sm text-label-sm text-primary uppercase font-mono tracking-wider">AFFILIATED: KUHS</span>
+                <div className="text-xs sm:text-[13px] text-white/60 font-medium">
+                  Students &amp; residents
+                </div>
+              </div>
+            </div>
+
+            {/* Metric 2 */}
+            <div className="flex items-center gap-4 pl-6 sm:pl-8 sm:justify-start">
+              <div className="h-12 w-12 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0">
+                <BookOpen className="h-6 w-6 text-[#ff2e56]" />
+              </div>
+              <div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-['Plus_Jakarta_Sans',sans-serif]">
+                  <AnimatedCounter value={68} suffix="" />
+                </div>
+                <div className="text-xs sm:text-[13px] text-white/60 font-medium">
+                  Years of student legacy
+                </div>
+              </div>
+            </div>
+
+            {/* Metric 3 */}
+            <div className="flex items-center gap-4 pl-6 sm:pl-8 sm:justify-start">
+              <div className="h-12 w-12 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center shrink-0">
+                <Headphones className="h-6 w-6 text-[#ff2e56]" />
+              </div>
+              <div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-['Plus_Jakarta_Sans',sans-serif]">
+                  24/7
+                </div>
+                <div className="text-xs sm:text-[13px] text-white/60 font-medium">
+                  Student support
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    );
-  }
 
-  // DEFAULT / ORIGINAL CLINICAL EMERALD HERO
-  return (
-    <section className="relative min-h-[92dvh] flex items-end pb-16 sm:pb-24 pt-32 overflow-hidden bg-gradient-to-b from-emerald-50/40 via-white to-white">
-      {/* Soft Ambient Radial Light with subtle continuous breath */}
-      <motion.div
-        aria-hidden="true"
-        animate={{
-          scale: [1, 1.04, 1],
-          opacity: [0.8, 1, 0.8],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.18),transparent_70%)] blur-3xl"
-      />
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-end">
-          {/* Left: Headline & Actions */}
-          <div className="lg:col-span-7">
-            {/* Eyebrow Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-2.5 rounded-full border border-emerald-200 bg-emerald-50/80 px-3.5 py-1 mb-6 shadow-2xs"
-            >
-              <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse-soft" />
-              <span className="text-xs font-semibold tracking-wide text-emerald-800">
-                Official College Union · 2026–2027
+          {/* Mobile-Only Compact Stats View */}
+          <div className="grid sm:hidden grid-cols-3 divide-x divide-white/10 text-center items-center">
+            {/* Mobile Metric 1 */}
+            <div className="px-1.5 flex flex-col items-center">
+              <span className="text-lg xs:text-xl font-black text-white tracking-tight">
+                <AnimatedCounter value={3020} suffix="+" />
               </span>
-            </motion.div>
+              <span className="text-[10px] text-white/65 font-medium leading-tight mt-0.5 truncate w-full">
+                Students
+              </span>
+            </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[clamp(2.75rem,6.2vw,5.2rem)] font-display leading-[0.98] tracking-[-0.03em] text-slate-900 font-normal"
-            >
-              The Epoch of
-              <br />
-              <span className="italic font-normal text-emerald-600">Renewal &amp; Care</span>
-            </motion.h1>
+            {/* Mobile Metric 2 */}
+            <div className="px-1.5 flex flex-col items-center">
+              <span className="text-lg xs:text-xl font-black text-white tracking-tight">
+                <AnimatedCounter value={68} suffix="" />
+              </span>
+              <span className="text-[10px] text-white/65 font-medium leading-tight mt-0.5 truncate w-full">
+                Years Legacy
+              </span>
+            </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 max-w-xl text-base sm:text-lg text-slate-600 leading-relaxed font-normal"
-            >
-              Democratically elected union representing every medical student,
-              intern doctor, and postgraduate resident at {COLLEGE.name}.
-            </motion.p>
-
-            {/* CTA Row */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-10 flex flex-wrap items-center gap-3.5"
-            >
-              <Link href="/events" className="btn-primary group">
-                <span>Explore Events &amp; Fests</span>
-                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
-              </Link>
-
-              <Link href="/complaints" className="btn-secondary">
-                Student Grievance Desk
-              </Link>
-            </motion.div>
+            {/* Mobile Metric 3 */}
+            <div className="px-1.5 flex flex-col items-center">
+              <span className="text-lg xs:text-xl font-black text-white tracking-tight">
+                24/7
+              </span>
+              <span className="text-[10px] text-white/65 font-medium leading-tight mt-0.5 truncate w-full">
+                Support
+              </span>
+            </div>
           </div>
-
-          {/* Right: Featured Event Card + Stats */}
-          <div className="lg:col-span-5">
-            {/* Featured Event Card */}
-            {isCardVisible ? (
-              <motion.div
-                initial={{ opacity: 0, y: 24, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.65, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                whileHover={{ y: -4, transition: { duration: 0.22, ease: [0.23, 1, 0.32, 1] } }}
-              >
-                <Link
-                  href={cardBtnLink}
-                  className="group block card p-6 sm:p-8 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 bg-white"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="tag">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse-soft" />
-                      {cardTag}
-                    </span>
-                    <ArrowUpRight className="h-4 w-4 text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" aria-hidden="true" />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-slate-900 leading-snug group-hover:text-emerald-700 transition-colors">
-                    {cardTitle}
-                  </h3>
-
-                  <p className="mt-2 text-sm text-slate-600 line-clamp-2 leading-relaxed">
-                    {cardDesc}
-                  </p>
-
-                  <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
-                    <span className="font-semibold text-emerald-800">{cardDate}</span>
-                    <span>{cardVenue}</span>
-                  </div>
-                </Link>
-              </motion.div>
-            ) : null}
-
-            {/* Stats strip with live numeric countup */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 grid grid-cols-4 gap-3 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs"
-            >
-              {STATS.map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="text-xl sm:text-2xl font-bold text-slate-900 tabular-nums">
-                    {stat.isStatic ? (
-                      stat.raw
-                    ) : (
-                      <AnimatedCounter value={stat.value!} suffix={stat.suffix} />
-                    )}
-                  </div>
-                  <div className="mt-1 text-[11px] font-semibold text-emerald-800 uppercase tracking-wide">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
