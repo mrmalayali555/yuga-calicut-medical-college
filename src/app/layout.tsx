@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { SITE, COLLEGE, YUGA } from "@/lib/site";
+import { getActiveTheme } from "@/lib/queries";
+import { ThemeProvider } from "@/components/theme/theme-context";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -49,53 +52,97 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  // Read active theme from DB and Cookies
+  const cookieStore = await cookies();
+  const cookieTheme = cookieStore.get("yuga_theme")?.value;
+  const dbTheme = await getActiveTheme();
+  const activeTheme =
+    cookieTheme === "obsidian-crimson" || (!cookieTheme && dbTheme === "obsidian-crimson")
+      ? "obsidian-crimson"
+      : "emerald";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "CollegeOrUniversity",
         "@id": `${SITE.url}/#college`,
-        "name": COLLEGE.name,
-        "alternateName": "Calicut Medical College / GMC Kozhikode",
-        "url": SITE.url,
-        "address": {
+        name: COLLEGE.name,
+        alternateName: "Calicut Medical College / GMC Kozhikode",
+        url: SITE.url,
+        address: {
           "@type": "PostalAddress",
-          "streetAddress": "Medical College Junction",
-          "addressLocality": "Kozhikode",
-          "addressRegion": "Kerala",
-          "postalCode": "673008",
-          "addressCountry": "IN"
-        }
+          streetAddress: "Medical College Junction",
+          addressLocality: "Kozhikode",
+          addressRegion: "Kerala",
+          postalCode: "673008",
+          addressCountry: "IN",
+        },
       },
       {
         "@type": "Organization",
         "@id": `${SITE.url}/#organization`,
-        "name": `${YUGA.name} College Union`,
-        "alternateName": "YUGA — Calicut Medical College Union 2026-2027",
-        "url": SITE.url,
-        "parentOrganization": {
-          "@id": `${SITE.url}/#college`
+        name: `${YUGA.name} College Union`,
+        alternateName: "YUGA — Calicut Medical College Union 2026-2027",
+        url: SITE.url,
+        parentOrganization: {
+          "@id": `${SITE.url}/#college`,
         },
-        "description": YUGA.description
-      }
-    ]
+        description: YUGA.description,
+      },
+    ],
   };
 
   return (
-    <html lang="en" className="scroll-smooth antialiased">
+    <html
+      lang="en"
+      data-theme={activeTheme}
+      className={`scroll-smooth antialiased ${activeTheme === "obsidian-crimson" ? "dark" : ""}`}
+    >
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+          rel="stylesheet"
+        />
+        {/* Anti-FOUC Theme Init Script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var cookieMatch = document.cookie.match(/(?:^|; )yuga_theme=([^;]*)/);
+                  var cookieTheme = cookieMatch ? decodeURIComponent(cookieMatch[1]) : null;
+                  var localTheme = localStorage.getItem('yuga_theme');
+                  var theme = cookieTheme || localTheme || '${activeTheme}';
+                  document.documentElement.setAttribute('data-theme', theme);
+                  if (theme === 'obsidian-crimson') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="min-h-screen bg-[var(--bg-root)] text-[var(--text-primary)] flex flex-col selection:bg-emerald-200 selection:text-emerald-900">
-        <Navbar />
-        <main id="main-content" className="flex-1">{children}</main>
-        <Footer />
+        <ThemeProvider initialTheme={activeTheme}>
+          <Navbar />
+          <main id="main-content" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

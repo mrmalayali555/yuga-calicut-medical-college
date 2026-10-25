@@ -1,8 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/require-admin";
+import type { SiteTheme } from "@/lib/queries";
 
 /** Save a rich page's JSON content (about / ug / pg). */
 export async function savePage(key: string, formData: FormData) {
@@ -45,6 +47,31 @@ export async function saveSetting(key: string, value: Record<string, unknown>) {
   revalidatePath("/admin/settings");
 }
 
+/** Set site active theme (emerald | obsidian-crimson). */
+export async function setSiteThemeAction(theme: SiteTheme) {
+  await requireAdmin();
+  const validTheme: SiteTheme = theme === "obsidian-crimson" ? "obsidian-crimson" : "emerald";
+
+  await db.setting.upsert({
+    where: { key: "theme" },
+    update: { value: JSON.stringify({ active: validTheme }) },
+    create: { key: "theme", value: JSON.stringify({ active: validTheme }) },
+  });
+
+  try {
+    const cookieStore = await cookies();
+    cookieStore.set("yuga_theme", validTheme, {
+      path: "/",
+      maxAge: 31536000,
+      sameSite: "lax",
+    });
+  } catch {}
+
+  revalidatePath("/", "layout");
+  revalidatePath("/admin/settings");
+  return { success: true, theme: validTheme };
+}
+
 export async function saveSettingsForm(formData: FormData) {
   await requireAdmin();
 
@@ -83,15 +110,35 @@ export async function saveSettingsForm(formData: FormData) {
     showDesktop: formData.get("search_show_desktop") === "on",
   };
 
-  await Promise.all([
+  const activeThemeRaw = formData.get("active_theme");
+  const promises: Promise<unknown>[] = [
     saveSetting("hero", hero),
     saveSetting("identity", identity),
     saveSetting("contact", contact),
     saveSetting("stats", stats),
     saveSetting("socials", socials),
     saveSetting("nav_search", navSearch),
-  ]);
+  ];
+
+  if (activeThemeRaw) {
+    const activeTheme: SiteTheme = activeThemeRaw === "obsidian-crimson" ? "obsidian-crimson" : "emerald";
+    promises.push(
+      db.setting.upsert({
+        where: { key: "theme" },
+        update: { value: JSON.stringify({ active: activeTheme }) },
+        create: { key: "theme", value: JSON.stringify({ active: activeTheme }) },
+      }).then(async () => {
+        try {
+          const cookieStore = await cookies();
+          cookieStore.set("yuga_theme", activeTheme, { path: "/", maxAge: 31536000, sameSite: "lax" });
+        } catch {}
+      })
+    );
+  }
+
+  await Promise.all(promises);
 
   revalidatePath("/", "layout");
   revalidatePath("/admin/settings");
 }
+

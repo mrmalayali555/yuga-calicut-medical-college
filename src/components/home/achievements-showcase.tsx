@@ -20,11 +20,11 @@ export function AchievementsShowcase() {
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12"
         >
           <div>
-            <p className="text-xs font-semibold tracking-wider uppercase text-emerald-700 mb-3">
+            <p className="text-xs font-semibold tracking-wider uppercase text-[var(--accent)] mb-3">
               Hall of Fame
             </p>
             <h2 className="text-3xl sm:text-4xl font-display text-[var(--text-primary)]">
-              Honors & Laurels
+              Honors &amp; Laurels
             </h2>
           </div>
 
@@ -62,8 +62,8 @@ export function AchievementsShowcase() {
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200 group-hover:border-amber-300 group-hover:bg-amber-100/70 transition-colors">
-                    <Trophy className="h-3.5 w-3.5 text-amber-600 transition-transform group-hover:scale-110" aria-hidden="true" />
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20 group-hover:border-amber-500/40 group-hover:bg-amber-500/15 transition-colors">
+                    <Trophy className="h-3.5 w-3.5 text-amber-500 transition-transform group-hover:scale-110" aria-hidden="true" />
                     {item.medal}
                   </span>
                   <span className="text-[11px] text-[var(--text-faint)] font-mono font-medium">
@@ -71,12 +71,12 @@ export function AchievementsShowcase() {
                   </span>
                 </div>
 
-                <h3 className="text-lg font-semibold text-[var(--text-primary)] leading-snug group-hover:text-emerald-800 transition-colors">
+                <h3 className="text-lg font-semibold text-[var(--text-primary)] leading-snug group-hover:text-[var(--accent)] transition-colors">
                   {item.title}
                 </h3>
 
                 <div className="mt-2">
-                  <span className="text-sm font-semibold text-emerald-800">
+                  <span className="text-sm font-semibold text-[var(--accent)]">
                     {item.recipient}
                   </span>
                   <span className="text-xs text-[var(--text-faint)] ml-2">
@@ -89,11 +89,12 @@ export function AchievementsShowcase() {
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-[var(--border-primary)] text-xs text-slate-600 font-medium">
+              <div className="mt-6 pt-4 border-t border-[var(--border-primary)] text-xs text-[var(--text-muted)] font-medium">
                 {item.event}
               </div>
             </motion.div>
           ))}
+
         </motion.div>
       </div>
     </section>

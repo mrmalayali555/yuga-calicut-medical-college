@@ -3,6 +3,8 @@ import { Field, TextArea, SubmitBtn } from "@/components/admin/form-fields";
 import { db } from "@/lib/db";
 import { saveSettingsForm } from "@/lib/actions/content";
 import { COLLEGE, YUGA, SITE } from "@/lib/site";
+import { ThemeSwitcher } from "@/components/admin/theme-switcher";
+import type { SiteTheme } from "@/lib/queries";
 
 async function getSetting<T>(key: string, fallback: T): Promise<T> {
   const row = await db.setting.findUnique({ where: { key } });
@@ -14,7 +16,7 @@ async function getSetting<T>(key: string, fallback: T): Promise<T> {
 }
 
 export default async function AdminSettingsPage() {
-  const [hero, identity, contact, stats, socials, navSearch] = await Promise.all([
+  const [hero, identity, contact, stats, socials, navSearch, themeSetting] = await Promise.all([
     getSetting("hero", {
       badge: COLLEGE.name,
       title: "The Voice of Calicut Medicos",
@@ -46,21 +48,28 @@ export default async function AdminSettingsPage() {
       telegram: YUGA.socials.telegram,
     }),
     getSetting("nav_search", { showMobile: true, showDesktop: true }),
+    getSetting<{ active: SiteTheme }>("theme", { active: "emerald" }),
   ]);
 
   return (
     <>
       <AdminHeader
         title="Site Branding & Configuration"
-        description="Central site configuration system. Change union identity, college name, branding, contact hotlines, social channels, and public visibility without rewriting code."
+        description="Central site configuration system. Change theme aesthetic, union identity, college name, branding, contact hotlines, social channels, and public visibility without rewriting code."
       />
 
       <form action={saveSettingsForm} className="space-y-8">
+        {/* Dynamic Theme Switcher */}
+        <AdminCard>
+          <ThemeSwitcher initialTheme={themeSetting.active || "emerald"} />
+        </AdminCard>
+
         {/* Union Identity */}
         <AdminCard>
           <h3 className="mb-4 text-base font-bold text-[var(--text-primary)]">
             Union Brand & Institutional Identity
           </h3>
+
           <div className="grid gap-4 sm:grid-cols-2">
             <Field
               label="Full Union Name"

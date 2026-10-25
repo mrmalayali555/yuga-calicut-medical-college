@@ -19,7 +19,7 @@ export function LeadershipSection() {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="text-center max-w-2xl mx-auto mb-14"
         >
-          <p className="text-xs font-semibold tracking-wider uppercase text-emerald-700 mb-3">
+          <p className="text-xs font-semibold tracking-wider uppercase text-[var(--accent)] mb-3">
             Union Governance
           </p>
           <h2 className="text-3xl sm:text-4xl font-display text-[var(--text-primary)]">
@@ -63,33 +63,34 @@ export function LeadershipSection() {
                 }}
                 whileHover={{ y: -4, transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1] } }}
                 whileTap={{ scale: 0.98 }}
-                className="card group p-6 sm:p-7 hover:border-emerald-300 hover:shadow-md transition-[border-color,box-shadow]"
+                className="card group p-6 sm:p-7 hover:border-[var(--accent)] hover:shadow-md transition-[border-color,box-shadow]"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold text-sm transition-transform duration-200 group-hover:scale-105 group-hover:bg-emerald-200/90">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--border-primary)] font-bold text-sm transition-transform duration-200 group-hover:scale-105 group-hover:bg-[var(--accent-muted)]">
                     {initials}
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-[var(--text-primary)] group-hover:text-emerald-800 transition-colors">
+                    <h3 className="text-base font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors">
                       {leader.name}
                     </h3>
-                    <p className="text-xs text-emerald-700 font-semibold">
+                    <p className="text-xs text-[var(--accent)] font-semibold">
                       {leader.role}
                     </p>
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-500 font-medium mb-3">
+                <p className="text-xs text-[var(--text-faint)] font-medium mb-3">
                   {leader.portfolio}
                 </p>
 
-                <blockquote className="text-sm text-[var(--text-secondary)] italic leading-relaxed border-l-2 border-emerald-500 group-hover:border-emerald-600 transition-colors pl-3">
+                <blockquote className="text-sm text-[var(--text-secondary)] italic leading-relaxed border-l-2 border-[var(--accent)] pl-3">
                   &ldquo;{leader.quote}&rdquo;
                 </blockquote>
               </motion.div>
             );
           })}
         </motion.div>
+
 
         {/* View all */}
         <div className="mt-10 text-center">

@@ -16,7 +16,7 @@ export function HeritageMonument3D() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="text-xs font-semibold tracking-wider uppercase text-emerald-700 mb-3">
+            <p className="text-xs font-semibold tracking-wider uppercase text-[var(--accent)] mb-3">
               Interactive Heritage
             </p>
             <h2 className="text-3xl sm:text-4xl font-display text-[var(--text-primary)]">

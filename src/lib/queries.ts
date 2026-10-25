@@ -28,6 +28,14 @@ export async function getSetting<T>(key: string, fallback: T): Promise<T> {
   }
 }
 
+export type SiteTheme = "emerald" | "obsidian-crimson";
+
+export async function getActiveTheme(): Promise<SiteTheme> {
+  const themeSetting = await getSetting<{ active: SiteTheme }>("theme", { active: "emerald" });
+  return themeSetting?.active === "obsidian-crimson" ? "obsidian-crimson" : "emerald";
+}
+
+
 export async function getPage(key: string) {
   try {
     const page = await db.page.findUnique({ where: { key } });

@@ -16,7 +16,7 @@ export function EmergencyStrip() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-2xl border border-red-200 bg-red-50/50 p-8 sm:p-10 shadow-sm"
+          className="rounded-2xl border border-red-500/20 bg-red-500/5 p-8 sm:p-10 shadow-sm backdrop-blur-xs"
         >
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-8">
             <div className="max-w-md">
@@ -25,7 +25,7 @@ export function EmergencyStrip() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-600" />
                 </span>
-                <span className="text-xs font-bold tracking-wider text-red-700 uppercase">
+                <span className="text-xs font-bold tracking-wider text-red-600 uppercase">
                   24/7 Casualty & Triage Hotlines
                 </span>
               </div>
@@ -55,16 +55,17 @@ export function EmergencyStrip() {
                 transition={{ duration: 0.35, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -3, transition: { duration: 0.18, ease: [0.23, 1, 0.32, 1] } }}
                 whileTap={{ scale: 0.98 }}
-                className="group flex items-center justify-between rounded-xl border border-red-100 bg-white p-4 hover:border-red-300 hover:shadow-md transition-[border-color,box-shadow]"
+                className="group flex items-center justify-between rounded-xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-4 hover:border-red-500/40 hover:shadow-md transition-[border-color,box-shadow]"
               >
                 <div className="min-w-0">
-                  <div className="text-xs text-slate-600 mb-0.5 truncate font-medium">
+                  <div className="text-xs text-[var(--text-secondary)] mb-0.5 truncate font-medium">
                     {contact.department}
                   </div>
-                  <div className="text-sm font-bold text-slate-900 font-mono group-hover:text-red-700 transition-colors">
+                  <div className="text-sm font-bold text-[var(--text-primary)] font-mono group-hover:text-red-500 transition-colors">
                     {contact.phone}
                   </div>
                 </div>
+
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-700 group-hover:bg-red-600 group-hover:text-white transition-all ml-3">
                   <Phone className="h-4 w-4 transition-transform duration-200 group-hover:rotate-[15deg] group-hover:scale-110" aria-hidden="true" />
                 </div>

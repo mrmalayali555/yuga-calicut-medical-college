@@ -68,7 +68,7 @@ const PORTALS = [
 
 export function QuickPortals() {
   return (
-    <section className="py-24 sm:py-32 bg-[#f8faf8]">
+    <section className="py-24 sm:py-32 bg-[var(--bg-surface)] border-t border-[var(--border-primary)] transition-colors">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -78,13 +78,13 @@ export function QuickPortals() {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-xl mb-12"
         >
-          <p className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-3">
+          <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] mb-3">
             Campus Portals
           </p>
-          <h2 className="text-3xl sm:text-4xl font-display text-slate-900 font-normal">
+          <h2 className="text-3xl sm:text-4xl font-display text-[var(--text-primary)] font-normal">
             Everything in one place.
           </h2>
-          <p className="mt-2 text-sm text-slate-600">
+          <p className="mt-2 text-sm text-[var(--text-secondary)]">
             Direct navigation across medical student welfare, academics, and culture.
           </p>
         </motion.div>
@@ -121,8 +121,8 @@ export function QuickPortals() {
                   href={portal.href}
                   className={`group flex flex-col justify-between h-full rounded-2xl border p-6 transition-[border-color,background,box-shadow] duration-200 ${
                     portal.danger
-                      ? "border-red-200 bg-red-50/40 hover:bg-red-50/80 hover:border-red-300 shadow-xs hover:shadow-md"
-                      : "border-slate-200/90 bg-white hover:border-emerald-300 hover:bg-emerald-50/30 shadow-xs hover:shadow-md"
+                      ? "border-red-500/30 bg-red-500/10 hover:bg-red-500/15 hover:border-red-500/50 shadow-xs hover:shadow-md"
+                      : "border-[var(--border-primary)] bg-[var(--bg-card)] hover:border-[var(--accent)] hover:bg-[var(--bg-card-hover)] shadow-xs hover:shadow-md"
                   }`}
                 >
                   <div>
@@ -130,8 +130,8 @@ export function QuickPortals() {
                       <div
                         className={`flex h-11 w-11 items-center justify-center rounded-xl border transition-all duration-200 group-hover:scale-105 ${
                           portal.danger
-                            ? "bg-red-100 border-red-200 text-red-600 group-hover:bg-red-200/80"
-                            : "bg-emerald-50 border-emerald-200/80 text-emerald-700 group-hover:bg-emerald-100 group-hover:border-emerald-300"
+                            ? "bg-red-500/20 border-red-500/30 text-red-500"
+                            : "bg-[var(--accent-subtle)] border-[var(--border-primary)] text-[var(--accent)] group-hover:border-[var(--accent)]"
                         }`}
                       >
                         <Icon className="h-5 w-5" aria-hidden="true" />
@@ -139,17 +139,17 @@ export function QuickPortals() {
                       <ArrowUpRight
                         className={`h-4 w-4 transition-transform duration-200 ${
                           portal.danger
-                            ? "text-red-400 group-hover:text-red-600 group-hover:translate-x-1 group-hover:-translate-y-1"
-                            : "text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-1 group-hover:-translate-y-1"
+                            ? "text-red-400 group-hover:text-red-500 group-hover:translate-x-1 group-hover:-translate-y-1"
+                            : "text-[var(--text-faint)] group-hover:text-[var(--accent)] group-hover:translate-x-1 group-hover:-translate-y-1"
                         }`}
                         aria-hidden="true"
                       />
                     </div>
 
-                    <h3 className="text-base font-bold text-slate-900 mb-1.5 group-hover:text-emerald-800 transition-colors">
+                    <h3 className="text-base font-bold text-[var(--text-primary)] mb-1.5 group-hover:text-[var(--accent)] transition-colors">
                       {portal.title}
                     </h3>
-                    <p className="text-sm text-slate-600 leading-relaxed font-normal">
+                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed font-normal">
                       {portal.desc}
                     </p>
                   </div>
@@ -162,3 +162,4 @@ export function QuickPortals() {
     </section>
   );
 }
+
