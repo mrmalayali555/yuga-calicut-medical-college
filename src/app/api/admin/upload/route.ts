@@ -149,9 +149,15 @@ export async function POST(req: NextRequest) {
 
     // 7. Store file in Vercel Blob (Cloud Object Storage)
     let url: string;
-    const token =
-      process.env.BLOB_READ_WRITE_TOKEN?.trim() ||
-      process.env.VERCEL_BLOB_READ_WRITE_TOKEN?.trim();
+    const foundTokenEntry = Object.entries(process.env).find(
+      ([key, val]) =>
+        Boolean(val) &&
+        (key === "BLOB_READ_WRITE_TOKEN" ||
+          key === "VERCEL_BLOB_READ_WRITE_TOKEN" ||
+          key.endsWith("_READ_WRITE_TOKEN") ||
+          (key.startsWith("BLOB_") && key.includes("TOKEN")))
+    );
+    const token = foundTokenEntry ? String(foundTokenEntry[1]).trim() : undefined;
 
     if (token) {
       // Production & configured cloud storage: Upload directly to Vercel Blob
