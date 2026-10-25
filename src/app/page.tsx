@@ -3,7 +3,6 @@ import { QuickPortals } from "@/components/home/quick-portals";
 import { EventShowcase } from "@/components/home/event-showcase";
 import { CircularsFeed } from "@/components/home/circulars-feed";
 import { AchievementsShowcase } from "@/components/home/achievements-showcase";
-import { HeritageMonument3D } from "@/components/home/heritage-monument-3d";
 import { LeadershipSection } from "@/components/home/leadership-section";
 import { EmergencyStrip } from "@/components/home/emergency-strip";
 import { CampusVoiceCTA } from "@/components/home/campus-voice-cta";
@@ -139,10 +138,7 @@ export default async function HomePage() {
       {/* 5. Calicut Medicos Hall of Fame */}
       <AchievementsShowcase initialAchievements={dbAchievements} sliderSettings={sliderSettings} />
 
-      {/* 6. Interactive 3D Heritage Monument (Tenshu Growth Study) */}
-      <HeritageMonument3D />
-
-      {/* 7. Executive Council Leadership */}
+      {/* 6. Executive Council Leadership */}
       <LeadershipSection />
 
       {/* 8. Emergency Hospital & Casualty Hotline Strip */}

@@ -526,7 +526,7 @@ export function AchievementsShowcase({
             />
 
             {/* Main Interactive Top Card */}
-            <div className="relative z-10 w-full h-[175px] sm:h-[210px] rounded-2xl overflow-hidden border border-white/15 bg-[#090b11] shadow-xl shadow-black/80">
+            <div className="relative z-10 w-full aspect-[4/3.2] max-h-[320px] rounded-2xl overflow-hidden border border-white/15 bg-[#090b11] shadow-2xl shadow-black/90">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeItem.id}
@@ -551,37 +551,37 @@ export function AchievementsShowcase({
                   <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/25 pointer-events-none" />
 
                   {/* Top Badges */}
-                  <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between gap-2">
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-amber-500/40 shadow-sm">
-                      <Trophy className="h-3 w-3 text-amber-400" aria-hidden="true" />
+                  <div className="relative z-10 p-3.5 sm:p-4 flex items-center justify-between gap-2">
+                    <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber-400 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-amber-500/40 shadow-sm">
+                      <Trophy className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" />
                       {activeItem.medal}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-white/80 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15 shadow-sm">
-                      <Calendar className="h-3 w-3 text-white/60" aria-hidden="true" />
+                    <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-mono text-white/80 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15 shadow-sm">
+                      <Calendar className="h-3.5 w-3.5 text-white/60" aria-hidden="true" />
                       {activeItem.date}
                     </span>
                   </div>
 
                   {/* Bottom Text Overlay with Floating Circular Button */}
-                  <div className="relative z-10 p-3 sm:p-4 flex items-end justify-between gap-3">
-                    <div className="space-y-0.5 pr-2 min-w-0">
+                  <div className="relative z-10 p-3.5 sm:p-5 flex items-end justify-between gap-3">
+                    <div className="space-y-1 pr-2 min-w-0">
                       <div className="inline-block">
-                        <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#ff2e56] block truncate">
+                        <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#ff2e56] block truncate">
                           {activeItem.recipient}
                         </span>
-                        <div className="h-0.5 w-6 bg-[#ff2e56] mt-0.5 rounded-full" />
+                        <div className="h-0.5 w-7 bg-[#ff2e56] mt-0.5 rounded-full" />
                       </div>
-                      <h3 className="text-sm sm:text-base font-serif font-bold text-white leading-snug line-clamp-2">
+                      <h3 className="text-base sm:text-xl font-serif font-bold text-white leading-snug line-clamp-2">
                         {activeItem.title}
                       </h3>
                     </div>
 
                     <Link
                       href={`/achievements/${activeItem.slug}`}
-                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#ff2e56]/20 border border-[#ff2e56]/50 text-white flex items-center justify-center shrink-0 hover:bg-[#ff2e56] transition-all shadow-md active:scale-95"
+                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ff2e56]/20 border border-[#ff2e56]/50 text-white flex items-center justify-center shrink-0 hover:bg-[#ff2e56] transition-all shadow-md active:scale-95"
                       aria-label={`View achievement ${activeItem.title}`}
                     >
-                      <ArrowRight className="h-4 w-4" />
+                      <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
                     </Link>
                   </div>
                 </motion.div>
@@ -589,97 +589,42 @@ export function AchievementsShowcase({
             </div>
           </div>
 
-          {/* Details Section Below the Card */}
-          <div className="mt-3 sm:mt-4 space-y-2 sm:space-y-2.5 px-0.5">
-            {/* Metadata badges row */}
-            <div className="flex items-center gap-2.5 text-[11px]">
-              <span className="font-bold uppercase tracking-wider text-amber-400 inline-flex items-center gap-1">
-                <Trophy className="h-3 w-3 text-amber-400" aria-hidden="true" />
-                {activeItem.medal}
-              </span>
-              <span className="text-white/20">|</span>
-              <span className="font-mono text-white/70 inline-flex items-center gap-1 uppercase tracking-wide">
-                <Calendar className="h-3 w-3 text-white/40" aria-hidden="true" />
-                {activeItem.date}
-              </span>
-            </div>
-
-            {/* Headline */}
-            <h3 className="text-lg sm:text-xl font-serif font-bold text-white leading-tight tracking-tight line-clamp-1">
-              {activeItem.title}
-            </h3>
-
-            {/* Recipient & Batch */}
-            <div className="flex flex-wrap items-center gap-2 pt-0.5">
-              <span className="text-xs sm:text-sm font-bold text-[#ff2e56]">
-                {activeItem.recipient}
-              </span>
-              <span className="text-[10px] font-medium px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-white/70">
-                {activeItem.batch}
-              </span>
-            </div>
-
-            {/* Description */}
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-2">
-              {activeItem.description}
-            </p>
-
-            {/* Official Event Card Pill */}
-            <Link
-              href={`/achievements/${activeItem.slug}`}
-              className="rounded-xl bg-white/[0.04] border border-white/10 p-2.5 flex items-center justify-between hover:border-white/20 transition-all cursor-pointer group block"
+          {/* Bottom Navigation & Dots */}
+          <div className="flex items-center justify-center gap-5 pt-4 pb-1">
+            <button
+              type="button"
+              aria-label="Previous achievement"
+              onClick={() => navigate(-1)}
+              className="w-10 h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white hover:border-[#ff2e56] hover:bg-[#ff2e56]/20 active:scale-95 transition-all shadow-md"
             >
-              <div className="flex items-center gap-2.5 min-w-0">
-                <span className="h-2 w-2 rounded-full bg-[#ff2e56] ring-4 ring-[#ff2e56]/20 shrink-0" />
-                <div className="min-w-0">
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400 block leading-none mb-1">
-                    Official Event
-                  </span>
-                  <span className="text-xs font-semibold text-white group-hover:text-[#ff2e56] transition-colors truncate block">
-                    {activeItem.event}
-                  </span>
-                </div>
-              </div>
-              <ChevronRight className="h-3.5 w-3.5 text-white/40 group-hover:text-white transition-colors shrink-0 ml-2" />
-            </Link>
+              <ArrowLeft className="h-4 w-4" />
+            </button>
 
-            {/* Bottom Navigation & Dots */}
-            <div className="flex items-center justify-center gap-4 pt-3 pb-1">
-              <button
-                type="button"
-                aria-label="Previous achievement"
-                onClick={() => navigate(-1)}
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white hover:border-[#ff2e56] hover:bg-[#ff2e56]/20 active:scale-95 transition-all shadow-md"
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </button>
-
-              {/* Centered Dots */}
-              <div className="flex items-center gap-2">
-                {items.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => goToSlide(idx)}
-                    aria-label={`Go to slide ${idx + 1}`}
-                    className={`rounded-full transition-all duration-300 ${
-                      k === idx
-                        ? "w-2.5 h-2.5 bg-[#ff2e56] shadow-sm shadow-[#ff2e56]/50"
-                        : "w-2 h-2 bg-white/20 hover:bg-white/40"
-                    }`}
-                  />
-                ))}
-              </div>
-
-              <button
-                type="button"
-                aria-label="Next achievement"
-                onClick={() => navigate(1)}
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white hover:border-[#ff2e56] hover:bg-[#ff2e56]/20 active:scale-95 transition-all shadow-md"
-              >
-                <ArrowRight className="h-4 w-4" />
-              </button>
+            {/* Centered Dots */}
+            <div className="flex items-center gap-2">
+              {items.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => goToSlide(idx)}
+                  aria-label={`Go to slide ${idx + 1}`}
+                  className={`rounded-full transition-all duration-300 ${
+                    k === idx
+                      ? "w-3 h-3 bg-[#ff2e56] shadow-sm shadow-[#ff2e56]/50"
+                      : "w-2 h-2 bg-white/20 hover:bg-white/40"
+                  }`}
+                />
+              ))}
             </div>
+
+            <button
+              type="button"
+              aria-label="Next achievement"
+              onClick={() => navigate(1)}
+              className="w-10 h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white hover:border-[#ff2e56] hover:bg-[#ff2e56]/20 active:scale-95 transition-all shadow-md"
+            >
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </div>
