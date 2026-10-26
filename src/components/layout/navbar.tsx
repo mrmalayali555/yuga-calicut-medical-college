@@ -8,15 +8,20 @@ import {
   Menu,
   X,
   Search,
-  Phone,
   ChevronDown,
-  User,
-  Bell,
+  Home,
+  Calendar,
+  Trophy,
+  Megaphone,
   Users,
+  Contact2,
+  Info,
+  Phone,
+  Pencil,
+  Bell,
   ShieldAlert,
   Landmark,
   HelpCircle,
-  Info,
   PhoneCall,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,6 +32,17 @@ const PRIMARY_LINKS = [
   { label: "Home", href: "/" },
   { label: "Events", href: "/events" },
   { label: "Achievements", href: "/achievements" },
+];
+
+const MOBILE_NAV_ITEMS = [
+  { label: "Home", href: "/", icon: Home },
+  { label: "Events", href: "/events", icon: Calendar },
+  { label: "Achievements", href: "/achievements", icon: Trophy },
+  { label: "Interventions", href: "/interventions", icon: Megaphone },
+  { label: "Subcommittee", href: "/subcommittees", icon: Users },
+  { label: "Union Accounts", href: "/finance", icon: Contact2 },
+  { label: "About GMC & YUGA", href: "/about", icon: Info },
+  { label: "Contact", href: "/contact", icon: Phone },
 ];
 
 const MORE_LINKS = [
@@ -130,16 +146,22 @@ export function Navbar() {
     setMoreOpen(false);
   }, [pathname]);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll cleanly without layout shift or white strip when mobile drawer is open
   useEffect(() => {
     if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      const originalPaddingRight = document.body.style.paddingRight;
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
       document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        document.body.style.paddingRight = originalPaddingRight;
+      };
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
   }, [isOpen]);
 
   const handleMouseEnter = () => {
@@ -448,113 +470,130 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Navigation Sidebar & Backdrop */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.18 }}
-            className={`fixed inset-x-0 top-16 sm:top-20 bottom-0 z-40 lg:hidden overflow-y-auto backdrop-blur-2xl border-b shadow-2xl transition-colors ${
-              isObsidian
-                ? "bg-[#07080a]/98 border-white/10 text-white"
-                : "bg-white/98 border-emerald-100 text-slate-900"
-            }`}
-          >
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 py-5 flex flex-col gap-4">
-              {/* Mobile Quick Search Button */}
-              <button
-                type="button"
-                onClick={() => {
-                  setIsOpen(false);
-                  setCommandPaletteOpen(true);
-                }}
-                className={`flex items-center justify-between w-full rounded-xl px-4 py-3 text-sm transition-all border ${
-                  isObsidian
-                    ? "border-white/10 bg-white/[0.04] text-white/80 hover:bg-white/[0.08]"
-                    : "border-slate-200 bg-slate-50 text-slate-600 hover:bg-emerald-50/50 hover:border-emerald-200"
-                }`}
-              >
-                <div className="flex items-center gap-2.5">
-                  <Search className={`h-4 w-4 ${isObsidian ? "text-[#e11d48]" : "text-emerald-600"}`} />
-                  <span className="font-medium">Search campus portals, events, circulars...</span>
-                </div>
-                <kbd className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${
-                  isObsidian ? "bg-white/10 text-white/60" : "bg-slate-200 text-slate-600"
-                }`}>
-                  ⌘K
-                </kbd>
-              </button>
+          <div className="fixed inset-0 z-50 lg:hidden">
+            {/* Dark Semi-Transparent Backdrop (covers the entire viewport behind the drawer) */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 w-full h-full bg-black/75 backdrop-blur-xs cursor-pointer"
+              aria-hidden="true"
+            />
 
-              {/* Primary Links */}
-              <div className="flex flex-col gap-1">
-                <span className={`text-[11px] font-bold tracking-wider uppercase px-2 mb-1 ${
-                  isObsidian ? "text-white/40" : "text-slate-400"
-                }`}>
-                  Main Navigation
-                </span>
-                {PRIMARY_LINKS.map((link) => {
-                  const isActive = pathname === link.href;
+            {/* Left Sliding Minimal Drawer */}
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
+              className="fixed top-0 left-0 bottom-0 w-[84vw] max-w-[320px] bg-[#0c0d12] border-r border-white/10 rounded-r-[2rem] flex flex-col p-5 shadow-[24px_0_60px_rgba(0,0,0,0.85)] z-10 overflow-hidden overscroll-contain select-none"
+              aria-label="Mobile Navigation Menu"
+            >
+              {/* Header inside the drawer */}
+              <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] shrink-0">
+                {/* Logo and Union Brand */}
+                <Link
+                  href="/"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-2.5 focus:outline-hidden group"
+                  aria-label="YUGA Home"
+                >
+                  <Image
+                    src="/yuga-logo-crimson.png"
+                    alt="YUGA Logo"
+                    width={38}
+                    height={38}
+                    className="h-9 w-auto object-contain transition-transform group-hover:scale-105 drop-shadow-[0_0_12px_rgba(225,29,72,0.4)]"
+                  />
+                  <div className="flex flex-col">
+                    <span className="font-serif text-lg font-bold tracking-wider text-white leading-none">
+                      YUGA
+                    </span>
+                    <span className="text-[8.5px] font-bold tracking-[0.16em] uppercase text-white/50 block mt-1 leading-none">
+                      GMC KOZHIKODE
+                    </span>
+                    <span className="text-[8.5px] font-bold tracking-[0.16em] uppercase text-white/50 block mt-0.5 leading-none">
+                      COLLEGE UNION
+                    </span>
+                  </div>
+                </Link>
+
+                {/* Header Action Buttons: Search & Close */}
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsOpen(false);
+                      setCommandPaletteOpen(true);
+                    }}
+                    aria-label="Search site"
+                    title="Search site (⌘K)"
+                    className="h-9 w-9 rounded-full bg-white/[0.06] border border-white/10 text-white/80 hover:text-white hover:bg-white/10 hover:border-white/20 active:scale-95 flex items-center justify-center transition-all cursor-pointer"
+                  >
+                    <Search className="h-4 w-4" aria-hidden="true" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsOpen(false)}
+                    aria-label="Close navigation menu"
+                    className="h-9 w-9 rounded-full bg-white/[0.06] border border-white/10 text-white/80 hover:text-white hover:bg-white/10 hover:border-white/20 active:scale-95 flex items-center justify-center transition-all cursor-pointer"
+                  >
+                    <X className="h-4 w-4" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Navigation Items (The exact 8 items in exact order) */}
+              <nav className="flex-1 overflow-y-auto py-3 space-y-1 pr-1 scrollbar-none">
+                {MOBILE_NAV_ITEMS.map((item) => {
+                  const Icon = item.icon;
+                  const isActive =
+                    item.href === "/"
+                      ? pathname === "/"
+                      : pathname === item.href || pathname?.startsWith(item.href + "/");
+
                   return (
                     <Link
-                      key={link.href}
-                      href={link.href}
+                      key={item.href}
+                      href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className={`rounded-xl px-4 py-3 text-sm font-semibold transition-colors flex items-center justify-between ${
-                        isObsidian
-                          ? isActive
-                            ? "bg-[#e11d48]/20 text-white border border-[#e11d48]/40"
-                            : "text-white/80 hover:bg-white/[0.05] hover:text-white"
-                          : isActive
-                          ? "bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold"
-                          : "text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800"
+                      className={`flex items-center gap-3.5 px-4 py-2.5 rounded-full text-sm transition-all ${
+                        isActive
+                          ? "bg-[#ff2e56]/15 border border-[#ff2e56]/40 text-white font-medium shadow-sm"
+                          : "text-white/70 hover:text-white hover:bg-white/[0.04] font-medium border border-transparent"
                       }`}
                     >
-                      <span>{link.label}</span>
-                      {isActive && (
-                        <span className={`h-1.5 w-1.5 rounded-full ${isObsidian ? "bg-[#e11d48]" : "bg-emerald-600"}`} />
-                      )}
+                      <Icon
+                        className={`h-4 w-4 shrink-0 transition-colors ${
+                          isActive ? "text-[#ff2e56]" : "text-white/60"
+                        } ${isActive && item.label === "Home" ? "fill-current" : ""}`}
+                        aria-hidden="true"
+                      />
+                      <span>{item.label}</span>
                     </Link>
                   );
                 })}
-              </div>
+              </nav>
 
-              {/* More Portals & Services */}
-              <div className="flex flex-col gap-1 pt-2 border-t border-white/5">
-                <span className={`text-[11px] font-bold tracking-wider uppercase px-2 mb-1 ${
-                  isObsidian ? "text-white/40" : "text-slate-400"
-                }`}>
-                  All Services & Portals
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                  {MORE_LINKS.map((item) => {
-                    const Icon = item.icon;
-                    const isActive = pathname === item.href;
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setIsOpen(false)}
-                        className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm transition-colors border ${
-                          isObsidian
-                            ? isActive
-                              ? "bg-white/10 text-white border-white/15"
-                              : "border-transparent text-white/70 hover:bg-white/[0.04] hover:text-white"
-                            : isActive
-                            ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-                            : "border-transparent text-slate-700 hover:bg-emerald-50/50 hover:text-emerald-800"
-                        }`}
-                      >
-                        <Icon className={`h-4 w-4 shrink-0 ${isObsidian ? "text-[#e11d48]" : "text-emerald-600"}`} />
-                        <span className="font-medium text-[13px]">{item.label}</span>
-                      </Link>
-                    );
-                  })}
-                </div>
+              {/* Bottom Prominent Action: Drop a Suggestion */}
+              <div className="pt-3 border-t border-white/[0.08] shrink-0">
+                <Link
+                  href="/complaints"
+                  onClick={() => setIsOpen(false)}
+                  className="w-full bg-[#8c182c] hover:bg-[#a61c34] active:scale-[0.98] border border-[#ff2e56]/30 text-white font-medium text-sm py-3 px-5 rounded-full flex items-center justify-center gap-2.5 shadow-lg shadow-[#8c182c]/20 transition-all cursor-pointer"
+                >
+                  <Pencil className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span>Drop a Suggestion</span>
+                </Link>
               </div>
-            </div>
-          </motion.div>
+            </motion.aside>
+          </div>
         )}
       </AnimatePresence>
 

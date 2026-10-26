@@ -9,14 +9,14 @@ export function EmergencyStrip() {
   const primaryContacts = EMERGENCY_CONTACTS.filter((c) => c.primary);
 
   return (
-    <section className="py-20 border-t border-[var(--border-primary)]">
+    <section className="py-16 sm:py-20 border-t border-[var(--border-primary)] overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-2xl border border-red-500/20 bg-red-500/5 p-8 sm:p-10 shadow-sm backdrop-blur-xs"
+          className="rounded-2xl border border-red-500/20 bg-red-500/5 p-4 xs:p-6 sm:p-8 lg:p-10 shadow-sm backdrop-blur-xs overflow-hidden"
         >
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 mb-8">
             <div className="max-w-md">

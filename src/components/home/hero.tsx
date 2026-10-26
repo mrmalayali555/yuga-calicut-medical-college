@@ -45,9 +45,9 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
   return (
     <section className="relative min-h-[96dvh] lg:min-h-screen flex flex-col justify-between pt-24 sm:pt-32 pb-8 sm:pb-14 overflow-hidden bg-[#07080a] text-white">
       {/* 1. Real Golden-Hour GMC Clocktower Campus Photographs (Desktop Landscape & Mobile Portrait) */}
-      <div className="absolute inset-0 pointer-events-none select-none z-0">
+      <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
         {/* Desktop & Tablet Background: Landscape Golden-Hour Clocktower */}
-        <div className="hidden sm:block absolute inset-0">
+        <div className="hidden sm:block absolute inset-0 overflow-hidden">
           <Image
             src="/hero-clocktower.png"
             alt="Government Medical College Kozhikode Clocktower during Golden Hour Sunset"
@@ -59,7 +59,7 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
         </div>
 
         {/* Mobile-Only Background: Portrait Golden-Hour Clocktower */}
-        <div className="block sm:hidden absolute inset-0">
+        <div className="block sm:hidden absolute inset-0 overflow-hidden">
           <Image
             src="/hero-clocktower-mobile.png"
             alt="Government Medical College Kozhikode Clocktower during Golden Hour Sunset - Mobile Portrait"
