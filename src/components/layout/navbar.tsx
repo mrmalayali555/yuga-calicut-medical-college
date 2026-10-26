@@ -237,9 +237,14 @@ export function Navbar() {
                     className="h-8.5 sm:h-9.5 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_14px_rgba(225,29,72,0.45)]"
                     priority
                   />
-                  <span className="font-extrabold text-xl sm:text-[22px] tracking-[0.16em] uppercase text-[#fffaf9] group-hover:text-[#ff2e56] transition-colors select-none font-['Plus_Jakarta_Sans',sans-serif]">
-                    YUGA
-                  </span>
+                  <div className="flex flex-col">
+                    <span className="font-extrabold text-lg sm:text-[22px] tracking-[0.16em] uppercase text-[#fffaf9] group-hover:text-[#ff2e56] transition-colors select-none font-['Plus_Jakarta_Sans',sans-serif] leading-none">
+                      YUGA
+                    </span>
+                    <span className="text-[7.5px] sm:text-[8px] font-bold tracking-[0.14em] uppercase text-white/50 leading-tight mt-0.5">
+                      GMC KOZHIKODE UNION 2026 – 27
+                    </span>
+                  </div>
                 </Link>
               ) : (
                 <Link
@@ -255,9 +260,14 @@ export function Navbar() {
                     className="h-8.5 sm:h-9.5 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                     priority
                   />
-                  <span className="font-extrabold text-xl sm:text-[22px] tracking-[0.16em] uppercase text-slate-900 group-hover:text-emerald-700 transition-colors select-none">
-                    YUGA
-                  </span>
+                  <div className="flex flex-col">
+                    <span className="font-extrabold text-lg sm:text-[22px] tracking-[0.16em] uppercase text-slate-900 group-hover:text-emerald-700 transition-colors select-none leading-none">
+                      YUGA
+                    </span>
+                    <span className="text-[7.5px] sm:text-[8px] font-bold tracking-[0.14em] uppercase text-slate-500 leading-tight mt-0.5">
+                      GMC KOZHIKODE UNION 2026 – 27
+                    </span>
+                  </div>
                 </Link>
               )}
             </div>
