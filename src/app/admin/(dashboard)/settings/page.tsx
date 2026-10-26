@@ -328,32 +328,54 @@ export default async function AdminSettingsPage() {
 
         {/* Social Media Channels */}
         <AdminCard>
-          <h3 className="mb-4 text-base font-bold text-[var(--text-primary)]">
-            Social & Community Channels
+          <h3 className="mb-1 text-base font-bold text-[var(--text-primary)]">
+            Social &amp; Community Channels
           </h3>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field
-              label="Instagram URL"
-              name="social_instagram"
-              defaultValue={socials.instagram}
-            />
-            <Field
-              label="YouTube URL"
-              name="social_youtube"
-              defaultValue={socials.youtube}
-            />
-            <Field
-              label="WhatsApp Community / Group URL"
-              name="social_whatsapp"
-              defaultValue={socials.whatsapp}
-            />
-            <Field
-              label="Telegram Channel URL"
-              name="social_telegram"
-              defaultValue={socials.telegram}
-            />
+          <p className="text-xs text-[var(--text-muted)] mb-5">Uncheck a platform to hide it from the footer.</p>
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Instagram</span>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" name="social_instagram_enabled" defaultChecked={(socials as any).instagram_enabled !== false} className="accent-[#e11d48]" />
+                  <span className="text-xs text-[var(--text-muted)]">Show in footer</span>
+                </label>
+              </div>
+              <Field label="Instagram URL" name="social_instagram" defaultValue={socials.instagram} />
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">YouTube</span>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" name="social_youtube_enabled" defaultChecked={(socials as any).youtube_enabled !== false} className="accent-[#e11d48]" />
+                  <span className="text-xs text-[var(--text-muted)]">Show in footer</span>
+                </label>
+              </div>
+              <Field label="YouTube URL" name="social_youtube" defaultValue={socials.youtube} />
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">WhatsApp</span>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" name="social_whatsapp_enabled" defaultChecked={(socials as any).whatsapp_enabled !== false} className="accent-[#e11d48]" />
+                  <span className="text-xs text-[var(--text-muted)]">Show in footer</span>
+                </label>
+              </div>
+              <Field label="WhatsApp Community / Group URL" name="social_whatsapp" defaultValue={socials.whatsapp} />
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Telegram</span>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" name="social_telegram_enabled" defaultChecked={(socials as any).telegram_enabled !== false} className="accent-[#e11d48]" />
+                  <span className="text-xs text-[var(--text-muted)]">Show in footer</span>
+                </label>
+              </div>
+              <Field label="Telegram Channel URL" name="social_telegram" defaultValue={socials.telegram} />
+            </div>
           </div>
         </AdminCard>
+
 
         {/* Stat Counters */}
         <AdminCard>
