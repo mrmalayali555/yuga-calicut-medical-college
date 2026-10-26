@@ -109,10 +109,10 @@ export default async function HomePage() {
   }
 
   let dbAchievements: any[] = [];
-  let sliderSettings = { autoplay: true, interval: 3 };
+  let sliderSettings = { autoplay: true, interval: 4 };
   try {
     const [achievementsRes, settingsRes] = await Promise.all([
-      getAchievements({ take: 6 }),
+      getAchievements({ take: 12 }),
       getAchievementsSliderSettings(),
     ]);
     dbAchievements = achievementsRes;

@@ -28,6 +28,14 @@ const FALLBACK_IMAGES: Record<string, string> = {
     "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80",
   "national-quiz-gold":
     "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
+  "inter-medical-football-2026":
+    "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80",
+  "state-youth-festival-music":
+    "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80",
+  "best-research-paper-med-conclave":
+    "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80",
+  "gold-inter-college-athletics":
+    "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80",
 };
 
 export interface AchievementItemProps {
@@ -107,11 +115,21 @@ export function AchievementsView({
         <AnimatePresence mode="popLayout">
           {filtered.map((item) => {
             const itemKey = item.slug || item.id;
+            const cat = (item.category || "general").toLowerCase();
+            const categoryDefault =
+              cat === "sports"
+                ? "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80"
+                : cat === "arts"
+                ? "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80"
+                : cat === "academics"
+                ? "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80"
+                : "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80";
+
             const imageSrc =
               item.coverImage ||
               FALLBACK_IMAGES[itemKey] ||
               FALLBACK_IMAGES[item.id] ||
-              "/hero-building.jpg";
+              categoryDefault;
 
             const recipientText = item.awardWinner || item.recipient || "Calicut Medicos";
             const dateText = typeof item.date === "string" ? item.date : formatDate(new Date(item.date));

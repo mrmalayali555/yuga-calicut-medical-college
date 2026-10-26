@@ -31,6 +31,7 @@ import { useTheme } from "@/components/theme/theme-context";
 const PRIMARY_LINKS = [
   { label: "Home", href: "/" },
   { label: "Events", href: "/events" },
+  { label: "Interventions", href: "/interventions" },
   { label: "Achievements", href: "/achievements" },
 ];
 

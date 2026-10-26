@@ -19,10 +19,10 @@ const ACHIEVEMENT_VISUALS: Record<string, string> = {
 };
 
 const CATEGORY_FALLBACK_IMAGES: Record<string, string> = {
-  arts: "/pulse-stage.jpg",
+  arts: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&auto=format&fit=crop&q=80",
   sports: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&auto=format&fit=crop&q=80",
   academics: "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&auto=format&fit=crop&q=80",
-  general: "/pulse-stage.jpg",
+  general: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80",
 };
 
 // Deterministic organic stack rotation angles for desktop 3D deck
