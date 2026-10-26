@@ -6,6 +6,8 @@ import { getAchievement } from "@/lib/queries";
 import { formatDate } from "@/lib/utils";
 import { COLLEGE } from "@/lib/site";
 
+import { AchievementCoverViewer } from "@/components/achievements/achievement-cover-viewer";
+
 export async function generateMetadata({
   params,
 }: {
@@ -74,15 +76,13 @@ export default async function AchievementDetailPage({
           </div>
         </div>
 
-        {/* Cover Image */}
+        {/* Cover Image with Lightbox */}
         {item.coverImage && (
-          <div className="mt-8 overflow-hidden rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-sm">
-            <img
-              src={item.coverImage}
-              alt={item.title}
-              className="w-full h-auto max-h-[480px] object-cover"
-            />
-          </div>
+          <AchievementCoverViewer
+            coverImage={item.coverImage}
+            title={item.title}
+            category={item.category}
+          />
         )}
 
         {/* Narrative Card */}

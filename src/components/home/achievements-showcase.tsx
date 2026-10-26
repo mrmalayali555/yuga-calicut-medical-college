@@ -2,10 +2,11 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Trophy, ArrowRight, ArrowLeft, Calendar, ChevronRight } from "lucide-react";
+import { Trophy, ArrowRight, ArrowLeft, Calendar, ChevronRight, Eye, Maximize2 } from "lucide-react";
 import { ACHIEVEMENTS } from "@/lib/data";
 import { motion, AnimatePresence } from "framer-motion";
 import { EditableText } from "@/components/admin/inline/editable-text";
+import { ImageLightboxModal } from "@/components/ui/image-lightbox-modal";
 
 // Visual photographs paired with each achievement
 const ACHIEVEMENT_VISUALS: Record<string, string> = {
@@ -148,6 +149,13 @@ export function AchievementsShowcase({
   const [k, setK] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [activeModalItem, setActiveModalItem] = useState<{
+    src: string;
+    alt: string;
+    title: string;
+    subtitle?: string;
+    detailUrl?: string;
+  } | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const touchStartXRef = useRef<number | null>(null);
@@ -408,6 +416,29 @@ export function AchievementsShowcase({
                           </h4>
                         </div>
                       </div>
+
+                      {/* Interactive Zoom overlay on active card */}
+                      {isActive && (
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/45 backdrop-blur-[1px] z-20">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveModalItem({
+                                src: item.image,
+                                alt: item.title,
+                                title: item.title,
+                                subtitle: `${item.medal} • ${item.recipient}`,
+                                detailUrl: `/achievements/${item.slug}`,
+                              });
+                            }}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/90 text-white text-xs font-semibold shadow-2xl border border-white/20 hover:border-amber-400 hover:text-amber-400 transition-all cursor-pointer"
+                          >
+                            <Maximize2 className="h-3.5 w-3.5 text-amber-400" />
+                            <span>View Original Photo</span>
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     {/* Title in Column 2, Row 2 */}
@@ -444,6 +475,33 @@ export function AchievementsShowcase({
                           Official Event:{" "}
                           <strong className="text-[var(--text-primary)]">{item.event}</strong>
                         </span>
+                      </div>
+
+                      <div className="pt-2 flex flex-wrap items-center gap-4">
+                        <Link
+                          href={`/achievements/${item.slug}`}
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--accent)] hover:underline"
+                        >
+                          <span>Full Laurel Story</span>
+                          <ArrowRight className="h-3.5 w-3.5" />
+                        </Link>
+                        <span className="text-white/20">•</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveModalItem({
+                              src: item.image,
+                              alt: item.title,
+                              title: item.title,
+                              subtitle: `${item.medal} • ${item.recipient}`,
+                              detailUrl: `/achievements/${item.slug}`,
+                            });
+                          }}
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--text-muted)] hover:text-white transition-colors cursor-pointer"
+                        >
+                          <Eye className="h-3.5 w-3.5 text-amber-400" />
+                          <span>View Original Photo</span>
+                        </button>
                       </div>
                     </div>
                   </article>
@@ -588,13 +646,33 @@ export function AchievementsShowcase({
                       </h3>
                     </div>
 
-                    <Link
-                      href={`/achievements/${activeItem.slug}`}
-                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ff2e56]/20 border border-[#ff2e56]/50 text-white flex items-center justify-center shrink-0 hover:bg-[#ff2e56] transition-all shadow-md active:scale-95"
-                      aria-label={`View achievement ${activeItem.title}`}
-                    >
-                      <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
-                    </Link>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setActiveModalItem({
+                            src: activeItem.image,
+                            alt: activeItem.title,
+                            title: activeItem.title,
+                            subtitle: `${activeItem.medal} • ${activeItem.recipient}`,
+                            detailUrl: `/achievements/${activeItem.slug}`,
+                          });
+                        }}
+                        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/60 border border-white/20 text-white flex items-center justify-center shrink-0 hover:bg-black/80 transition-all shadow-md active:scale-95 cursor-pointer"
+                        aria-label="View original full photo"
+                        title="View original full photo"
+                      >
+                        <Eye className="h-4 w-4 sm:h-5 sm:w-5 text-amber-400" />
+                      </button>
+
+                      <Link
+                        href={`/achievements/${activeItem.slug}`}
+                        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ff2e56]/20 border border-[#ff2e56]/50 text-white flex items-center justify-center shrink-0 hover:bg-[#ff2e56] transition-all shadow-md active:scale-95"
+                        aria-label={`View achievement ${activeItem.title}`}
+                      >
+                        <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                      </Link>
+                    </div>
                   </div>
                 </motion.div>
               </AnimatePresence>
@@ -640,6 +718,17 @@ export function AchievementsShowcase({
           </div>
         </div>
       </div>
+
+      {/* Lightbox modal for original full-resolution photos */}
+      <ImageLightboxModal
+        isOpen={activeModalItem !== null}
+        onClose={() => setActiveModalItem(null)}
+        src={activeModalItem?.src || null}
+        alt={activeModalItem?.alt || ""}
+        title={activeModalItem?.title}
+        subtitle={activeModalItem?.subtitle}
+        detailUrl={activeModalItem?.detailUrl}
+      />
     </section>
   );
 }

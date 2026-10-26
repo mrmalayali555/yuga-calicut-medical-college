@@ -17,6 +17,7 @@ import { getEvent } from "@/lib/queries";
 import { formatDate } from "@/lib/utils";
 import { SITE, COLLEGE } from "@/lib/site";
 import { EventGalleryRenderer } from "@/components/gallery/gallery-themes";
+import { EventPosterViewer } from "@/components/events/event-poster-viewer";
 
 const statusTone: Record<string, { label: string; className: string }> = {
   upcoming: {
@@ -112,15 +113,14 @@ export default async function EventDetailPage({
           {event.title}
         </h1>
 
-        {/* Poster Image */}
+        {/* Poster Image Viewer with Zoom & Lightbox */}
         {event.poster && (
-          <div className="mt-8 overflow-hidden rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-sm">
-            <img
-              src={event.poster}
-              alt={event.title}
-              className="w-full h-auto max-h-[500px] object-cover"
-            />
-          </div>
+          <EventPosterViewer
+            posterUrl={event.poster}
+            title={event.title}
+            category={event.committee?.name || "Official Event"}
+            dateStr={formatDate(event.date)}
+          />
         )}
 
         {/* Registration Banner (only if registration is required & active) */}

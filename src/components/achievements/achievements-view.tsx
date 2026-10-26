@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Trophy, Medal, Award, ArrowUpRight } from "lucide-react";
+import { Trophy, Medal, Award, ArrowUpRight, Eye, Maximize2 } from "lucide-react";
 import { ACHIEVEMENT_CATEGORIES } from "@/lib/site";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -18,6 +18,7 @@ import {
   CutoutCorner,
 } from "@/components/ui/cutout-card";
 import { formatDate } from "@/lib/utils";
+import { ImageLightboxModal } from "@/components/ui/image-lightbox-modal";
 
 const FALLBACK_IMAGES: Record<string, string> = {
   "kuhs-arts-champions":
@@ -59,6 +60,13 @@ export function AchievementsView({
   initialAchievements: AchievementItemProps[];
 }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [activeModalItem, setActiveModalItem] = useState<{
+    src: string;
+    alt: string;
+    title: string;
+    subtitle?: string;
+    detailUrl?: string;
+  } | null>(null);
 
   const filtered =
     selectedCategory === "all"
@@ -147,16 +155,38 @@ export function AchievementsView({
                 <CutoutCard className="h-full flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300">
                   <div>
                     {/* Media container with Cutout Corners */}
-                    <CutoutCardMedia className="h-56 sm:h-60 relative">
-                      <CutoutCardImage
-                        alt={item.title}
-                        src={imageSrc}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                      <CutoutCardOverlay />
+                    <CutoutCardMedia className="h-56 sm:h-60 relative group/thumb cursor-pointer overflow-hidden">
+                      <div
+                        className="w-full h-full"
+                        onClick={() => {
+                          setActiveModalItem({
+                            src: imageSrc,
+                            alt: item.title,
+                            title: item.title,
+                            subtitle: `${medalLabel} • ${item.category.toUpperCase()}`,
+                            detailUrl: `/achievements/${itemKey}`,
+                          });
+                        }}
+                        title="Click to view full original photo"
+                      >
+                        <CutoutCardImage
+                          alt={item.title}
+                          src={imageSrc}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                        <CutoutCardOverlay />
+
+                        {/* Interactive Hover Badge */}
+                        <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover/thumb:opacity-100 transition-opacity bg-black/45 backdrop-blur-[1.5px] pointer-events-none">
+                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/85 text-white text-xs font-semibold shadow-xl border border-white/20">
+                            <Maximize2 className="h-3.5 w-3.5 text-amber-400" />
+                            <span>View Original Photo</span>
+                          </span>
+                        </div>
+                      </div>
 
                       {/* Inset Label — bottom-left cutout */}
-                      <CutoutCardInsetLabel className="bg-[var(--bg-card)] bottom-0 left-0 rounded-tr-[20px] px-4 py-2 shadow-2xs border-t border-r border-[var(--border-primary)]/40">
+                      <CutoutCardInsetLabel className="bg-[var(--bg-card)] bottom-0 left-0 rounded-tr-[20px] px-4 py-2 shadow-2xs border-t border-r border-[var(--border-primary)]/40 pointer-events-none z-10">
                         <span className="text-[var(--accent)] text-[11px] font-bold tracking-wider uppercase">
                           {item.category.toUpperCase()}
                         </span>
@@ -165,7 +195,7 @@ export function AchievementsView({
                       </CutoutCardInsetLabel>
 
                       {/* Pin Badge — top-right cutout */}
-                      <CutoutCardPin className="top-0 right-0 rounded-bl-[16px] px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider shadow-sm ring-1 bg-amber-500 text-white ring-amber-600/30">
+                      <CutoutCardPin className="top-0 right-0 rounded-bl-[16px] px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider shadow-sm ring-1 bg-amber-500 text-white ring-amber-600/30 pointer-events-none z-10">
                         <span className="inline-flex items-center gap-1.5">
                           <Medal className="h-3.5 w-3.5" />
                           {medalLabel}
@@ -219,7 +249,24 @@ export function AchievementsView({
                   </div>
 
                   {/* Hover Action */}
-                  <CutoutCardAction className="right-5 bottom-5">
+                  <CutoutCardAction className="right-5 bottom-5 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveModalItem({
+                          src: imageSrc,
+                          alt: item.title,
+                          title: item.title,
+                          subtitle: `${medalLabel} • ${item.category.toUpperCase()}`,
+                          detailUrl: `/achievements/${itemKey}`,
+                        });
+                      }}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-primary)] bg-[var(--bg-card)]/90 backdrop-blur-md px-3 py-2 text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] shadow-2xs transition-all cursor-pointer"
+                      title="Inspect original photo"
+                    >
+                      <Eye className="h-3.5 w-3.5 text-amber-500" />
+                      <span className="hidden sm:inline">Photo</span>
+                    </button>
                     <Link
                       href={`/achievements/${itemKey}`}
                       className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white shadow-md transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] hover:brightness-110"
@@ -235,6 +282,17 @@ export function AchievementsView({
           })}
         </AnimatePresence>
       </motion.div>
+
+      {/* Lightbox modal for full original photos */}
+      <ImageLightboxModal
+        isOpen={activeModalItem !== null}
+        onClose={() => setActiveModalItem(null)}
+        src={activeModalItem?.src || null}
+        alt={activeModalItem?.alt || ""}
+        title={activeModalItem?.title}
+        subtitle={activeModalItem?.subtitle}
+        detailUrl={activeModalItem?.detailUrl}
+      />
     </div>
   );
 }

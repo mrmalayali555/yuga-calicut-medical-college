@@ -6,6 +6,8 @@ import { getIntervention } from "@/lib/queries";
 import { formatDate } from "@/lib/utils";
 import { COLLEGE, YUGA } from "@/lib/site";
 
+import { InterventionDocViewer } from "@/components/interventions/intervention-doc-viewer";
+
 export async function generateMetadata({
   params,
 }: {
@@ -29,6 +31,8 @@ export default async function InterventionDetailPage({
   const { slug } = await params;
   const item = await getIntervention(slug);
   if (!item) notFound();
+
+  const downloadTarget = item.pdfUrl || item.image;
 
   return (
     <div className="min-h-screen pt-28 pb-24 bg-[var(--bg-root)] text-[var(--text-primary)] relative overflow-hidden transition-colors">
@@ -72,6 +76,16 @@ export default async function InterventionDetailPage({
           </div>
         </div>
 
+        {/* Interactive Original Document Photo / Lightbox Viewer */}
+        {item.image && (
+          <InterventionDocViewer
+            image={item.image}
+            title={item.title}
+            category={item.category}
+            pdfUrl={item.pdfUrl}
+          />
+        )}
+
         {/* Narrative & Body */}
         <div className="mt-8 rounded-3xl border border-[var(--border-primary)] bg-[var(--bg-card)] p-6 sm:p-10 shadow-xs">
           <h2 className="text-sm font-bold uppercase tracking-wider text-[var(--text-muted)] mb-4">
@@ -82,25 +96,32 @@ export default async function InterventionDetailPage({
           </div>
 
           {/* Download Official Letter */}
-          <div className="mt-8 pt-6 border-t border-[var(--border-primary)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--accent)]/20">
-                <Paperclip className="h-5 w-5" />
+          {downloadTarget && (
+            <div className="mt-8 pt-6 border-t border-[var(--border-primary)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--accent)]/20">
+                  <Paperclip className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-[var(--text-primary)]">Signed Memorandum Copy</h4>
+                  <p className="text-[11px] text-[var(--text-muted)]">
+                    {item.pdfUrl ? "Official circular PDF format" : "High-resolution signed document photograph"}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h4 className="text-xs font-bold text-[var(--text-primary)]">Signed Memorandum Copy</h4>
-                <p className="text-[11px] text-[var(--text-muted)]">Official memorandum stamped by General Secretary</p>
-              </div>
-            </div>
 
-            <a
-              href="#"
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white hover:brightness-110 transition-colors cursor-pointer"
-            >
-              <Download className="h-4 w-4" />
-              <span>Download Signed Copy</span>
-            </a>
-          </div>
+              <a
+                href={downloadTarget}
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+                className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-2.5 text-xs font-semibold text-white hover:brightness-110 transition-colors cursor-pointer shadow-sm"
+              >
+                <Download className="h-4 w-4" />
+                <span>{item.pdfUrl ? "Download Signed PDF" : "Download Full Photo"}</span>
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>

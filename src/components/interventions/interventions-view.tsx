@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { CheckCircle2, Clock, FileText, ArrowRight, ShieldCheck, Building2 } from "lucide-react";
+import { CheckCircle2, Clock, FileText, ArrowRight, ShieldCheck, Building2, Eye, Maximize2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   CutoutCard,
@@ -17,6 +17,7 @@ import {
   CutoutCorner,
 } from "@/components/ui/cutout-card";
 import { formatDate } from "@/lib/utils";
+import { ImageLightboxModal } from "@/components/ui/image-lightbox-modal";
 
 const FALLBACK_INTERVENTION_IMAGES: Record<string, string> = {
   "representation-regarding-early-publication-of-final-year-mbbs-results":
@@ -47,6 +48,7 @@ export interface DynamicInterventionItem {
   authority?: string;
   status?: string;
   outcome?: string;
+  pdfUrl?: string | null;
 }
 
 interface InterventionsViewProps {
@@ -59,6 +61,14 @@ export function InterventionsView({
   columns = 2,
 }: InterventionsViewProps) {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [activeModalItem, setActiveModalItem] = useState<{
+    src: string;
+    alt: string;
+    title: string;
+    subtitle?: string;
+    pdfUrl?: string | null;
+    detailUrl?: string;
+  } | null>(null);
 
   // Extract unique categories
   const categories = [
@@ -175,16 +185,39 @@ export function InterventionsView({
                 <CutoutCard className="h-full flex flex-col justify-between border-[var(--border-primary)] bg-[var(--bg-card)] shadow-sm hover:border-[var(--accent)] hover:shadow-xl transition-all duration-300">
                   <div>
                     {/* Media container with signature Cutout Corner accents */}
-                    <CutoutCardMedia className="h-64 sm:h-72 relative">
-                      <CutoutCardImage
-                        alt={item.title}
-                        src={imageSrc}
-                        sizes="(max-width: 768px) 100vw, 600px"
-                      />
-                      <CutoutCardOverlay />
+                    <CutoutCardMedia className="h-64 sm:h-72 relative group/thumb cursor-pointer overflow-hidden">
+                      <div
+                        className="w-full h-full"
+                        onClick={() => {
+                          setActiveModalItem({
+                            src: imageSrc,
+                            alt: item.title,
+                            title: item.title,
+                            subtitle: item.category || "Official Representation Document",
+                            pdfUrl: item.pdfUrl,
+                            detailUrl: `/interventions/${itemKey}`,
+                          });
+                        }}
+                        title="Click to view full original document photo"
+                      >
+                        <CutoutCardImage
+                          alt={item.title}
+                          src={imageSrc}
+                          sizes="(max-width: 768px) 100vw, 600px"
+                        />
+                        <CutoutCardOverlay />
+
+                        {/* Interactive Hover Badge to view original photo */}
+                        <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover/thumb:opacity-100 transition-opacity bg-black/45 backdrop-blur-[1.5px] pointer-events-none">
+                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/85 text-white text-xs font-semibold shadow-xl border border-white/20">
+                            <Maximize2 className="h-3.5 w-3.5 text-[var(--accent)]" />
+                            <span>View Original Photo</span>
+                          </span>
+                        </div>
+                      </div>
 
                       {/* Inset Label — bottom-left cutout */}
-                      <CutoutCardInsetLabel className="bg-[var(--bg-card)] bottom-0 left-0 rounded-tr-[20px] px-4 py-2.5 shadow-2xs border-t border-r border-[var(--border-primary)]/40">
+                      <CutoutCardInsetLabel className="bg-[var(--bg-card)] bottom-0 left-0 rounded-tr-[20px] px-4 py-2.5 shadow-2xs border-t border-r border-[var(--border-primary)]/40 pointer-events-none z-10">
                         <span className="text-[var(--accent)] text-[11px] font-bold tracking-wider uppercase">
                           {item.category || "General Advocacy"}
                         </span>
@@ -194,7 +227,7 @@ export function InterventionsView({
 
                       {/* Pin Badge — top-right cutout */}
                       <CutoutCardPin
-                        className={`top-0 right-0 rounded-bl-[16px] px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider shadow-sm ring-1 ${
+                        className={`top-0 right-0 rounded-bl-[16px] px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider shadow-sm ring-1 pointer-events-none z-10 ${
                           isResolved
                             ? "bg-emerald-600 text-white ring-emerald-700/30"
                             : "bg-amber-500 text-white ring-amber-600/30"
@@ -271,7 +304,25 @@ export function InterventionsView({
                   </div>
 
                   {/* Hover Action */}
-                  <CutoutCardAction className="right-6 bottom-6">
+                  <CutoutCardAction className="right-6 bottom-6 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveModalItem({
+                          src: imageSrc,
+                          alt: item.title,
+                          title: item.title,
+                          subtitle: item.category || "Official Representation Document",
+                          pdfUrl: item.pdfUrl,
+                          detailUrl: `/interventions/${itemKey}`,
+                        });
+                      }}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-primary)] bg-[var(--bg-card)]/90 backdrop-blur-md px-3 py-2 text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] shadow-2xs transition-all cursor-pointer"
+                      title="Inspect original document image"
+                    >
+                      <Eye className="h-3.5 w-3.5 text-[var(--accent)]" />
+                      <span className="hidden sm:inline">Original Photo</span>
+                    </button>
                     <Link
                       href={`/interventions/${itemKey}`}
                       className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white shadow-md transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] hover:bg-[var(--accent-dark)]"
@@ -286,6 +337,18 @@ export function InterventionsView({
           })}
         </AnimatePresence>
       </motion.div>
+
+      {/* Lightbox modal for original full-resolution documents and photos */}
+      <ImageLightboxModal
+        isOpen={activeModalItem !== null}
+        onClose={() => setActiveModalItem(null)}
+        src={activeModalItem?.src || null}
+        alt={activeModalItem?.alt || ""}
+        title={activeModalItem?.title}
+        subtitle={activeModalItem?.subtitle}
+        pdfUrl={activeModalItem?.pdfUrl}
+        detailUrl={activeModalItem?.detailUrl}
+      />
     </div>
   );
 }

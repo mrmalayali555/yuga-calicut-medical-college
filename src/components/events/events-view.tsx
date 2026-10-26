@@ -8,6 +8,8 @@ import {
   Clock,
   ArrowUpRight,
   Sparkles,
+  Eye,
+  Maximize2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -23,6 +25,7 @@ import {
   CutoutCorner,
 } from "@/components/ui/cutout-card";
 import { formatDate } from "@/lib/utils";
+import { ImageLightboxModal } from "@/components/ui/image-lightbox-modal";
 
 const FALLBACK_EVENT_IMAGES: Record<string, string> = {
   "yuga-arts-fest":
@@ -77,6 +80,13 @@ export function EventsView({
 }) {
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [activeModalItem, setActiveModalItem] = useState<{
+    src: string;
+    alt: string;
+    title: string;
+    subtitle?: string;
+    detailUrl?: string;
+  } | null>(null);
 
   const filtered = initialEvents.filter((e) => {
     if (selectedStatus !== "all" && e.status !== selectedStatus) return false;
@@ -214,13 +224,35 @@ export function EventsView({
                 <CutoutCard className="h-full flex flex-col justify-between border-[var(--border-primary)] bg-[var(--bg-card)] shadow-sm hover:border-[var(--accent)] hover:shadow-xl transition-all duration-300">
                   <div>
                     {/* Media Header with signature Cutout Corners */}
-                    <CutoutCardMedia className="h-60 sm:h-64 relative">
-                      <CutoutCardImage
-                        alt={item.title}
-                        src={imageSrc}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                      <CutoutCardOverlay />
+                    <CutoutCardMedia className="h-60 sm:h-64 relative group/thumb cursor-pointer overflow-hidden">
+                      <div
+                        className="w-full h-full"
+                        onClick={() => {
+                          setActiveModalItem({
+                            src: imageSrc,
+                            alt: item.title,
+                            title: item.title,
+                            subtitle: `${item.category ? item.category.toUpperCase() : "OFFICIAL EVENT"} • ${formatDate(new Date(item.date))}`,
+                            detailUrl: `/events/${itemKey}`,
+                          });
+                        }}
+                        title="Click to view full original event poster"
+                      >
+                        <CutoutCardImage
+                          alt={item.title}
+                          src={imageSrc}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                        <CutoutCardOverlay />
+
+                        {/* Interactive Hover Badge to view original poster */}
+                        <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover/thumb:opacity-100 transition-opacity bg-black/45 backdrop-blur-[1.5px] pointer-events-none">
+                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/85 text-white text-xs font-semibold shadow-xl border border-white/20">
+                            <Maximize2 className="h-3.5 w-3.5 text-[var(--accent)]" />
+                            <span>View Original Poster</span>
+                          </span>
+                        </div>
+                      </div>
 
                       {/* Inset Label — bottom-left cutout */}
                       <CutoutCardInsetLabel className="bg-[var(--bg-card)] bottom-0 left-0 rounded-tr-[20px] px-4 py-2 shadow-2xs">
@@ -314,7 +346,24 @@ export function EventsView({
                   </div>
 
                   {/* Hover Action */}
-                  <CutoutCardAction className="right-5 bottom-5">
+                  <CutoutCardAction className="right-5 bottom-5 flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveModalItem({
+                          src: imageSrc,
+                          alt: item.title,
+                          title: item.title,
+                          subtitle: `${item.category ? item.category.toUpperCase() : "OFFICIAL EVENT"} • ${formatDate(new Date(item.date))}`,
+                          detailUrl: `/events/${itemKey}`,
+                        });
+                      }}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-primary)] bg-[var(--bg-card)]/90 backdrop-blur-md px-3 py-2 text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] shadow-2xs transition-all cursor-pointer"
+                      title="Inspect original poster"
+                    >
+                      <Eye className="h-3.5 w-3.5 text-[var(--accent)]" />
+                      <span className="hidden sm:inline">Poster</span>
+                    </button>
                     <Link
                       href={`/events/${itemKey}`}
                       className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white shadow-md hover:bg-[var(--accent-dark)] transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97]"
@@ -330,6 +379,17 @@ export function EventsView({
           })}
         </AnimatePresence>
       </motion.div>
+
+      {/* Lightbox modal for full original posters */}
+      <ImageLightboxModal
+        isOpen={activeModalItem !== null}
+        onClose={() => setActiveModalItem(null)}
+        src={activeModalItem?.src || null}
+        alt={activeModalItem?.alt || ""}
+        title={activeModalItem?.title}
+        subtitle={activeModalItem?.subtitle}
+        detailUrl={activeModalItem?.detailUrl}
+      />
     </div>
   );
 }
