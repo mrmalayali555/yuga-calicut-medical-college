@@ -27,8 +27,13 @@ import {
   ChevronRight,
   Filter,
   Check,
+  Target,
+  TrendingUp,
+  Dumbbell,
+  Award,
 } from "lucide-react";
 import { JeevanamHero } from "./jeevanam-hero";
+import { GodhaHero } from "./godha-hero";
 
 export type ClubSlug = "jeevanam" | "praanah" | "godha" | "ocha";
 
@@ -181,7 +186,7 @@ const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
     logo: "/clubs/praanah.jpg",
     accent: "#d97706",
     accentRgb: "217, 119, 6",
-    heroGradient: "from-amber-950 via-slate-900 to-orange-950",
+    heroGradient: "from-[#1a0e05] via-[#0d0703] to-[#140802]",
     mission:
       "To celebrate the artistic soul of medicine, providing an inspiring creative sanctuary where musical virtuosity, classical dance, theatrical craft, and visual design thrive hand-in-hand with clinical rigor.",
     vision:
@@ -290,45 +295,41 @@ const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
     accentRgb: "5, 150, 105",
     heroGradient: "from-emerald-950 via-slate-900 to-teal-950",
     mission:
-      "To build physical endurance, grit, and unwavering sportsmanship among medical scholars through world-class tournament organization, training regimens, and accessible campus athletic facilities.",
+      "To promote holistic development through sports, fitness and recreation, and to provide world-class facilities and opportunities for all GMC students.",
     vision:
-      "A healthy, energized medical campus where athletic discipline is embraced as a fundamental pillar of clinical and personal balance.",
+      "A vibrant and inclusive sports culture making GMC Kozhikode a leading institution in student athletics, fitness and wellness in Kerala.",
     heroDescription:
-      "The athletic battleground and fitness powerhouse of GMC Kozhikode. Godha manages the historic college sports grounds, multi-gym, synthetic indoor badminton arena, and basketball courts, while organizing the world-famous Calicut Medicos Premier League (CMPL).",
+      "The athletic battleground and fitness powerhouse of GMC Kozhikode, Godha manages the historic college sports grounds, multi-gym, synthetic indoor badminton arena, and basketball courts, while organizing the world-famous Calicut Medicos Premier League (CMPL).",
     stats: [
       { label: "Active Medico Athletes", value: "480+", hint: "Across 8 disciplines" },
       { label: "CMPL Franchise Teams", value: "16 Batches", hint: "Cricket & Football" },
-      { label: "University Cups", value: "28 Trophies", hint: "KUHAS & Inter-Collegiate" },
+      { label: "University Cup Wins", value: "28 Trophies", hint: "KUHS & Inter-Collegiate" },
       { label: "Annual Meets", value: "18 Meets", hint: "Intra & State tournaments" },
     ],
     initiatives: [
       {
-        title: "Calicut Medicos Premier League (CMPL)",
-        description:
-          "The biggest floodlit student cricket league in South India with official player auctions, digital live-streams, and 800+ spectator attendance.",
-        category: "Cricket",
-        status: "Season Live",
-      },
-      {
-        title: "Inter-Batch Football Championship",
-        description:
-          "Grueling 11-a-side football tournament played on the GMC full-dimension grass turf under floodlights.",
-        category: "Football",
+        title: "Multi-Gym & Fitness Centre",
+        description: "Modern gym facilities for all GMC students.",
+        category: "FACILITIES",
         status: "Active",
       },
       {
-        title: "Smash Open Badminton Circuit",
-        description:
-          "Men's & Women's singles and doubles indoor wooden-court tournaments featuring medicos, faculty, and resident doctors.",
-        category: "Badminton",
-        status: "Quarterly",
+        title: "Calicut Medicos Premier League (CMPL)",
+        description: "Annual inter-batch cricket and football league.",
+        category: "EVENT",
+        status: "Annual",
       },
       {
-        title: "10K Kozhikode Medicos Health Run",
-        description:
-          "Annual city marathon promoting cardiovascular fitness, cardiopulmonary health, and metabolic lifestyle awareness.",
-        category: "Athletics",
-        status: "Annual",
+        title: "Sports Grounds Management",
+        description: "Maintenance of athletic tracks, indoor arena and courts.",
+        category: "INFRASTRUCTURE",
+        status: "Live 24/7",
+      },
+      {
+        title: "Inter-Collegiate Participation",
+        description: "Training and support for university and state level competitions.",
+        category: "DEVELOPMENT",
+        status: "Continuous",
       },
     ],
     achievements: [
@@ -395,7 +396,7 @@ const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
     logo: "/clubs/ocha.png",
     accent: "#7c3aed",
     accentRgb: "124, 58, 237",
-    heroGradient: "from-violet-950 via-slate-900 to-indigo-950",
+    heroGradient: "from-[#160829] via-[#0b0416] to-[#11051f]",
     mission:
       "To champion the power of the spoken and written word, cultivating articulate, empathetic, and intellectually fearless medical professionals equipped to debate bioethics, question dogma, and articulate truth.",
     vision:
@@ -522,12 +523,15 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
   );
 
   const isJeevanam = club.id === "jeevanam";
+  const isGodha = club.id === "godha";
 
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
         isJeevanam
           ? "bg-[#07080a] text-slate-100 selection:bg-red-600 selection:text-white"
+          : isGodha
+          ? "bg-[#FAF8F5] text-slate-900 selection:bg-emerald-600 selection:text-white"
           : "bg-[#FDFBF7] text-slate-900 selection:bg-slate-900 selection:text-white"
       }`}
     >
@@ -542,8 +546,10 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
             }, 100);
           }}
         />
+      ) : isGodha ? (
+        <GodhaHero convenorPhone={club.team[0]?.phone} />
       ) : (
-        <section className={`relative pt-32 pb-24 overflow-hidden ${club.heroGradient} text-white`}>
+        <section className={`relative pt-32 pb-24 overflow-hidden bg-gradient-to-br ${club.heroGradient} text-white`}>
           {/* Ambient radial mesh gradient orbs */}
           <div
             className="absolute -top-48 -right-48 h-[650px] w-[650px] rounded-full blur-[140px] opacity-40 pointer-events-none"
@@ -596,7 +602,15 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                   }}
                 >
                   {/* Inner Core container */}
-                  <div className="relative h-48 w-48 sm:h-56 sm:w-56 rounded-[calc(2.5rem-0.5rem)] bg-white p-4 flex items-center justify-center overflow-hidden shadow-inner">
+                  <div
+                    className={`relative h-48 w-48 sm:h-56 sm:w-56 rounded-[calc(2.5rem-0.5rem)] p-4 flex items-center justify-center overflow-hidden shadow-inner ${
+                      club.id === "ocha"
+                        ? "bg-[#140b22] border border-violet-500/25"
+                        : club.id === "praanah"
+                        ? "bg-[#170e06] border border-amber-500/25"
+                        : "bg-white"
+                    }`}
+                  >
                     <Image
                       src={club.logo}
                       alt={`${club.name} Official Emblem`}
@@ -794,37 +808,62 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                 {/* Mission Card with Double Bezel */}
                 <div
                   className={`p-1 rounded-[2rem] ring-1 transition-all duration-300 hover:shadow-lg ${
-                    isJeevanam ? "ring-red-500/20 bg-red-950/20" : ""
+                    isJeevanam
+                      ? "ring-red-500/20 bg-red-950/20"
+                      : isGodha
+                      ? "ring-emerald-900/10 bg-white"
+                      : "ring-slate-200 bg-white"
                   }`}
-                  style={isJeevanam ? undefined : {
+                  style={isJeevanam || isGodha ? undefined : {
                     backgroundColor: `rgba(${club.accentRgb}, 0.04)`,
                     borderColor: `rgba(${club.accentRgb}, 0.2)`,
                   }}
                 >
                   <div className={`p-8 sm:p-10 rounded-[calc(2rem-0.25rem)] h-full flex flex-col justify-between ${
-                    isJeevanam ? "bg-[#0c0d12] border border-white/10 text-white" : "bg-white text-slate-900"
+                    isJeevanam
+                      ? "bg-[#0c0d12] border border-white/10 text-white"
+                      : isGodha
+                      ? "bg-[#FCFCFA] border border-[#e5dfce] text-slate-900"
+                      : "bg-white text-slate-900"
                   }`}>
                     <div>
-                      <div
-                        className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider mb-4"
-                        style={{
-                          color: club.accent,
-                          backgroundColor: `rgba(${club.accentRgb}, ${isJeevanam ? 0.2 : 0.08})`,
-                        }}
-                      >
-                        <ShieldCheck className="h-3.5 w-3.5" />
-                        <span>Core Mandate</span>
+                      <div className="flex items-center justify-between mb-4">
+                        <div
+                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${
+                            isGodha
+                              ? "bg-rose-50 text-rose-600 border border-rose-200/70"
+                              : isJeevanam
+                              ? "bg-red-500/20 text-red-400"
+                              : "bg-slate-100 text-slate-700"
+                          }`}
+                          style={isGodha || isJeevanam ? undefined : {
+                            color: club.accent,
+                            backgroundColor: `rgba(${club.accentRgb}, 0.08)`,
+                          }}
+                        >
+                          <ShieldCheck className="h-3.5 w-3.5" />
+                          <span>Core Mandate</span>
+                        </div>
+                        {isGodha && (
+                          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 border border-emerald-200/60 shadow-xs">
+                            <Target className="h-6 w-6" />
+                          </div>
+                        )}
                       </div>
                       <h3
                         className={`text-2xl font-display font-bold tracking-tight mb-4 ${
-                          isJeevanam ? "text-white" : ""
+                          isJeevanam
+                            ? "text-white"
+                            : isGodha
+                            ? "text-slate-900 font-serif"
+                            : ""
                         }`}
-                        style={isJeevanam ? undefined : { color: club.accent }}
+                        style={isJeevanam || isGodha ? undefined : { color: club.accent }}
                       >
                         Our Mission
                       </h3>
                       <p className={`text-base sm:text-lg leading-relaxed font-normal ${
-                        isJeevanam ? "text-slate-300" : "text-slate-700"
+                        isJeevanam ? "text-slate-300" : isGodha ? "text-slate-700" : "text-slate-700"
                       }`}>
                         {club.mission}
                       </p>
@@ -833,14 +872,35 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                 </div>
 
                 {/* Vision Card */}
-                <div className="p-1 rounded-[2rem] bg-slate-900 ring-1 ring-slate-800 transition-all duration-300 hover:shadow-lg text-white">
-                  <div className="p-8 sm:p-10 rounded-[calc(2rem-0.25rem)] bg-slate-950 h-full flex flex-col justify-between">
+                <div
+                  className={`p-1 rounded-[2rem] transition-all duration-300 hover:shadow-lg text-white ${
+                    isGodha
+                      ? "bg-[#072415] ring-1 ring-emerald-900/60 shadow-xl"
+                      : "bg-slate-900 ring-1 ring-slate-800"
+                  }`}
+                >
+                  <div
+                    className={`p-8 sm:p-10 rounded-[calc(2rem-0.25rem)] h-full flex flex-col justify-between ${
+                      isGodha ? "bg-[#051c11] border border-emerald-800/40" : "bg-slate-950"
+                    }`}
+                  >
                     <div>
-                      <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-300 mb-4">
-                        <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-                        <span>Horizon 2030</span>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-300 border border-amber-400/25">
+                          <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+                          <span>Horizon 2030</span>
+                        </div>
+                        {isGodha && (
+                          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shadow-xs">
+                            <TrendingUp className="h-6 w-6" />
+                          </div>
+                        )}
                       </div>
-                      <h3 className="text-2xl font-display font-bold tracking-tight text-white mb-4">
+                      <h3
+                        className={`text-2xl font-display font-bold tracking-tight text-white mb-4 ${
+                          isGodha ? "font-serif" : ""
+                        }`}
+                      >
                         Long-Term Vision
                       </h3>
                       <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
@@ -851,75 +911,103 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                 </div>
               </div>
 
-              {/* Programs Bento Grid */}
+              {/* Programs Bento Grid / Flagship Operations */}
               <div>
                 <div className="text-center max-w-2xl mx-auto mb-12">
-                  <p
-                    className="text-xs font-bold uppercase tracking-[0.2em] mb-2"
-                    style={{ color: club.accent }}
-                  >
-                    Annual Ecosystem
-                  </p>
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <span className="h-px w-6 sm:w-8 bg-emerald-600/40" />
+                    <p
+                      className="text-xs font-bold uppercase tracking-[0.22em]"
+                      style={{ color: club.accent }}
+                    >
+                      Annual Ecosystem
+                    </p>
+                    <span className="h-px w-6 sm:w-8 bg-emerald-600/40" />
+                  </div>
                   <h2 className={`text-3xl sm:text-4xl font-display font-bold tracking-tight ${
-                    isJeevanam ? "text-white" : "text-slate-900"
+                    isJeevanam ? "text-white" : isGodha ? "font-serif text-slate-900" : "text-slate-900"
                   }`}>
                     Flagship Operations &amp; Initiatives
                   </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {club.initiatives.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className={`group relative rounded-3xl p-7 flex flex-col justify-between transition-all duration-300 ${
-                        isJeevanam
-                          ? "bg-[#0c0d12] border border-white/10 hover:border-red-500/40 hover:shadow-xl text-white"
-                          : "border border-slate-200/80 bg-white shadow-xs hover:border-slate-300 hover:shadow-xl"
-                      }`}
-                    >
-                      <div>
-                        <div className="flex items-center justify-between mb-4">
-                          <span
-                            className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
-                            style={{
-                              color: club.accent,
-                              backgroundColor: `rgba(${club.accentRgb}, ${isJeevanam ? 0.2 : 0.08})`,
-                            }}
-                          >
-                            {item.category}
-                          </span>
-                          <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
-                            isJeevanam ? "text-zinc-400" : "text-slate-500"
+                <div className={`grid gap-6 ${
+                  isGodha
+                    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+                    : "grid-cols-1 md:grid-cols-2"
+                }`}>
+                  {club.initiatives.map((item, idx) => {
+                    const sportsIcons = [Dumbbell, Trophy, Activity, Users];
+                    const SportIcon = sportsIcons[idx % sportsIcons.length];
+
+                    return (
+                      <div
+                        key={idx}
+                        className={`group relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 ${
+                          isJeevanam
+                            ? "bg-[#0c0d12] border border-white/10 hover:border-red-500/40 hover:shadow-xl text-white"
+                            : isGodha
+                            ? "border border-[#e2dec9] bg-white shadow-xs hover:border-emerald-500/40 hover:shadow-xl hover:-translate-y-0.5"
+                            : "border border-slate-200/80 bg-white shadow-xs hover:border-slate-300 hover:shadow-xl"
+                        }`}
+                      >
+                        <div>
+                          {isGodha && (
+                            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 border border-emerald-200/60 mb-5 shadow-2xs">
+                              <SportIcon className="h-5 w-5" />
+                            </div>
+                          )}
+                          <div className="flex items-center justify-between mb-3.5">
+                            <span
+                              className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
+                              style={{
+                                color: club.accent,
+                                backgroundColor: `rgba(${club.accentRgb}, ${isJeevanam ? 0.2 : 0.08})`,
+                              }}
+                            >
+                              {item.category}
+                            </span>
+                            <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
+                              isJeevanam ? "text-zinc-400" : "text-slate-500"
+                            }`}>
+                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                              {item.status}
+                            </span>
+                          </div>
+                          <h4 className={`text-lg sm:text-xl font-bold mb-2 leading-snug transition-colors ${
+                            isJeevanam
+                              ? "text-white group-hover:text-red-400"
+                              : isGodha
+                              ? "text-slate-900 group-hover:text-emerald-700"
+                              : "text-slate-900 group-hover:text-slate-800"
                           }`}>
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            {item.status}
+                            {item.title}
+                          </h4>
+                          <p className={`text-xs sm:text-sm leading-relaxed ${
+                            isJeevanam ? "text-zinc-400" : "text-slate-600"
+                          }`}>
+                            {item.description}
+                          </p>
+                        </div>
+
+                        <div className={`mt-6 pt-4 border-t flex items-center justify-between text-xs font-bold ${
+                          isJeevanam
+                            ? "border-white/10 text-zinc-500"
+                            : "border-slate-100 text-slate-500"
+                        }`}>
+                          <span>Initiative 0{idx + 1}</span>
+                          <span
+                            className={`group-hover:translate-x-1 transition-transform ${
+                              isGodha ? "text-rose-600" : ""
+                            }`}
+                            style={isGodha ? undefined : { color: club.accent }}
+                          >
+                            Official Program →
                           </span>
                         </div>
-                        <h4 className={`text-xl font-bold mb-2 leading-snug transition-colors ${
-                          isJeevanam ? "text-white group-hover:text-red-400" : "text-slate-900 group-hover:text-slate-800"
-                        }`}>
-                          {item.title}
-                        </h4>
-                        <p className={`text-sm leading-relaxed ${
-                          isJeevanam ? "text-zinc-400" : "text-slate-600"
-                        }`}>
-                          {item.description}
-                        </p>
                       </div>
-
-                      <div className={`mt-6 pt-4 border-t flex items-center justify-between text-xs font-bold ${
-                        isJeevanam ? "border-white/10 text-zinc-500" : "border-slate-100 text-slate-500"
-                      }`}>
-                        <span>Initiative 0{idx + 1}</span>
-                        <span
-                          className="group-hover:translate-x-1 transition-transform"
-                          style={{ color: club.accent }}
-                        >
-                          Official Program →
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>

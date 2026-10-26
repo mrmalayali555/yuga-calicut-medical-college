@@ -28,8 +28,22 @@ export function JeevanamHero({
   return (
     <section className="relative pt-24 sm:pt-32 pb-14 sm:pb-20 bg-[#07080a] text-white overflow-hidden select-none">
       {/* =========================================================================
-          BACKGROUND ARTWORK: Ambient Red Glows, Abstract Circles, Silk Wave Ribbons
+          BACKGROUND ARTWORK: Crimson Wave Background, Ambient Red Glows, Silk Ribbons
           ========================================================================= */}
+      {/* Background Hero Image: Crimson Wave Abstract Hero Background */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none -z-20 overflow-hidden">
+        <Image
+          src="/clubs/crimson-wave-bg.png"
+          alt="Crimson Wave Abstract Hero Background"
+          fill
+          priority
+          className="object-cover object-center opacity-95"
+        />
+        {/* Soft edge blend gradient for readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#07080a]/85 via-[#07080a]/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#07080a] via-transparent to-[#07080a]/50" />
+      </div>
+
       {/* 1. Ambient radial lighting behind left panel */}
       <div
         className="absolute top-1/3 left-[22%] -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] rounded-full pointer-events-none -z-10"
@@ -176,7 +190,7 @@ export function JeevanamHero({
         {/* Hero 2-Column Desktop Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center">
           {/* ===================================================================
-              LEFT SIDE: Official Jeevanam Identity & Logo Frame
+              LEFT SIDE: Official Jeevanam Floating Logo & Identification
               =================================================================== */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94, y: 15 }}
@@ -184,34 +198,24 @@ export function JeevanamHero({
             transition={{ duration: 0.55, ease: [0.32, 0.72, 0, 1] }}
             className="lg:col-span-5 xl:col-span-4 flex flex-col items-center lg:items-start"
           >
-            <div className="relative group w-full max-w-[320px] sm:max-w-[340px]">
-              {/* Outer Ambient Glow */}
-              <div className="absolute -inset-1 rounded-[2.6rem] bg-gradient-to-br from-red-600/35 via-rose-600/15 to-transparent blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative group w-full max-w-[320px] sm:max-w-[340px] flex flex-col items-center">
+              {/* Soft Ambient Glow Flowing Behind Logo */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-72 sm:h-72 rounded-full bg-red-600/25 blur-3xl pointer-events-none transition-opacity duration-500 group-hover:opacity-100" />
 
-              {/* Refined Dark Framed Panel */}
-              <div className="relative rounded-[2.3rem] bg-[#0c0d12]/90 backdrop-blur-2xl border border-red-500/30 p-6 sm:p-8 shadow-[0_24px_60px_rgba(0,0,0,0.9)] flex flex-col items-center justify-center overflow-hidden transition-all duration-500 hover:border-red-500/50 hover:shadow-[0_24px_70px_rgba(225,29,72,0.25)]">
-                {/* Inner Bezel Ring */}
-                <div className="absolute inset-2.5 rounded-[1.85rem] border border-white/[0.06] pointer-events-none" />
-
-                {/* Subtle Glass Wave Highlight Inside Card */}
-                <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full border border-red-500/20 pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.04] via-transparent to-red-500/[0.03] pointer-events-none" />
-
-                {/* Jeevanam Official Logo (Red droplet emblem + Malayalam text) */}
-                <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
-                  <Image
-                    src="/clubs/jeevanam-gold.png"
-                    alt="Official Jeevanam Emblem"
-                    width={240}
-                    height={240}
-                    className="w-full h-full object-contain filter drop-shadow-[0_6px_16px_rgba(0,0,0,0.7)] transition-transform duration-500 group-hover:scale-[1.03]"
-                    priority
-                  />
-                </div>
+              {/* Floating Jeevanam Official Logo (Directly on background flow, no extra card box) */}
+              <div className="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center">
+                <Image
+                  src="/clubs/jeevanam-gold.png"
+                  alt="Official Jeevanam Emblem"
+                  width={280}
+                  height={280}
+                  className="w-full h-full object-contain filter drop-shadow-[0_12px_32px_rgba(225,29,72,0.4)] transition-transform duration-500 group-hover:scale-[1.04]"
+                  priority
+                />
               </div>
 
-              {/* Caption Beneath Panel: EST. 2008 · OFFICIAL WING */}
-              <div className="mt-5 flex items-center justify-center gap-3 w-full">
+              {/* Caption Beneath Logo: EST. 2008 · OFFICIAL WING */}
+              <div className="mt-4 sm:mt-5 flex items-center justify-center gap-3 w-full">
                 <span className="h-px w-10 sm:w-14 bg-white/20" />
                 <div className="text-center">
                   <div className="text-[10px] sm:text-[11px] font-bold tracking-[0.25em] text-white/50 uppercase">
