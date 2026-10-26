@@ -100,7 +100,8 @@ export function Navbar() {
 
   const pathname = usePathname();
   const { theme } = useTheme();
-  const isObsidian = theme === "obsidian-crimson";
+  const isJeevanam = pathname?.startsWith("/clubs/jeevanam");
+  const isObsidian = theme === "obsidian-crimson" || isJeevanam;
 
   // Hide the public navbar on admin pages
   if (pathname?.startsWith("/admin")) {
@@ -206,7 +207,22 @@ export function Navbar() {
           >
             {/* Left: Logo & YUGA Only */}
             <div className="flex items-center">
-              {isObsidian ? (
+              {isJeevanam ? (
+                <Link
+                  href="/"
+                  aria-label="Jeevanam Portal — GMC Kozhikode"
+                  className="flex items-center gap-2 group focus:outline-hidden"
+                >
+                  <Image
+                    src="/clubs/jeevanam-transparent.png"
+                    alt="Jeevanam Logo"
+                    width={44}
+                    height={44}
+                    className="h-9 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_12px_rgba(225,29,72,0.4)]"
+                    priority
+                  />
+                </Link>
+              ) : isObsidian ? (
                 <Link
                   href="/"
                   aria-label="YUGA Home"

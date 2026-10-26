@@ -306,6 +306,11 @@ model Committee {
   name        String
   slug        String            @unique
   description String?
+  category    String?
+  logo        String?
+  portalUrl   String?
+  accent      String?
+  socialLinks String?
   order       Int               @default(0)
   members     CommitteeMember[]
   events      Event[]

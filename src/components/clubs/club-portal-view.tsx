@@ -28,6 +28,7 @@ import {
   Filter,
   Check,
 } from "lucide-react";
+import { JeevanamHero } from "./jeevanam-hero";
 
 export type ClubSlug = "jeevanam" | "praanah" | "godha" | "ocha";
 
@@ -70,7 +71,7 @@ const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
     tagline: "Voluntary Blood Donation & Emergency Wing",
     category: "Emergency & Social Service",
     founded: "Est. 2008",
-    logo: "/clubs/jeevanam.jpg",
+    logo: "/clubs/jeevanam-gold.png",
     accent: "#dc2626",
     accentRgb: "220, 38, 38",
     heroGradient: "from-red-950 via-slate-900 to-rose-950",
@@ -82,9 +83,9 @@ const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
       "The dedicated lifeline of Calicut Medical College. Jeevanam coordinates 24/7 urgent blood mobilization, single-donor platelet (SDP) apheresis for oncology & dengue crises, and rare blood group registry support across all GMC ICUs and casualty triage.",
     stats: [
       { label: "Active Donors", value: "1,850+", hint: "Verified medicos & alumni" },
-      { label: "Units Mobilized", value: "3,400+", hint: "Past 2 academic cycles" },
+      { label: "Units Mobilized", value: "3,400+", hint: "Past 3 academic years" },
       { label: "Avg Response Time", value: "14 Mins", hint: "From request to triage" },
-      { label: "Emergency Drives", value: "52", hint: "Disaster & seasonal camps" },
+      { label: "Emergency Drives", value: "52", hint: "Disease & seasonal camps" },
     ],
     initiatives: [
       {
@@ -520,183 +521,209 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
     (s) => s !== club.id
   );
 
+  const isJeevanam = club.id === "jeevanam";
+
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-slate-900 selection:bg-slate-900 selection:text-white">
-      {/* 1. CINEMATIC HERO SECTION WITH DOUBLE-BEZEL & DEPTH OF FIELD */}
-      <section className={`relative pt-32 pb-24 overflow-hidden ${club.heroGradient} text-white`}>
-        {/* Ambient radial mesh gradient orbs */}
-        <div
-          className="absolute -top-48 -right-48 h-[650px] w-[650px] rounded-full blur-[140px] opacity-40 pointer-events-none"
-          style={{ background: club.accent }}
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        isJeevanam
+          ? "bg-[#07080a] text-slate-100 selection:bg-red-600 selection:text-white"
+          : "bg-[#FDFBF7] text-slate-900 selection:bg-slate-900 selection:text-white"
+      }`}
+    >
+      {/* 1. CINEMATIC HERO SECTION */}
+      {isJeevanam ? (
+        <JeevanamHero
+          convenorPhone={club.team[0]?.phone}
+          onOpenEmergencyDesk={() => {
+            setActiveTab("engine");
+            setTimeout(() => {
+              document.getElementById("blood-dispatch")?.scrollIntoView({ behavior: "smooth" });
+            }, 100);
+          }}
         />
-        <div
-          className="absolute -bottom-48 -left-48 h-[550px] w-[550px] rounded-full blur-[120px] opacity-25 pointer-events-none"
-          style={{ background: club.accent }}
-        />
+      ) : (
+        <section className={`relative pt-32 pb-24 overflow-hidden ${club.heroGradient} text-white`}>
+          {/* Ambient radial mesh gradient orbs */}
+          <div
+            className="absolute -top-48 -right-48 h-[650px] w-[650px] rounded-full blur-[140px] opacity-40 pointer-events-none"
+            style={{ background: club.accent }}
+          />
+          <div
+            className="absolute -bottom-48 -left-48 h-[550px] w-[550px] rounded-full blur-[120px] opacity-25 pointer-events-none"
+            style={{ background: club.accent }}
+          />
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb with Apple Fluid Touch */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-            className="flex items-center gap-2 text-xs font-semibold text-slate-300 mb-10"
-          >
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-md"
-            >
-              <ArrowLeft className="h-3 w-3" />
-              <span>GMC Home</span>
-            </Link>
-            <span className="text-white/40">/</span>
-            <Link
-              href="/subcommittees"
-              className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-md"
-            >
-              Student Wings
-            </Link>
-            <span className="text-white/40">/</span>
-            <span className="text-white font-bold px-2">{club.name} Portal</span>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Left: The Machined Double-Bezel Emblem */}
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            {/* Breadcrumb with Apple Fluid Touch */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
-              className="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+              className="flex items-center gap-2 text-xs font-semibold text-slate-300 mb-10"
             >
-              {/* Outer Shell (Doppelrand hardware enclosure) */}
-              <div
-                className="relative p-2 rounded-[2.5rem] bg-white/10 backdrop-blur-2xl ring-1 ring-white/20 shadow-2xl transition-transform duration-500 hover:scale-[1.02]"
-                style={{
-                  boxShadow: `0 25px 60px -15px rgba(${club.accentRgb}, 0.35)`,
-                }}
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-md"
               >
-                {/* Inner Core container */}
-                <div className="relative h-48 w-48 sm:h-56 sm:w-56 rounded-[calc(2.5rem-0.5rem)] bg-white p-4 flex items-center justify-center overflow-hidden shadow-inner">
-                  <Image
-                    src={club.logo}
-                    alt={`${club.name} Official Emblem`}
-                    fill
-                    className="object-contain p-3"
-                    sizes="224px"
-                    priority
-                  />
-                </div>
-              </div>
-
-              {/* Eyebrow Pill */}
-              <div
-                className="mt-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] backdrop-blur-md ring-1"
-                style={{
-                  color: club.accent,
-                  backgroundColor: `rgba(${club.accentRgb}, 0.15)`,
-                  borderColor: `rgba(${club.accentRgb}, 0.3)`,
-                }}
+                <ArrowLeft className="h-3 w-3" />
+                <span>GMC Home</span>
+              </Link>
+              <span className="text-white/40">/</span>
+              <Link
+                href="/subcommittees"
+                className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-md"
               >
-                <Sparkles className="h-3 w-3 animate-pulse" />
-                <span>{club.founded} · Official Wing</span>
-              </div>
+                Student Wings
+              </Link>
+              <span className="text-white/40">/</span>
+              <span className="text-white font-bold px-2">{club.name} Portal</span>
             </motion.div>
 
-            {/* Right: Typography, Malayalam Identity & Hero Statement */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0.32, 0.72, 0, 1] }}
-              className="lg:col-span-8 text-center lg:text-left"
-            >
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-3">
-                <span className="text-xs font-bold uppercase tracking-widest text-slate-300">
-                  {club.category}
-                </span>
-                <span className="text-slate-500">•</span>
-                <span className="text-3xl font-bold font-serif text-white/90">
-                  {club.malayalam}
-                </span>
-              </div>
-
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-black tracking-tight text-white mb-3 leading-[1.05]">
-                {club.name}
-              </h1>
-
-              <p className="text-lg sm:text-2xl font-medium text-slate-200 mb-6 font-display">
-                {club.tagline}
-              </p>
-
-              <p className="text-base sm:text-lg text-slate-300/90 leading-relaxed max-w-3xl mb-8 font-normal">
-                {club.heroDescription}
-              </p>
-
-              {/* Action Island: Nested Button-in-Button Architecture */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
-                <a
-                  href={`tel:${club.team[0]?.phone}`}
-                  className="group relative inline-flex items-center gap-3 rounded-full pl-6 pr-2 py-2 text-sm font-bold text-white shadow-xl transition-all duration-300 active:scale-[0.97]"
-                  style={{ backgroundColor: club.accent }}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              {/* Left: The Machined Double-Bezel Emblem */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+                className="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left"
+              >
+                {/* Outer Shell (Doppelrand hardware enclosure) */}
+                <div
+                  className="relative p-2 rounded-[2.5rem] bg-white/10 backdrop-blur-2xl ring-1 ring-white/20 shadow-2xl transition-transform duration-500 hover:scale-[1.02]"
+                  style={{
+                    boxShadow: `0 25px 60px -15px rgba(${club.accentRgb}, 0.35)`,
+                  }}
                 >
-                  <span>Connect with Convenor</span>
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-black/20 text-white transition-transform duration-300 group-hover:translate-x-0.5">
-                    <Phone className="h-4 w-4" />
-                  </span>
-                </a>
+                  {/* Inner Core container */}
+                  <div className="relative h-48 w-48 sm:h-56 sm:w-56 rounded-[calc(2.5rem-0.5rem)] bg-white p-4 flex items-center justify-center overflow-hidden shadow-inner">
+                    <Image
+                      src={club.logo}
+                      alt={`${club.name} Official Emblem`}
+                      fill
+                      className="object-contain p-3"
+                      sizes="224px"
+                      priority
+                    />
+                  </div>
+                </div>
 
-                {club.id === "jeevanam" && (
+                {/* Eyebrow Pill */}
+                <div
+                  className="mt-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] backdrop-blur-md ring-1"
+                  style={{
+                    color: club.accent,
+                    backgroundColor: `rgba(${club.accentRgb}, 0.15)`,
+                    borderColor: `rgba(${club.accentRgb}, 0.3)`,
+                  }}
+                >
+                  <Sparkles className="h-3 w-3 animate-pulse" />
+                  <span>{club.founded} · Official Wing</span>
+                </div>
+              </motion.div>
+
+              {/* Right: Typography, Malayalam Identity & Hero Statement */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1, ease: [0.32, 0.72, 0, 1] }}
+                className="lg:col-span-8 text-center lg:text-left"
+              >
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-3">
+                  <span className="text-xs font-bold uppercase tracking-widest text-slate-300">
+                    {club.category}
+                  </span>
+                  <span className="text-slate-500">•</span>
+                  <span className="text-3xl font-bold font-serif text-white/90">
+                    {club.malayalam}
+                  </span>
+                </div>
+
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-black tracking-tight text-white mb-3 leading-[1.05]">
+                  {club.name}
+                </h1>
+
+                <p className="text-lg sm:text-2xl font-medium text-slate-200 mb-6 font-display">
+                  {club.tagline}
+                </p>
+
+                <p className="text-base sm:text-lg text-slate-300/90 leading-relaxed max-w-3xl mb-8 font-normal">
+                  {club.heroDescription}
+                </p>
+
+                {/* Action Island: Nested Button-in-Button Architecture */}
+                <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
                   <a
-                    href="#blood-dispatch"
-                    className="group relative inline-flex items-center gap-3 rounded-full pl-6 pr-2 py-2 text-sm font-bold text-slate-900 bg-white shadow-xl transition-all duration-300 hover:bg-slate-100 active:scale-[0.97]"
+                    href={`tel:${club.team[0]?.phone}`}
+                    className="group relative inline-flex items-center gap-3 rounded-full pl-6 pr-2 py-2 text-sm font-bold text-white shadow-xl transition-all duration-300 active:scale-[0.97]"
+                    style={{ backgroundColor: club.accent }}
                   >
-                    <span>Emergency Blood Desk</span>
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-red-100 text-red-600 transition-transform duration-300 group-hover:translate-x-0.5">
-                      <Flame className="h-4 w-4 animate-bounce" />
+                    <span>Connect with Convenor</span>
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-black/20 text-white transition-transform duration-300 group-hover:translate-x-0.5">
+                      <Phone className="h-4 w-4" />
                     </span>
                   </a>
-                )}
 
-                <Link
-                  href="/events"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-sm font-bold text-white backdrop-blur-md hover:bg-white/20 transition-all duration-200"
+                  {club.id === "jeevanam" && (
+                    <a
+                      href="#blood-dispatch"
+                      className="group relative inline-flex items-center gap-3 rounded-full pl-6 pr-2 py-2 text-sm font-bold text-slate-900 bg-white shadow-xl transition-all duration-300 hover:bg-slate-100 active:scale-[0.97]"
+                    >
+                      <span>Emergency Blood Desk</span>
+                      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-red-100 text-red-600 transition-transform duration-300 group-hover:translate-x-0.5">
+                        <Flame className="h-4 w-4 animate-bounce" />
+                      </span>
+                    </a>
+                  )}
+
+                  <Link
+                    href="/events"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-sm font-bold text-white backdrop-blur-md hover:bg-white/20 transition-all duration-200"
+                  >
+                    <Calendar className="h-4 w-4 text-white/70" />
+                    <span>Wing Calendar</span>
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Metric Hardware Strip */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
+              className="mt-16 pt-10 border-t border-white/15 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
+            >
+              {club.stats.map((st, idx) => (
+                <div
+                  key={idx}
+                  className="relative rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md p-5 text-center lg:text-left transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5"
                 >
-                  <Calendar className="h-4 w-4 text-white/70" />
-                  <span>Wing Calendar</span>
-                </Link>
-              </div>
+                  <div
+                    className="text-3xl sm:text-4xl font-display font-black tracking-tight mb-1"
+                    style={{ color: club.accent }}
+                  >
+                    {st.value}
+                  </div>
+                  <div className="text-xs font-bold text-white uppercase tracking-wider mb-0.5">
+                    {st.label}
+                  </div>
+                  <div className="text-[11px] text-white/50">{st.hint}</div>
+                </div>
+              ))}
             </motion.div>
           </div>
-
-          {/* Metric Hardware Strip */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-            className="mt-16 pt-10 border-t border-white/15 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
-          >
-            {club.stats.map((st, idx) => (
-              <div
-                key={idx}
-                className="relative rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md p-5 text-center lg:text-left transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5"
-              >
-                <div
-                  className="text-3xl sm:text-4xl font-display font-black tracking-tight mb-1"
-                  style={{ color: club.accent }}
-                >
-                  {st.value}
-                </div>
-                <div className="text-xs font-bold text-white uppercase tracking-wider mb-0.5">
-                  {st.label}
-                </div>
-                <div className="text-[11px] text-white/50">{st.hint}</div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 2. EMIL KOWALSKI SLIDING TABS CONTROLLER */}
-      <section className="sticky top-20 z-30 bg-white/80 backdrop-blur-xl border-b border-slate-200 py-3 shadow-xs">
+      <section
+        className={`sticky top-16 sm:top-20 z-30 py-3 shadow-xs transition-colors duration-200 ${
+          isJeevanam
+            ? "bg-[#07080a]/90 backdrop-blur-xl border-b border-white/10"
+            : "bg-white/80 backdrop-blur-xl border-b border-slate-200"
+        }`}
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center sm:justify-start gap-2 overflow-x-auto py-1 no-scrollbar">
             {[
@@ -725,6 +752,8 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                   className={`relative flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold transition-all duration-300 active:scale-[0.98] ${
                     isActive
                       ? "text-white shadow-md"
+                      : isJeevanam
+                      ? "text-zinc-400 hover:text-white hover:bg-white/5"
                       : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                   }`}
                   style={{
@@ -764,31 +793,39 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Mission Card with Double Bezel */}
                 <div
-                  className="p-1 rounded-[2rem] ring-1 transition-all duration-300 hover:shadow-lg"
-                  style={{
+                  className={`p-1 rounded-[2rem] ring-1 transition-all duration-300 hover:shadow-lg ${
+                    isJeevanam ? "ring-red-500/20 bg-red-950/20" : ""
+                  }`}
+                  style={isJeevanam ? undefined : {
                     backgroundColor: `rgba(${club.accentRgb}, 0.04)`,
                     borderColor: `rgba(${club.accentRgb}, 0.2)`,
                   }}
                 >
-                  <div className="p-8 sm:p-10 rounded-[calc(2rem-0.25rem)] bg-white h-full flex flex-col justify-between">
+                  <div className={`p-8 sm:p-10 rounded-[calc(2rem-0.25rem)] h-full flex flex-col justify-between ${
+                    isJeevanam ? "bg-[#0c0d12] border border-white/10 text-white" : "bg-white text-slate-900"
+                  }`}>
                     <div>
                       <div
                         className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider mb-4"
                         style={{
                           color: club.accent,
-                          backgroundColor: `rgba(${club.accentRgb}, 0.08)`,
+                          backgroundColor: `rgba(${club.accentRgb}, ${isJeevanam ? 0.2 : 0.08})`,
                         }}
                       >
                         <ShieldCheck className="h-3.5 w-3.5" />
                         <span>Core Mandate</span>
                       </div>
                       <h3
-                        className="text-2xl font-display font-bold tracking-tight mb-4"
-                        style={{ color: club.accent }}
+                        className={`text-2xl font-display font-bold tracking-tight mb-4 ${
+                          isJeevanam ? "text-white" : ""
+                        }`}
+                        style={isJeevanam ? undefined : { color: club.accent }}
                       >
                         Our Mission
                       </h3>
-                      <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-normal">
+                      <p className={`text-base sm:text-lg leading-relaxed font-normal ${
+                        isJeevanam ? "text-slate-300" : "text-slate-700"
+                      }`}>
                         {club.mission}
                       </p>
                     </div>
@@ -823,7 +860,9 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                   >
                     Annual Ecosystem
                   </p>
-                  <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
+                  <h2 className={`text-3xl sm:text-4xl font-display font-bold tracking-tight ${
+                    isJeevanam ? "text-white" : "text-slate-900"
+                  }`}>
                     Flagship Operations &amp; Initiatives
                   </h2>
                 </div>
@@ -832,7 +871,11 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                   {club.initiatives.map((item, idx) => (
                     <div
                       key={idx}
-                      className="group relative rounded-3xl border border-slate-200/80 bg-white p-7 shadow-xs hover:border-slate-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                      className={`group relative rounded-3xl p-7 flex flex-col justify-between transition-all duration-300 ${
+                        isJeevanam
+                          ? "bg-[#0c0d12] border border-white/10 hover:border-red-500/40 hover:shadow-xl text-white"
+                          : "border border-slate-200/80 bg-white shadow-xs hover:border-slate-300 hover:shadow-xl"
+                      }`}
                     >
                       <div>
                         <div className="flex items-center justify-between mb-4">
@@ -840,25 +883,33 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                             className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
                             style={{
                               color: club.accent,
-                              backgroundColor: `rgba(${club.accentRgb}, 0.08)`,
+                              backgroundColor: `rgba(${club.accentRgb}, ${isJeevanam ? 0.2 : 0.08})`,
                             }}
                           >
                             {item.category}
                           </span>
-                          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500">
+                          <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
+                            isJeevanam ? "text-zinc-400" : "text-slate-500"
+                          }`}>
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                             {item.status}
                           </span>
                         </div>
-                        <h4 className="text-xl font-bold text-slate-900 mb-2 leading-snug group-hover:text-slate-800 transition-colors">
+                        <h4 className={`text-xl font-bold mb-2 leading-snug transition-colors ${
+                          isJeevanam ? "text-white group-hover:text-red-400" : "text-slate-900 group-hover:text-slate-800"
+                        }`}>
                           {item.title}
                         </h4>
-                        <p className="text-sm text-slate-600 leading-relaxed">
+                        <p className={`text-sm leading-relaxed ${
+                          isJeevanam ? "text-zinc-400" : "text-slate-600"
+                        }`}>
                           {item.description}
                         </p>
                       </div>
 
-                      <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-500">
+                      <div className={`mt-6 pt-4 border-t flex items-center justify-between text-xs font-bold ${
+                        isJeevanam ? "border-white/10 text-zinc-500" : "border-slate-100 text-slate-500"
+                      }`}>
                         <span>Initiative 0{idx + 1}</span>
                         <span
                           className="group-hover:translate-x-1 transition-transform"
@@ -887,16 +938,24 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
               {/* JEEVANAM: LIVE BLOOD DISPATCH DESK */}
               {club.id === "jeevanam" && (
                 <div id="blood-dispatch" className="space-y-8">
-                  <div className="rounded-3xl border border-red-200 bg-gradient-to-br from-red-50/60 via-white to-red-50/30 p-8 sm:p-10 shadow-xs">
+                  <div className={`rounded-3xl border p-8 sm:p-10 shadow-2xl ${
+                    isJeevanam
+                      ? "border-red-500/25 bg-gradient-to-br from-[#12090b] via-[#0c0d12] to-[#08090d]"
+                      : "border-red-200 bg-gradient-to-br from-red-50/60 via-white to-red-50/30 shadow-xs"
+                  }`}>
                     <div className="max-w-2xl mb-8">
-                      <div className="inline-flex items-center gap-2 rounded-full bg-red-100 text-red-700 px-3 py-1 text-xs font-bold uppercase tracking-wider mb-2">
-                        <Flame className="h-3.5 w-3.5 text-red-600 animate-pulse" />
+                      <div className="inline-flex items-center gap-2 rounded-full bg-red-950/60 border border-red-500/30 text-red-400 px-3 py-1 text-xs font-bold uppercase tracking-wider mb-2">
+                        <Flame className="h-3.5 w-3.5 text-red-500 animate-pulse" />
                         <span>Live Casualty Dispatch Desk</span>
                       </div>
-                      <h3 className="text-2xl sm:text-3xl font-display font-bold text-slate-900">
+                      <h3 className={`text-2xl sm:text-3xl font-display font-bold ${
+                        isJeevanam ? "text-white" : "text-slate-900"
+                      }`}>
                         Emergency Blood Group Standby Registry
                       </h3>
-                      <p className="text-sm text-slate-600 mt-2">
+                      <p className={`text-sm mt-2 ${
+                        isJeevanam ? "text-zinc-400" : "text-slate-600"
+                      }`}>
                         Real-time student donor standby counts across hostels. Click any blood group to connect instantly with the emergency coordinator.
                       </p>
                     </div>
@@ -911,7 +970,9 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                             onClick={() => setSelectedBlood(bg.group)}
                             className={`p-5 rounded-2xl border text-left transition-all duration-300 active:scale-[0.98] ${
                               isSelected
-                                ? "bg-red-600 text-white border-red-600 shadow-lg -translate-y-1"
+                                ? "bg-gradient-to-br from-red-600 to-rose-700 text-white border-red-500 shadow-[0_8px_20px_rgba(225,29,72,0.4)] -translate-y-1"
+                                : isJeevanam
+                                ? "bg-[#111318] text-white border-white/10 hover:border-red-500/40 hover:bg-[#161820]"
                                 : "bg-white text-slate-900 border-slate-200 hover:border-red-300 hover:shadow-xs"
                             }`}
                           >
@@ -920,14 +981,14 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                             </div>
                             <div
                               className={`text-xs font-bold mt-1 ${
-                                isSelected ? "text-red-100" : "text-red-600"
+                                isSelected ? "text-red-100" : "text-red-400"
                               }`}
                             >
                               {bg.status}
                             </div>
                             <div
                               className={`text-[11px] mt-0.5 ${
-                                isSelected ? "text-white/80" : "text-slate-500"
+                                isSelected ? "text-white/80" : isJeevanam ? "text-zinc-400" : "text-slate-500"
                               }`}
                             >
                               {bg.units}
@@ -938,12 +999,18 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                     </div>
 
                     {/* Selected Blood Emergency Call Box */}
-                    <div className="mt-8 pt-6 border-t border-red-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white/80 p-5 rounded-2xl">
+                    <div className={`mt-8 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4 p-5 rounded-2xl ${
+                      isJeevanam
+                        ? "border-white/10 bg-[#12131a] border border-white/5"
+                        : "border-red-200/80 bg-white/80"
+                    }`}>
                       <div>
-                        <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                        <span className={`text-xs font-bold uppercase tracking-wider ${
+                          isJeevanam ? "text-zinc-400" : "text-slate-500"
+                        }`}>
                           Requesting Group:
                         </span>
-                        <div className="text-xl font-bold text-red-600">
+                        <div className="text-xl font-bold text-red-500">
                           {selectedBlood} Emergency Triage Assistance
                         </div>
                       </div>
@@ -951,7 +1018,7 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                       <div className="flex items-center gap-3">
                         <a
                           href="tel:+919447123402"
-                          className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white bg-red-600 hover:bg-red-700 shadow-md transition-all active:scale-[0.98]"
+                          className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 shadow-lg shadow-red-600/30 transition-all active:scale-[0.98]"
                         >
                           <Phone className="h-4 w-4" />
                           <span>Dispatch Hotline (+91 94471 23402)</span>
@@ -1154,7 +1221,9 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                 >
                   Hall of Laurels
                 </p>
-                <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
+                <h2 className={`text-3xl sm:text-4xl font-display font-bold tracking-tight ${
+                  isJeevanam ? "text-white" : "text-slate-900"
+                }`}>
                   State &amp; National Commendations
                 </h2>
               </div>
@@ -1163,7 +1232,11 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                 {club.achievements.map((ach, idx) => (
                   <div
                     key={idx}
-                    className="relative rounded-3xl border border-slate-200/90 bg-white p-7 shadow-xs hover:shadow-xl transition-all duration-300"
+                    className={`relative rounded-3xl p-7 transition-all duration-300 ${
+                      isJeevanam
+                        ? "bg-[#0c0d12] border border-white/10 hover:border-red-500/40 text-white"
+                        : "border border-slate-200/90 bg-white shadow-xs hover:shadow-xl"
+                    }`}
                   >
                     <div className="flex items-center justify-between mb-3">
                       <span
@@ -1183,10 +1256,14 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                       </span>
                     </div>
 
-                    <h4 className="text-base sm:text-lg font-bold text-slate-900 mb-2 leading-snug">
+                    <h4 className={`text-base sm:text-lg font-bold mb-2 leading-snug ${
+                      isJeevanam ? "text-white" : "text-slate-900"
+                    }`}>
                       {ach.title}
                     </h4>
-                    <p className="text-xs text-slate-500 font-medium">
+                    <p className={`text-xs font-medium ${
+                      isJeevanam ? "text-zinc-400" : "text-slate-500"
+                    }`}>
                       Conferred by {ach.awarder}
                     </p>
                   </div>
@@ -1212,7 +1289,9 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                 >
                   Student Office Bearers
                 </p>
-                <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 tracking-tight">
+                <h2 className={`text-3xl sm:text-4xl font-display font-bold tracking-tight ${
+                  isJeevanam ? "text-white" : "text-slate-900"
+                }`}>
                   Executive Committee (2026–2027)
                 </h2>
               </div>
@@ -1221,7 +1300,11 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                 {club.team.map((member, idx) => (
                   <div
                     key={idx}
-                    className="group rounded-3xl border border-slate-200/80 bg-white p-6 shadow-xs hover:border-slate-300 hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                    className={`group rounded-3xl p-6 flex flex-col justify-between transition-all duration-300 ${
+                      isJeevanam
+                        ? "bg-[#0c0d12] border border-white/10 hover:border-red-500/40 hover:shadow-xl text-white"
+                        : "border border-slate-200/80 bg-white shadow-xs hover:border-slate-300 hover:shadow-xl"
+                    }`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-5">
@@ -1235,22 +1318,28 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                           className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"
                           style={{
                             color: club.accent,
-                            backgroundColor: `rgba(${club.accentRgb}, 0.1)`,
+                            backgroundColor: `rgba(${club.accentRgb}, ${isJeevanam ? 0.2 : 0.1})`,
                           }}
                         >
                           {member.role}
                         </span>
                       </div>
 
-                      <h4 className="text-base font-bold text-slate-900 leading-snug">
+                      <h4 className={`text-base font-bold leading-snug ${
+                        isJeevanam ? "text-white" : "text-slate-900"
+                      }`}>
                         {member.name}
                       </h4>
-                      <p className="text-xs text-slate-500 font-medium mt-1">
+                      <p className={`text-xs font-medium mt-1 ${
+                        isJeevanam ? "text-zinc-400" : "text-slate-500"
+                      }`}>
                         {member.batch}
                       </p>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <div className={`mt-6 pt-4 border-t flex items-center justify-between ${
+                      isJeevanam ? "border-white/10" : "border-slate-100"
+                    }`}>
                       <a
                         href={`tel:${member.phone}`}
                         className="inline-flex items-center gap-1.5 text-xs font-bold transition-colors hover:underline"
@@ -1263,10 +1352,12 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
 
                       <button
                         onClick={() => copyNumber(member.phone)}
-                        className="text-[10px] font-bold text-slate-400 hover:text-slate-600 transition-colors"
+                        className={`text-[10px] font-bold transition-colors ${
+                          isJeevanam ? "text-zinc-500 hover:text-white" : "text-slate-400 hover:text-slate-600"
+                        }`}
                       >
                         {copiedContact === member.phone ? (
-                          <span className="text-emerald-600 flex items-center gap-0.5">
+                          <span className="text-emerald-500 flex items-center gap-0.5">
                             <Check className="h-3 w-3" /> Copied
                           </span>
                         ) : (
@@ -1283,20 +1374,28 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
       </div>
 
       {/* 4. EXPLORE OTHER CLUBS (CROSS-PORTAL SWITCHER) */}
-      <section className="py-20 border-t border-slate-200 bg-white">
+      <section className={`py-20 border-t ${
+        isJeevanam ? "border-white/10 bg-[#07080a]" : "border-slate-200 bg-white"
+      }`}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-10">
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-slate-400">
+              <p className={`text-xs font-bold uppercase tracking-widest ${
+                isJeevanam ? "text-zinc-500" : "text-slate-400"
+              }`}>
                 YUGA Ecosystem
               </p>
-              <h3 className="text-2xl font-display font-bold text-slate-900">
+              <h3 className={`text-2xl font-display font-bold ${
+                isJeevanam ? "text-white" : "text-slate-900"
+              }`}>
                 Explore Other Student Sub-Committee Portals
               </h3>
             </div>
             <Link
               href="/subcommittees"
-              className="inline-flex items-center gap-1 text-sm font-bold text-slate-700 hover:text-slate-900 transition-colors"
+              className={`inline-flex items-center gap-1 text-sm font-bold transition-colors ${
+                isJeevanam ? "text-zinc-300 hover:text-white" : "text-slate-700 hover:text-slate-900"
+              }`}
             >
               <span>View All 8 Council Wings</span>
               <ArrowRight className="h-4 w-4" />
@@ -1310,7 +1409,11 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                 <Link
                   key={otherSlug}
                   href={`/clubs/${otherSlug}`}
-                  className="group relative flex items-center gap-4 rounded-3xl border border-slate-200/80 bg-[#FDFBF7] p-5 shadow-xs hover:border-slate-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                  className={`group relative flex items-center gap-4 rounded-3xl border p-5 transition-all duration-300 ${
+                    isJeevanam
+                      ? "border-white/10 bg-[#0c0d12] hover:border-red-500/40 hover:shadow-xl hover:-translate-y-1 text-white"
+                      : "border-slate-200/80 bg-[#FDFBF7] shadow-xs hover:border-slate-300 hover:shadow-xl hover:-translate-y-1"
+                  }`}
                 >
                   <div className="relative h-16 w-16 rounded-2xl overflow-hidden bg-white shadow-xs p-1.5 shrink-0 border border-slate-100">
                     <Image
@@ -1324,15 +1427,23 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
 
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      <span className={`text-[10px] font-bold uppercase tracking-wider ${
+                        isJeevanam ? "text-zinc-400" : "text-slate-400"
+                      }`}>
                         {other.category}
                       </span>
-                      <ArrowUpRight className="h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      <ArrowUpRight className={`h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${
+                        isJeevanam ? "text-zinc-400" : "text-slate-400"
+                      }`} />
                     </div>
-                    <h4 className="text-lg font-bold text-slate-900 group-hover:text-slate-800 transition-colors truncate">
+                    <h4 className={`text-lg font-bold transition-colors truncate ${
+                      isJeevanam ? "text-white group-hover:text-red-400" : "text-slate-900 group-hover:text-slate-800"
+                    }`}>
                       {other.name}
                     </h4>
-                    <p className="text-xs text-slate-500 font-serif">
+                    <p className={`text-xs font-serif ${
+                      isJeevanam ? "text-zinc-400" : "text-slate-500"
+                    }`}>
                       {other.malayalam} · {other.tagline}
                     </p>
                   </div>
