@@ -2,172 +2,318 @@
 
 import Link from "next/link";
 import {
-  Sparkles,
+  Megaphone,
+  Bell,
+  CalendarDays,
   Trophy,
-  FileText,
-  Users,
-  MessageSquareWarning,
+  MessageSquareDot,
   Siren,
+  Users2,
+  Phone,
+  Wallet,
   ArrowUpRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { EditableText } from "@/components/admin/inline/editable-text";
 
-const PORTALS = [
+const QUICK_CARDS = [
   {
-    title: "Circulars & Notices",
-    desc: "Academic directives, circulars, and executive council notifications.",
+    label: "Interventions",
+    href: "/interventions",
+    icon: Megaphone,
+    featured: true, // crimson highlight
+  },
+  {
+    label: "Notifications",
     href: "/notifications",
-    icon: FileText,
-    span: "",
+    icon: Bell,
+    featured: false,
   },
   {
-    title: "Emergency Registry",
-    desc: "24/7 direct casualty triage, ambulance lines, and blood donor matching.",
-    href: "/emergency",
-    icon: Siren,
-    span: "",
-    danger: true,
-  },
-  {
-    title: "Fests & Cultural Nights",
-    desc: "Annual YUGA arts fests, music concerts, and stage registrations.",
+    label: "Events",
     href: "/events",
-    icon: Sparkles,
-    span: "",
+    icon: CalendarDays,
+    featured: false,
   },
   {
-    title: "Laurels & Hall of Fame",
-    desc: "State championship shields, research grants, and athletic gold.",
+    label: "Achievements",
     href: "/achievements",
     icon: Trophy,
-    span: "",
+    featured: false,
   },
   {
-    title: "Subcommittees & Wings",
-    desc: "16 active student councils across fine arts, sports, literary, and social aid.",
-    href: "/subcommittees",
-    icon: Users,
-    span: "",
-  },
-  {
-    title: "Student Grievance Desk",
-    desc: "Confidential feedback loop and representation to Union Executive Council.",
+    label: "Drop a Suggestion",
     href: "/complaints",
-    icon: MessageSquareWarning,
-    span: "",
+    icon: MessageSquareDot,
+    featured: false,
+  },
+  {
+    label: "Emergency",
+    href: "/emergency",
+    icon: Siren,
+    featured: false,
+  },
+  {
+    label: "Subcommittee",
+    href: "/subcommittees",
+    icon: Users2,
+    featured: false,
+  },
+  {
+    label: "Contact",
+    href: "/contact",
+    icon: Phone,
+    featured: false,
+  },
+  {
+    label: "Union Accounts",
+    href: "/finance",
+    icon: Wallet,
+    featured: false,
   },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const cardVariants: any = {
+  hidden: { opacity: 0, y: 20, scale: 0.96 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      delay: i * 0.055,
+      duration: 0.45,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  }),
+};
+
 export function QuickPortals() {
   return (
-    <section className="py-24 sm:py-32 bg-[var(--bg-surface)] border-t border-[var(--border-primary)] transition-colors">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <section className="relative bg-[#07080a] border-t border-white/[0.07] overflow-hidden">
+      {/* Subtle dot-grid texture */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: `radial-gradient(circle, #fff 1px, transparent 1px)`,
+          backgroundSize: "28px 28px",
+        }}
+      />
+
+      {/* ── MOBILE / SMALL TABLET LAYOUT (< lg) ─────────────────────────── */}
+      <div className="lg:hidden relative px-4 sm:px-6 pt-10 pb-0">
+        {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-xl mb-12"
+          className="mb-7"
         >
-          <EditableText
-            blockId="portals-label"
-            defaultContent="Campus Portals"
-            pageId="home"
-            label="Portals Section Label"
-            as="p"
-            className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] mb-3"
-          />
-          <EditableText
-            blockId="portals-title"
-            defaultContent="Everything in one place."
-            pageId="home"
-            label="Portals Section Title"
-            as="h2"
-            className="text-3xl sm:text-4xl font-display text-[var(--text-primary)] font-normal"
-          />
-          <EditableText
-            blockId="portals-subtitle"
-            defaultContent="Direct navigation across medical student welfare, academics, and culture."
-            pageId="home"
-            label="Portals Section Subtitle"
-            as="p"
-            className="mt-2 text-sm text-[var(--text-secondary)]"
-          />
+          <div className="flex items-center gap-2 mb-2">
+            <span className="h-px w-5 bg-[#e11d48]" />
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#e11d48]">
+              Campus Portals
+            </p>
+          </div>
+          <h2 className="text-[2.4rem] font-black leading-[1.05] tracking-tight text-white">
+            Quick Access
+          </h2>
         </motion.div>
 
-        {/* Grid */}
+        {/* 2-column grid */}
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.055 } },
-          }}
-          className="grid sm:grid-cols-3 gap-4"
+          viewport={{ once: true, margin: "-40px" }}
+          className="grid grid-cols-2 gap-3 relative z-10"
         >
-          {PORTALS.map((portal) => {
-            const Icon = portal.icon;
+          {QUICK_CARDS.map((card, i) => {
+            const Icon = card.icon;
+            const isSingle = i === QUICK_CARDS.length - 1 && QUICK_CARDS.length % 2 !== 0;
             return (
               <motion.div
-                key={portal.title}
-                variants={{
-                  hidden: { opacity: 0, y: 18 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
-                  },
-                }}
-                whileHover={{ y: -4, transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1] } }}
-                whileTap={{ scale: 0.98 }}
-                className={portal.span}
+                key={card.href}
+                custom={i}
+                variants={cardVariants}
+                whileHover={{ y: -3, transition: { duration: 0.18, ease: "easeOut" } }}
+                whileTap={{ scale: 0.97 }}
+                className={isSingle ? "col-span-1" : ""}
               >
                 <Link
-                  href={portal.href}
-                  className={`group flex flex-col justify-between h-full rounded-2xl border p-6 transition-[border-color,background,box-shadow] duration-200 ${
-                    portal.danger
-                      ? "border-red-500/30 bg-red-500/10 hover:bg-red-500/15 hover:border-red-500/50 shadow-xs hover:shadow-md"
-                      : "border-[var(--border-primary)] bg-[var(--bg-card)] hover:border-[var(--accent)] hover:bg-[var(--bg-card-hover)] shadow-xs hover:shadow-md"
-                  }`}
+                  href={card.href}
+                  className={`
+                    group relative flex flex-col justify-between
+                    rounded-[18px] p-4 h-[130px]
+                    border transition-all duration-200
+                    ${
+                      card.featured
+                        ? "bg-[#1a0509] border-[#e11d48]/50 shadow-[inset_0_0_32px_rgba(225,29,72,0.08),0_4px_24px_rgba(225,29,72,0.15)]"
+                        : "bg-[#111215] border-white/[0.07] hover:border-[#e11d48]/30 hover:bg-[#14080b]"
+                    }
+                  `}
                 >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div
-                        className={`flex h-11 w-11 items-center justify-center rounded-xl border transition-all duration-200 group-hover:scale-105 ${
-                          portal.danger
-                            ? "bg-red-500/20 border-red-500/30 text-red-500"
-                            : "bg-[var(--accent-subtle)] border-[var(--border-primary)] text-[var(--accent)] group-hover:border-[var(--accent)]"
-                        }`}
-                      >
-                        <Icon className="h-5 w-5" aria-hidden="true" />
-                      </div>
-                      <ArrowUpRight
-                        className={`h-4 w-4 transition-transform duration-200 ${
-                          portal.danger
-                            ? "text-red-400 group-hover:text-red-500 group-hover:translate-x-1 group-hover:-translate-y-1"
-                            : "text-[var(--text-faint)] group-hover:text-[var(--accent)] group-hover:translate-x-1 group-hover:-translate-y-1"
-                        }`}
-                        aria-hidden="true"
-                      />
-                    </div>
+                  {/* Arrow top-right */}
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className={`absolute top-3.5 right-3.5 h-3.5 w-3.5 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${
+                      card.featured ? "text-[#e11d48]/70" : "text-white/25 group-hover:text-[#e11d48]/60"
+                    }`}
+                  />
 
-                    <h3 className="text-base font-bold text-[var(--text-primary)] mb-1.5 group-hover:text-[var(--accent)] transition-colors">
-                      {portal.title}
-                    </h3>
-                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed font-normal">
-                      {portal.desc}
-                    </p>
+                  {/* Icon circle */}
+                  <div
+                    className={`h-11 w-11 rounded-full flex items-center justify-center ${
+                      card.featured
+                        ? "bg-[#e11d48]/20"
+                        : "bg-[#e11d48]/10 group-hover:bg-[#e11d48]/15"
+                    } transition-colors duration-200`}
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      strokeWidth={1.5}
+                      className={`h-5 w-5 ${
+                        card.featured ? "text-[#e11d48]" : "text-[#e11d48]/80 group-hover:text-[#e11d48]"
+                      } transition-colors duration-200`}
+                    />
                   </div>
+
+                  {/* Label */}
+                  <span
+                    className={`text-sm font-semibold leading-tight ${
+                      card.featured ? "text-white" : "text-white/85 group-hover:text-white"
+                    } transition-colors duration-200`}
+                  >
+                    {card.label}
+                  </span>
                 </Link>
               </motion.div>
             );
           })}
         </motion.div>
+
+        {/* Bottom crimson wave SVG */}
+        <div aria-hidden="true" className="relative w-full overflow-hidden mt-6 h-28 pointer-events-none select-none">
+          <svg
+            viewBox="0 0 390 112"
+            preserveAspectRatio="none"
+            className="absolute bottom-0 left-0 w-full h-full"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="waveGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#4a0311" stopOpacity="0.5" />
+                <stop offset="45%" stopColor="#7f0920" stopOpacity="0.35" />
+                <stop offset="100%" stopColor="#2a020c" stopOpacity="0.15" />
+              </linearGradient>
+              <linearGradient id="waveGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#e11d48" stopOpacity="0.12" />
+                <stop offset="50%" stopColor="#9f1239" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#4a0311" stopOpacity="0.08" />
+              </linearGradient>
+            </defs>
+            {/* Back wave – deep burgundy */}
+            <path
+              d="M0 80 C60 48, 130 95, 200 70 C270 45, 330 85, 390 55 L390 112 L0 112 Z"
+              fill="url(#waveGrad1)"
+            />
+            {/* Front wave – brighter crimson */}
+            <path
+              d="M0 92 C55 62, 140 104, 220 80 C285 60, 350 96, 390 72 L390 112 L0 112 Z"
+              fill="url(#waveGrad2)"
+            />
+          </svg>
+        </div>
+      </div>
+
+      {/* ── DESKTOP LAYOUT (>= lg) ────────────────────────────────────────── */}
+      <div className="hidden lg:block py-24 xl:py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-xl mb-12"
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <span className="h-px w-5 bg-[#e11d48]" />
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#e11d48]">
+                Campus Portals
+              </p>
+            </div>
+            <h2 className="text-4xl xl:text-5xl font-black tracking-tight text-white leading-[1.06]">
+              Quick Access
+            </h2>
+            <p className="mt-3 text-base text-white/50 leading-relaxed">
+              Direct navigation across all student welfare, campus life, and union services.
+            </p>
+          </motion.div>
+
+          {/* 3-col grid on desktop */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            className="grid grid-cols-3 gap-4"
+          >
+            {QUICK_CARDS.map((card, i) => {
+              const Icon = card.icon;
+              return (
+                <motion.div
+                  key={card.href}
+                  custom={i}
+                  variants={cardVariants}
+                  whileHover={{ y: -4, transition: { duration: 0.2, ease: "easeOut" } }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Link
+                    href={card.href}
+                    className={`
+                      group relative flex flex-col justify-between
+                      rounded-2xl p-5 h-[140px]
+                      border transition-all duration-200
+                      ${
+                        card.featured
+                          ? "bg-[#1a0509] border-[#e11d48]/50 shadow-[inset_0_0_40px_rgba(225,29,72,0.08),0_4px_28px_rgba(225,29,72,0.18)]"
+                          : "bg-[#111215] border-white/[0.07] hover:border-[#e11d48]/30 hover:bg-[#14080b]"
+                      }
+                    `}
+                  >
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className={`absolute top-4 right-4 h-4 w-4 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${
+                        card.featured ? "text-[#e11d48]/60" : "text-white/20 group-hover:text-[#e11d48]/60"
+                      }`}
+                    />
+                    <div
+                      className={`h-12 w-12 rounded-full flex items-center justify-center ${
+                        card.featured ? "bg-[#e11d48]/20" : "bg-[#e11d48]/10 group-hover:bg-[#e11d48]/15"
+                      } transition-colors duration-200`}
+                    >
+                      <Icon
+                        aria-hidden="true"
+                        strokeWidth={1.5}
+                        className={`h-5.5 w-5.5 ${
+                          card.featured ? "text-[#e11d48]" : "text-[#e11d48]/80 group-hover:text-[#e11d48]"
+                        } transition-colors duration-200`}
+                      />
+                    </div>
+                    <span
+                      className={`text-[15px] font-semibold leading-tight ${
+                        card.featured ? "text-white" : "text-white/85 group-hover:text-white"
+                      } transition-colors duration-200`}
+                    >
+                      {card.label}
+                    </span>
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
       </div>
     </section>
   );
 }
-

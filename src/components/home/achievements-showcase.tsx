@@ -205,18 +205,30 @@ export function AchievementsShowcase({
     return () => mq.removeEventListener("change", handler);
   }, []);
 
+  // Track when this section is visible on screen (for autoplay)
+  const [isInView, setIsInView] = useState(false);
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.2 }
+    );
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   // Reset autoplay timer cleanly whenever slide changes or conditions update
   const restartAutoplay = useCallback(() => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
-    if (!autoplayEnabled || reducedMotion || isHovered || n <= 1) return;
+    if (!autoplayEnabled || reducedMotion || isHovered || n <= 1 || !isInView) return;
 
     timerRef.current = setInterval(() => {
       navigate(1);
     }, intervalMs);
-  }, [autoplayEnabled, reducedMotion, isHovered, n, intervalMs, navigate]);
+  }, [autoplayEnabled, reducedMotion, isHovered, n, intervalMs, navigate, isInView]);
 
   useEffect(() => {
     restartAutoplay();

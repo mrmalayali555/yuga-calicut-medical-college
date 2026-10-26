@@ -163,26 +163,26 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
               />
             </motion.div>
 
-            {/* Call to Action Buttons (Stacked on mobile, row on tablet/desktop) */}
+            {/* Call to Action Buttons — row on tablet+, stacked only on very small mobile */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col xs:flex-row items-stretch xs:items-center gap-3 sm:gap-4 w-full sm:w-auto"
+              className="flex flex-col xs:flex-row sm:flex-row items-stretch xs:items-center sm:items-center gap-3 w-full sm:w-auto"
             >
-              {/* Primary Action Button */}
+              {/* Primary Action — crimson pill with glow */}
               <Link
                 href="/events"
-                className="group relative inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#ff2e56] text-white px-6 sm:px-7 py-3 sm:py-3.5 text-sm font-bold tracking-wide shadow-[0_0_24px_rgba(225,29,72,0.5)] hover:shadow-[0_0_36px_rgba(255,46,86,0.75)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 select-none text-center"
+                className="group relative inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#e11d48] via-[#f02050] to-[#ff2e56] text-white px-7 py-3.5 text-sm font-bold tracking-wide shadow-[0_0_28px_rgba(225,29,72,0.55),0_4px_16px_rgba(225,29,72,0.3)] hover:shadow-[0_0_40px_rgba(255,46,86,0.8),0_6px_20px_rgba(225,29,72,0.45)] hover:scale-[1.03] active:scale-[0.97] transition-all duration-200 select-none text-center"
               >
                 <span>Explore Campus</span>
-                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1.5" />
               </Link>
 
-              {/* Secondary Action Button */}
+              {/* Secondary Action — dark pill with subtle glass */}
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/[0.06] hover:bg-white/10 hover:border-white/35 text-white px-6 sm:px-7 py-3 sm:py-3.5 text-sm font-semibold backdrop-blur-md active:scale-[0.98] transition-all duration-200 select-none shadow-[0_4px_16px_rgba(0,0,0,0.3)] text-center"
+                className="inline-flex items-center justify-center rounded-full border border-white/15 bg-[#0d0e14]/80 hover:bg-[#0d0e14] hover:border-white/30 text-white px-7 py-3.5 text-sm font-semibold backdrop-blur-md active:scale-[0.97] transition-all duration-200 select-none shadow-[0_4px_20px_rgba(0,0,0,0.5)] text-center"
               >
                 <span>Discover YUGA</span>
               </Link>

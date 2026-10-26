@@ -3,281 +3,220 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MapPin, Phone, Mail } from "lucide-react";
-import { Logo } from "./logo";
-import { COLLEGE, YUGA, NAV_LINKS } from "@/lib/site";
-import { useTheme } from "@/components/theme/theme-context";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Send,
+  MessageCircle,
+  ArrowUpRight,
+  ExternalLink,
+} from "lucide-react";
+import { COLLEGE, YUGA } from "@/lib/site";
 
-const SOCIAL_LINKS = [
-  { label: "Instagram", href: YUGA.socials.instagram },
-  { label: "Telegram", href: YUGA.socials.telegram },
-  { label: "WhatsApp", href: YUGA.socials.whatsapp },
-  { label: "YouTube", href: YUGA.socials.youtube },
+const NAV_COLS = [
+  {
+    heading: "Explore",
+    links: [
+      { label: "Home", href: "/" },
+      { label: "Events & Fests", href: "/events" },
+      { label: "Achievements", href: "/achievements" },
+      { label: "Notifications", href: "/notifications" },
+    ],
+  },
+  {
+    heading: "Union",
+    links: [
+      { label: "Interventions", href: "/interventions" },
+      { label: "Subcommittees", href: "/subcommittees" },
+      { label: "Union Accounts", href: "/finance" },
+      { label: "About YUGA", href: "/about" },
+    ],
+  },
+  {
+    heading: "Support",
+    links: [
+      { label: "Drop a Suggestion", href: "/complaints" },
+      { label: "Emergency Directory", href: "/emergency" },
+      { label: "Contact Us", href: "/contact" },
+    ],
+  },
+];
+
+const SOCIALS = [
+  {
+    label: "Instagram",
+    abbr: "IG",
+    href: YUGA.socials.instagram,
+    icon: null,
+  },
+  {
+    label: "YouTube",
+    abbr: "YT",
+    href: YUGA.socials.youtube,
+    icon: null,
+  },
+  {
+    label: "Telegram",
+    abbr: null,
+    href: YUGA.socials.telegram,
+    icon: Send,
+  },
+  {
+    label: "WhatsApp",
+    abbr: null,
+    href: YUGA.socials.whatsapp,
+    icon: MessageCircle,
+  },
 ];
 
 export function Footer() {
   const pathname = usePathname();
-  const { theme } = useTheme();
-  const isObsidian = theme === "obsidian-crimson";
 
-  if (pathname?.startsWith("/admin")) {
-    return null;
-  }
+  if (pathname?.startsWith("/admin")) return null;
 
-  if (isObsidian) {
-    return (
-      <footer className="w-full bg-surface-container-lowest py-space-xl mt-auto border-t border-white/10 text-on-surface">
-        <div className="max-w-[1440px] mx-auto px-margin">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-gutter-lg pb-space-lg mb-space-lg border-b border-white/10">
-            {/* Col 1: Brand & Union Authority */}
-            <div className="space-y-space-sm">
-              <div className="flex items-center gap-space-sm">
-                <div className="w-8 h-8 p-1 rounded bg-primary-container flex items-center justify-center shadow-[0_0_12px_rgba(225,29,72,0.4)]">
-                  <Image
-                    src="/yuga-logo-white.png"
-                    alt="YUGA Logo"
-                    width={28}
-                    height={28}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <span className="font-headline-sm text-base text-on-surface uppercase font-bold tracking-tight">
-                  YUGA Union
+  return (
+    <footer className="relative w-full bg-[#07080a] border-t border-white/[0.07] overflow-hidden">
+      {/* Subtle crimson glow top-left */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 -left-32 w-[500px] h-[300px] rounded-full bg-[#e11d48]/5 blur-[120px]"
+      />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-10 pt-16 sm:pt-20 pb-8">
+        {/* ── Main grid ────────────────────────────────────────────────────── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.8fr_1fr_1fr_1fr] gap-10 lg:gap-8 pb-12 border-b border-white/[0.07]">
+
+          {/* ── Brand column ── */}
+          <div className="space-y-5">
+            <Link href="/" className="inline-flex items-center gap-3 group">
+              <div className="relative w-10 h-10 shrink-0">
+                <Image
+                  src="/yuga-logo-crimson.png"
+                  alt="YUGA Logo"
+                  fill
+                  className="object-contain drop-shadow-[0_0_10px_rgba(225,29,72,0.4)] group-hover:drop-shadow-[0_0_16px_rgba(225,29,72,0.65)] transition-all duration-300"
+                />
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="text-lg font-extrabold tracking-[0.16em] text-white uppercase">YUGA</span>
+                <span className="text-[9px] font-semibold tracking-[0.12em] text-white/40 uppercase mt-0.5">
+                  GMC Kozhikode · 2026–27
                 </span>
               </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant max-w-xs leading-relaxed">
-                Autonomous Collegiate Union representing medical residents, clinical scholars, and healthcare fellows with clinical mastery and institutional authority at Government Medical College Kozhikode.
-              </p>
-            </div>
+            </Link>
 
-            {/* Col 2: Governance */}
-            <div>
-              <div className="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-space-md">
-                Governance
-              </div>
-              <ul className="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant">
-                <li>
-                  <Link className="hover:text-on-surface transition-colors" href="/notifications">
-                    Academic Senate &amp; KUHS Directives
-                  </Link>
-                </li>
-                <li>
-                  <Link className="hover:text-on-surface transition-colors" href="/about">
-                    Union Executive Council
-                  </Link>
-                </li>
-                <li>
-                  <Link className="hover:text-on-surface transition-colors" href="/interventions">
-                    Bylaws &amp; Charters
-                  </Link>
-                </li>
-                <li>
-                  <Link className="hover:text-on-surface transition-colors" href="/emergency">
-                    Rapid Response Protocols
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Col 3: Union Portals */}
-            <div>
-              <div className="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-space-md">
-                Union Portals
-              </div>
-              <ul className="space-y-space-sm font-body-sm text-body-sm text-on-surface-variant">
-                <li>
-                  <Link className="hover:text-on-surface transition-colors" href="/events">
-                    Conclaves &amp; Symposiums
-                  </Link>
-                </li>
-                <li>
-                  <Link className="hover:text-on-surface transition-colors" href="/achievements">
-                    Credential Repository
-                  </Link>
-                </li>
-                <li>
-                  <Link className="hover:text-on-surface transition-colors" href="/finance">
-                    Transparent Defense Fund
-                  </Link>
-                </li>
-                <li>
-                  <Link className="hover:text-on-surface transition-colors" href="/complaints">
-                    Ethics &amp; Whistleblower
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Col 4: Emergency Dispatch */}
-            <div>
-              <div className="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-space-md">
-                Emergency Dispatch
-              </div>
-              <div className="bg-surface-container-low p-space-md rounded border border-white/5">
-                <div className="font-label-sm text-label-sm text-primary uppercase tracking-wider mb-space-xs font-bold">
-                  Trauma &amp; Urgent Representation
-                </div>
-                <div className="font-headline-sm text-lg font-bold text-on-surface mb-space-xs font-mono">
-                  {COLLEGE.casualtyPhone || "1-800-YUGA-MED"}
-                </div>
-                <div className="font-body-sm text-body-sm text-on-surface-variant">
-                  Immediate executive intervention for clinical staff on duty 24/7/365.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-md font-body-sm text-body-sm text-on-surface-variant">
-            <div className="flex items-center gap-space-xs">
-              <span>© {new Date().getFullYear()} YUGA Medical College Union. Collegiate Executive Authority.</span>
-            </div>
-            <div className="flex items-center gap-space-lg">
-              <Link className="hover:text-on-surface transition-colors" href="/about">
-                Privacy Framework
-              </Link>
-              <Link className="hover:text-on-surface transition-colors" href="/interventions">
-                Union Rights Charter
-              </Link>
-              <Link className="hover:text-on-surface transition-colors" href="/contact">
-                Institutional Compliance
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
-    );
-  }
-
-  // DEFAULT CLINICAL EMERALD FOOTER
-  return (
-    <footer className="border-t border-slate-200 bg-[#f8faf8]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Brand */}
-          <div className="space-y-4">
-            <Logo showTagline={false} />
-            <p className="text-sm text-slate-600 leading-relaxed max-w-xs font-normal">
-              Official student union portal for Government Medical College,
-              Kozhikode — academic epoch 2026–2027.
+            <p className="text-sm text-white/45 leading-relaxed max-w-xs">
+              Official student union of Government Medical College, Kozhikode — representing every medico across academics, culture, sport, and advocacy.
             </p>
-            <div className="flex flex-wrap items-center gap-2 pt-1">
-              {SOCIAL_LINKS.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:text-emerald-700 hover:border-emerald-300 transition-colors shadow-2xs"
-                  aria-label={`YUGA on ${social.label}`}
-                >
-                  {social.label}
-                </a>
-              ))}
-            </div>
-          </div>
 
-          {/* Navigation */}
-          <div>
-            <h4 className="text-xs font-bold tracking-widest uppercase text-emerald-800 mb-5">
-              Navigation
-            </h4>
-            <ul className="space-y-2.5">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors"
+            {/* Contact info */}
+            <div className="space-y-2.5 pt-1">
+              <a
+                href={`tel:${COLLEGE.phone}`}
+                className="flex items-center gap-2.5 text-sm text-white/45 hover:text-white/80 transition-colors group"
+              >
+                <Phone className="h-3.5 w-3.5 text-[#e11d48]/60 shrink-0" />
+                <span>{COLLEGE.phone}</span>
+              </a>
+              <a
+                href={`mailto:${YUGA.email}`}
+                className="flex items-center gap-2.5 text-sm text-white/45 hover:text-white/80 transition-colors"
+              >
+                <Mail className="h-3.5 w-3.5 text-[#e11d48]/60 shrink-0" />
+                <span className="truncate">{YUGA.email}</span>
+              </a>
+              <div className="flex items-start gap-2.5 text-sm text-white/40">
+                <MapPin className="h-3.5 w-3.5 text-[#e11d48]/60 shrink-0 mt-0.5" />
+                <span className="leading-relaxed">{COLLEGE.address}</span>
+              </div>
+            </div>
+
+            {/* Social icons */}
+            <div className="flex items-center gap-2 pt-1">
+              {SOCIALS.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`YUGA on ${s.label}`}
+                    className="h-9 w-9 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center text-white/50 hover:text-white hover:border-[#e11d48]/50 hover:bg-[#e11d48]/10 transition-all duration-200 active:scale-95 text-[10px] font-bold"
                   >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h4 className="text-xs font-bold tracking-widest uppercase text-emerald-800 mb-5">
-              Resources &amp; Hotlines
-            </h4>
-            <ul className="space-y-2.5">
-              <li>
-                <Link href="/complaints" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
-                  Campus Voice Grievance
-                </Link>
-              </li>
-              <li>
-                <Link href="/interventions" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
-                  Union Interventions
-                </Link>
-              </li>
-              <li>
-                <Link href="/finance" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
-                  Union Accounts &amp; Finance
-                </Link>
-              </li>
-              <li>
-                <Link href="/notifications" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
-                  Official Notifications &amp; Circulars
-                </Link>
-              </li>
-              <li>
-                <Link href="/emergency" className="text-sm font-semibold text-red-600 hover:text-red-700 transition-colors">
-                  Emergency Directory (24/7)
-                </Link>
-              </li>
-              <li>
-                <Link href="/interventions" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
-                  Union Interventions &amp; Charters
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-sm text-slate-600 hover:text-emerald-800 font-medium transition-colors">
-                  Official Contact Desk
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="text-xs font-bold tracking-widest uppercase text-emerald-800 mb-5">
-              Campus Contact
-            </h4>
-            <div className="space-y-3 text-sm text-slate-600">
-              <div className="flex gap-2.5">
-                <MapPin className="h-4 w-4 shrink-0 text-emerald-600 mt-0.5" aria-hidden="true" />
-                <span>{COLLEGE.address}</span>
-              </div>
-              <div className="flex gap-2.5">
-                <Phone className="h-4 w-4 shrink-0 text-emerald-600 mt-0.5" aria-hidden="true" />
-                <a href={`tel:${COLLEGE.phone}`} className="hover:text-emerald-800 font-medium transition-colors">
-                  {COLLEGE.phone}
-                </a>
-              </div>
-              <div className="flex gap-2.5">
-                <Mail className="h-4 w-4 shrink-0 text-emerald-600 mt-0.5" aria-hidden="true" />
-                <a href={`mailto:${YUGA.email}`} className="hover:text-emerald-800 font-medium transition-colors">
-                  {YUGA.email}
-                </a>
-              </div>
-              <div className="mt-4 pt-3 border-t border-slate-200">
-                <div className="text-xs font-semibold text-slate-500 mb-1">Casualty Triage (24/7)</div>
-                <div className="text-sm font-bold text-red-600 font-mono">{COLLEGE.casualtyPhone}</div>
-              </div>
+                    {Icon ? (
+                      <Icon className="h-4 w-4" />
+                    ) : (
+                      <span>{s.abbr}</span>
+                    )}
+                  </a>
+                );
+              })}
             </div>
           </div>
+
+          {/* ── Nav columns ── */}
+          {NAV_COLS.map((col) => (
+            <div key={col.heading}>
+              <h4 className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#e11d48] mb-5">
+                {col.heading}
+              </h4>
+              <ul className="space-y-3">
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="group flex items-center gap-1 text-sm text-white/45 hover:text-white/90 transition-colors duration-150"
+                    >
+                      <span>{link.label}</span>
+                      <ArrowUpRight className="h-3 w-3 opacity-0 group-hover:opacity-60 -translate-x-0.5 translate-y-0.5 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-150" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-14 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+        {/* ── Emergency hotline banner ── */}
+        <div className="my-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-[#e11d48]/20 bg-[#e11d48]/[0.05] px-5 py-4">
+          <div className="flex items-center gap-3">
+            <span className="relative flex h-2.5 w-2.5 shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e11d48] opacity-60" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#e11d48]" />
+            </span>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-[#e11d48] leading-none mb-0.5">
+                24 / 7 Casualty Hotline
+              </p>
+              <a
+                href={`tel:${COLLEGE.casualtyPhone}`}
+                className="text-lg font-bold text-white font-mono hover:text-[#e11d48] transition-colors"
+              >
+                {COLLEGE.casualtyPhone}
+              </a>
+            </div>
+          </div>
+          <Link
+            href="/emergency"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#e11d48] hover:text-[#ff4d6d] transition-colors"
+          >
+            Full Emergency Directory
+            <ExternalLink className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+
+        {/* ── Bottom bar ── */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 text-xs text-white/25">
           <span>
-            © {new Date().getFullYear()} {YUGA.name} · {COLLEGE.name}
+            © {new Date().getFullYear()} YUGA College Union · Government Medical College, Kozhikode
           </span>
-          <span className="font-mono text-[11px] text-emerald-800 font-medium">
-            Calicut Medical College Union
-          </span>
+          <div className="flex items-center gap-5">
+            <Link href="/about" className="hover:text-white/60 transition-colors">Privacy</Link>
+            <Link href="/interventions" className="hover:text-white/60 transition-colors">Rights Charter</Link>
+            <Link href="/contact" className="hover:text-white/60 transition-colors">Contact</Link>
+          </div>
         </div>
       </div>
     </footer>
