@@ -19,13 +19,28 @@ export default async function AdminCommitteesPage() {
         description="Manage union subcommittees, wing convenors, club leadership and student volunteers."
       />
 
-      <AdminCard className="mb-8 max-w-xl">
+      <AdminCard className="mb-8">
         <h3 className="mb-4 font-semibold text-[var(--text-primary)]">Add Subcommittee / Club</h3>
         <form action={createCommittee} className="grid gap-4">
-          <Field label="Name" name="name" required placeholder="Sports Committee / Arts & Cultural Club" />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Name" name="name" required placeholder="Sports Committee / Arts & Cultural Club" />
+            <Field label="Category" name="category" placeholder="Sports · Arts · Literary · Medical Social" />
+          </div>
           <TextArea label="Description" name="description" rows={2} placeholder="Brief role of the subcommittee..." />
-          <Field label="Order" name="order" type="number" defaultValue={0} />
-          <SubmitBtn>Add committee</SubmitBtn>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Logo URL" name="logo" placeholder="/clubs/godha.png or https://..." />
+            <Field label="Dedicated Portal URL" name="portalUrl" placeholder="https://yugacollegeunion.co.in/clubs/..." />
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Accent Colour (hex)" name="accent" placeholder="#e11d48" />
+            <Field label="Order" name="order" type="number" defaultValue={0} />
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Field label="Instagram URL" name="social_instagram" placeholder="https://instagram.com/..." />
+            <Field label="YouTube URL" name="social_youtube" placeholder="https://youtube.com/..." />
+            <Field label="Website / Portal URL" name="social_website" placeholder="https://..." />
+          </div>
+          <SubmitBtn>Add Subcommittee / Club</SubmitBtn>
         </form>
       </AdminCard>
 
@@ -35,12 +50,34 @@ export default async function AdminCommitteesPage() {
         <div className="space-y-6">
           {committees.map((committee) => (
             <AdminCard key={committee.id}>
-              <div className="mb-4 flex items-center justify-between">
-                <div>
-                  <h3 className="font-semibold text-[var(--text-primary)]">{committee.name}</h3>
-                  {committee.description && (
-                    <p className="text-xs text-[var(--text-muted)] mt-0.5">{committee.description}</p>
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3 min-w-0">
+                  {committee.logo && (
+                    <div className="h-10 w-10 rounded-xl border border-[var(--border-primary)] bg-white flex items-center justify-center overflow-hidden shrink-0">
+                      <img src={committee.logo} alt={committee.name} className="h-8 w-8 object-contain" />
+                    </div>
                   )}
+                  {committee.accent && !committee.logo && (
+                    <div className="h-10 w-10 rounded-xl shrink-0" style={{ backgroundColor: committee.accent }} />
+                  )}
+                  <div className="min-w-0">
+                    <h3 className="font-semibold text-[var(--text-primary)] truncate">{committee.name}</h3>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      {committee.category && (
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[var(--accent-subtle)] text-[var(--accent)]">
+                          {committee.category}
+                        </span>
+                      )}
+                      {committee.portalUrl && (
+                        <a href={committee.portalUrl} target="_blank" rel="noopener noreferrer" className="text-[10px] text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors truncate">
+                          Dedicated Portal ↗
+                        </a>
+                      )}
+                    </div>
+                    {committee.description && (
+                      <p className="text-xs text-[var(--text-muted)] mt-0.5 line-clamp-1">{committee.description}</p>
+                    )}
+                  </div>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Link

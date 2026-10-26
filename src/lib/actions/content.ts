@@ -76,7 +76,7 @@ export async function setSiteThemeAction(theme: SiteTheme) {
       maxAge: 31536000,
       sameSite: "lax",
     });
-  } catch {}
+  } catch { }
 
   revalidatePath("/", "layout");
   revalidatePath("/admin/settings");
@@ -151,10 +151,6 @@ export async function saveSettingsForm(formData: FormData) {
       youtube: String(formData.get("social_youtube") || "").trim(),
       whatsapp: String(formData.get("social_whatsapp") || "").trim(),
       telegram: String(formData.get("social_telegram") || "").trim(),
-      instagram_enabled: formData.get("social_instagram_enabled") === "on",
-      youtube_enabled: formData.get("social_youtube_enabled") === "on",
-      whatsapp_enabled: formData.get("social_whatsapp_enabled") === "on",
-      telegram_enabled: formData.get("social_telegram_enabled") === "on",
     };
     const navSearch = {
       showMobile: formData.get("search_show_mobile") === "on",
@@ -212,7 +208,7 @@ export async function saveSettingsForm(formData: FormData) {
       try {
         const cookieStore = await cookies();
         cookieStore.set("yuga_theme", activeTheme, { path: "/", maxAge: 31536000, sameSite: "lax" });
-      } catch {}
+      } catch { }
 
       promises.push(
         db.setting.upsert({

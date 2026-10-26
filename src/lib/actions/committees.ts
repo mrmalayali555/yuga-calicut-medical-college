@@ -22,11 +22,20 @@ export async function createCommittee(formData: FormData) {
   await requireAdmin();
   const name = String(formData.get("name") || "").trim();
   if (!name) return;
+  const instagram = String(formData.get("social_instagram") || "").trim();
+  const youtube = String(formData.get("social_youtube") || "").trim();
+  const website = String(formData.get("social_website") || "").trim();
+  const socialLinks = JSON.stringify({ instagram: instagram || null, youtube: youtube || null, website: website || null });
   await db.committee.create({
     data: {
       name,
       slug: await uniqueSlug(name),
       description: String(formData.get("description") || "").trim() || null,
+      logo: String(formData.get("logo") || "").trim() || null,
+      portalUrl: String(formData.get("portalUrl") || "").trim() || null,
+      category: String(formData.get("category") || "").trim() || null,
+      accent: String(formData.get("accent") || "").trim() || null,
+      socialLinks,
       order: Number(formData.get("order") || 0),
     },
   });
@@ -37,12 +46,21 @@ export async function createCommittee(formData: FormData) {
 export async function updateCommittee(id: string, formData: FormData) {
   await requireAdmin();
   const name = String(formData.get("name") || "").trim();
+  const instagram = String(formData.get("social_instagram") || "").trim();
+  const youtube = String(formData.get("social_youtube") || "").trim();
+  const website = String(formData.get("social_website") || "").trim();
+  const socialLinks = JSON.stringify({ instagram: instagram || null, youtube: youtube || null, website: website || null });
   await db.committee.update({
     where: { id },
     data: {
       name,
       slug: await uniqueSlug(name, id),
       description: String(formData.get("description") || "").trim() || null,
+      logo: String(formData.get("logo") || "").trim() || null,
+      portalUrl: String(formData.get("portalUrl") || "").trim() || null,
+      category: String(formData.get("category") || "").trim() || null,
+      accent: String(formData.get("accent") || "").trim() || null,
+      socialLinks,
       order: Number(formData.get("order") || 0),
     },
   });
