@@ -37,7 +37,11 @@ export async function getActiveTheme(): Promise<SiteTheme> {
 
 export interface GridLayoutSettings {
   eventsColumns: 1 | 2 | 3;
+  eventsMobileColumns: 1 | 2;
   interventionsColumns: 1 | 2 | 3;
+  interventionsMobileColumns: 1 | 2;
+  achievementsColumns: 1 | 2 | 3;
+  achievementsMobileColumns: 1 | 2;
   notificationsColumns: 1 | 2 | 3;
 }
 
@@ -61,9 +65,21 @@ export async function getGridLayoutSettings(): Promise<GridLayoutSettings> {
     eventsColumns: (settings?.eventsColumns === 1 || settings?.eventsColumns === 2 || settings?.eventsColumns === 3)
       ? settings.eventsColumns
       : 3,
+    eventsMobileColumns: (settings?.eventsMobileColumns === 1 || settings?.eventsMobileColumns === 2)
+      ? settings.eventsMobileColumns
+      : 1,
     interventionsColumns: (settings?.interventionsColumns === 1 || settings?.interventionsColumns === 2 || settings?.interventionsColumns === 3)
       ? settings.interventionsColumns
       : 2,
+    interventionsMobileColumns: (settings?.interventionsMobileColumns === 1 || settings?.interventionsMobileColumns === 2)
+      ? settings.interventionsMobileColumns
+      : 1,
+    achievementsColumns: (settings?.achievementsColumns === 1 || settings?.achievementsColumns === 2 || settings?.achievementsColumns === 3)
+      ? settings.achievementsColumns
+      : 3,
+    achievementsMobileColumns: (settings?.achievementsMobileColumns === 1 || settings?.achievementsMobileColumns === 2)
+      ? settings.achievementsMobileColumns
+      : 1,
     notificationsColumns: (settings?.notificationsColumns === 1 || settings?.notificationsColumns === 2 || settings?.notificationsColumns === 3)
       ? settings.notificationsColumns
       : 1,

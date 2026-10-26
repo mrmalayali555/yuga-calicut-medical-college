@@ -98,14 +98,22 @@ export default async function AdminSettingsPage() {
 
           <div className="space-y-4">
             <GridLayoutControl
-              type="events"
-              label="Public Events Listing"
-              initialColumns={gridLayout.eventsColumns}
-            />
-            <GridLayoutControl
               type="interventions"
               label="Public Union Interventions Listing"
               initialColumns={gridLayout.interventionsColumns}
+              initialMobileColumns={gridLayout.interventionsMobileColumns}
+            />
+            <GridLayoutControl
+              type="events"
+              label="Public Events Listing"
+              initialColumns={gridLayout.eventsColumns}
+              initialMobileColumns={gridLayout.eventsMobileColumns}
+            />
+            <GridLayoutControl
+              type="achievements"
+              label="Public Honors &amp; Achievements Listing"
+              initialColumns={gridLayout.achievementsColumns}
+              initialMobileColumns={gridLayout.achievementsMobileColumns}
             />
             <GridLayoutControl
               type="notifications"

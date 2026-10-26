@@ -33,6 +33,7 @@ export default async function AdminEventsPage() {
           compact
           type="events"
           initialColumns={gridLayout.eventsColumns}
+          initialMobileColumns={gridLayout.eventsMobileColumns}
         />
       </div>
 

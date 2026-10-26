@@ -5,16 +5,18 @@ import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
 import { ensureInitialAchievements } from "@/lib/initial-sync";
 import { AchievementsSliderControl } from "@/components/admin/achievements-slider-control";
-import { getAchievementsSliderSettings } from "@/lib/queries";
+import { getAchievementsSliderSettings, getGridLayoutSettings } from "@/lib/queries";
+import { GridLayoutControl } from "@/components/admin/grid-layout-control";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function AdminAchievementsPage() {
   await ensureInitialAchievements();
-  const [items, sliderSettings] = await Promise.all([
+  const [items, sliderSettings, gridLayout] = await Promise.all([
     db.achievement.findMany({ orderBy: { date: "desc" } }).catch(() => []),
     getAchievementsSliderSettings(),
+    getGridLayoutSettings(),
   ]);
 
   return (
@@ -24,6 +26,15 @@ export default async function AdminAchievementsPage() {
         description="Celebrate wins and records across sports tournaments, arts fests, and medical academic conferences."
         action={{ label: "New achievement", href: "/admin/achievements/new" }}
       />
+
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <GridLayoutControl
+          compact
+          type="achievements"
+          initialColumns={gridLayout.achievementsColumns}
+          initialMobileColumns={gridLayout.achievementsMobileColumns}
+        />
+      </div>
 
       <div className="mb-8">
         <AchievementsSliderControl initialSettings={sliderSettings} />

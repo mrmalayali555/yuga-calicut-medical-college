@@ -54,11 +54,13 @@ export interface DynamicInterventionItem {
 interface InterventionsViewProps {
   initialInterventions: DynamicInterventionItem[];
   columns?: 1 | 2 | 3;
+  mobileColumns?: 1 | 2;
 }
 
 export function InterventionsView({
   initialInterventions,
   columns = 2,
+  mobileColumns = 1,
 }: InterventionsViewProps) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [activeModalItem, setActiveModalItem] = useState<{
@@ -87,12 +89,15 @@ export function InterventionsView({
       ? initialInterventions
       : initialInterventions.filter((i) => i.category === selectedCategory);
 
-  const gridCls =
+  const gridCls = [
+    "grid",
+    mobileColumns === 2 ? "grid-cols-2 gap-3 sm:gap-6" : "grid-cols-1 gap-6 sm:gap-8",
     columns === 1
-      ? "grid gap-8 grid-cols-1 max-w-3xl mx-auto"
+      ? "md:grid-cols-1 max-w-3xl mx-auto"
       : columns === 2
-      ? "grid gap-8 grid-cols-1 md:grid-cols-2"
-      : "grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
+      ? "md:grid-cols-2"
+      : "md:grid-cols-2 lg:grid-cols-3",
+  ].join(" ");
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -183,9 +188,9 @@ export function InterventionsView({
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
                 <CutoutCard className="h-full flex flex-col justify-between border-[var(--border-primary)] bg-[var(--bg-card)] shadow-sm hover:border-[var(--accent)] hover:shadow-xl transition-all duration-300">
-                  <div>
+                  <div className="flex-1 flex flex-col">
                     {/* Media container with signature Cutout Corner accents */}
-                    <CutoutCardMedia className="h-64 sm:h-72 relative group/thumb cursor-pointer overflow-hidden">
+                    <CutoutCardMedia className={`${mobileColumns === 2 ? "h-44 xs:h-52 sm:h-72" : "h-64 sm:h-72"} relative group/thumb cursor-pointer overflow-hidden`}>
                       <div
                         className="w-full h-full"
                         onClick={() => {
@@ -217,8 +222,8 @@ export function InterventionsView({
                       </div>
 
                       {/* Inset Label — bottom-left cutout */}
-                      <CutoutCardInsetLabel className="bg-[var(--bg-card)] bottom-0 left-0 rounded-tr-[20px] px-4 py-2.5 shadow-2xs border-t border-r border-[var(--border-primary)]/40 pointer-events-none z-10">
-                        <span className="text-[var(--accent)] text-[11px] font-bold tracking-wider uppercase">
+                      <CutoutCardInsetLabel className={`bg-[var(--bg-card)] bottom-0 left-0 rounded-tr-[16px] sm:rounded-tr-[20px] ${mobileColumns === 2 ? "px-2.5 py-1.5" : "px-4 py-2.5"} shadow-2xs border-t border-r border-[var(--border-primary)]/40 pointer-events-none z-10`}>
+                        <span className={`text-[var(--accent)] ${mobileColumns === 2 ? "text-[9px] sm:text-[11px]" : "text-[11px]"} font-bold tracking-wider uppercase`}>
                           {item.category || "General Advocacy"}
                         </span>
                         <CutoutCorner className="text-[var(--bg-card)] absolute -right-[31px] -bottom-px rotate-90" />
@@ -227,7 +232,7 @@ export function InterventionsView({
 
                       {/* Pin Badge — top-right cutout */}
                       <CutoutCardPin
-                        className={`top-0 right-0 rounded-bl-[16px] px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider shadow-sm ring-1 pointer-events-none z-10 ${
+                        className={`top-0 right-0 rounded-bl-[14px] sm:rounded-bl-[16px] ${mobileColumns === 2 ? "px-2.5 py-1 text-[10px]" : "px-3.5 py-1.5 text-xs"} font-bold uppercase tracking-wider shadow-sm ring-1 pointer-events-none z-10 ${
                           isResolved
                             ? "bg-emerald-600 text-white ring-emerald-700/30"
                             : "bg-amber-500 text-white ring-amber-600/30"
@@ -239,7 +244,9 @@ export function InterventionsView({
                           ) : (
                             <Clock className="h-3.5 w-3.5" />
                           )}
-                          {item.status || (isResolved ? "Resolved" : "In Progress")}
+                          <span className={mobileColumns === 2 ? "hidden xs:inline" : ""}>
+                            {item.status || (isResolved ? "Resolved" : "In Progress")}
+                          </span>
                         </span>
                         <CutoutCorner
                           className={`absolute top-0 -left-[23px] -rotate-90 ${
@@ -257,31 +264,43 @@ export function InterventionsView({
                     </CutoutCardMedia>
 
                     {/* Content Section */}
-                    <CutoutCardContent className="p-6 sm:p-7">
-                      <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2 font-medium">
-                        <span className="flex items-center gap-1.5 font-semibold text-[var(--text-primary)]">
-                          <Building2 className="h-3.5 w-3.5 text-[var(--accent)]" />
-                          To: {item.authority || "DME & Hospital Administration"}
-                        </span>
-                        <span className="font-mono">{dateStr}</span>
+                    <CutoutCardContent className={`${mobileColumns === 2 ? "p-3.5 sm:p-7" : "p-6 sm:p-7"} flex-1 flex flex-col`}>
+                      <div>
+                        <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2 font-medium gap-1">
+                          <span className="flex items-center gap-1.5 font-semibold text-[var(--text-primary)] truncate max-w-[140px] sm:max-w-none">
+                            <Building2 className="h-3.5 w-3.5 text-[var(--accent)] shrink-0" />
+                            <span className="truncate">To: {item.authority || "DME & Hospital Administration"}</span>
+                          </span>
+                          <span className="font-mono shrink-0 ml-1">{dateStr}</span>
+                        </div>
+
+                        <Link href={`/interventions/${itemKey}`} className="group/link block">
+                          <h2 className={`${mobileColumns === 2 ? "text-base sm:text-2xl" : "text-xl sm:text-2xl"} font-display font-bold text-[var(--text-primary)] leading-snug group-hover/link:text-[var(--accent)] transition-colors line-clamp-2 min-h-[2.6rem] sm:min-h-[3.5rem]`}>
+                            {item.title}
+                          </h2>
+                        </Link>
+
+                        <p className="mt-2.5 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-normal line-clamp-2 min-h-[2.4rem]">
+                          {item.description}
+                        </p>
+
+                        <div className="mt-2">
+                          <Link
+                            href={`/interventions/${itemKey}`}
+                            className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--accent)] hover:underline"
+                          >
+                            <span>Read full representation</span>
+                            <ArrowRight className="h-3 w-3" />
+                          </Link>
+                        </div>
                       </div>
 
-                      <Link href={`/interventions/${itemKey}`} className="group/link block">
-                        <h2 className="text-xl sm:text-2xl font-display font-bold text-[var(--text-primary)] leading-snug group-hover/link:text-[var(--accent)] transition-colors">
-                          {item.title}
-                        </h2>
-                      </Link>
-
-                      <p className="mt-3 text-sm text-[var(--text-secondary)] leading-relaxed font-normal">
-                        {item.description}
-                      </p>
-
                       {item.outcome && (
-                        <div className="mt-5 rounded-xl bg-[var(--accent-subtle)] border border-[var(--accent)]/30 p-3.5 text-xs text-[var(--text-primary)] leading-relaxed font-medium flex items-start gap-2.5">
-                          <CheckCircle2 className="h-4 w-4 shrink-0 text-[var(--accent)] mt-0.5" />
-                          <div>
+                        <div className="mt-3.5 rounded-xl bg-[var(--accent-subtle)] border border-[var(--accent)]/30 p-2.5 sm:p-3.5 text-xs text-[var(--text-primary)] leading-relaxed font-medium flex items-start gap-2">
+                          <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-[var(--accent)] mt-0.5" />
+                          <div className="line-clamp-2">
                             <strong className="font-semibold text-[var(--accent)]">
-                              Impact Outcome:{" "}
+                              Impact:{" "}
                             </strong>
                             {item.outcome}
                           </div>
@@ -291,20 +310,20 @@ export function InterventionsView({
                   </div>
 
                   {/* Footer */}
-                  <div className="px-6 pb-6 pt-2">
-                    <CutoutCardFooter className="border-t border-[var(--border-primary)] pt-4">
-                      <div className="flex items-center gap-2 text-xs text-[var(--text-muted)] font-mono">
-                        <FileText className="h-3.5 w-3.5 text-[var(--text-muted)]" />
-                        <span>Official Union Docket</span>
+                  <div className={mobileColumns === 2 ? "px-3.5 pb-3.5 pt-2 sm:px-6 sm:pb-6" : "px-6 pb-6 pt-2"}>
+                    <CutoutCardFooter className="border-t border-[var(--border-primary)] pt-3.5">
+                      <div className="flex items-center gap-1.5 text-xs text-[var(--text-muted)] font-mono truncate max-w-[130px] sm:max-w-none">
+                        <FileText className="h-3.5 w-3.5 text-[var(--text-muted)] shrink-0" />
+                        <span className="truncate">Official Docket</span>
                       </div>
-                      <span className="text-xs font-semibold text-[var(--accent)]">
-                        {item.category || "Active Representation"}
+                      <span className="text-xs font-semibold text-[var(--accent)] truncate max-w-[100px] sm:max-w-none">
+                        {item.category || "Representation"}
                       </span>
                     </CutoutCardFooter>
                   </div>
 
                   {/* Hover Action */}
-                  <CutoutCardAction className="right-6 bottom-6 flex items-center gap-2">
+                  <CutoutCardAction className={`${mobileColumns === 2 ? "right-3.5 bottom-3.5 sm:right-6 sm:bottom-6" : "right-6 bottom-6"} flex items-center gap-1.5 sm:gap-2`}>
                     <button
                       type="button"
                       onClick={() => {
@@ -317,7 +336,7 @@ export function InterventionsView({
                           detailUrl: `/interventions/${itemKey}`,
                         });
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-primary)] bg-[var(--bg-card)]/90 backdrop-blur-md px-3 py-2 text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] shadow-2xs transition-all cursor-pointer"
+                      className={`inline-flex items-center gap-1.5 rounded-full border border-[var(--border-primary)] bg-[var(--bg-card)]/90 backdrop-blur-md ${mobileColumns === 2 ? "p-2 sm:px-3 sm:py-2" : "px-3 py-2"} text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] shadow-2xs transition-all cursor-pointer`}
                       title="Inspect original document image"
                     >
                       <Eye className="h-3.5 w-3.5 text-[var(--accent)]" />
@@ -325,7 +344,7 @@ export function InterventionsView({
                     </button>
                     <Link
                       href={`/interventions/${itemKey}`}
-                      className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white shadow-md transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] hover:bg-[var(--accent-dark)]"
+                      className={`inline-flex items-center gap-1.5 rounded-full bg-[var(--accent)] ${mobileColumns === 2 ? "px-3 py-2 text-[11px] sm:px-4 sm:py-2 sm:text-xs" : "px-4 py-2 text-xs"} font-semibold text-white shadow-md transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] hover:bg-[var(--accent-dark)]`}
                     >
                       <span>Read Petition</span>
                       <ArrowRight className="h-3.5 w-3.5" />

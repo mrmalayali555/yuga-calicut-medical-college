@@ -74,9 +74,11 @@ export interface DynamicEventItem {
 export function EventsView({
   initialEvents,
   columns = 3,
+  mobileColumns = 1,
 }: {
   initialEvents: DynamicEventItem[];
   columns?: 1 | 2 | 3;
+  mobileColumns?: 1 | 2;
 }) {
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -185,13 +187,15 @@ export function EventsView({
       {/* Cutout Events Grid */}
       <motion.div
         layout
-        className={
+        className={[
+          "grid",
+          mobileColumns === 2 ? "grid-cols-2 gap-3 sm:gap-6" : "grid-cols-1 gap-6 sm:gap-8",
           columns === 1
-            ? "grid gap-8 grid-cols-1 max-w-3xl mx-auto"
+            ? "md:grid-cols-1 max-w-3xl mx-auto"
             : columns === 2
-            ? "grid gap-8 grid-cols-1 md:grid-cols-2"
-            : "grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-        }
+            ? "md:grid-cols-2"
+            : "md:grid-cols-2 lg:grid-cols-3",
+        ].join(" ")}
       >
         <AnimatePresence mode="popLayout">
           {filtered.map((item) => {
@@ -222,9 +226,9 @@ export function EventsView({
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
                 <CutoutCard className="h-full flex flex-col justify-between border-[var(--border-primary)] bg-[var(--bg-card)] shadow-sm hover:border-[var(--accent)] hover:shadow-xl transition-all duration-300">
-                  <div>
+                  <div className="flex-1 flex flex-col">
                     {/* Media Header with signature Cutout Corners */}
-                    <CutoutCardMedia className="h-60 sm:h-64 relative group/thumb cursor-pointer overflow-hidden">
+                    <CutoutCardMedia className={`${mobileColumns === 2 ? "h-40 xs:h-48 sm:h-64" : "h-60 sm:h-64"} relative group/thumb cursor-pointer overflow-hidden`}>
                       <div
                         className="w-full h-full"
                         onClick={() => {
@@ -255,8 +259,8 @@ export function EventsView({
                       </div>
 
                       {/* Inset Label — bottom-left cutout */}
-                      <CutoutCardInsetLabel className="bg-[var(--bg-card)] bottom-0 left-0 rounded-tr-[20px] px-4 py-2 shadow-2xs">
-                        <span className="text-[var(--accent)] text-[11px] font-bold tracking-wider uppercase">
+                      <CutoutCardInsetLabel className={`bg-[var(--bg-card)] bottom-0 left-0 rounded-tr-[16px] sm:rounded-tr-[20px] ${mobileColumns === 2 ? "px-2.5 py-1.5" : "px-4 py-2"} shadow-2xs`}>
+                        <span className={`text-[var(--accent)] ${mobileColumns === 2 ? "text-[9px] sm:text-[11px]" : "text-[11px]"} font-bold tracking-wider uppercase`}>
                           {item.category || item.status.toUpperCase()}
                         </span>
                         <CutoutCorner className="text-[var(--bg-card)] absolute -right-[31px] -bottom-px rotate-90" />
@@ -265,7 +269,7 @@ export function EventsView({
 
                       {/* Pin Badge — top-right cutout */}
                       <CutoutCardPin
-                        className={`top-0 right-0 rounded-bl-[16px] px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider shadow-sm ring-1 ${
+                        className={`top-0 right-0 rounded-bl-[14px] sm:rounded-bl-[16px] ${mobileColumns === 2 ? "px-2.5 py-1 text-[10px]" : "px-3.5 py-1.5 text-xs"} font-bold uppercase tracking-wider shadow-sm ring-1 pointer-events-none z-10 ${
                           isOpen
                             ? "bg-[var(--accent)] text-white ring-[var(--accent)]/30"
                             : "bg-[var(--bg-surface)] text-[var(--text-secondary)] ring-[var(--border-primary)]"
@@ -275,7 +279,8 @@ export function EventsView({
                           {isOpen ? (
                             <>
                               <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-                              Registration Open
+                              <span className={mobileColumns === 2 ? "hidden xs:inline" : ""}>Registration Open</span>
+                              <span className={mobileColumns === 2 ? "xs:hidden" : "hidden"}>Open</span>
                             </>
                           ) : (
                             item.status.toUpperCase()
@@ -297,27 +302,29 @@ export function EventsView({
                     </CutoutCardMedia>
 
                     {/* Content Section */}
-                    <CutoutCardContent className="p-6">
-                      <Link href={`/events/${itemKey}`} className="group/link block">
-                        <h3 className="text-xl font-display font-bold text-[var(--text-primary)] leading-snug group-hover/link:text-[var(--accent)] transition-colors">
-                          {item.title}
-                        </h3>
-                      </Link>
+                    <CutoutCardContent className={`${mobileColumns === 2 ? "p-3.5 sm:p-6" : "p-6"} flex-1 flex flex-col justify-between`}>
+                      <div>
+                        <Link href={`/events/${itemKey}`} className="group/link block">
+                          <h3 className={`${mobileColumns === 2 ? "text-base sm:text-xl" : "text-xl"} font-display font-bold text-[var(--text-primary)] leading-snug group-hover/link:text-[var(--accent)] transition-colors line-clamp-2 min-h-[2.5rem] sm:min-h-[3.25rem]`}>
+                            {item.title}
+                          </h3>
+                        </Link>
 
-                      <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed font-normal line-clamp-2">
-                        {item.description}
-                      </p>
+                        <p className="mt-2 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-normal line-clamp-2 min-h-[2.2rem]">
+                          {item.description}
+                        </p>
+                      </div>
 
                       {/* Meta Schedule details */}
-                      <div className="mt-5 pt-4 border-t border-[var(--border-primary)] space-y-2 text-xs text-[var(--text-muted)]">
+                      <div className="mt-3.5 sm:mt-5 pt-3 sm:pt-4 border-t border-[var(--border-primary)] space-y-1.5 sm:space-y-2 text-xs text-[var(--text-muted)]">
                         <div className="flex items-center gap-2">
                           <Calendar className="h-3.5 w-3.5 text-[var(--accent)] shrink-0" aria-hidden="true" />
-                          <span className="font-semibold text-[var(--text-primary)]">{dateStr}</span>
+                          <span className="font-semibold text-[var(--text-primary)] truncate">{dateStr}</span>
                         </div>
                         {item.time && (
                           <div className="flex items-center gap-2">
                             <Clock className="h-3.5 w-3.5 text-[var(--accent)] shrink-0" aria-hidden="true" />
-                            <span className="font-medium text-[var(--text-secondary)]">{item.time}</span>
+                            <span className="font-medium text-[var(--text-secondary)] truncate">{item.time}</span>
                           </div>
                         )}
                         {item.venue && (
@@ -331,9 +338,9 @@ export function EventsView({
                   </div>
 
                   {/* Footer */}
-                  <div className="px-6 pb-6 pt-1">
-                    <CutoutCardFooter className="border-t border-[var(--border-primary)] pt-3.5">
-                      <span className="text-[11px] font-mono font-medium text-[var(--text-muted)]">
+                  <div className={mobileColumns === 2 ? "px-3.5 pb-3.5 pt-1 sm:px-6 sm:pb-6" : "px-6 pb-6 pt-1"}>
+                    <CutoutCardFooter className="border-t border-[var(--border-primary)] pt-3">
+                      <span className="text-[10px] sm:text-[11px] font-mono font-medium text-[var(--text-muted)]">
                         {item.status.toUpperCase()}
                       </span>
                       <Link
@@ -346,7 +353,7 @@ export function EventsView({
                   </div>
 
                   {/* Hover Action */}
-                  <CutoutCardAction className="right-5 bottom-5 flex items-center gap-2">
+                  <CutoutCardAction className={`${mobileColumns === 2 ? "right-3.5 bottom-3.5 sm:right-5 sm:bottom-5" : "right-5 bottom-5"} flex items-center gap-1.5 sm:gap-2`}>
                     <button
                       type="button"
                       onClick={() => {
@@ -358,7 +365,7 @@ export function EventsView({
                           detailUrl: `/events/${itemKey}`,
                         });
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-primary)] bg-[var(--bg-card)]/90 backdrop-blur-md px-3 py-2 text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] shadow-2xs transition-all cursor-pointer"
+                      className={`inline-flex items-center gap-1.5 rounded-full border border-[var(--border-primary)] bg-[var(--bg-card)]/90 backdrop-blur-md ${mobileColumns === 2 ? "p-2 sm:px-3 sm:py-2" : "px-3 py-2"} text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] shadow-2xs transition-all cursor-pointer`}
                       title="Inspect original poster"
                     >
                       <Eye className="h-3.5 w-3.5 text-[var(--accent)]" />
@@ -366,7 +373,7 @@ export function EventsView({
                     </button>
                     <Link
                       href={`/events/${itemKey}`}
-                      className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white shadow-md hover:bg-[var(--accent-dark)] transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97]"
+                      className={`inline-flex items-center gap-1.5 rounded-full bg-[var(--accent)] ${mobileColumns === 2 ? "px-3 py-2 text-[11px] sm:px-4 sm:py-2 sm:text-xs" : "px-4 py-2 text-xs"} font-semibold text-white shadow-md hover:bg-[var(--accent-dark)] transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97]`}
                     >
                       <Sparkles className="h-3.5 w-3.5" />
                       <span>Explore</span>

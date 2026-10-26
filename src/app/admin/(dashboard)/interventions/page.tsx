@@ -57,6 +57,7 @@ export default async function AdminInterventionsPage({
           compact
           type="interventions"
           initialColumns={gridLayout.interventionsColumns}
+          initialMobileColumns={gridLayout.interventionsMobileColumns}
         />
       </div>
 

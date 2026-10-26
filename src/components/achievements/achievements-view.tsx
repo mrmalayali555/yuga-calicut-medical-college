@@ -56,8 +56,12 @@ export interface AchievementItemProps {
 
 export function AchievementsView({
   initialAchievements,
+  columns = 3,
+  mobileColumns = 1,
 }: {
   initialAchievements: AchievementItemProps[];
+  columns?: 1 | 2 | 3;
+  mobileColumns?: 1 | 2;
 }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [activeModalItem, setActiveModalItem] = useState<{
@@ -119,7 +123,18 @@ export function AchievementsView({
       </div>
 
       {/* Grid of Achievement Cards */}
-      <motion.div layout className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        layout
+        className={[
+          "grid",
+          mobileColumns === 2 ? "grid-cols-2 gap-3 sm:gap-6" : "grid-cols-1 gap-6 sm:gap-8",
+          columns === 1
+            ? "md:grid-cols-1 max-w-3xl mx-auto"
+            : columns === 2
+            ? "md:grid-cols-2"
+            : "md:grid-cols-2 lg:grid-cols-3",
+        ].join(" ")}
+      >
         <AnimatePresence mode="popLayout">
           {filtered.map((item) => {
             const itemKey = item.slug || item.id;
@@ -153,9 +168,9 @@ export function AchievementsView({
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
                 <CutoutCard className="h-full flex flex-col justify-between shadow-sm hover:shadow-xl transition-all duration-300">
-                  <div>
+                  <div className="flex-1 flex flex-col">
                     {/* Media container with Cutout Corners */}
-                    <CutoutCardMedia className="h-56 sm:h-60 relative group/thumb cursor-pointer overflow-hidden">
+                    <CutoutCardMedia className={`${mobileColumns === 2 ? "h-40 xs:h-48 sm:h-60" : "h-56 sm:h-60"} relative group/thumb cursor-pointer overflow-hidden`}>
                       <div
                         className="w-full h-full"
                         onClick={() => {
@@ -186,8 +201,8 @@ export function AchievementsView({
                       </div>
 
                       {/* Inset Label — bottom-left cutout */}
-                      <CutoutCardInsetLabel className="bg-[var(--bg-card)] bottom-0 left-0 rounded-tr-[20px] px-4 py-2 shadow-2xs border-t border-r border-[var(--border-primary)]/40 pointer-events-none z-10">
-                        <span className="text-[var(--accent)] text-[11px] font-bold tracking-wider uppercase">
+                      <CutoutCardInsetLabel className={`bg-[var(--bg-card)] bottom-0 left-0 rounded-tr-[16px] sm:rounded-tr-[20px] ${mobileColumns === 2 ? "px-2.5 py-1.5" : "px-4 py-2"} shadow-2xs border-t border-r border-[var(--border-primary)]/40 pointer-events-none z-10`}>
+                        <span className={`text-[var(--accent)] ${mobileColumns === 2 ? "text-[9px] sm:text-[11px]" : "text-[11px]"} font-bold tracking-wider uppercase`}>
                           {item.category.toUpperCase()}
                         </span>
                         <CutoutCorner className="text-[var(--bg-card)] absolute -right-[31px] -bottom-px rotate-90" />
@@ -195,10 +210,10 @@ export function AchievementsView({
                       </CutoutCardInsetLabel>
 
                       {/* Pin Badge — top-right cutout */}
-                      <CutoutCardPin className="top-0 right-0 rounded-bl-[16px] px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider shadow-sm ring-1 bg-amber-500 text-white ring-amber-600/30 pointer-events-none z-10">
+                      <CutoutCardPin className={`top-0 right-0 rounded-bl-[14px] sm:rounded-bl-[16px] ${mobileColumns === 2 ? "px-2.5 py-1 text-[10px]" : "px-3.5 py-1.5 text-xs"} font-bold uppercase tracking-wider shadow-sm ring-1 bg-amber-500 text-white ring-amber-600/30 pointer-events-none z-10`}>
                         <span className="inline-flex items-center gap-1.5">
                           <Medal className="h-3.5 w-3.5" />
-                          {medalLabel}
+                          <span className={mobileColumns === 2 ? "hidden xs:inline" : ""}>{medalLabel}</span>
                         </span>
                         <CutoutCorner
                           className="text-amber-500 absolute top-0 -left-[23px] -rotate-90"
@@ -212,36 +227,38 @@ export function AchievementsView({
                     </CutoutCardMedia>
 
                     {/* Content Section */}
-                    <CutoutCardContent className="p-6">
-                      <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2 font-medium">
-                        <span className="text-[var(--accent)] font-semibold truncate max-w-[200px]">
-                          {recipientText}
-                        </span>
-                        <span className="font-mono">{dateText}</span>
-                      </div>
+                    <CutoutCardContent className={`${mobileColumns === 2 ? "p-3.5 sm:p-6" : "p-6"} flex-1 flex flex-col justify-between`}>
+                      <div>
+                        <div className="flex items-center justify-between text-xs text-[var(--text-muted)] mb-2 font-medium">
+                          <span className="text-[var(--accent)] font-semibold truncate max-w-[130px] sm:max-w-[200px]">
+                            {recipientText}
+                          </span>
+                          <span className="font-mono">{dateText}</span>
+                        </div>
 
-                      <Link href={`/achievements/${itemKey}`} className="group/link block">
-                        <h3 className="text-xl font-display font-bold text-[var(--text-primary)] leading-snug group-hover/link:text-[var(--accent)] transition-colors">
-                          {item.title}
-                        </h3>
-                      </Link>
+                        <Link href={`/achievements/${itemKey}`} className="group/link block">
+                          <h3 className={`${mobileColumns === 2 ? "text-base sm:text-xl" : "text-xl"} font-display font-bold text-[var(--text-primary)] leading-snug group-hover/link:text-[var(--accent)] transition-colors line-clamp-2 min-h-[2.5rem] sm:min-h-[3.25rem]`}>
+                            {item.title}
+                          </h3>
+                        </Link>
 
-                      {item.batch && (
-                        <p className="mt-1 text-xs text-[var(--text-muted)] font-medium">
-                          {item.batch}
+                        {item.batch && (
+                          <p className="mt-1 text-xs text-[var(--text-muted)] font-medium truncate">
+                            {item.batch}
+                          </p>
+                        )}
+
+                        <p className="mt-2.5 text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-normal line-clamp-2 min-h-[2.2rem]">
+                          {item.description}
                         </p>
-                      )}
-
-                      <p className="mt-3 text-sm text-[var(--text-secondary)] leading-relaxed font-normal line-clamp-3">
-                        {item.description}
-                      </p>
+                      </div>
                     </CutoutCardContent>
                   </div>
 
                   {/* Footer */}
-                  <div className="px-6 pb-6 pt-1">
+                  <div className={mobileColumns === 2 ? "px-3.5 pb-3.5 pt-1 sm:px-6 sm:pb-6" : "px-6 pb-6 pt-1"}>
                     <CutoutCardFooter className="border-t border-[var(--border-primary)] pt-3.5">
-                      <span className="text-xs font-medium text-[var(--text-secondary)] truncate max-w-[220px]">
+                      <span className="text-xs font-medium text-[var(--text-secondary)] truncate max-w-[140px] sm:max-w-[220px]">
                         {item.event || "GMC Kozhikode"}
                       </span>
                       <Trophy className="h-4 w-4 text-amber-500 shrink-0" aria-hidden="true" />
@@ -249,7 +266,7 @@ export function AchievementsView({
                   </div>
 
                   {/* Hover Action */}
-                  <CutoutCardAction className="right-5 bottom-5 flex items-center gap-2">
+                  <CutoutCardAction className={`${mobileColumns === 2 ? "right-3.5 bottom-3.5 sm:right-5 sm:bottom-5" : "right-5 bottom-5"} flex items-center gap-1.5 sm:gap-2`}>
                     <button
                       type="button"
                       onClick={() => {
@@ -261,7 +278,7 @@ export function AchievementsView({
                           detailUrl: `/achievements/${itemKey}`,
                         });
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-primary)] bg-[var(--bg-card)]/90 backdrop-blur-md px-3 py-2 text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] shadow-2xs transition-all cursor-pointer"
+                      className={`inline-flex items-center gap-1.5 rounded-full border border-[var(--border-primary)] bg-[var(--bg-card)]/90 backdrop-blur-md ${mobileColumns === 2 ? "p-2 sm:px-3 sm:py-2" : "px-3 py-2"} text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--accent)] hover:text-[var(--accent)] shadow-2xs transition-all cursor-pointer`}
                       title="Inspect original photo"
                     >
                       <Eye className="h-3.5 w-3.5 text-amber-500" />
@@ -269,7 +286,7 @@ export function AchievementsView({
                     </button>
                     <Link
                       href={`/achievements/${itemKey}`}
-                      className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white shadow-md transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] hover:brightness-110"
+                      className={`inline-flex items-center gap-1.5 rounded-full bg-[var(--accent)] ${mobileColumns === 2 ? "px-3 py-2 text-[11px] sm:px-4 sm:py-2 sm:text-xs" : "px-4 py-2 text-xs"} font-semibold text-white shadow-md transition-transform duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] hover:brightness-110`}
                     >
                       <Award className="h-3.5 w-3.5" />
                       <span>View Laurel</span>

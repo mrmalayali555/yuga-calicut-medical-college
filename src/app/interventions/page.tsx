@@ -26,6 +26,7 @@ export default async function InterventionsPage() {
         <InterventionsView
           initialInterventions={interventions as any}
           columns={gridLayout.interventionsColumns}
+          mobileColumns={gridLayout.interventionsMobileColumns}
         />
       </div>
     </div>

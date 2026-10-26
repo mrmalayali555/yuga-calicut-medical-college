@@ -83,21 +83,33 @@ export async function setSiteThemeAction(theme: SiteTheme) {
   return { success: true, theme: validTheme };
 }
 
-/** Update page grid columns (1, 2, or 3 per row) for events, interventions, notifications. */
+/** Update page grid columns for desktop (1, 2, 3) and mobile (1, 2) for events, interventions, achievements, notifications. */
 export async function updateGridLayoutAction(
-  type: "events" | "interventions" | "notifications",
-  columns: 1 | 2 | 3
+  type: "events" | "interventions" | "achievements" | "notifications",
+  columns?: 1 | 2 | 3,
+  mobileColumns?: 1 | 2
 ) {
   await requireAdmin();
-  const validCol: 1 | 2 | 3 = columns === 1 ? 1 : columns === 2 ? 2 : 3;
 
   try {
     const current = await db.setting.findUnique({ where: { key: "grid_layouts" } }).catch(() => null);
     const parsed = current?.value ? JSON.parse(current.value) : {};
 
-    if (type === "events") parsed.eventsColumns = validCol;
-    if (type === "interventions") parsed.interventionsColumns = validCol;
-    if (type === "notifications") parsed.notificationsColumns = validCol;
+    if (type === "events") {
+      if (columns !== undefined) parsed.eventsColumns = columns === 1 ? 1 : columns === 2 ? 2 : 3;
+      if (mobileColumns !== undefined) parsed.eventsMobileColumns = mobileColumns === 2 ? 2 : 1;
+    }
+    if (type === "interventions") {
+      if (columns !== undefined) parsed.interventionsColumns = columns === 1 ? 1 : columns === 2 ? 2 : 3;
+      if (mobileColumns !== undefined) parsed.interventionsMobileColumns = mobileColumns === 2 ? 2 : 1;
+    }
+    if (type === "achievements") {
+      if (columns !== undefined) parsed.achievementsColumns = columns === 1 ? 1 : columns === 2 ? 2 : 3;
+      if (mobileColumns !== undefined) parsed.achievementsMobileColumns = mobileColumns === 2 ? 2 : 1;
+    }
+    if (type === "notifications") {
+      if (columns !== undefined) parsed.notificationsColumns = columns === 1 ? 1 : columns === 2 ? 2 : 3;
+    }
 
     await db.setting.upsert({
       where: { key: "grid_layouts" },
@@ -107,11 +119,13 @@ export async function updateGridLayoutAction(
 
     revalidatePath("/events");
     revalidatePath("/interventions");
+    revalidatePath("/achievements");
     revalidatePath("/notifications");
     revalidatePath("/admin/events");
     revalidatePath("/admin/interventions");
+    revalidatePath("/admin/achievements");
     revalidatePath("/admin/settings");
-    return { success: true, columns: validCol };
+    return { success: true };
   } catch (err) {
     console.error("Error updating grid layout:", err);
     return { success: false, error: "Failed to update layout." };

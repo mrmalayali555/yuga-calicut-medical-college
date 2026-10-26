@@ -179,34 +179,6 @@ export function Footer() {
           ))}
         </div>
 
-        {/* ── Emergency hotline banner ── */}
-        <div className="my-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-[#e11d48]/20 bg-[#e11d48]/[0.05] px-5 py-4">
-          <div className="flex items-center gap-3">
-            <span className="relative flex h-2.5 w-2.5 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e11d48] opacity-60" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#e11d48]" />
-            </span>
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#e11d48] leading-none mb-0.5">
-                24 / 7 Casualty Hotline
-              </p>
-              <a
-                href={`tel:${COLLEGE.casualtyPhone}`}
-                className="text-lg font-bold text-white font-mono hover:text-[#e11d48] transition-colors"
-              >
-                {COLLEGE.casualtyPhone}
-              </a>
-            </div>
-          </div>
-          <Link
-            href="/emergency"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#e11d48] hover:text-[#ff4d6d] transition-colors"
-          >
-            Full Emergency Directory
-            <ExternalLink className="h-3.5 w-3.5" />
-          </Link>
-        </div>
-
         {/* ── Bottom bar ── */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 text-xs text-white/25">
           <span>
