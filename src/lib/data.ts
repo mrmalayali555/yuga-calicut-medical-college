@@ -62,9 +62,9 @@ export interface InterventionItem {
   id: string;
   title: string;
   date: string;
-  status: "Resolved" | "In Review" | "Submitted";
+  status: string;
   authority: string;
-  category: "Hostel & Living" | "Academic" | "Hospital & Clinical" | "Welfare";
+  category: string;
   description: string;
   outcome?: string;
 }
