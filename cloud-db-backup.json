@@ -1,0 +1,2226 @@
+{
+  "AcademicCalendarEvent": [],
+  "Achievement": [
+    {
+      "id": "cmvnnoyv30004n848mel8iocu",
+      "title": "Inter-Medical Football Championship 2026",
+      "slug": "inter-medical-football-2026",
+      "category": "sports",
+      "description": "Our team lifted the state inter-medical football trophy after a thrilling final, defeating the hosts 2–1 in extra time.",
+      "date": "2026-10-05T04:29:40.670Z",
+      "coverImage": null,
+      "awardWinner": null,
+      "published": true,
+      "createdAt": "2026-10-25T04:29:40.671Z",
+      "updatedAt": "2026-10-25T04:29:40.671Z"
+    },
+    {
+      "id": "cmvnnoyvj0005n848esuk1v00",
+      "title": "First Prize — State Youth Festival (Music)",
+      "slug": "state-youth-festival-music",
+      "category": "arts",
+      "description": "ADVAYA's music troupe secured first place in the group song category at the state medical youth festival.",
+      "date": "2026-09-15T04:29:40.670Z",
+      "coverImage": null,
+      "awardWinner": null,
+      "published": true,
+      "createdAt": "2026-10-25T04:29:40.688Z",
+      "updatedAt": "2026-10-25T04:29:40.688Z"
+    },
+    {
+      "id": "cmvnnoyvs0006n848fcko89o8",
+      "title": "Best Research Paper — National Med Conclave",
+      "slug": "best-research-paper-med-conclave",
+      "category": "academics",
+      "description": "A final-year student's research on rural healthcare access won best paper at the national medical students' conclave.",
+      "date": "2026-10-17T04:29:40.670Z",
+      "coverImage": null,
+      "awardWinner": null,
+      "published": true,
+      "createdAt": "2026-10-25T04:29:40.697Z",
+      "updatedAt": "2026-10-25T04:29:40.697Z"
+    },
+    {
+      "id": "cmvnnoyw10007n84810tpxama",
+      "title": "Gold in Inter-College Athletics Meet",
+      "slug": "gold-inter-college-athletics",
+      "category": "sports",
+      "description": "Three golds and a new meet record in the 4x100m relay at the university athletics meet.",
+      "date": "2026-08-26T04:29:40.670Z",
+      "coverImage": null,
+      "awardWinner": null,
+      "published": true,
+      "createdAt": "2026-10-25T04:29:40.706Z",
+      "updatedAt": "2026-10-25T04:29:40.706Z"
+    },
+    {
+      "id": "cmvnoim4f0004p948a3zhcy49",
+      "title": "Overall Champions — KUHS Inter-Zone Arts Festival 2026",
+      "slug": "kuhs-arts-champions",
+      "category": "arts",
+      "description": "Lifted the prestigious Ever-Rolling Golden Trophy for the 4th consecutive year with 18 first prizes across competitive disciplines.",
+      "date": "2026-10-05T04:52:43.837Z",
+      "coverImage": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80",
+      "awardWinner": "Calicut Medicos Arts Contingent (All Batches)",
+      "published": true,
+      "createdAt": "2026-10-25T04:52:43.839Z",
+      "updatedAt": "2026-10-25T04:52:43.839Z"
+    },
+    {
+      "id": "cmvnoim6m0005p9483fk2wlkg",
+      "title": "State Inter-Medical Football Championship Winners",
+      "slug": "intermed-football-trophy",
+      "category": "sports",
+      "description": "Defeated the tournament hosts 3-1 in a nail-biting final under floodlights to secure the championship trophy.",
+      "date": "2026-09-15T04:52:43.837Z",
+      "coverImage": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80",
+      "awardWinner": "CMC Kozhikode Football Team (UG & PG)",
+      "published": true,
+      "createdAt": "2026-10-25T04:52:43.918Z",
+      "updatedAt": "2026-10-25T04:52:43.918Z"
+    },
+    {
+      "id": "cmvnoim7u0006p948uh4yi19d",
+      "title": "14 ICMR Short-Term Studentship (STS) Research Awards",
+      "slug": "icmr-sts-grants",
+      "category": "academics",
+      "description": "Highest number of ICMR research grants bagged by any single medical institution in Kerala for student-led biomedical inquiries.",
+      "date": "2026-10-17T04:52:43.837Z",
+      "coverImage": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=80",
+      "awardWinner": "Undergraduate Scholars (MBBS Phase 2 & 3)",
+      "published": true,
+      "createdAt": "2026-10-25T04:52:43.962Z",
+      "updatedAt": "2026-10-25T04:52:43.962Z"
+    },
+    {
+      "id": "cmvnoim920007p9482flt9xwh",
+      "title": "First Prize — National Pharmacology Conclave Quiz",
+      "slug": "national-quiz-gold",
+      "category": "academics",
+      "description": "Secured top position competing against 64 premier medical colleges across India in clinical therapeutics and pharmacology.",
+      "date": "2026-08-26T04:52:43.837Z",
+      "coverImage": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80",
+      "awardWinner": "Dr. Rohith Krishna & Dr. Sneha Paul (Final MBBS)",
+      "published": true,
+      "createdAt": "2026-10-25T04:52:44.006Z",
+      "updatedAt": "2026-10-25T04:52:44.006Z"
+    }
+  ],
+  "AchievementMedia": [],
+  "Admin": [
+    {
+      "id": "cmvnkaxdz0000p949tmou6i79",
+      "name": "YUGA Union Admin",
+      "email": "admin@yuga.local",
+      "passwordHash": "$2b$12$GogHmjcQlCRWsU5e0DPP3eOJkwLRUmZEVcPg8sp9rIhf5XvWS1PCi",
+      "role": "superadmin",
+      "avatar": null,
+      "createdAt": "2026-10-25T02:54:46.727Z",
+      "updatedAt": "2026-10-26T09:30:55.345Z"
+    },
+    {
+      "id": "cmvnkaxrd0001p9496ii6tcxd",
+      "name": "YUGA Admin",
+      "email": "admin@advaya.local",
+      "passwordHash": "$2b$12$gA5B7XN6HibYtGCynuaqbeJ9oe12wmKzwQhztTZQcMcuapSUnmC/2",
+      "role": "superadmin",
+      "avatar": null,
+      "createdAt": "2026-10-25T02:54:47.209Z",
+      "updatedAt": "2026-10-26T09:30:55.708Z"
+    }
+  ],
+  "AdminSession": [
+    {
+      "id": "cmvnoshwp0001js08bdx6gvgu",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbXZua2F4ZHowMDAwcDk0OXRtb3U2aTc5IiwibmFtZSI6IllVR0EgVW5pb24gQWRtaW4iLCJlbWFpbCI6ImFkbWluQHl1Z2EubG9jYWwiLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTc5MjkyNDIyNCwiZXhwIjoxNzkyOTUzMDI0fQ.xSGcdvVv6VIG2dOBlvWupAQmIMW6CyRLeokUB9OJtFw",
+      "ipAddress": "103.199.162.82",
+      "location": "Alatt%C5%ABr, IN",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36",
+      "lastActiveAt": "2026-10-25T05:00:24.936Z",
+      "createdAt": "2026-10-25T05:00:24.937Z"
+    },
+    {
+      "id": "cmvnoxsdw0002l2088cx2mr88",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbXZua2F4ZHowMDAwcDk0OXRtb3U2aTc5IiwibmFtZSI6IllVR0EgVW5pb24gQWRtaW4iLCJlbWFpbCI6ImFkbWluQHl1Z2EubG9jYWwiLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTc5MjkyNDQ3MSwiZXhwIjoxNzkyOTUzMjcxfQ.TPM8HJaHhjafllVYDJhLrDblRLdroLQ5bGf0QytSM9I",
+      "ipAddress": "157.51.204.174",
+      "location": "Kozhikode, IN",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+      "lastActiveAt": "2026-10-25T05:04:31.795Z",
+      "createdAt": "2026-10-25T05:04:31.796Z"
+    },
+    {
+      "id": "cmvo6t32o0001jv08oyjsdu4a",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbXZua2F4ZHowMDAwcDk0OXRtb3U2aTc5IiwibmFtZSI6IllVR0EgVW5pb24gQWRtaW4iLCJlbWFpbCI6ImFkbWluQHl1Z2EubG9jYWwiLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTc5Mjk1NDQ4NSwiZXhwIjoxNzkyOTgzMjg1fQ.HjYolJxDS7i96oFER2bQqWkg98pgY4313j2zD9yp2B0",
+      "ipAddress": "157.51.204.76",
+      "location": "Kozhikode, IN",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+      "lastActiveAt": "2026-10-25T13:24:45.456Z",
+      "createdAt": "2026-10-25T13:24:45.457Z"
+    },
+    {
+      "id": "cmvo7l09l0001l908cf2sw6l7",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbXZua2F4ZHowMDAwcDk0OXRtb3U2aTc5IiwibmFtZSI6IllVR0EgVW5pb24gQWRtaW4iLCJlbWFpbCI6ImFkbWluQHl1Z2EubG9jYWwiLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTc5Mjk1NTc4OCwiZXhwIjoxNzkyOTg0NTg4fQ.cDuiFtLS8Zf_B0umapvuOY7v1b10w3G2ApUb9gW1Oxw",
+      "ipAddress": "42.108.124.30",
+      "location": "Kanayannur, IN",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36",
+      "lastActiveAt": "2026-10-25T13:46:28.185Z",
+      "createdAt": "2026-10-25T13:46:28.186Z"
+    },
+    {
+      "id": "cmvost3na0001l5079f251n12",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbXZua2F4ZHowMDAwcDk0OXRtb3U2aTc5IiwibmFtZSI6IllVR0EgVW5pb24gQWRtaW4iLCJlbWFpbCI6ImFkbWluQHl1Z2EubG9jYWwiLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTc5Mjk5MTQzNywiZXhwIjoxNzkzMDIwMjM3fQ.7fuipNQVTQvL2WwjqcxSvp3o_kQwvg1xn2XwBPbEW64",
+      "ipAddress": "116.68.113.59",
+      "location": "Kozhikode, IN",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+      "lastActiveAt": "2026-10-25T23:40:37.750Z",
+      "createdAt": "2026-10-25T23:40:37.751Z"
+    },
+    {
+      "id": "cmvovsdke0001js0803j5ch2k",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbXZua2F4ZHowMDAwcDk0OXRtb3U2aTc5IiwibmFtZSI6IllVR0EgVW5pb24gQWRtaW4iLCJlbWFpbCI6ImFkbWluQHl1Z2EubG9jYWwiLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTc5Mjk5NjQ0MiwiZXhwIjoxNzkzMDI1MjQyfQ.U3cTTyhk1lss71Ktcmn5kk_baET8mCPGCiF8LSdxVMs",
+      "ipAddress": "42.105.230.12",
+      "location": "Kanayannur, IN",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Mobile Safari/537.36",
+      "lastActiveAt": "2026-10-26T01:04:02.797Z",
+      "createdAt": "2026-10-26T01:04:02.798Z"
+    },
+    {
+      "id": "cmvowd9w20001l808vv8w6qch",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbXZua2F4ZHowMDAwcDk0OXRtb3U2aTc5IiwibmFtZSI6IllVR0EgVW5pb24gQWRtaW4iLCJlbWFpbCI6ImFkbWluQHl1Z2EubG9jYWwiLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTc5Mjk5NzQxNywiZXhwIjoxNzkzMDI2MjE3fQ.r6_nvJ8w1ynGJX_qSD89FlP0kq6xq6DUd9mGWlAEJOI",
+      "ipAddress": "116.68.113.59",
+      "location": "Kozhikode, IN",
+      "userAgent": "Mozilla/5.0 (iPad; CPU OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1 Brave",
+      "lastActiveAt": "2026-10-26T01:20:17.810Z",
+      "createdAt": "2026-10-26T01:20:17.810Z"
+    },
+    {
+      "id": "cmvpdv1e70001lb07a4msctca",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbXZua2F4ZHowMDAwcDk0OXRtb3U2aTc5IiwibmFtZSI6IllVR0EgVW5pb24gQWRtaW4iLCJlbWFpbCI6ImFkbWluQHl1Z2EubG9jYWwiLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTc5MzAyNjgwMCwiZXhwIjoxNzkzMDU1NjAwfQ.pD7PgSnSKtin2XpiPwYiR-Wd3bptLX7kdMGPUHP238g",
+      "ipAddress": "116.68.113.59",
+      "location": "Kozhikode, IN",
+      "userAgent": "Mozilla/5.0 (iPad; CPU OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1 Brave",
+      "lastActiveAt": "2026-10-26T09:30:00.079Z",
+      "createdAt": "2026-10-26T09:30:00.080Z"
+    },
+    {
+      "id": "cmvpf5s6b0001ig08v0jhmzod",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbXZua2F4ZHowMDAwcDk0OXRtb3U2aTc5IiwibmFtZSI6IllVR0EgVW5pb24gQWRtaW4iLCJlbWFpbCI6ImFkbWluQHl1Z2EubG9jYWwiLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTc5MzAyODk4MCwiZXhwIjoxNzkzMDU3NzgwfQ.QMWaKRPQW59aztbf7MJ6I3X4VKLfJx7sXkcKsXIbpsA",
+      "ipAddress": "103.199.162.82",
+      "location": "Alatt%C5%ABr, IN",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+      "lastActiveAt": "2026-10-26T10:06:20.963Z",
+      "createdAt": "2026-10-26T10:06:20.964Z"
+    }
+  ],
+  "Committee": [
+    {
+      "id": "cmvpdw98s001rmc4lsjmbuwio",
+      "name": "Arts & Cultural Committee",
+      "slug": "arts-cultural",
+      "description": "Organises cultural fests, music, dance and drama.",
+      "order": 1,
+      "createdAt": "2026-10-26T09:30:56.908Z",
+      "accent": null,
+      "category": null,
+      "logo": null,
+      "portalUrl": null,
+      "socialLinks": null
+    },
+    {
+      "id": "cmvpdw99a001smc4lmdj41fzg",
+      "name": "Sports Committee",
+      "slug": "sports",
+      "description": "Runs tournaments, teams and the annual athletics meet.",
+      "order": 2,
+      "createdAt": "2026-10-26T09:30:56.926Z",
+      "accent": null,
+      "category": null,
+      "logo": null,
+      "portalUrl": null,
+      "socialLinks": null
+    }
+  ],
+  "CommitteeMember": [
+    {
+      "id": "cmvpdw99j001tmc4l9w1a3dav",
+      "committeeId": "cmvpdw98s001rmc4lsjmbuwio",
+      "name": "Convenor — Arts",
+      "position": "Convenor",
+      "photo": null,
+      "contact": null,
+      "order": 1
+    },
+    {
+      "id": "cmvpdw99j001umc4ln0oejaaf",
+      "committeeId": "cmvpdw98s001rmc4lsjmbuwio",
+      "name": "Joint Convenor — Arts",
+      "position": "Joint Convenor",
+      "photo": null,
+      "contact": null,
+      "order": 2
+    },
+    {
+      "id": "cmvpdw99j001vmc4lvgqyisil",
+      "committeeId": "cmvpdw99a001smc4lmdj41fzg",
+      "name": "Convenor — Sports",
+      "position": "Convenor",
+      "photo": null,
+      "contact": null,
+      "order": 1
+    }
+  ],
+  "Complaint": [],
+  "ContentBlock": [
+    {
+      "id": "cmvnmghdg0000l108onyrclcw",
+      "pageId": "home",
+      "blockId": "hero-status-pill",
+      "content": "",
+      "type": "text",
+      "updatedAt": "2026-10-25T03:55:05.079Z"
+    },
+    {
+      "id": "cmvnnv9ex0000l307i1x9viji",
+      "pageId": "home",
+      "blockId": "span_protected-by-official-un_cxn3ft",
+      "content": "Protected by official union confidentiality charter",
+      "type": "hidden",
+      "updatedAt": "2026-10-25T04:36:05.053Z"
+    },
+    {
+      "id": "cmvnoxs2y0001lb08ehcarzts",
+      "pageId": "home",
+      "blockId": "h3_pulse-2026-the-sovereign_vcpmfo",
+      "content": "PULSE 2026: The Sovereign Vanguard",
+      "type": "text",
+      "updatedAt": "2026-10-25T05:04:52.044Z"
+    },
+    {
+      "id": "cmvnp2xus0006lb086fgwkry9",
+      "pageId": "home",
+      "blockId": "span_3-000_g98qvo",
+      "content": "3,020+",
+      "type": "text",
+      "updatedAt": "2026-10-25T05:08:32.083Z"
+    },
+    {
+      "id": "cmvnp5j020009lb08sid2lwly",
+      "pageId": "admin",
+      "blockId": "span_2026-yuga-medical-colleg_ri7p7a",
+      "content": "© 2026 YUGA Medical College Union.",
+      "type": "text",
+      "updatedAt": "2026-10-25T05:10:32.776Z"
+    },
+    {
+      "id": "cmvo4yv1e0000jq07ol499qz5",
+      "pageId": "home",
+      "blockId": "span_68_conji0",
+      "content": "69+",
+      "type": "text",
+      "updatedAt": "2026-10-25T12:33:15.662Z"
+    },
+    {
+      "id": "cmvo7lpr90000l507c7b8guhq",
+      "pageId": "finance",
+      "blockId": "span_reserve-balance_cyqrkd",
+      "content": "BALANCE",
+      "type": "text",
+      "updatedAt": "2026-10-25T13:47:01.151Z"
+    },
+    {
+      "id": "cmvouvvmf0003le07xymz88m7",
+      "pageId": "interventions",
+      "blockId": "p_the-union-submitted-a-fo_jzrkop",
+      "content": "The Union has submitted a representation to KUHS requesting acceptance of the ICMR Ethics Review of Health Research Course certificate in lieu of the KUHS Bioethics Course for eligibile DM residents, ensuring examination eligibility without delay.",
+      "type": "text",
+      "updatedAt": "2026-10-26T00:38:46.471Z"
+    },
+    {
+      "id": "cmvouxmhh0006le07lcltbry6",
+      "pageId": "interventions",
+      "blockId": "a_read-petition_o6ni7z",
+      "content": "Read Petition",
+      "type": "text",
+      "updatedAt": "2026-10-26T00:40:22.690Z"
+    },
+    {
+      "id": "cmvouzfsj000cle076awg9gv5",
+      "pageId": "interventions",
+      "blockId": "span_resolved_5dsqte",
+      "content": "IN PROGRESS",
+      "type": "text",
+      "updatedAt": "2026-10-26T00:41:32.543Z"
+    },
+    {
+      "id": "cmvov1e5i000fle075chtlgm4",
+      "pageId": "interventions",
+      "blockId": "span_22-oct-2026_sylqqm",
+      "content": "23 October 2026",
+      "type": "text",
+      "updatedAt": "2026-10-26T00:43:03.760Z"
+    },
+    {
+      "id": "cmvov1p4h000ile07wke4dt8a",
+      "pageId": "interventions",
+      "blockId": "span_to-dme-hospital-administ_sylqrj",
+      "content": "To: KUHS",
+      "type": "text",
+      "updatedAt": "2026-10-26T00:43:18.066Z"
+    },
+    {
+      "id": "cmvov6hc2000lle077so1odc2",
+      "pageId": "interventions",
+      "blockId": "span_infrastructure_qxqybj",
+      "content": "ACADEMIC & WELFARE",
+      "type": "text",
+      "updatedAt": "2026-10-26T00:47:01.137Z"
+    },
+    {
+      "id": "cmvovhe6t0000ia08bvtugys0",
+      "pageId": "interventions-representation-hostel-library-247-study-room",
+      "blockId": "span_infrastructure_q7wz2l",
+      "content": "ACADEMIC & WELFARE",
+      "type": "text",
+      "updatedAt": "2026-10-26T00:55:30.309Z"
+    },
+    {
+      "id": "cmvovmriz0009ia087whqs5zq",
+      "pageId": "interventions-representation-hostel-library-247-study-room",
+      "blockId": "span_submitted-on-22-oct-2026_2zjygb",
+      "content": "Submitted on 23 Oct 2026",
+      "type": "text",
+      "updatedAt": "2026-10-26T00:59:40.877Z"
+    },
+    {
+      "id": "cmvovnt0c000cia08u2gynbeg",
+      "pageId": "interventions-representation-hostel-library-247-study-room",
+      "blockId": "div_the-union-submitted-a-fo_qdz56i",
+      "content": "The Union has submitted a representation to KUHS requesting acceptance of the ICMR Ethics Review of Health Research Course certificate in lieu of the KUHS Bioethics Course for eligibile DM residents, ensuring examination eligibility without delay.",
+      "type": "text",
+      "updatedAt": "2026-10-26T01:00:29.453Z"
+    },
+    {
+      "id": "cmvovov98000fia08h0x30yn8",
+      "pageId": "interventions-representation-hostel-library-247-study-room",
+      "blockId": "p_official-memorandum-stam_y80j9t",
+      "content": "Official memorandum stamped by  UUC PG",
+      "type": "text",
+      "updatedAt": "2026-10-26T01:01:19.021Z"
+    },
+    {
+      "id": "cmvovm2s20006ia08u2n9y141",
+      "pageId": "interventions-representation-hostel-library-247-study-room",
+      "blockId": "h1_representation-regarding_8h3tn9",
+      "content": "Representation regarding acceptance of ICMR Ethics Course Certificate",
+      "type": "text",
+      "updatedAt": "2026-10-26T01:04:11.247Z"
+    },
+    {
+      "id": "cmvovw1gx000pia0816iejg3c",
+      "pageId": "interventions",
+      "blockId": "h2_request-for-the-the-insp_cdbksx",
+      "content": "Request for the Inspection of Hostel infrastructure",
+      "type": "text",
+      "updatedAt": "2026-10-26T01:06:53.746Z"
+    },
+    {
+      "id": "cmvousqsu0000le079q7kabcw",
+      "pageId": "interventions",
+      "blockId": "h2_representation-regarding_5d6ua8",
+      "content": "Representation regarding acceptance of ICMR Ethics Course Certificate",
+      "type": "text",
+      "updatedAt": "2026-10-26T01:07:21.611Z"
+    },
+    {
+      "id": "cmvow12kb000wia08sw5vs2d8",
+      "pageId": "interventions",
+      "blockId": "p_an-urgent-request-has-be_e201js",
+      "content": "An urgent request has been submitted by the Union to the Principal, highlighting the deteriorating hostel infrastructure and student safety concerns. Following the representation, the Vice Principal has called for an immediate inspection of hostel facilities",
+      "type": "text",
+      "updatedAt": "2026-10-26T01:10:48.349Z"
+    },
+    {
+      "id": "cmvowtsig0003jv08u3zki8la",
+      "pageId": "interventions",
+      "blockId": "span_to-dme-hospital-administ_xe8fz6",
+      "content": "To:  KUHS",
+      "type": "text",
+      "updatedAt": "2026-10-26T01:33:08.363Z"
+    },
+    {
+      "id": "cmvowut6r0006jv082bnk37yn",
+      "pageId": "interventions-test",
+      "blockId": "p_official-memorandum-stam_y80j9t",
+      "content": "Official memorandum stamped by  UUC PG",
+      "type": "text",
+      "updatedAt": "2026-10-26T01:33:55.888Z"
+    }
+  ],
+  "ContentEdit": [
+    {
+      "id": "cmvnmgheb0002l108bw8yfka6",
+      "contentBlockId": "cmvnmghdg0000l108onyrclcw",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "LIVE TENURE 2026–2027  |  GMC KOZHIKODE",
+      "newValue": "",
+      "fieldLabel": "Status Pill Text",
+      "pageName": "home",
+      "reverted": false,
+      "createdAt": "2026-10-25T03:55:05.171Z"
+    },
+    {
+      "id": "cmvnnv9fh0002l307fxusa070",
+      "contentBlockId": "cmvnnv9ex0000l307i1x9viji",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Protected by official union confidentiality charter",
+      "newValue": "__hidden__",
+      "fieldLabel": "Hidden [span]: \"Protected by official union co...\"",
+      "pageName": "home",
+      "reverted": true,
+      "createdAt": "2026-10-25T04:34:34.301Z"
+    },
+    {
+      "id": "cmvnnx7hc0004l307va91l0gi",
+      "contentBlockId": "cmvnnv9ex0000l307i1x9viji",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "__hidden__",
+      "newValue": "Protected by official union confidentiality charter",
+      "fieldLabel": "Undo: Hidden [span]: \"Protected by official union co...\"",
+      "pageName": "home",
+      "reverted": false,
+      "createdAt": "2026-10-25T04:36:05.089Z"
+    },
+    {
+      "id": "cmvnoxs3h0003lb08wrwrfi5b",
+      "contentBlockId": "cmvnoxs2y0001lb08ehcarzts",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "PULSE 2026: The Sovereign Vanguard",
+      "newValue": "PULSE 2026: The Sovereign Vanguar",
+      "fieldLabel": "H3: \"PULSE 2026: The Sovereign Vang...\"",
+      "pageName": "home",
+      "reverted": true,
+      "createdAt": "2026-10-25T05:04:31.422Z"
+    },
+    {
+      "id": "cmvnoy81b0005lb08p6ykl0a8",
+      "contentBlockId": "cmvnoxs2y0001lb08ehcarzts",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "PULSE 2026: The Sovereign Vanguar",
+      "newValue": "PULSE 2026: The Sovereign Vanguard",
+      "fieldLabel": "Undo: H3: \"PULSE 2026: The Sovereign Vang...\"",
+      "pageName": "home",
+      "reverted": false,
+      "createdAt": "2026-10-25T05:04:52.079Z"
+    },
+    {
+      "id": "cmvnp2xve0008lb08mqp8r4tt",
+      "contentBlockId": "cmvnp2xus0006lb086fgwkry9",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "3,000+",
+      "newValue": "3,020+",
+      "fieldLabel": "SPAN: \"3,000+...\"",
+      "pageName": "home",
+      "reverted": false,
+      "createdAt": "2026-10-25T05:08:32.187Z"
+    },
+    {
+      "id": "cmvnp5j0o000blb08ojjgkde9",
+      "contentBlockId": "cmvnp5j020009lb08sid2lwly",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "© 2026 YUGA Medical College Union. Collegiate Executive Authority.",
+      "newValue": "© 2026 YUGA Medical College Union.",
+      "fieldLabel": "SPAN: \"© 2026 YUGA Medical College Un...\"",
+      "pageName": "admin",
+      "reverted": false,
+      "createdAt": "2026-10-25T05:10:32.904Z"
+    },
+    {
+      "id": "cmvo4yv2a0002jq07k6bj6c16",
+      "contentBlockId": "cmvo4yv1e0000jq07ol499qz5",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "68",
+      "newValue": "69+",
+      "fieldLabel": "SPAN: \"68...\"",
+      "pageName": "home",
+      "reverted": false,
+      "createdAt": "2026-10-25T12:33:15.778Z"
+    },
+    {
+      "id": "cmvo7lpsa0002l507n3v4xrmv",
+      "contentBlockId": "cmvo7lpr90000l507c7b8guhq",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "RESERVE BALANCE",
+      "newValue": "BALANCE",
+      "fieldLabel": "SPAN: \"RESERVE BALANCE...\"",
+      "pageName": "finance",
+      "reverted": false,
+      "createdAt": "2026-10-25T13:47:01.259Z"
+    },
+    {
+      "id": "cmvousqth0002le070hhj1uig",
+      "contentBlockId": "cmvousqsu0000le079q7kabcw",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Representation regarding acceptance of the ICMR Ethics review",
+      "newValue": "Representation regarding acceptance of the ICMR Ethics Course certification",
+      "fieldLabel": "H2: \"Representation regarding accep...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:36:20.358Z"
+    },
+    {
+      "id": "cmvouvvmy0005le07fbxv5cow",
+      "contentBlockId": "cmvouvvmf0003le07xymz88m7",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "The Union submitted a formal representation to the Principal requesting the installation of air conditioning and 24/7 lighting/Wi-Fi access in the Men's and Women's hostel reading rooms prior to university exams.",
+      "newValue": "The Union has submitted a representation to KUHS requesting acceptance of the ICMR Ethics Review of Health Research Course certificate in lieu of the KUHS Bioethics Course for eligibile DM residents, ensuring examination eligibility without delay.",
+      "fieldLabel": "P: \"The Union submitted a formal r...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:38:46.570Z"
+    },
+    {
+      "id": "cmvouxmhr0008le07aiia7lly",
+      "contentBlockId": "cmvouxmhh0006le07lcltbry6",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Read Petition",
+      "newValue": "Read Petitionpoand",
+      "fieldLabel": "A: \"Read Petition...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:40:08.031Z"
+    },
+    {
+      "id": "cmvouxxvn000ble07h3npp4bc",
+      "contentBlockId": "cmvouxmhh0006le07lcltbry6",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Read Petitionpoand",
+      "newValue": "Read Petition",
+      "fieldLabel": "A: \"Read Petitionpoand...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:40:22.788Z"
+    },
+    {
+      "id": "cmvouzftr000ele07uogos6c3",
+      "contentBlockId": "cmvouzfsj000cle076awg9gv5",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "RESOLVED",
+      "newValue": "IN PROGRESS",
+      "fieldLabel": "SPAN: \"RESOLVED...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:41:32.703Z"
+    },
+    {
+      "id": "cmvov1e61000hle07u80z9ouj",
+      "contentBlockId": "cmvov1e5i000fle075chtlgm4",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "22 Oct 2026",
+      "newValue": "23 October 2026",
+      "fieldLabel": "SPAN: \"22 Oct 2026...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:43:03.865Z"
+    },
+    {
+      "id": "cmvov1p73000kle07vbo6xls2",
+      "contentBlockId": "cmvov1p4h000ile07wke4dt8a",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "To: DME & Hospital Administration",
+      "newValue": "To: KUHS",
+      "fieldLabel": "SPAN: \"To: DME & Hospital Administrat...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:43:18.159Z"
+    },
+    {
+      "id": "cmvov6hcm000nle07em7jhbpu",
+      "contentBlockId": "cmvov6hc2000lle077so1odc2",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "INFRASTRUCTURE",
+      "newValue": "ACADEMIC & WELFARE",
+      "fieldLabel": "SPAN: \"INFRASTRUCTURE...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:47:01.271Z"
+    },
+    {
+      "id": "cmvovhe7p0002ia08hti5iek3",
+      "contentBlockId": "cmvovhe6t0000ia08bvtugys0",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "INFRASTRUCTURE",
+      "newValue": "ACADEMIC & WELFARE",
+      "fieldLabel": "SPAN: \"INFRASTRUCTURE...\"",
+      "pageName": "interventions-representation-hostel-library-247-study-room",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:55:30.421Z"
+    },
+    {
+      "id": "cmvovjd4w0005ia0815axarci",
+      "contentBlockId": "cmvousqsu0000le079q7kabcw",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Representation regarding Hostel Library & 24/7 Study Room Facility",
+      "newValue": "Representation regarding acceptance of ICMR Ethics Course certificate",
+      "fieldLabel": "H2: \"Representation regarding Hoste...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:57:02.337Z"
+    },
+    {
+      "id": "cmvovm2sb0008ia0823cbkkk0",
+      "contentBlockId": "cmvovm2s20006ia08u2n9y141",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Representation regarding Hostel Library & 24/7 Study Room Facility",
+      "newValue": "Representation regarding acceptance of ICMR Ethics Course certificate",
+      "fieldLabel": "H1: \"Representation regarding Hoste...\"",
+      "pageName": "interventions-representation-hostel-library-247-study-room",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:59:08.892Z"
+    },
+    {
+      "id": "cmvovmrjj000bia08p8tyvg3n",
+      "contentBlockId": "cmvovmriz0009ia087whqs5zq",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Submitted on 22 Oct 2026",
+      "newValue": "Submitted on 23 Oct 2026",
+      "fieldLabel": "SPAN: \"Submitted on 22 Oct 2026...\"",
+      "pageName": "interventions-representation-hostel-library-247-study-room",
+      "reverted": false,
+      "createdAt": "2026-10-26T00:59:40.975Z"
+    },
+    {
+      "id": "cmvovnt0x000eia08j651os21",
+      "contentBlockId": "cmvovnt0c000cia08u2gynbeg",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "The Union submitted a formal representation to the Principal requesting the installation of air conditioning and 24/7 lighting/Wi-Fi access in the Men's and Women's hostel reading rooms prior to university exams.",
+      "newValue": "The Union has submitted a representation to KUHS requesting acceptance of the ICMR Ethics Review of Health Research Course certificate in lieu of the KUHS Bioethics Course for eligibile DM residents, ensuring examination eligibility without delay.",
+      "fieldLabel": "DIV: \"The Union submitted a formal r...\"",
+      "pageName": "interventions-representation-hostel-library-247-study-room",
+      "reverted": false,
+      "createdAt": "2026-10-26T01:00:29.553Z"
+    },
+    {
+      "id": "cmvovov9p000hia08i22i51x3",
+      "contentBlockId": "cmvovov98000fia08h0x30yn8",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Official memorandum stamped by General Secretary",
+      "newValue": "Official memorandum stamped by  UUC PG",
+      "fieldLabel": "P: \"Official memorandum stamped by...\"",
+      "pageName": "interventions-representation-hostel-library-247-study-room",
+      "reverted": false,
+      "createdAt": "2026-10-26T01:01:19.118Z"
+    },
+    {
+      "id": "cmvovs150000kia08fnjlfi57",
+      "contentBlockId": "cmvousqsu0000le079q7kabcw",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Representation regarding acceptance of ICMR Ethics Course certifica",
+      "newValue": "Representation regarding acceptance of ICMR Ethics Course Certificate",
+      "fieldLabel": "A: \"Representation regarding accep...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T01:03:46.692Z"
+    },
+    {
+      "id": "cmvovsk5z000nia08dtgak2fn",
+      "contentBlockId": "cmvovm2s20006ia08u2n9y141",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Representation regarding acceptance of ICMR Ethics Course certificate",
+      "newValue": "Representation regarding acceptance of ICMR Ethics Course Certificate",
+      "fieldLabel": "H1: \"Representation regarding accep...\"",
+      "pageName": "interventions-representation-hostel-library-247-study-room",
+      "reverted": false,
+      "createdAt": "2026-10-26T01:04:11.351Z"
+    },
+    {
+      "id": "cmvovw1w0000ria08p53wzht3",
+      "contentBlockId": "cmvovw1gx000pia0816iejg3c",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Request for the The inspection of",
+      "newValue": "Request for the Inspection of Hostel infrastructure",
+      "fieldLabel": "H2: \"Request for the The inspection...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T01:06:54.289Z"
+    },
+    {
+      "id": "cmvovwn1t000uia08s5qlhqzt",
+      "contentBlockId": "cmvousqsu0000le079q7kabcw",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Representation regarding Hostel Library & 24/7 Study Room Facility",
+      "newValue": "Representation regarding acceptance of ICMR Ethics Course Certificate",
+      "fieldLabel": "H2: \"Representation regarding Hoste...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T01:07:21.713Z"
+    },
+    {
+      "id": "cmvow12l1000yia08euse01h8",
+      "contentBlockId": "cmvow12kb000wia08sw5vs2d8",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "An urgent request has been submitted by the Union to the Principal, highlighting the deteriorating hostel infrastructure and student safety concerns. Following the representation, the Vice Principal has called for an immdeiate inspection of hostel facilities.",
+      "newValue": "An urgent request has been submitted by the Union to the Principal, highlighting the deteriorating hostel infrastructure and student safety concerns. Following the representation, the Vice Principal has called for an immediate inspection of hostel facilities",
+      "fieldLabel": "P: \"An urgent request has been sub...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T01:10:48.470Z"
+    },
+    {
+      "id": "cmvowtsjg0005jv08kdj7tu18",
+      "contentBlockId": "cmvowtsig0003jv08u3zki8la",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "To: DME & Hospital Administration",
+      "newValue": "To:  KUHS",
+      "fieldLabel": "SPAN: \"To: DME & Hospital Administrat...\"",
+      "pageName": "interventions",
+      "reverted": false,
+      "createdAt": "2026-10-26T01:33:08.476Z"
+    },
+    {
+      "id": "cmvowut7h0008jv08c4d7330l",
+      "contentBlockId": "cmvowut6r0006jv082bnk37yn",
+      "adminId": "cmvnkaxdz0000p949tmou6i79",
+      "adminName": "YUGA Union Admin",
+      "previousValue": "Official memorandum stamped by General Secretary",
+      "newValue": "Official memorandum stamped by  UUC PG",
+      "fieldLabel": "P: \"Official memorandum stamped by...\"",
+      "pageName": "interventions-test",
+      "reverted": false,
+      "createdAt": "2026-10-26T01:33:55.998Z"
+    }
+  ],
+  "Department": [],
+  "Doctor": [],
+  "EmergencyContact": [
+    {
+      "id": "cmvpdw96m001fmc4lrejhr5gg",
+      "category": "Ladies' Hostel",
+      "name": "Dr. Mekha (Assistant Warden)",
+      "phone": "97459 05537",
+      "description": "Ladies' Hostel Assistant Warden",
+      "order": 43,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001gmc4l7wgr38pt",
+      "category": "Police Station",
+      "name": "Punnapra Police Station",
+      "phone": "0477 2287669",
+      "description": "Jurisdiction police station for Vandanam / TDMC Campus",
+      "order": 50,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001hmc4l5vic258l",
+      "category": "Auto-Drivers (Night)",
+      "name": "Mr. Saleem (Night Auto)",
+      "phone": "98951 55452",
+      "description": "Night auto driver service for campus & hospital",
+      "order": 60,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001imc4lul1hznur",
+      "category": "Auto-Drivers (Night)",
+      "name": "Mr. Jabbar (Night Auto)",
+      "phone": "80860 92812",
+      "description": "Night auto driver service for campus & hospital",
+      "order": 61,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001jmc4l288f9mm5",
+      "category": "College Watchmen",
+      "name": "Mr. Krishnakumar (Watchman)",
+      "phone": "99466 41956",
+      "description": "College security watchman",
+      "order": 70,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001kmc4lney8eak1",
+      "category": "College Watchmen",
+      "name": "Mr. Satheesh (Watchman)",
+      "phone": "91422 29998",
+      "description": "College security watchman",
+      "order": 71,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001lmc4lxri54d1e",
+      "category": "College Watchmen",
+      "name": "Mr. Sebastian (Watchman)",
+      "phone": "96455 33771",
+      "description": "College security watchman",
+      "order": 72,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001mmc4ld99e54km",
+      "category": "College Watchmen",
+      "name": "Mr. Anandu (Watchman)",
+      "phone": "98463 81767",
+      "description": "College security watchman",
+      "order": 73,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001nmc4lq877iv1p",
+      "category": "College Watchmen",
+      "name": "Mr. Harikrishnan (Watchman)",
+      "phone": "80787 88043",
+      "description": "College security watchman",
+      "order": 74,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001omc4l8vfeg2a0",
+      "category": "College Watchmen",
+      "name": "Mr. Renjith (Watchman)",
+      "phone": "62829 97904",
+      "description": "College security watchman",
+      "order": 75,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001pmc4lmivja4f7",
+      "category": "College Watchmen",
+      "name": "Mr. Sujith (Watchman)",
+      "phone": "90741 94761",
+      "description": "College security watchman",
+      "order": 76,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001qmc4lwgjfxrd6",
+      "category": "College Watchmen",
+      "name": "Mr. Saran (Watchman)",
+      "phone": "79946 68518",
+      "description": "College security watchman",
+      "order": 77,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m000umc4l9yuzpe53",
+      "category": "Emergency Services",
+      "name": "National Emergency Number",
+      "phone": "112",
+      "description": "All-in-one national emergency helpline",
+      "order": 1,
+      "active": true,
+      "showOnHomepage": true
+    },
+    {
+      "id": "cmvpdw96m000vmc4lx286mzb4",
+      "category": "Emergency Services",
+      "name": "Police Helpline",
+      "phone": "100",
+      "description": "Police control room",
+      "order": 2,
+      "active": true,
+      "showOnHomepage": true
+    },
+    {
+      "id": "cmvpdw96m000wmc4lt037ob1g",
+      "category": "Emergency Services",
+      "name": "Fire Force",
+      "phone": "101",
+      "description": "Fire and rescue control room",
+      "order": 3,
+      "active": true,
+      "showOnHomepage": true
+    },
+    {
+      "id": "cmvpdw96m000xmc4lo4dtkd7v",
+      "category": "Emergency Services",
+      "name": "Ambulance / Disaster Management",
+      "phone": "102, 108",
+      "description": "Emergency medical transport & disaster response",
+      "order": 4,
+      "active": true,
+      "showOnHomepage": true
+    },
+    {
+      "id": "cmvpdw96m000ymc4lo7dftj6g",
+      "category": "Emergency Services",
+      "name": "Woman Helpline",
+      "phone": "1091",
+      "description": "24x7 women safety and emergency helpline",
+      "order": 5,
+      "active": true,
+      "showOnHomepage": true
+    },
+    {
+      "id": "cmvpdw96m000zmc4lquabueb0",
+      "category": "Emergency Services",
+      "name": "KSEB Electricity",
+      "phone": "9496010101",
+      "description": "Kerala State Electricity Board emergency helpline",
+      "order": 6,
+      "active": true,
+      "showOnHomepage": true
+    },
+    {
+      "id": "cmvpdw96m0010mc4lyyt2o2gg",
+      "category": "College & Hospital",
+      "name": "College Contact Number",
+      "phone": "0477 2282611",
+      "description": "Govt T.D. Medical College Alappuzha official office",
+      "order": 10,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m0011mc4lq8h5nsd6",
+      "category": "College & Hospital",
+      "name": "Hospital Help Desk",
+      "phone": "0477 2282367",
+      "description": "T.D. Medical College Hospital help desk & reception",
+      "order": 11,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m0012mc4l7shdrpfo",
+      "category": "College & Hospital",
+      "name": "Hospital Ambulance",
+      "phone": "80864 13064",
+      "description": "T.D. Medical College Hospital 24x7 ambulance",
+      "order": 12,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m0013mc4lsiab2rer",
+      "category": "College & Hospital",
+      "name": "Sergeant (Mr. Abhaya Kumar)",
+      "phone": "88488 22576",
+      "description": "Campus security sergeant",
+      "order": 13,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m0014mc4lwj5tsvhd",
+      "category": "College Union",
+      "name": "Sann Mariya (Chairperson)",
+      "phone": "85908 80366",
+      "description": "Sattva College Union Chairperson",
+      "order": 20,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m0015mc4l1nwcdq0t",
+      "category": "College Union",
+      "name": "Mahadevan (General Secretary)",
+      "phone": "94964 75272",
+      "description": "Sattva College Union General Secretary",
+      "order": 21,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m0016mc4llz27f7ye",
+      "category": "College Union",
+      "name": "Mina Younus (UUC)",
+      "phone": "85475 36746",
+      "description": "University Union Councillor (UUC)",
+      "order": 22,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m0017mc4liom4z0vb",
+      "category": "Men's Hostel",
+      "name": "Muhammed Nishad (MH 1 Secretary)",
+      "phone": "85903 97925",
+      "description": "Men's Hostel 1 Secretary",
+      "order": 30,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m0018mc4l010pp4zz",
+      "category": "Men's Hostel",
+      "name": "Jazeel (MH 2 Secretary)",
+      "phone": "81369 94226",
+      "description": "Men's Hostel 2 Secretary",
+      "order": 31,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m0019mc4lnedx8aak",
+      "category": "Men's Hostel",
+      "name": "Ralchim (MH 3 Secretary)",
+      "phone": "93492 79201",
+      "description": "Men's Hostel 3 Secretary",
+      "order": 32,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001amc4l9nye8s9c",
+      "category": "Men's Hostel",
+      "name": "Dr. Jamshad (Warden)",
+      "phone": "98468 35786",
+      "description": "Men's Hostel Warden",
+      "order": 33,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001bmc4lmat2m54m",
+      "category": "Men's Hostel",
+      "name": "Dr. Alan (Assistant Warden)",
+      "phone": "94962 19851",
+      "description": "Men's Hostel Assistant Warden",
+      "order": 34,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001cmc4lrm75e6zm",
+      "category": "Ladies' Hostel",
+      "name": "Adithya P (LH 1 Secretary)",
+      "phone": "90480 32076",
+      "description": "Ladies' Hostel 1 Secretary",
+      "order": 40,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001dmc4lxdiygldz",
+      "category": "Ladies' Hostel",
+      "name": "Anjana Rajesh (LH 2 Secretary)",
+      "phone": "70342 73129",
+      "description": "Ladies' Hostel 2 Secretary",
+      "order": 41,
+      "active": true,
+      "showOnHomepage": false
+    },
+    {
+      "id": "cmvpdw96m001emc4lj9030ldi",
+      "category": "Ladies' Hostel",
+      "name": "Dr. Rani Raphael (Warden)",
+      "phone": "94463 39030",
+      "description": "Ladies' Hostel Warden",
+      "order": 42,
+      "active": true,
+      "showOnHomepage": false
+    }
+  ],
+  "Event": [
+    {
+      "id": "cmvnnoyxu0009n848ldjja794",
+      "title": "Blood Donation Camp",
+      "slug": "blood-donation-camp",
+      "description": "In association with the district blood bank. Every donor counts — be a lifesaver.",
+      "date": "2026-11-03T04:29:40.752Z",
+      "endDate": null,
+      "time": "9:00 AM",
+      "venue": "OPD Block, Ground Floor",
+      "poster": null,
+      "status": "upcoming",
+      "published": true,
+      "committeeId": null,
+      "createdAt": "2026-10-25T04:29:40.771Z",
+      "updatedAt": "2026-10-25T04:29:40.771Z"
+    },
+    {
+      "id": "cmvnnoyy4000an8484ugh56b9",
+      "title": "Freshers' Welcome 2026",
+      "slug": "freshers-welcome-2026",
+      "description": "A warm welcome to the incoming batch with performances, games and mentorship pairing.",
+      "date": "2026-10-09T18:30:00.000Z",
+      "endDate": null,
+      "time": "6:00 PM",
+      "venue": "Open Air Theatre",
+      "poster": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792922456401-c45be554.png",
+      "status": "completed",
+      "published": true,
+      "committeeId": null,
+      "createdAt": "2026-10-25T04:29:40.780Z",
+      "updatedAt": "2026-10-25T04:31:01.310Z"
+    },
+    {
+      "id": "cmvnntv7r0000jv07lmjs0kif",
+      "title": "bgnbb",
+      "slug": "bgnbb",
+      "description": "vbbv",
+      "date": "0022-02-01T18:06:32.000Z",
+      "endDate": "0002-12-20T18:06:32.000Z",
+      "time": "ik",
+      "venue": null,
+      "poster": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792922606884-979026db.png",
+      "status": "upcoming",
+      "published": true,
+      "committeeId": null,
+      "createdAt": "2026-10-25T04:33:29.224Z",
+      "updatedAt": "2026-10-25T04:33:29.224Z"
+    },
+    {
+      "id": "cmvnoima90008p9483g15v45j",
+      "title": "YUGA Arts Fest 2026 — Rhythms of GMC",
+      "slug": "yuga-arts-fest",
+      "description": "Annual inter-batch cultural battle across 42 competitive disciplines including music, dance, literary arts, and theatrical performances.",
+      "date": "2026-10-30T04:52:44.048Z",
+      "endDate": null,
+      "time": "9:00 AM onwards",
+      "venue": "Main Auditorium & Open Air Stage",
+      "poster": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80",
+      "status": "upcoming",
+      "published": true,
+      "committeeId": null,
+      "createdAt": "2026-10-25T04:52:44.050Z",
+      "updatedAt": "2026-10-25T04:52:44.050Z"
+    },
+    {
+      "id": "cmvnoimc70009p948k9bcuirg",
+      "title": "Calicut Medicos Premier League (CMPL VIII)",
+      "slug": "calicut-medicos-premier-league",
+      "description": "Under-floodlights night cricket tournament with 12 franchise batches competing for the coveted Calicut Medicos Cup.",
+      "date": "2026-11-06T04:52:44.048Z",
+      "endDate": null,
+      "time": "5:00 PM – 11:00 PM",
+      "venue": "GMC Stadium Ground",
+      "poster": "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1200&q=80",
+      "status": "live",
+      "published": true,
+      "committeeId": null,
+      "createdAt": "2026-10-25T04:52:44.120Z",
+      "updatedAt": "2026-10-25T04:52:44.120Z"
+    },
+    {
+      "id": "cmvnoimde000ap948pwt03jbw",
+      "title": "Caduceus Acoustic Night & Unplugged Jam",
+      "slug": "caduceus-music-night",
+      "description": "Soulful musical journey curated by the GMC Fine Arts Club featuring indie melodies, violin overtures, and acoustic medleys.",
+      "date": "2026-11-14T04:52:44.048Z",
+      "endDate": null,
+      "time": "6:30 PM",
+      "venue": "OAT Amphitheatre",
+      "poster": "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&w=1200&q=80",
+      "status": "upcoming",
+      "published": true,
+      "committeeId": null,
+      "createdAt": "2026-10-25T04:52:44.162Z",
+      "updatedAt": "2026-10-25T04:52:44.162Z"
+    },
+    {
+      "id": "cmvnota8x0000l208l71cpubc",
+      "title": "Test",
+      "slug": "test",
+      "description": "Dhdhd",
+      "date": "2026-10-23T18:30:00.000Z",
+      "endDate": null,
+      "time": null,
+      "venue": null,
+      "poster": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792924257182-4b8ae4f8.jpg",
+      "status": "upcoming",
+      "published": true,
+      "committeeId": null,
+      "createdAt": "2026-10-25T05:01:01.666Z",
+      "updatedAt": "2026-10-25T05:01:01.666Z"
+    },
+    {
+      "id": "cmvnnoyxd0008n848efpncxn6",
+      "title": "ADVAYA Union Day 2026",
+      "slug": "advaya-union-day-2026",
+      "description": "The flagship celebration of the year — cultural performances, awards, food stalls and a night of music.",
+      "date": "2026-11-14T18:30:00.000Z",
+      "endDate": null,
+      "time": "5:00 PM",
+      "venue": "College Main Auditorium",
+      "poster": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792929017367-9bb7ec9c.jpg",
+      "status": "upcoming",
+      "published": true,
+      "committeeId": null,
+      "createdAt": "2026-10-25T04:29:40.753Z",
+      "updatedAt": "2026-10-25T06:20:22.148Z"
+    }
+  ],
+  "EventAttachment": [],
+  "EventGallery": [
+    {
+      "id": "cmvnpsf630001jt08vrlhhf36",
+      "eventId": "cmvnnoyy4000an8484ugh56b9",
+      "theme": "scrapbook",
+      "titleLine1": "Event Gallerybcnbvbnmbmvmnvmnvmn",
+      "titleLine2": "nbgvhmvmn ",
+      "subtitle": "Memories & Momentshjfvhvm",
+      "blogText": "mhvmn ",
+      "createdAt": "2026-10-25T05:28:20.916Z",
+      "updatedAt": "2026-10-25T05:29:25.429Z"
+    }
+  ],
+  "EventMedia": [],
+  "FinanceEntry": [
+    {
+      "id": "cmvpdw947000qmc4l3uwdnpcd",
+      "kind": "income",
+      "category": "Union Fund",
+      "label": "Annual union fund collection",
+      "amount": 480000,
+      "note": null,
+      "receiptUrl": null,
+      "date": "2026-10-26T09:30:56.743Z",
+      "createdAt": "2026-10-26T09:30:56.743Z"
+    },
+    {
+      "id": "cmvpdw947000rmc4lxa1v2u1m",
+      "kind": "income",
+      "category": "Other Income",
+      "label": "Sponsorships & donations",
+      "amount": 125000,
+      "note": null,
+      "receiptUrl": null,
+      "date": "2026-10-26T09:30:56.743Z",
+      "createdAt": "2026-10-26T09:30:56.743Z"
+    },
+    {
+      "id": "cmvpdw947000smc4lz9gohb7v",
+      "kind": "expenditure",
+      "category": "Union Expenditure",
+      "label": "Union Day 2025 arrangements",
+      "amount": 210000,
+      "note": null,
+      "receiptUrl": null,
+      "date": "2026-10-26T09:30:56.743Z",
+      "createdAt": "2026-10-26T09:30:56.743Z"
+    },
+    {
+      "id": "cmvpdw947000tmc4lchtnngda",
+      "kind": "expenditure",
+      "category": "Union Expenditure",
+      "label": "Sports equipment & kits",
+      "amount": 86000,
+      "note": null,
+      "receiptUrl": null,
+      "date": "2026-10-26T09:30:56.743Z",
+      "createdAt": "2026-10-26T09:30:56.743Z"
+    }
+  ],
+  "GalleryPhoto": [
+    {
+      "id": "cmvnpt9nx0003jt08d9hvkkh0",
+      "galleryId": "cmvnpsf630001jt08vrlhhf36",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925939740-8e0c89cd.png",
+      "caption": "_ksd",
+      "position": 0,
+      "order": 0,
+      "zoom": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0
+    },
+    {
+      "id": "cmvnptauq0001kt08mjmp1d0s",
+      "galleryId": "cmvnpsf630001jt08vrlhhf36",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925941630-b8b36927.png",
+      "caption": "Screenshot (1)",
+      "position": 1,
+      "order": 0,
+      "zoom": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0
+    },
+    {
+      "id": "cmvnptc3c0001jq08teefrznl",
+      "galleryId": "cmvnpsf630001jt08vrlhhf36",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925943294-96a7cf33.png",
+      "caption": "Screenshot (2)",
+      "position": 2,
+      "order": 0,
+      "zoom": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0
+    },
+    {
+      "id": "cmvnptdiy0005jt084u28nxge",
+      "galleryId": "cmvnpsf630001jt08vrlhhf36",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925945139-b3542573.png",
+      "caption": "Screenshot (3)",
+      "position": 3,
+      "order": 0,
+      "zoom": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0
+    },
+    {
+      "id": "cmvnptee10001ju07epg86vh1",
+      "galleryId": "cmvnpsf630001jt08vrlhhf36",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925946191-622288ca.png",
+      "caption": "Screenshot 2024-04-19 124457",
+      "position": 4,
+      "order": 0,
+      "zoom": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0
+    },
+    {
+      "id": "cmvnptmda0003kt08bk5y669b",
+      "galleryId": "cmvnpsf630001jt08vrlhhf36",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925956356-33b5fc49.png",
+      "caption": "_ksd",
+      "position": 0,
+      "order": 0,
+      "zoom": 1,
+      "offsetX": 0,
+      "offsetY": 0,
+      "rotation": 0
+    }
+  ],
+  "Intervention": [
+    {
+      "id": "cmvpfsmua0000jn083nsqc89d",
+      "title": "Representation regarding early publication of Final-year MBBS results",
+      "slug": "representation-regarding-early-publication-of-final-year-mbbs-results",
+      "description": "The College Union ’26, has submitted representations to KUHS and the Directorate of Medical Education seeking early evaluation and publication of the Final-Year MBBS results to facilitate timely registration and internship formalities.\r\n\r\nThe Union has also requested  early commencement of House Surgency and interim deployment of NAJRs to ensure adequate resident manpower and a smooth transition between the outgoing and incoming batches, thereby maintaining uninterrupted patient care.",
+      "date": "2026-09-07T18:30:00.000Z",
+      "image": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030060998-2eb356d4.jpg",
+      "pdfUrl": null,
+      "category": null,
+      "pinned": false,
+      "published": true,
+      "createdAt": "2026-10-26T10:24:07.138Z",
+      "updatedAt": "2026-10-26T10:24:25.723Z"
+    },
+    {
+      "id": "cmvpdw9aw001wmc4l9830rx85",
+      "title": "Representation regarding Hostel Library & 24/7 Study Room Facility",
+      "slug": "representation-hostel-library-247-study-room",
+      "description": "The Union submitted a formal representation to the Principal requesting the installation of air conditioning and 24/7 lighting/Wi-Fi access in the Men's and Women's hostel reading rooms prior to university exams.",
+      "date": "2026-10-22T09:30:56.984Z",
+      "image": null,
+      "pdfUrl": null,
+      "category": "Infrastructure",
+      "pinned": true,
+      "published": true,
+      "createdAt": "2026-10-26T09:30:56.985Z",
+      "updatedAt": "2026-10-26T09:30:56.985Z"
+    },
+    {
+      "id": "cmvpdw9bd001xmc4lwhlb2k0m",
+      "title": "Request for Immediate Repair of OPD Block Elevator & Ramp Access",
+      "slug": "request-opd-elevator-ramp-repair",
+      "description": "Official letter submitted to the Medical Superintendent highlighting difficulties faced by wheel-chair bound patients and clinical postings students due to non-functioning elevators.",
+      "date": "2026-10-14T09:30:56.984Z",
+      "image": null,
+      "pdfUrl": null,
+      "category": "Campus Safety",
+      "pinned": false,
+      "published": true,
+      "createdAt": "2026-10-26T09:30:57.001Z",
+      "updatedAt": "2026-10-26T09:30:57.001Z"
+    },
+    {
+      "id": "cmvpdw9bm001ymc4l2k9q4x6b",
+      "title": "Memorandum on Stipend Disbursal Schedule for PG Residents & House Surgeons",
+      "slug": "memorandum-stipend-disbursal-schedule",
+      "description": "Official petition addressed to the Directorate of Medical Education (DME) ensuring timely monthly credit of stipends for senior and junior resident doctors.",
+      "date": "2026-10-01T09:30:56.984Z",
+      "image": null,
+      "pdfUrl": null,
+      "category": "Academic & Welfare",
+      "pinned": false,
+      "published": true,
+      "createdAt": "2026-10-26T09:30:57.010Z",
+      "updatedAt": "2026-10-26T09:30:57.010Z"
+    },
+    {
+      "id": "cmvpf63pb0002ig089xnjlg54",
+      "title": "hnh",
+      "slug": "hnh",
+      "description": "hmhm",
+      "date": "2026-10-25T18:30:00.000Z",
+      "image": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793028993638-acdccb8f.png",
+      "pdfUrl": null,
+      "category": null,
+      "pinned": false,
+      "published": true,
+      "createdAt": "2026-10-26T10:06:35.903Z",
+      "updatedAt": "2026-10-26T10:06:35.903Z"
+    },
+    {
+      "id": "cmvpfomss0000l0080sydtm59",
+      "title": "Representation regarding the delay in E Grantz Scholarship",
+      "slug": "representation-regarding-the-delay-in-e-grantz-scholarship",
+      "description": "The Union has informed the Principal of the issue of delay in E Grantz Scholarship regarding mess refund for SC/ST students and Tuition fee refund for OBC students and that if the issue is not resolved immediately, protesting measures will be taken. Following the Representation, the Principal has given the assurance to take the needed measures.",
+      "date": "2026-09-07T18:30:00.000Z",
+      "image": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030082533-b0fcc17d.jpg",
+      "pdfUrl": null,
+      "category": null,
+      "pinned": false,
+      "published": true,
+      "createdAt": "2026-10-26T10:21:00.461Z",
+      "updatedAt": "2026-10-26T10:24:45.519Z"
+    },
+    {
+      "id": "cmvpfx5j60001jn08bpbr1wii",
+      "title": "Representation regarding the proposed increase in working hours of JRs under the DRP",
+      "slug": "representation-regarding-the-proposed-increase-in-working-hours-of-jrs-under-the-drp",
+      "description": "The College Union submitted a representation to the Deputy Superintendent, GGH Kozhikode, highlighting concerns regarding the proposed increase in working hours of Junior Residents under the DRP. The representation requested reconsideration of the proposed arrangement, considering the additional workload it may place on residents.",
+      "date": "2026-08-30T18:30:00.000Z",
+      "image": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030255714-6183f0b9.jpg",
+      "pdfUrl": null,
+      "category": null,
+      "pinned": false,
+      "published": true,
+      "createdAt": "2026-10-26T10:27:37.987Z",
+      "updatedAt": "2026-10-26T10:27:37.987Z"
+    }
+  ],
+  "Marquee": [
+    {
+      "id": "cmvpdw8ce0002mc4lbn8js3da",
+      "enabled": true,
+      "text": "Welcome to ADVAYA — Union Day celebrations begin 15 August. Registrations now open.",
+      "buttonText": "View Details",
+      "buttonUrl": "/events",
+      "updatedAt": "2026-10-26T09:30:55.743Z"
+    }
+  ],
+  "Media": [
+    {
+      "id": "cmvnnqlhu0000l608u47ytqtn",
+      "name": "_ksd.png",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792922456401-c45be554.png",
+      "type": "image",
+      "mime": "image/png",
+      "size": 110459,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T04:30:56.659Z"
+    },
+    {
+      "id": "cmvnnttjq0000kt08my03b3u2",
+      "name": "Screenshot (2).png",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792922606884-979026db.png",
+      "type": "image",
+      "mime": "image/png",
+      "size": 297371,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T04:33:27.047Z"
+    },
+    {
+      "id": "cmvnot70s0000lb0866ln2d7f",
+      "name": "484404.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792924257182-4b8ae4f8.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 190221,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T05:00:57.409Z"
+    },
+    {
+      "id": "cmvnpt9ct0000l608bt7cybug",
+      "name": "_ksd.png",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925939740-8e0c89cd.png",
+      "type": "image",
+      "mime": "image/png",
+      "size": 110459,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T05:28:59.997Z"
+    },
+    {
+      "id": "cmvnptame0001l608750zq7up",
+      "name": "Screenshot (1).png",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925941630-b8b36927.png",
+      "type": "image",
+      "mime": "image/png",
+      "size": 297936,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T05:29:01.766Z"
+    },
+    {
+      "id": "cmvnptbvo0002l608wic5iy5i",
+      "name": "Screenshot (2).png",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925943294-96a7cf33.png",
+      "type": "image",
+      "mime": "image/png",
+      "size": 297371,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T05:29:03.397Z"
+    },
+    {
+      "id": "cmvnptdbb0003l608gp763s77",
+      "name": "Screenshot (3).png",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925945139-b3542573.png",
+      "type": "image",
+      "mime": "image/png",
+      "size": 698213,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T05:29:05.256Z"
+    },
+    {
+      "id": "cmvnpte3d0004l608e03rzqqc",
+      "name": "Screenshot 2024-04-19 124457.png",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925946191-622288ca.png",
+      "type": "image",
+      "mime": "image/png",
+      "size": 176,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T05:29:06.265Z"
+    },
+    {
+      "id": "cmvnptm1g0005l608mbbh9s30",
+      "name": "_ksd.png",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792925956356-33b5fc49.png",
+      "type": "image",
+      "mime": "image/png",
+      "size": 110459,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T05:29:16.475Z"
+    },
+    {
+      "id": "cmvnpz7fe0000k008xvkpgd58",
+      "name": "_ksd.png",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792926217327-750c306c.png",
+      "type": "image",
+      "mime": "image/png",
+      "size": 110459,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T05:33:37.543Z"
+    },
+    {
+      "id": "cmvnrmh560000jr08shugof1l",
+      "name": "_ksd.png",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792928982569-ffe171e6.png",
+      "type": "image",
+      "mime": "image/png",
+      "size": 110459,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T06:19:42.780Z"
+    },
+    {
+      "id": "cmvnrn7vp0001jr08nm5a0sqk",
+      "name": "crop-1792929016700.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792929017367-9bb7ec9c.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 27523,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-25T06:20:17.429Z"
+    },
+    {
+      "id": "cmvovt39l000oia08olgmub2h",
+      "name": "490340.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792996475779-96a8d68e.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 47043,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T01:04:36.023Z"
+    },
+    {
+      "id": "cmvovwoij000via08vtavomnf",
+      "name": "490340.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792996643453-3822512f.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 47043,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T01:07:23.611Z"
+    },
+    {
+      "id": "cmvowpen90000l908ilj4ir5g",
+      "name": "Rep to KUHS.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792997983441-4d01ef22.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 156329,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T01:29:43.760Z"
+    },
+    {
+      "id": "cmvowq4ql0000jv08rjks6ato",
+      "name": "crop-1792998017062.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792998017023-aba7df18.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 484786,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T01:30:17.657Z"
+    },
+    {
+      "id": "cmvowsi4w0001jv081r3g9e38",
+      "name": "Rep to KUHS.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792998128120-4cfec717.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 156329,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T01:32:08.251Z"
+    },
+    {
+      "id": "cmvowsnqc0002jv08asd81lhs",
+      "name": "crop-1792998136141.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792998135450-50be9662.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 484786,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T01:32:15.589Z"
+    },
+    {
+      "id": "cmvox56vi0009jv087ka8h8kj",
+      "name": "a76ac66e-0121-43a0-aded-8e86a274953b.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792998719939-cd1eb6d4.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 191444,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T01:42:00.185Z"
+    },
+    {
+      "id": "cmvox5bxu000ajv08u85gagya",
+      "name": "crop-1792998725133.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1792998726500-f5715857.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 489294,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T01:42:06.835Z"
+    },
+    {
+      "id": "cmvoy1ya50000jv08zszz5s90",
+      "name": "cb22c29c-e883-43ab-b56e-e201801450ba.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793000248405-dd71cb9d.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 464943,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T02:07:28.693Z"
+    },
+    {
+      "id": "cmvoy8miu0001jv08yih153q3",
+      "name": "172b7746-96ba-4870-9e98-e26562bc7300.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793000559684-8952b057.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 874050,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T02:12:40.020Z"
+    },
+    {
+      "id": "cmvoy8qdn0002jv08skczwzvq",
+      "name": "crop-1793000563706.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793000564907-c9dcedc7.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 789530,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T02:12:45.131Z"
+    },
+    {
+      "id": "cmvoyj87w0000l908tfrnoqah",
+      "name": "eeb824c0-7d7e-4e2c-8c45-e5424681906a.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793001054261-ed54d7f0.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 73267,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T02:20:54.809Z"
+    },
+    {
+      "id": "cmvoyjbkr0001l908mis84x4c",
+      "name": "crop-1793001057804.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793001059005-06908207.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 553327,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T02:20:59.164Z"
+    },
+    {
+      "id": "cmvpauajw0000l7087dqdbu1a",
+      "name": "IMG_0465.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793021725862-2eb86f76.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 923179,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T08:05:26.441Z"
+    },
+    {
+      "id": "cmvpauk6w0001l708f16950dj",
+      "name": "crop-1793021737611.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793021738783-373349f7.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 606928,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T08:05:38.937Z"
+    },
+    {
+      "id": "cmvpaydio0000l808lbdt5xa3",
+      "name": "348bebd0-7a7b-4173-9ccd-7a55d4476bc9.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793021916497-407a891f.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 413426,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T08:08:36.909Z"
+    },
+    {
+      "id": "cmvpayimw0001l808vondnq9f",
+      "name": "crop-1793021922203.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793021923339-f03d055b.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 907892,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T08:08:43.544Z"
+    },
+    {
+      "id": "cmvpb9d8s0000l508aio6x6wb",
+      "name": "1ee06cd2-2023-4513-87f9-21362a32a1dc.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793022429222-655f20b0.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 239530,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T08:17:09.769Z"
+    },
+    {
+      "id": "cmvpbew060000l60736a25gm4",
+      "name": "dbc3f223-5ca1-41ef-8a9e-282222a768a3.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793022687080-a8d5e5a2.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 214481,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T08:21:27.285Z"
+    },
+    {
+      "id": "cmvpbezck0001l607nt5bhot8",
+      "name": "crop-1793022690125.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793022691543-575932c6.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 652984,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T08:21:31.700Z"
+    },
+    {
+      "id": "cmvpbfkki0002l607ayulch8j",
+      "name": "crop-1793022717755.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793022719010-d2180032.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 657029,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T08:21:59.120Z"
+    },
+    {
+      "id": "cmvpbfwn20003l6071g54cnwf",
+      "name": "crop-1793022733085.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793022734496-3b5f15c3.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 678192,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T08:22:14.766Z"
+    },
+    {
+      "id": "cmvpbg0yd0004l607zn0rwwla",
+      "name": "crop-1793022739244.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793022740286-1503a13f.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 675399,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T08:22:20.438Z"
+    },
+    {
+      "id": "cmvpf624h0000l608afuud6m9",
+      "name": "pranaah-removebg-preview.png",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793028993638-acdccb8f.png",
+      "type": "image",
+      "mime": "image/png",
+      "size": 138391,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T10:06:33.850Z"
+    },
+    {
+      "id": "cmvpfog190000l507wf3cgk8d",
+      "name": "19085991-d1f4-46d2-a884-c0cbadc05d75.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793029851354-843e6de5.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 338743,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T10:20:51.577Z"
+    },
+    {
+      "id": "cmvpfs3yb0001l507s3wsksb7",
+      "name": "59c14814-b406-4da1-9eac-3ee9fc87858a.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030022459-79616ca8.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 321181,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T10:23:42.579Z"
+    },
+    {
+      "id": "cmvpfs8mu0002l507qt1zv4i7",
+      "name": "crop-1793030027092.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030028458-83716ee6.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 736567,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T10:23:48.726Z"
+    },
+    {
+      "id": "cmvpfsj1f0003l507alia6vp8",
+      "name": "crop-1793030040405.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030041973-c58038b7.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 737075,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T10:24:02.131Z"
+    },
+    {
+      "id": "cmvpfsxny0004l507nydhzj9g",
+      "name": "crop-1793030059713.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030060998-2eb356d4.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 729411,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T10:24:21.158Z"
+    },
+    {
+      "id": "cmvpfte8j0005l507hky28krv",
+      "name": "crop-1793030081067.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030082533-b0fcc17d.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 715061,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T10:24:42.635Z"
+    },
+    {
+      "id": "cmvpfwyu00000lb08ryhv2rxj",
+      "name": "42d79eb1-7bf6-48b6-be1b-cd4a9e0df465.jpeg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030248990-badb7738.jpeg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 75951,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T10:27:29.225Z"
+    },
+    {
+      "id": "cmvpfx3xz0001lb087yl3hnu7",
+      "name": "crop-1793030254506.jpg",
+      "url": "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030255714-6183f0b9.jpg",
+      "type": "image",
+      "mime": "image/jpeg",
+      "size": 506541,
+      "width": null,
+      "height": null,
+      "createdAt": "2026-10-26T10:27:35.928Z"
+    }
+  ],
+  "Notification": [
+    {
+      "id": "cmvpdw92p000nmc4ldju9w1cc",
+      "title": "Union Day registrations open",
+      "slug": "union-day-registrations-open",
+      "description": "Register for cultural and sports events before 10 August. Slots are limited.",
+      "date": "2026-10-25T09:30:56.689Z",
+      "image": null,
+      "pdfUrl": null,
+      "published": true,
+      "createdAt": "2026-10-26T09:30:56.690Z",
+      "updatedAt": "2026-10-26T09:30:56.690Z"
+    },
+    {
+      "id": "cmvpdw936000omc4lkf0ilqcb",
+      "title": "Revised internal exam timetable",
+      "slug": "revised-internal-exam-timetable",
+      "description": "The internal assessment schedule has been revised. Please check the attached notice.",
+      "date": "2026-10-23T09:30:56.689Z",
+      "image": null,
+      "pdfUrl": null,
+      "published": true,
+      "createdAt": "2026-10-26T09:30:56.706Z",
+      "updatedAt": "2026-10-26T09:30:56.706Z"
+    },
+    {
+      "id": "cmvpdw93e000pmc4lzpkn9gvt",
+      "title": "Holiday declared on 15 October",
+      "slug": "holiday-15-october",
+      "description": "The college will remain closed on 15 October on account of the local festival.",
+      "date": "2026-10-20T09:30:56.689Z",
+      "image": null,
+      "pdfUrl": null,
+      "published": true,
+      "createdAt": "2026-10-26T09:30:56.715Z",
+      "updatedAt": "2026-10-26T09:30:56.715Z"
+    }
+  ],
+  "Page": [
+    {
+      "id": "cmvnkaxtw0003p949dkdo3yjx",
+      "key": "about",
+      "title": "About the Union",
+      "content": "{\"history\":\"ADVAYA (അദ്വയ) is the elected student union of Alappuzha Government Medical College, representing undergraduate and postgraduate students across all departments.\",\"mission\":\"To give every student a voice, nurture talent in arts, sports and academics, and build a college community rooted in fairness and care.\",\"vision\":\"A medical college where students lead, support one another, and grow into compassionate professionals.\",\"chairperson\":\"It is my privilege to serve the students of Alappuzha Medical College. Together we will make this a year of achievement, unity and unforgettable memories.\"}",
+      "updatedAt": "2026-10-26T09:30:55.797Z"
+    }
+  ],
+  "RegistrationField": [
+    {
+      "id": "cmvpdw8zf000emc4lqk78wtl9",
+      "formId": "cmvpdw8zf000dmc4lzprwts6u",
+      "label": "Full Name",
+      "type": "text",
+      "required": true,
+      "placeholder": "Dr. / Medico Full Name",
+      "options": null,
+      "order": 0
+    },
+    {
+      "id": "cmvpdw8zf000fmc4lixpk1s12",
+      "formId": "cmvpdw8zf000dmc4lzprwts6u",
+      "label": "Email Address",
+      "type": "email",
+      "required": true,
+      "placeholder": "name@gmc.edu",
+      "options": null,
+      "order": 1
+    },
+    {
+      "id": "cmvpdw8zf000gmc4lborrk3gt",
+      "formId": "cmvpdw8zf000dmc4lzprwts6u",
+      "label": "Batch / Academic Year",
+      "type": "radio",
+      "required": true,
+      "placeholder": null,
+      "options": "MBBS 2021, MBBS 2022, MBBS 2023, MBBS 2024, MBBS 2025, House Surgeon / Intern, PG Resident",
+      "order": 2
+    },
+    {
+      "id": "cmvpdw8zf000hmc4laq4lq3if",
+      "formId": "cmvpdw8zf000dmc4lzprwts6u",
+      "label": "WhatsApp Phone Number",
+      "type": "number",
+      "required": true,
+      "placeholder": "+91 98765 43210",
+      "options": null,
+      "order": 3
+    },
+    {
+      "id": "cmvpdw8zf000imc4lma24dpq5",
+      "formId": "cmvpdw8zf000dmc4lzprwts6u",
+      "label": "Delegate Category",
+      "type": "select",
+      "required": false,
+      "placeholder": null,
+      "options": "Student Delegate, Stage Performer, Sports Team, Volunteer, Alumni Guest",
+      "order": 4
+    }
+  ],
+  "RegistrationForm": [
+    {
+      "id": "cmvpdw8zf000dmc4lzprwts6u",
+      "title": "YUGA Union Day 2026 — Delegate Pass Registration",
+      "slug": "yuga-union-day-2026-delegate-pass",
+      "description": "Official delegate enrollment for YUGA Union Day celebrations. Please fill in your academic batch and contact details to generate your digital gate pass.",
+      "eventId": "cmvnnoyxu0009n848ldjja794",
+      "deadline": "2026-11-13T09:30:56.570Z",
+      "published": true,
+      "createdAt": "2026-10-26T09:30:56.571Z",
+      "updatedAt": "2026-10-26T09:30:56.571Z"
+    }
+  ],
+  "RegistrationSubmission": [
+    {
+      "id": "cmvpdw91h000kmc4ldbili6lj",
+      "formId": "cmvpdw8zf000dmc4lzprwts6u",
+      "data": "{\"_ticketRef\":\"YUG-842091\",\"_submittedAt\":\"2026-10-26T15:00:56.645Z\",\"Full Name\":\"Dr. Rohit Menon\",\"Email Address\":\"rohit.menon@gmck.edu\",\"Batch / Academic Year\":\"MBBS 2022\",\"WhatsApp Phone Number\":\"+91 98471 23456\",\"Delegate Category\":\"Student Delegate\"}",
+      "files": null,
+      "createdAt": "2026-10-26T09:30:56.646Z"
+    },
+    {
+      "id": "cmvpdw91y000mmc4la31lec36",
+      "formId": "cmvpdw8zf000dmc4lzprwts6u",
+      "data": "{\"_ticketRef\":\"YUG-319582\",\"_submittedAt\":\"2026-10-26T15:00:56.662Z\",\"Full Name\":\"Dr. Ananya Varma\",\"Email Address\":\"ananya.varma@gmck.edu\",\"Batch / Academic Year\":\"House Surgeon / Intern\",\"WhatsApp Phone Number\":\"+91 94470 65432\",\"Delegate Category\":\"Stage Performer\"}",
+      "files": null,
+      "createdAt": "2026-10-26T09:30:56.663Z"
+    }
+  ],
+  "Setting": [
+    {
+      "key": "contact",
+      "value": "{\"address\":\"Alappuzha Government Medical College, Vandanam, Alappuzha, Kerala 688005\",\"phone\":\"+91 477 000 0000\",\"email\":\"advaya.union@example.com\"}",
+      "updatedAt": "2026-10-26T09:30:55.779Z"
+    },
+    {
+      "key": "stats",
+      "value": "{\"students\":1200,\"events\":48,\"achievements\":96,\"committees\":12}",
+      "updatedAt": "2026-10-26T09:30:55.788Z"
+    },
+    {
+      "key": "yuga_initial_notifications_synced",
+      "value": "true",
+      "updatedAt": "2026-10-25T06:45:31.527Z"
+    },
+    {
+      "key": "yuga_initial_interventions_synced",
+      "value": "true",
+      "updatedAt": "2026-10-25T08:09:59.946Z"
+    },
+    {
+      "key": "grid_layouts",
+      "value": "{\"eventsColumns\":3,\"interventionsColumns\":2,\"notificationsColumns\":1}",
+      "updatedAt": "2026-10-26T02:21:14.798Z"
+    },
+    {
+      "key": "identity",
+      "value": "{\"unionName\":\"YUGA\",\"unionMalayalam\":\"യുഗ\",\"collegeName\":\"Government Medical College, Kozhikode\",\"academicYear\":\"2026-2027\",\"tagline\":\"Official College Union — Govt. Medical College Kozhikode\"}",
+      "updatedAt": "2026-10-25T12:33:27.455Z"
+    },
+    {
+      "key": "yuga_initial_achievements_synced",
+      "value": "true",
+      "updatedAt": "2026-10-25T04:53:20.386Z"
+    },
+    {
+      "key": "yuga_initial_events_synced",
+      "value": "true",
+      "updatedAt": "2026-10-25T04:53:36.493Z"
+    },
+    {
+      "key": "theme",
+      "value": "{\"active\":\"obsidian-crimson\"}",
+      "updatedAt": "2026-10-25T12:33:27.454Z"
+    },
+    {
+      "key": "socials",
+      "value": "{\"instagram\":\"https://instagram.com/yuga_calicutmedicos\",\"youtube\":\"https://youtube.com/@yugacalicut\",\"whatsapp\":\"https://chat.whatsapp.com/\",\"telegram\":\"https://t.me/yugacmc\"}",
+      "updatedAt": "2026-10-25T12:33:27.456Z"
+    },
+    {
+      "key": "hero_card",
+      "value": "{\"visible\":false,\"cardStyle\":\"white\",\"tag\":\"ALL-KERALA CONCLAVE\",\"date\":\"MARCH 27–29, 2026\",\"category\":\"Annual Intercollegiate Medical Colloquium\",\"title\":\"PULSE 2026: The Sovereign Vanguard\",\"description\":\"Featuring 42 clinical hackathons, state surgical simulation leagues, national med-law panels, and Calicut's landmark cultural gala.\",\"venue\":\"Silver Jubilee Auditorium, GMC\",\"btnText\":\"Delegate Pass →\",\"btnLink\":\"/events\",\"image\":\"/pulse-stage.jpg\"}",
+      "updatedAt": "2026-10-25T12:33:27.459Z"
+    },
+    {
+      "key": "achievements_slider",
+      "value": "{\"autoplay\":false,\"interval\":3}",
+      "updatedAt": "2026-10-25T12:33:27.459Z"
+    },
+    {
+      "key": "nav_search",
+      "value": "{\"showMobile\":true,\"showDesktop\":true}",
+      "updatedAt": "2026-10-25T12:33:27.456Z"
+    },
+    {
+      "key": "hero",
+      "value": "{\"badge\":\"Alappuzha Government Medical College\",\"title\":\"The voice of every student.\",\"subtitle\":\"ADVAYA is the official college union — celebrating achievements, powering events, and standing for every student at Alappuzha Medical College.\"}",
+      "updatedAt": "2026-10-26T09:30:55.760Z"
+    }
+  ],
+  "_EventCommittees": []
+}

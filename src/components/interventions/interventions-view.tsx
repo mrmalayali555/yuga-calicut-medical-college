@@ -19,6 +19,12 @@ import {
 import { formatDate } from "@/lib/utils";
 
 const FALLBACK_INTERVENTION_IMAGES: Record<string, string> = {
+  "representation-regarding-early-publication-of-final-year-mbbs-results":
+    "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030060998-2eb356d4.jpg",
+  "representation-regarding-the-delay-in-e-grantz-scholarship":
+    "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030082533-b0fcc17d.jpg",
+  "representation-regarding-the-proposed-increase-in-working-hours-of-jrs-under-the-drp":
+    "https://tokr4sc45vjvffrx.public.blob.vercel-storage.com/1793030255714-6183f0b9.jpg",
   "inv-reading-rooms":
     "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1200&q=80",
   "inv-opd-ramp":
