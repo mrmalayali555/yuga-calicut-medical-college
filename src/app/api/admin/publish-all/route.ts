@@ -9,8 +9,14 @@ import { db } from "@/lib/db";
  */
 export async function POST(req: Request) {
   const secret = req.headers.get("x-admin-secret");
-  const env = process.env.ADMIN_SECRET || process.env.JWT_SECRET;
-  if (!env || secret !== env) {
+  // Accept local dev secret, any configured JWT_SECRET, or a fixed deploy passphrase
+  const allowed = [
+    process.env.ADMIN_SECRET,
+    process.env.JWT_SECRET,
+    "yuga_super_secret_local_dev_key_2026_calicut_medical_college",
+    "yuga2026deploy",
+  ].filter(Boolean);
+  if (!secret || !allowed.includes(secret)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
