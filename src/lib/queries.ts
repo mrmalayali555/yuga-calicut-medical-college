@@ -112,8 +112,8 @@ export async function getAchievements(opts?: { category?: string; take?: number 
       take: opts?.take,
       include: { media: { orderBy: { order: "asc" } } },
     });
-    const totalCount = await db.achievement.count();
-    if (totalCount > 0) return dbAchievements;
+    const publishedCount = await db.achievement.count({ where: { published: true } });
+    if (publishedCount > 0) return dbAchievements;
   } catch (err) {
     console.error("Error querying achievements from db:", err);
   }
@@ -200,8 +200,8 @@ export async function getEvents(opts?: { status?: string; take?: number }) {
         registrationForm: { select: { id: true, title: true, slug: true, published: true, deadline: true } },
       },
     });
-    const totalCount = await db.event.count();
-    if (totalCount > 0) return dbEvents;
+    const publishedCount = await db.event.count({ where: { published: true } });
+    if (publishedCount > 0) return dbEvents;
   } catch (err) {
     console.error("Error querying events from db:", err);
   }
@@ -310,8 +310,8 @@ export async function getNotifications(take?: number) {
       orderBy: { date: "desc" },
       take,
     });
-    const totalCount = await db.notification.count();
-    if (totalCount > 0) return dbNotifs;
+    const publishedCount = await db.notification.count({ where: { published: true } });
+    if (publishedCount > 0) return dbNotifs;
   } catch (err) {
     console.error("Error querying notifications:", err);
   }
@@ -369,8 +369,8 @@ export async function getInterventions(take?: number) {
       orderBy: [{ pinned: "desc" }, { date: "desc" }],
       take,
     });
-    const totalCount = await db.intervention.count();
-    if (totalCount > 0) return dbItems;
+    const publishedCount = await db.intervention.count({ where: { published: true } });
+    if (publishedCount > 0) return dbItems;
   } catch (err) {
     console.error("Error querying interventions:", err);
   }
