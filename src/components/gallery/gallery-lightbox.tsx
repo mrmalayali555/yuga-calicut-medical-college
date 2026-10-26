@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { GalleryPhotoImg } from "@/components/ui/gallery-photo-img";
@@ -23,8 +24,13 @@ export function GalleryLightbox({
   initialIndex: number;
   onClose: () => void;
 }) {
+  const [mounted, setMounted] = useState(false);
   const [index, setIndex] = useState(initialIndex);
   const [direction, setDirection] = useState(0);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const photo = photos[index];
 
@@ -80,21 +86,28 @@ export function GalleryLightbox({
     }),
   };
 
-  return (
+  if (!mounted) return null;
+
+  const content = (
     <motion.div
       initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
       animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
       exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85"
+      className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/90 backdrop-blur-md"
       onClick={onClose}
     >
-      {/* Close button */}
+      {/* Floating Top-Right Close Button */}
       <button
-        onClick={onClose}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
         aria-label="Close Lightbox"
-        className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 focus:outline-none"
+        className="fixed right-3 top-3 sm:right-5 sm:top-5 z-[9999999] flex items-center gap-1.5 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-[#e11d48] hover:bg-[#be123c] active:scale-95 text-white font-bold text-xs sm:text-sm shadow-2xl border-2 border-white/60 backdrop-blur-md transition-all cursor-pointer group"
+        title="Close (ESC)"
       >
-        <X className="h-5 w-5" />
+        <X className="h-4 w-4 sm:h-5 sm:w-5 transition-transform group-hover:rotate-90 group-hover:scale-110" />
+        <span>Close</span>
       </button>
 
       {/* Nav buttons */}
@@ -171,4 +184,6 @@ export function GalleryLightbox({
       </div>
     </motion.div>
   );
+
+  return createPortal(content, document.body);
 }
