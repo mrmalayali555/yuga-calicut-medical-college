@@ -3,8 +3,6 @@
 import Link from "next/link";
 import {
   History,
-  Target,
-  Eye,
   Quote,
   ArrowRight,
   Building2,
@@ -141,48 +139,7 @@ export default function AboutPage() {
           </motion.div>
         </div>
 
-        {/* Mission & Vision */}
-        <div className="grid gap-5 sm:grid-cols-2 mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 80, damping: 20 }}
-            className="card p-8"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--accent)]/20 mb-5">
-              <Target className="h-5 w-5" aria-hidden="true" />
-            </div>
-            <h3 className="text-xl font-display text-[var(--text-primary)]">
-              Our Mission
-            </h3>
-            <p className="mt-3 text-sm text-[var(--text-secondary)] leading-relaxed">
-              To cultivate an inclusive environment that balances demanding
-              medical curricula with artistic expression, athletic glory, and
-              fearless student advocacy across all batches.
-            </p>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.06 }}
-            className="card p-8"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20 mb-5">
-              <Eye className="h-5 w-5" aria-hidden="true" />
-            </div>
-            <h3 className="text-xl font-display text-[var(--text-primary)]">
-              Our Vision
-            </h3>
-            <p className="mt-3 text-sm text-[var(--text-secondary)] leading-relaxed">
-              Fostering compassionate healthcare leaders who excel as
-              clinicians, researchers, and socially conscious citizens who
-              uplift public healthcare.
-            </p>
-          </motion.div>
-        </div>
 
         {/* Leadership Grid */}
         <div className="mb-20">
