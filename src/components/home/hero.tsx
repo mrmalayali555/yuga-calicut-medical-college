@@ -399,7 +399,7 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
               </div>
               <div>
                 <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-['Plus_Jakarta_Sans',sans-serif]">
-                  <AnimatedCounter value={3020} suffix="+" />
+                  2,000+
                 </div>
                 <div className="text-xs sm:text-[13px] text-white/60 font-medium">
                   Students &amp; residents
@@ -443,7 +443,7 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
             {/* Mobile Metric 1 */}
             <div className="px-1.5 flex flex-col items-center">
               <span className="text-lg xs:text-xl font-black text-white tracking-tight">
-                <AnimatedCounter value={3020} suffix="+" />
+                2,000+
               </span>
               <span className="text-[10px] text-white/65 font-medium leading-tight mt-0.5 truncate w-full">
                 Students

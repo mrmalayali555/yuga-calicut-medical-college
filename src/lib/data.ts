@@ -271,6 +271,14 @@ export const LEADERSHIP: LeaderItem[] = [
     phone: "+91 94471 20004",
   },
   {
+    name: "Yadhukrishnan C",
+    role: "UUC-UG",
+    batch: "Final MBBS Part 2",
+    portfolio: "KUHS University Union Council (UG)",
+    quote: "Representing our voice at the university level.",
+    phone: "+91 94471 20008",
+  },
+  {
     name: "Sreelakshmi M S",
     role: "Fine Arts Secretary",
     batch: "Third Professional MBBS Year",
@@ -293,14 +301,6 @@ export const LEADERSHIP: LeaderItem[] = [
     portfolio: "Union Editorial & Literary Forum",
     quote: "Documenting the heartbeat of Calicut Medicos.",
     phone: "+91 94471 20007",
-  },
-  {
-    name: "Yadhukrishnan C",
-    role: "UUC-UG",
-    batch: "Final MBBS Part 2",
-    portfolio: "KUHS University Union Council (UG)",
-    quote: "Representing our voice at the university level.",
-    phone: "+91 94471 20008",
   },
   {
     name: "Sumayya Beegum K T",
