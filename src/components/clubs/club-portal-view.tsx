@@ -38,7 +38,7 @@ import { useAdminEdit } from "@/components/admin/inline/admin-edit-context";
 
 export type ClubSlug = "jeevanam" | "praanah" | "godha" | "ocha";
 
-interface ClubConfig {
+export interface ClubConfig {
   id: ClubSlug;
   name: string;
   malayalam: string;
@@ -69,7 +69,7 @@ interface ClubConfig {
   }[];
 }
 
-const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
+export const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
   jeevanam: {
     id: "jeevanam",
     name: "Jeevanam",
@@ -87,12 +87,7 @@ const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
       "A self-sufficient clinical community where ethical, voluntary donation eliminates commercial donor reliance throughout Northern Kerala.",
     heroDescription:
       "The dedicated lifeline of Calicut Medical College. Jeevanam coordinates 24/7 urgent blood mobilization, single-donor platelet (SDP) apheresis for oncology & dengue crises, and rare blood group registry support across all GMC ICUs and casualty triage.",
-    stats: [
-      { label: "Active Donors", value: "1,850+", hint: "Verified medicos & alumni" },
-      { label: "Units Mobilized", value: "3,400+", hint: "Past 3 academic years" },
-      { label: "Avg Response Time", value: "14 Mins", hint: "From request to triage" },
-      { label: "Emergency Drives", value: "52", hint: "Disease & seasonal camps" },
-    ],
+    stats: [],
     initiatives: [
       {
         title: "24/7 Casualty & ICU Live Blood Dispatch",
@@ -301,12 +296,7 @@ const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
       "A vibrant and inclusive sports culture making GMC Kozhikode a leading institution in student athletics, fitness and wellness in Kerala.",
     heroDescription:
       "The athletic battleground and fitness powerhouse of GMC Kozhikode, Godha manages the historic college sports grounds, multi-gym, synthetic indoor badminton arena, and basketball courts, while organizing the world-famous Calicut Medicos Premier League (CMPL).",
-    stats: [
-      { label: "Active Medico Athletes", value: "480+", hint: "Across 8 disciplines" },
-      { label: "CMPL Franchise Teams", value: "16 Batches", hint: "Cricket & Football" },
-      { label: "University Cup Wins", value: "28 Trophies", hint: "KUHS & Inter-Collegiate" },
-      { label: "Annual Meets", value: "18 Meets", hint: "Intra & State tournaments" },
-    ],
+    stats: [],
     initiatives: [],
     achievements: [
       {
@@ -482,13 +472,20 @@ const BLOOD_GROUPS = [
   { group: "AB-", status: "Ultra Rare", units: "3 Standby" },
 ];
 
-export function ClubPortalView({ slug }: { slug: ClubSlug }) {
-  const baseClub = CLUBS_CONFIG[slug] || CLUBS_CONFIG.jeevanam;
-  const [dbOverrides, setDbOverrides] = useState<Partial<ClubConfig>| null>(null);
+export function ClubPortalView({
+  slug,
+  initialClub,
+}: {
+  slug: ClubSlug;
+  initialClub?: ClubConfig;
+}) {
+  const baseClub = initialClub || CLUBS_CONFIG[slug] || CLUBS_CONFIG.jeevanam;
+  const [dbOverrides, setDbOverrides] = useState<Partial<ClubConfig> | null>(null);
   const { isAdmin } = useAdminEdit();
 
-  // Fetch persisted DB overrides for this club
+  // Fetch persisted DB overrides only if initialClub was not provided or user is admin
   useEffect(() => {
+    if (initialClub && !isAdmin) return;
     fetch(`/api/clubs?slug=${slug}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
@@ -497,7 +494,7 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
         }
       })
       .catch(() => {});
-  }, [slug]);
+  }, [slug, initialClub, isAdmin]);
 
   // Merge DB overrides over static defaults
   const club: ClubConfig = dbOverrides
@@ -515,8 +512,16 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
         mission: dbOverrides.mission ?? baseClub.mission,
         vision: dbOverrides.vision ?? baseClub.vision,
         heroDescription: dbOverrides.heroDescription ?? baseClub.heroDescription,
-        stats: dbOverrides.stats ?? baseClub.stats,
-        initiatives: dbOverrides.initiatives ?? baseClub.initiatives,
+        stats:
+          slug === "jeevanam" || slug === "godha"
+            ? []
+            : dbOverrides.stats && dbOverrides.stats.length > 0
+            ? dbOverrides.stats
+            : baseClub.stats,
+        initiatives:
+          slug === "godha"
+            ? []
+            : (dbOverrides.initiatives ?? baseClub.initiatives),
         achievements: dbOverrides.achievements ?? baseClub.achievements,
         team: dbOverrides.team ?? baseClub.team,
       }
@@ -717,30 +722,32 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
             </div>
 
             {/* Metric Hardware Strip */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-              className="mt-16 pt-10 border-t border-white/15 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
-            >
-              {club.stats.map((st, idx) => (
-                <div
-                  key={idx}
-                  className="relative rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md p-5 text-center lg:text-left transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5"
-                >
+            {club.stats && club.stats.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
+                className="mt-16 pt-10 border-t border-white/15 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
+              >
+                {club.stats.map((st, idx) => (
                   <div
-                    className="text-3xl sm:text-4xl font-display font-black tracking-tight mb-1"
-                    style={{ color: club.accent }}
+                    key={idx}
+                    className="relative rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md p-5 text-center lg:text-left transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5"
                   >
-                    {st.value}
+                    <div
+                      className="text-3xl sm:text-4xl font-display font-black tracking-tight mb-1"
+                      style={{ color: club.accent }}
+                    >
+                      {st.value}
+                    </div>
+                    <div className="text-xs font-bold text-white uppercase tracking-wider mb-0.5">
+                      {st.label}
+                    </div>
+                    <div className="text-[11px] text-white/50">{st.hint}</div>
                   </div>
-                  <div className="text-xs font-bold text-white uppercase tracking-wider mb-0.5">
-                    {st.label}
-                  </div>
-                  <div className="text-[11px] text-white/50">{st.hint}</div>
-                </div>
-              ))}
-            </motion.div>
+                ))}
+              </motion.div>
+            )}
           </div>
         </section>
       )}

@@ -1,6 +1,12 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ClubPortalView, type ClubSlug } from "@/components/clubs/club-portal-view";
+import {
+  ClubPortalView,
+  type ClubSlug,
+  type ClubConfig,
+  CLUBS_CONFIG,
+} from "@/components/clubs/club-portal-view";
+import { db } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -45,6 +51,44 @@ export async function generateMetadata({
   };
 }
 
+async function getClubData(slug: ClubSlug): Promise<ClubConfig> {
+  const baseClub = CLUBS_CONFIG[slug] || CLUBS_CONFIG.jeevanam;
+  try {
+    const row = await db.setting.findUnique({ where: { key: `club:${slug}` } });
+    if (!row) return baseClub;
+    const dbOverrides = JSON.parse(row.value) as Partial<ClubConfig>;
+    return {
+      ...baseClub,
+      name: dbOverrides.name ?? baseClub.name,
+      malayalam: dbOverrides.malayalam ?? baseClub.malayalam,
+      tagline: dbOverrides.tagline ?? baseClub.tagline,
+      category: dbOverrides.category ?? baseClub.category,
+      founded: dbOverrides.founded ?? baseClub.founded,
+      logo: dbOverrides.logo ?? baseClub.logo,
+      accent: dbOverrides.accent ?? baseClub.accent,
+      accentRgb: dbOverrides.accentRgb ?? baseClub.accentRgb,
+      heroGradient: dbOverrides.heroGradient ?? baseClub.heroGradient,
+      mission: dbOverrides.mission ?? baseClub.mission,
+      vision: dbOverrides.vision ?? baseClub.vision,
+      heroDescription: dbOverrides.heroDescription ?? baseClub.heroDescription,
+      stats:
+        slug === "jeevanam" || slug === "godha"
+          ? []
+          : dbOverrides.stats && dbOverrides.stats.length > 0
+          ? dbOverrides.stats
+          : baseClub.stats,
+      initiatives:
+        slug === "godha"
+          ? []
+          : (dbOverrides.initiatives ?? baseClub.initiatives),
+      achievements: dbOverrides.achievements ?? baseClub.achievements,
+      team: dbOverrides.team ?? baseClub.team,
+    };
+  } catch {
+    return baseClub;
+  }
+}
+
 export default async function ClubDetailPage({
   params,
 }: {
@@ -56,5 +100,8 @@ export default async function ClubDetailPage({
     notFound();
   }
 
-  return <ClubPortalView slug={slug as ClubSlug} />;
+  const initialClub = await getClubData(slug as ClubSlug);
+
+  return <ClubPortalView slug={slug as ClubSlug} initialClub={initialClub} />;
 }
+

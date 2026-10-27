@@ -23,21 +23,10 @@ interface JeevanamHeroProps {
   stats?: { label: string; value: string; hint: string }[];
 }
 
-const DEFAULT_JEEVANAM_STATS = [
-  { label: "ACTIVE DONORS", value: "1,850+", hint: "Verified medicos & alumni" },
-  { label: "UNITS MOBILIZED", value: "3,400+", hint: "Past 3 academic years" },
-  { label: "AVG RESPONSE TIME", value: "14 Mins", hint: "From request to triage" },
-  { label: "EMERGENCY DRIVES", value: "52", hint: "Disease & seasonal camps" },
-];
-
-const JEEVANAM_STAT_ICONS = [Users, Truck, Zap, HeartPulse, Activity];
-
 export function JeevanamHero({
   convenorPhone = "+919447123401",
   onOpenEmergencyDesk,
-  stats,
 }: JeevanamHeroProps) {
-  const displayStats = stats && stats.length > 0 ? stats : DEFAULT_JEEVANAM_STATS;
   return (
     <section className="relative pt-24 sm:pt-32 pb-14 sm:pb-20 bg-[#07080a] text-white overflow-hidden select-none">
       {/* =========================================================================

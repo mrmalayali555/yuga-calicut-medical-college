@@ -20,20 +20,9 @@ interface GodhaHeroProps {
   stats?: { label: string; value: string; hint: string }[];
 }
 
-const DEFAULT_GODHA_STATS = [
-  { label: "ACTIVE MEDICO ATHLETES", value: "480+", hint: "Across 8 disciplines" },
-  { label: "CMPL FRANCHISE TEAMS", value: "16 Batches", hint: "Cricket & Football" },
-  { label: "UNIVERSITY CUP WINS", value: "28 Trophies", hint: "KUHS & Inter-Collegiate" },
-  { label: "ANNUAL MEETS", value: "18 Meets", hint: "Intra & State tournaments" },
-];
-
-const GODHA_STAT_ICONS = [Users, Trophy, Award, Calendar];
-
 export function GodhaHero({
   convenorPhone = "+919447345601",
-  stats,
 }: GodhaHeroProps) {
-  const displayStats = stats && stats.length > 0 ? stats : DEFAULT_GODHA_STATS;
   return (
     <section className="relative pt-24 sm:pt-32 pb-14 sm:pb-24 bg-[#030905] text-white overflow-hidden select-none">
       {/* =========================================================================
