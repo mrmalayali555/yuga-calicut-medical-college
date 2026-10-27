@@ -14,17 +14,30 @@ import {
   Truck,
   Zap,
   HeartPulse,
+  Activity,
 } from "lucide-react";
 
 interface JeevanamHeroProps {
   convenorPhone?: string;
   onOpenEmergencyDesk?: () => void;
+  stats?: { label: string; value: string; hint: string }[];
 }
+
+const DEFAULT_JEEVANAM_STATS = [
+  { label: "ACTIVE DONORS", value: "1,850+", hint: "Verified medicos & alumni" },
+  { label: "UNITS MOBILIZED", value: "3,400+", hint: "Past 3 academic years" },
+  { label: "AVG RESPONSE TIME", value: "14 Mins", hint: "From request to triage" },
+  { label: "EMERGENCY DRIVES", value: "52", hint: "Disease & seasonal camps" },
+];
+
+const JEEVANAM_STAT_ICONS = [Users, Truck, Zap, HeartPulse, Activity];
 
 export function JeevanamHero({
   convenorPhone = "+919447123401",
   onOpenEmergencyDesk,
+  stats,
 }: JeevanamHeroProps) {
+  const displayStats = stats && stats.length > 0 ? stats : DEFAULT_JEEVANAM_STATS;
   return (
     <section className="relative pt-24 sm:pt-32 pb-14 sm:pb-20 bg-[#07080a] text-white overflow-hidden select-none">
       {/* =========================================================================
@@ -333,80 +346,32 @@ export function JeevanamHero({
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-          className="mt-14 sm:mt-18 rounded-3xl bg-[#0a0c10]/85 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.85)] p-6 sm:p-8"
+          className="mt-10 sm:mt-18 rounded-2xl sm:rounded-3xl bg-[#0a0c10]/85 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.85)] p-4 sm:p-6 lg:p-8"
         >
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-0 lg:divide-x divide-white/10">
-            {/* 1. Active Donors */}
-            <div className="flex items-center gap-4 lg:px-6">
-              <div className="w-12 h-12 rounded-full bg-red-950/60 border border-red-500/30 flex items-center justify-center shrink-0 shadow-inner">
-                <Users className="w-5 h-5 text-red-400" />
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-display font-bold text-red-500 tracking-tight leading-none mb-1">
-                  1,850+
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-0 lg:divide-x divide-white/10">
+            {displayStats.map((st, i) => {
+              const Icon = JEEVANAM_STAT_ICONS[i % JEEVANAM_STAT_ICONS.length];
+              return (
+                <div key={i} className="flex items-center gap-3.5 sm:gap-4 lg:px-6">
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-red-950/60 border border-red-500/30 flex items-center justify-center shrink-0 shadow-inner">
+                    <Icon className="w-5 h-5 text-red-400" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xl sm:text-2xl lg:text-3xl font-display font-bold text-red-500 tracking-tight leading-none mb-1 truncate">
+                      {st.value}
+                    </div>
+                    <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider truncate">
+                      {st.label}
+                    </div>
+                    {st.hint && (
+                      <div className="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5 truncate">
+                        {st.hint}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="text-xs font-bold text-white uppercase tracking-wider">
-                  ACTIVE DONORS
-                </div>
-                <div className="text-[11px] text-zinc-400 mt-0.5">
-                  Verified medicos & alumni
-                </div>
-              </div>
-            </div>
-
-            {/* 2. Units Mobilized */}
-            <div className="flex items-center gap-4 lg:px-6">
-              <div className="w-12 h-12 rounded-full bg-red-950/60 border border-red-500/30 flex items-center justify-center shrink-0 shadow-inner">
-                <Truck className="w-5 h-5 text-red-400" />
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-display font-bold text-red-500 tracking-tight leading-none mb-1">
-                  3,400+
-                </div>
-                <div className="text-xs font-bold text-white uppercase tracking-wider">
-                  UNITS MOBILIZED
-                </div>
-                <div className="text-[11px] text-zinc-400 mt-0.5">
-                  Past 3 academic years
-                </div>
-              </div>
-            </div>
-
-            {/* 3. Average Response Time */}
-            <div className="flex items-center gap-4 lg:px-6">
-              <div className="w-12 h-12 rounded-full bg-red-950/60 border border-red-500/30 flex items-center justify-center shrink-0 shadow-inner">
-                <Zap className="w-5 h-5 text-red-400" />
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-display font-bold text-red-500 tracking-tight leading-none mb-1">
-                  14 Mins
-                </div>
-                <div className="text-xs font-bold text-white uppercase tracking-wider">
-                  AVG RESPONSE TIME
-                </div>
-                <div className="text-[11px] text-zinc-400 mt-0.5">
-                  From request to triage
-                </div>
-              </div>
-            </div>
-
-            {/* 4. Emergency Drives */}
-            <div className="flex items-center gap-4 lg:px-6">
-              <div className="w-12 h-12 rounded-full bg-red-950/60 border border-red-500/30 flex items-center justify-center shrink-0 shadow-inner">
-                <HeartPulse className="w-5 h-5 text-red-400" />
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-display font-bold text-red-500 tracking-tight leading-none mb-1">
-                  52
-                </div>
-                <div className="text-xs font-bold text-white uppercase tracking-wider">
-                  EMERGENCY DRIVES
-                </div>
-                <div className="text-[11px] text-zinc-400 mt-0.5">
-                  Disease & seasonal camps
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </motion.div>
       </div>

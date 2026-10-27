@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     "Official financial accounts and budget statement for YUGA College Union 2026-2027 at Government Medical College, Kozhikode. Transparent ledger of union income and campus expenditures.",
 };
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function FinancePage() {
   const summary = await getFinanceSummary();
 

@@ -578,6 +578,7 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
       {isJeevanam ? (
         <JeevanamHero
           convenorPhone={club.team[0]?.phone}
+          stats={club.stats}
           onOpenEmergencyDesk={() => {
             setActiveTab("engine");
             setTimeout(() => {
@@ -586,7 +587,7 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
           }}
         />
       ) : isGodha ? (
-        <GodhaHero convenorPhone={club.team[0]?.phone} />
+        <GodhaHero convenorPhone={club.team[0]?.phone} stats={club.stats} />
       ) : (
         <section className={`relative pt-32 pb-24 overflow-hidden bg-gradient-to-br ${club.heroGradient} text-white`}>
           {/* Ambient radial mesh gradient orbs */}
@@ -745,7 +746,7 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-              className="mt-16 pt-10 border-t border-white/15 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
+              className="mt-16 pt-10 border-t border-white/15 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
             >
               {club.stats.map((st, idx) => (
                 <div

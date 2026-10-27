@@ -3,85 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Palette,
-  Trophy,
-  Microscope,
-  BookOpen,
-  Film,
-  HeartHandshake,
-  Home,
-  Leaf,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-
-const WINGS = [
-  {
-    slug: "arts",
-    name: "Fine Arts & Cultural Wing",
-    category: "Culture",
-    icon: Palette,
-    convenor: "Arathi Krishna (Phase 2)",
-    description: "Curating music bands, classical dance troupes, street plays, and the annual YUGA arts festival.",
-  },
-  {
-    slug: "sports",
-    name: "Sports & Athletics Council",
-    category: "Sports",
-    icon: Trophy,
-    convenor: "Naveen Thomas (Final Part 1)",
-    description: "Managing inter-batch cricket (CMPL), football, basketball, badminton, and state athletic meets.",
-  },
-  {
-    slug: "academic",
-    name: "Calicut Medicos Research Society",
-    category: "Academic",
-    icon: Microscope,
-    convenor: "Dr. Rohith K. (Final Part 2)",
-    description: "Mentoring undergrads in ICMR STS grant drafting, clinical audits, and research conclaves.",
-  },
-  {
-    slug: "literary",
-    name: "Literary & Debating Forum",
-    category: "Literary",
-    icon: BookOpen,
-    convenor: "Meera Chandran (Phase 2)",
-    description: "Parliamentary debates, medical quiz leagues, creative writing, and the union journal.",
-  },
-  {
-    slug: "media",
-    name: "Cine & Visual Media Club",
-    category: "Media",
-    icon: Film,
-    convenor: "Jithin Raj (Phase 2)",
-    description: "Festival teasers, documentary shorts, event photography, and live audio-visual setups.",
-  },
-  {
-    slug: "social-service",
-    name: "Community Health & Blood Wing",
-    category: "Social",
-    icon: HeartHandshake,
-    convenor: "Muhammed Shafi (Final Part 1)",
-    description: "Blood donor matching, disaster medical relief camps, and rural health awareness drives.",
-  },
-  {
-    slug: "welfare",
-    name: "Hostel & Mess Welfare Committee",
-    category: "Welfare",
-    icon: Home,
-    convenor: "Adarsh M. (MH Secretary)",
-    description: "Monitoring dining quality, room maintenance, 24/7 library amenities, and facilities.",
-  },
-  {
-    slug: "eco",
-    name: "Nature & Green Campus Forum",
-    category: "Eco",
-    icon: Leaf,
-    convenor: "Sneha V. (Phase 1)",
-    description: "Preserving botanical gardens, waste recycling, and campus tree-planting initiatives.",
-  },
-];
 
 const FEATURED_CLUBS = [
   {

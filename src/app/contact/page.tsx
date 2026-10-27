@@ -31,6 +31,9 @@ export const metadata: Metadata = {
     "Get in touch with YUGA College Union 2026-2027 at Government Medical College, Kozhikode. Office location, 24/7 casualty phone, emergency hotline, and official enquiry form.",
 };
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function ContactPage() {
   const contact = await getContactSettings();
   return (

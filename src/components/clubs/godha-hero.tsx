@@ -17,11 +17,23 @@ import {
 
 interface GodhaHeroProps {
   convenorPhone?: string;
+  stats?: { label: string; value: string; hint: string }[];
 }
+
+const DEFAULT_GODHA_STATS = [
+  { label: "ACTIVE MEDICO ATHLETES", value: "480+", hint: "Across 8 disciplines" },
+  { label: "CMPL FRANCHISE TEAMS", value: "16 Batches", hint: "Cricket & Football" },
+  { label: "UNIVERSITY CUP WINS", value: "28 Trophies", hint: "KUHS & Inter-Collegiate" },
+  { label: "ANNUAL MEETS", value: "18 Meets", hint: "Intra & State tournaments" },
+];
+
+const GODHA_STAT_ICONS = [Users, Trophy, Award, Calendar];
 
 export function GodhaHero({
   convenorPhone = "+919447345601",
+  stats,
 }: GodhaHeroProps) {
+  const displayStats = stats && stats.length > 0 ? stats : DEFAULT_GODHA_STATS;
   return (
     <section className="relative pt-24 sm:pt-32 pb-14 sm:pb-24 bg-[#030905] text-white overflow-hidden select-none">
       {/* =========================================================================
@@ -229,80 +241,32 @@ export function GodhaHero({
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-          className="mt-12 sm:mt-16 rounded-[2rem] bg-[#07150d]/90 backdrop-blur-2xl border border-emerald-500/25 p-5 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
+          className="mt-10 sm:mt-16 rounded-2xl sm:rounded-[2rem] bg-[#07150d]/90 backdrop-blur-2xl border border-emerald-500/25 p-4 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
         >
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
-            {/* Stat 1 */}
-            <div className="flex items-center gap-4 pt-4 lg:pt-0">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
-                <Users className="h-6 w-6" />
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-display font-black tracking-tight text-emerald-400">
-                  480+
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-0 lg:divide-x divide-white/10">
+            {displayStats.map((st, i) => {
+              const Icon = GODHA_STAT_ICONS[i % GODHA_STAT_ICONS.length];
+              return (
+                <div key={i} className="flex items-center gap-3.5 sm:gap-4 lg:px-6">
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 shadow-inner">
+                    <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xl sm:text-2xl lg:text-3xl font-display font-black tracking-tight text-emerald-400 truncate">
+                      {st.value}
+                    </div>
+                    <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white truncate">
+                      {st.label}
+                    </div>
+                    {st.hint && (
+                      <div className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 truncate">
+                        {st.hint}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white">
-                  ACTIVE MEDICO ATHLETES
-                </div>
-                <div className="text-[10px] sm:text-[11px] text-slate-400">
-                  Across 8 disciplines
-                </div>
-              </div>
-            </div>
-
-            {/* Stat 2 */}
-            <div className="flex items-center gap-4 pt-4 lg:pt-0 lg:pl-6">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
-                <Trophy className="h-6 w-6" />
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-display font-black tracking-tight text-emerald-400">
-                  16 Batches
-                </div>
-                <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white">
-                  CMPL FRANCHISE TEAMS
-                </div>
-                <div className="text-[10px] sm:text-[11px] text-slate-400">
-                  Cricket &amp; Football
-                </div>
-              </div>
-            </div>
-
-            {/* Stat 3 */}
-            <div className="flex items-center gap-4 pt-4 lg:pt-0 lg:pl-6">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
-                <Award className="h-6 w-6" />
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-display font-black tracking-tight text-emerald-400">
-                  28 Trophies
-                </div>
-                <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white">
-                  UNIVERSITY CUP WINS
-                </div>
-                <div className="text-[10px] sm:text-[11px] text-slate-400">
-                  KUHS &amp; Inter-Collegiate
-                </div>
-              </div>
-            </div>
-
-            {/* Stat 4 */}
-            <div className="flex items-center gap-4 pt-4 lg:pt-0 lg:pl-6">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
-                <Calendar className="h-6 w-6" />
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-display font-black tracking-tight text-emerald-400">
-                  18 Meets
-                </div>
-                <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white">
-                  ANNUAL MEETS
-                </div>
-                <div className="text-[10px] sm:text-[11px] text-slate-400">
-                  Intra &amp; State tournaments
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </motion.div>
       </div>
