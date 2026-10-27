@@ -233,42 +233,6 @@ export function GodhaHero({
             </div>
           </motion.div>
         </div>
-
-        {/* =========================================================================
-            STATISTICS STRIP: 480+ Medicos, 16 Batches, 28 Trophies, 18 Meets
-            ========================================================================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-          className="mt-10 sm:mt-16 rounded-2xl sm:rounded-[2rem] bg-[#07150d]/90 backdrop-blur-2xl border border-emerald-500/25 p-4 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
-        >
-          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-0 lg:divide-x divide-white/10">
-            {displayStats.map((st, i) => {
-              const Icon = GODHA_STAT_ICONS[i % GODHA_STAT_ICONS.length];
-              return (
-                <div key={i} className="flex items-center gap-3.5 sm:gap-4 lg:px-6">
-                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 shadow-inner">
-                    <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="text-xl sm:text-2xl lg:text-3xl font-display font-black tracking-tight text-emerald-400 truncate">
-                      {st.value}
-                    </div>
-                    <div className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white truncate">
-                      {st.label}
-                    </div>
-                    {st.hint && (
-                      <div className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5 truncate">
-                        {st.hint}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

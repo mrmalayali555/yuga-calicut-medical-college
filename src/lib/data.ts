@@ -263,7 +263,7 @@ export const LEADERSHIP: LeaderItem[] = [
     phone: "+91 94471 20003",
   },
   {
-    name: "Anaya E S",
+    name: "Anaya ES",
     role: "Joint Secretary",
     batch: "Final MBBS Part 1",
     portfolio: "Inter-Department Liaison & Documentation",

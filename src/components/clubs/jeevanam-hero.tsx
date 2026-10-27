@@ -339,41 +339,6 @@ export function JeevanamHero({
           </div>
         </div>
 
-        {/* =======================================================================
-            STATISTICS SECTION: Horizontal 4-Column Panel with Subtle Dividers
-            ======================================================================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-          className="mt-10 sm:mt-18 rounded-2xl sm:rounded-3xl bg-[#0a0c10]/85 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.85)] p-4 sm:p-6 lg:p-8"
-        >
-          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-0 lg:divide-x divide-white/10">
-            {displayStats.map((st, i) => {
-              const Icon = JEEVANAM_STAT_ICONS[i % JEEVANAM_STAT_ICONS.length];
-              return (
-                <div key={i} className="flex items-center gap-3.5 sm:gap-4 lg:px-6">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-red-950/60 border border-red-500/30 flex items-center justify-center shrink-0 shadow-inner">
-                    <Icon className="w-5 h-5 text-red-400" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="text-xl sm:text-2xl lg:text-3xl font-display font-bold text-red-500 tracking-tight leading-none mb-1 truncate">
-                      {st.value}
-                    </div>
-                    <div className="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider truncate">
-                      {st.label}
-                    </div>
-                    {st.hint && (
-                      <div className="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5 truncate">
-                        {st.hint}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

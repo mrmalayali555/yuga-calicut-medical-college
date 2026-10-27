@@ -52,7 +52,7 @@ export function LeadershipSection() {
 
             return (
               <motion.div
-                key={leader.role}
+                key={`${leader.role}-${leader.name}`}
                 variants={{
                   hidden: { opacity: 0, y: 16 },
                   visible: {

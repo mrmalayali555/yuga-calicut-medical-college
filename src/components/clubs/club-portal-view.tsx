@@ -307,32 +307,7 @@ const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
       { label: "University Cup Wins", value: "28 Trophies", hint: "KUHS & Inter-Collegiate" },
       { label: "Annual Meets", value: "18 Meets", hint: "Intra & State tournaments" },
     ],
-    initiatives: [
-      {
-        title: "Multi-Gym & Fitness Centre",
-        description: "Modern gym facilities for all GMC students.",
-        category: "FACILITIES",
-        status: "Active",
-      },
-      {
-        title: "Calicut Medicos Premier League (CMPL)",
-        description: "Annual inter-batch cricket and football league.",
-        category: "EVENT",
-        status: "Annual",
-      },
-      {
-        title: "Sports Grounds Management",
-        description: "Maintenance of athletic tracks, indoor arena and courts.",
-        category: "INFRASTRUCTURE",
-        status: "Live 24/7",
-      },
-      {
-        title: "Inter-Collegiate Participation",
-        description: "Training and support for university and state level competitions.",
-        category: "DEVELOPMENT",
-        status: "Continuous",
-      },
-    ],
+    initiatives: [],
     achievements: [
       {
         title: "Overall Champions — All-Kerala Inter-Medical Football Conclave",
@@ -950,32 +925,32 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
               </div>
 
               {/* Programs Bento Grid / Flagship Operations */}
-              <div>
-                <div className="text-center max-w-2xl mx-auto mb-12">
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <span className="h-px w-6 sm:w-8 bg-emerald-600/40" />
-                    <p
-                      className="text-xs font-bold uppercase tracking-[0.22em]"
-                      style={{ color: club.accent }}
-                    >
-                      Annual Ecosystem
-                    </p>
-                    <span className="h-px w-6 sm:w-8 bg-emerald-600/40" />
+              {club.initiatives && club.initiatives.length > 0 && (
+                <div>
+                  <div className="text-center max-w-2xl mx-auto mb-12">
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <span className="h-px w-6 sm:w-8 bg-emerald-600/40" />
+                      <p
+                        className="text-xs font-bold uppercase tracking-[0.22em]"
+                        style={{ color: club.accent }}
+                      >
+                        Annual Ecosystem
+                      </p>
+                      <span className="h-px w-6 sm:w-8 bg-emerald-600/40" />
+                    </div>
+                    <h2 className={`text-3xl sm:text-4xl font-display font-bold tracking-tight ${
+                      isJeevanam ? "text-white" : isGodha ? "font-serif text-slate-900" : "text-slate-900"
+                    }`}>
+                      Flagship Operations &amp; Initiatives
+                    </h2>
                   </div>
-                  <h2 className={`text-3xl sm:text-4xl font-display font-bold tracking-tight ${
-                    isJeevanam ? "text-white" : isGodha ? "font-serif text-slate-900" : "text-slate-900"
-                  }`}>
-                    Flagship Operations &amp; Initiatives
-                  </h2>
-                </div>
 
-                <div className={`grid gap-6 ${
-                  isGodha
-                    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
-                    : "grid-cols-1 md:grid-cols-2"
-                }`}>
-                  {club.initiatives && club.initiatives.length > 0 ? (
-                    club.initiatives.map((item, idx) => {
+                  <div className={`grid gap-6 ${
+                    isGodha
+                      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+                      : "grid-cols-1 md:grid-cols-2"
+                  }`}>
+                    {club.initiatives.map((item, idx) => {
                       const sportsIcons = [Dumbbell, Trophy, Activity, Users];
                       const SportIcon = sportsIcons[idx % sportsIcons.length];
 
@@ -1046,14 +1021,10 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                           </div>
                         </div>
                       );
-                    })
-                  ) : (
-                    <div className="col-span-full rounded-2xl border border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] p-8 text-center text-sm text-[var(--text-muted)]">
-                      No initiatives listed at this time.
-                    </div>
-                  )}
+                    })}
+                  </div>
                 </div>
-              </div>
+              )}
             </motion.div>
           )}
 
@@ -1181,62 +1152,22 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                 </div>
               )}
 
-              {/* GODHA: CMPL LEAGUE ARENA */}
+              {/* GODHA: ACTIVITIES & PROGRAMS */}
               {club.id === "godha" && (
-                <div className="space-y-8">
-                  <div className="rounded-3xl border border-emerald-200 bg-gradient-to-br from-emerald-50/60 via-white to-white p-8 sm:p-10 shadow-xs">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-                      <div>
-                        <span className="text-xs font-bold uppercase tracking-widest text-emerald-700">
-                          Flagship Championship
-                        </span>
-                        <h3 className="text-2xl sm:text-3xl font-display font-bold text-slate-900">
-                          CMPL — Calicut Medicos Premier League
-                        </h3>
-                      </div>
-                      <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 text-emerald-800 px-3.5 py-1 text-xs font-bold">
-                        <span className="h-2 w-2 rounded-full bg-emerald-600 animate-ping" />
-                        Season 8 Registrations Open
-                      </span>
+                <div className="py-8">
+                  <div className="rounded-3xl border border-dashed border-emerald-300/80 bg-gradient-to-br from-emerald-50/40 via-white to-white p-10 sm:p-14 text-center max-w-2xl mx-auto shadow-xs">
+                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 mb-4 border border-emerald-200 shadow-2xs">
+                      <Trophy className="h-6 w-6" />
                     </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-2xs">
-                        <div className="text-xs font-bold text-emerald-700 uppercase">
-                          Tournament Format
-                        </div>
-                        <h4 className="text-xl font-bold text-slate-900 mt-1 mb-2">
-                          16 Batch Franchises
-                        </h4>
-                        <p className="text-xs text-slate-600 leading-relaxed">
-                          T20 floodlit cricket matches with live DRS, leather balls, and student player auctions held in the central college auditorium.
-                        </p>
-                      </div>
-
-                      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-2xs">
-                        <div className="text-xs font-bold text-emerald-700 uppercase">
-                          Arena Grounds
-                        </div>
-                        <h4 className="text-xl font-bold text-slate-900 mt-1 mb-2">
-                          GMC Olympic Stadium
-                        </h4>
-                        <p className="text-xs text-slate-600 leading-relaxed">
-                          Full-sized boundary turf, floodlit 4-tower lighting, and digital scoreboard operated by the sports council technical wing.
-                        </p>
-                      </div>
-
-                      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-2xs">
-                        <div className="text-xs font-bold text-emerald-700 uppercase">
-                          Reigning Champions
-                        </div>
-                        <h4 className="text-xl font-bold text-slate-900 mt-1 mb-2">
-                          Batch of 2021 (The Vikings)
-                        </h4>
-                        <p className="text-xs text-slate-600 leading-relaxed">
-                          Defended their title with a thrilling final against House Surgeons XI before 900+ cheering supporters.
-                        </p>
-                      </div>
-                    </div>
+                    <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-emerald-700 bg-emerald-100/80 px-3 py-1 rounded-full mb-3">
+                      Godha Sports &amp; Athletics
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-display font-bold text-slate-900">
+                      No Activities &amp; Programs Listed
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-md mx-auto leading-relaxed">
+                      Official sports tournaments, CMPL fixtures, and athletic meet schedules under Godha for 2026–2027 will be updated here soon.
+                    </p>
                   </div>
                 </div>
               )}
