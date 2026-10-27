@@ -71,12 +71,7 @@ async function getClubData(slug: ClubSlug): Promise<ClubConfig> {
       mission: dbOverrides.mission ?? baseClub.mission,
       vision: dbOverrides.vision ?? baseClub.vision,
       heroDescription: dbOverrides.heroDescription ?? baseClub.heroDescription,
-      stats:
-        slug === "jeevanam" || slug === "godha"
-          ? []
-          : dbOverrides.stats && dbOverrides.stats.length > 0
-          ? dbOverrides.stats
-          : baseClub.stats,
+      stats: [],
       initiatives:
         slug === "godha"
           ? []

@@ -14,7 +14,14 @@ export async function GET(request: NextRequest) {
       rows.forEach((r) => {
         const s = r.key.replace("club:", "");
         try {
-          map[s] = JSON.parse(r.value);
+          const val = JSON.parse(r.value);
+          if (s === "jeevanam" || s === "godha") {
+            val.stats = [];
+          }
+          if (s === "godha") {
+            val.initiatives = [];
+          }
+          map[s] = val;
         } catch {}
       });
       return NextResponse.json(map);
@@ -30,7 +37,31 @@ export async function GET(request: NextRequest) {
   try {
     const row = await db.setting.findUnique({ where: { key: `club:${slug}` } });
     if (!row) return NextResponse.json(null);
-    return NextResponse.json(JSON.parse(row.value));
+    const parsed = JSON.parse(row.value);
+    let mutated = false;
+    if (slug === "jeevanam" || slug === "godha") {
+      if (parsed.stats && parsed.stats.length > 0) {
+        parsed.stats = [];
+        mutated = true;
+      } else {
+        parsed.stats = [];
+      }
+    }
+    if (slug === "godha") {
+      if (parsed.initiatives && parsed.initiatives.length > 0) {
+        parsed.initiatives = [];
+        mutated = true;
+      } else {
+        parsed.initiatives = [];
+      }
+    }
+    if (mutated) {
+      db.setting.update({
+        where: { key: `club:${slug}` },
+        data: { value: JSON.stringify(parsed) },
+      }).catch(() => {});
+    }
+    return NextResponse.json(parsed);
   } catch {
     return NextResponse.json(null);
   }

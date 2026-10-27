@@ -9,7 +9,7 @@ export function LeadershipSection() {
   const leaders = LEADERSHIP.slice(0, 6);
 
   return (
-    <section className="py-24 sm:py-32 border-t border-[var(--border-primary)]">
+    <section data-no-override="true" className="py-24 sm:py-32 border-t border-[var(--border-primary)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div

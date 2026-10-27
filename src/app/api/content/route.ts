@@ -15,10 +15,67 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ blocks: [] });
   }
 
+  // Purge any stale leadership or counter override blocks that cause text shifting on home/about
+  if (pageId === "home" || pageId === "about") {
+    try {
+      await db.contentBlock.deleteMany({
+        where: {
+          pageId: { in: ["home", "about"] },
+          OR: [
+            { blockId: { contains: "secretary" } },
+            { blockId: { contains: "cultural" } },
+            { blockId: { contains: "athletics" } },
+            { blockId: { contains: "salim" } },
+            { blockId: { contains: "ananya" } },
+            { blockId: { contains: "arjun" } },
+            { blockId: { contains: "aparna" } },
+            { blockId: { contains: "farhan" } },
+            { blockId: { contains: "vishnu" } },
+            { blockId: { contains: "siddharth" } },
+            { blockId: { contains: "sm_" } },
+            { blockId: { contains: "am_" } },
+            { blockId: { contains: "as_" } },
+            { blockId: { contains: "fk_" } },
+            { blockId: { contains: "ar_" } },
+            { blockId: { contains: "vp_" } },
+            { blockId: { contains: "68" } },
+            { blockId: { contains: "3-000" } },
+            { blockId: { contains: "3-020" } },
+            { blockId: { contains: "secretariat" } },
+          ],
+        },
+      });
+    } catch {}
+  }
+
   try {
     const blocks = await db.contentBlock.findMany({
       where: {
         OR: [{ pageId }, { pageId: "global" }],
+        NOT: {
+          OR: [
+            { blockId: { contains: "secretary" } },
+            { blockId: { contains: "cultural" } },
+            { blockId: { contains: "athletics" } },
+            { blockId: { contains: "salim" } },
+            { blockId: { contains: "ananya" } },
+            { blockId: { contains: "arjun" } },
+            { blockId: { contains: "aparna" } },
+            { blockId: { contains: "farhan" } },
+            { blockId: { contains: "vishnu" } },
+            { blockId: { contains: "siddharth" } },
+            { blockId: { contains: "sm_" } },
+            { blockId: { contains: "am_" } },
+            { blockId: { contains: "as_" } },
+            { blockId: { contains: "fk_" } },
+            { blockId: { contains: "ar_" } },
+            { blockId: { contains: "vp_" } },
+            { blockId: { contains: "68" } },
+            { blockId: { contains: "3-000" } },
+            { blockId: { contains: "3-020" } },
+            { blockId: { contains: "secretariat" } },
+          ],
+        },
       },
       select: {
         id: true,

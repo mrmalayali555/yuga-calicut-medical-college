@@ -189,12 +189,7 @@ export const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
       "To be South India's premier medical cultural collective, producing national-standard music, theatre, and films that illuminate the human condition.",
     heroDescription:
       "The creative heartbeat of Calicut Medical College. Praanah oversees specialized cultural wings, represents GMC at university festivals (KUHAS), curates the annual YUGA Arts Carnival, and nurtures artistic talents that have launched celebrated playback artists, choreographers, and directors.",
-    stats: [
-      { label: "Active Artists", value: "320+", hint: "Singers, dancers & actors" },
-      { label: "KUHAS Gold Medals", value: "24 Titles", hint: "State university meets" },
-      { label: "Annual Productions", value: "16 Shows", hint: "Stage plays & concerts" },
-      { label: "Festival Footfall", value: "4,000+", hint: "Annual arts carnival" },
-    ],
+    stats: [],
     initiatives: [
       {
         title: "Annual YUGA Arts Carnival",
@@ -369,12 +364,7 @@ export const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
       "To be the intellectual nucleus of GMC Kozhikode, renowned nationwide for competitive debate, premier biomedical quizzing, and impactful campus journalism.",
     heroDescription:
       "The literary forum and debating society of Calicut Medical College. Ocha trains students in Asian Parliamentary debate, conducts the prestigious Calicut Medical Quiz, publishes the peer-reviewed union journal & annual magazine, and curates Malayalam poetry circles.",
-    stats: [
-      { label: "Debate Trophies", value: "36 Wins", hint: "National & State circuits" },
-      { label: "Quiz Leagues", value: "10 Editions", hint: "Hippocratic Quiz Circuit" },
-      { label: "Journal Issues", value: "16 Printed", hint: "YUGA Literary Gazette" },
-      { label: "Active Debaters", value: "190+", hint: "Trained student speakers" },
-    ],
+    stats: [],
     initiatives: [
       {
         title: "Calicut Medicos Parliamentary Debate (CMPD)",
@@ -512,12 +502,7 @@ export function ClubPortalView({
         mission: dbOverrides.mission ?? baseClub.mission,
         vision: dbOverrides.vision ?? baseClub.vision,
         heroDescription: dbOverrides.heroDescription ?? baseClub.heroDescription,
-        stats:
-          slug === "jeevanam" || slug === "godha"
-            ? []
-            : dbOverrides.stats && dbOverrides.stats.length > 0
-            ? dbOverrides.stats
-            : baseClub.stats,
+        stats: [],
         initiatives:
           slug === "godha"
             ? []
@@ -546,6 +531,7 @@ export function ClubPortalView({
 
   return (
     <div
+      data-no-override="true"
       className={`min-h-screen transition-colors duration-300 ${
         isJeevanam
           ? "bg-[#07080a] text-slate-100 selection:bg-red-600 selection:text-white"
@@ -721,33 +707,7 @@ export function ClubPortalView({
               </motion.div>
             </div>
 
-            {/* Metric Hardware Strip */}
-            {club.stats && club.stats.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: [0.32, 0.72, 0, 1] }}
-                className="mt-16 pt-10 border-t border-white/15 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
-              >
-                {club.stats.map((st, idx) => (
-                  <div
-                    key={idx}
-                    className="relative rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md p-5 text-center lg:text-left transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5"
-                  >
-                    <div
-                      className="text-3xl sm:text-4xl font-display font-black tracking-tight mb-1"
-                      style={{ color: club.accent }}
-                    >
-                      {st.value}
-                    </div>
-                    <div className="text-xs font-bold text-white uppercase tracking-wider mb-0.5">
-                      {st.label}
-                    </div>
-                    <div className="text-[11px] text-white/50">{st.hint}</div>
-                  </div>
-                ))}
-              </motion.div>
-            )}
+
           </div>
         </section>
       )}

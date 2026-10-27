@@ -161,8 +161,10 @@ export function UniversalInlineEditor() {
 
   const pageId = pathnameToPageId(pathname);
 
-  // ── 1. DOM Overrides Applicator for All Visitors (Client & Admin) ──
+  // ── 1. DOM Overrides Applicator — ADMIN EDIT MODE ONLY ──
   const applyOverridesToDom = useCallback(() => {
+    // Only apply in admin edit mode. Never patch DOM for regular visitors.
+    if (!isAdmin || !editMode) return;
     if (pathname.startsWith("/admin")) return;
 
     fetch(`/api/content?page=${pageId}`)
@@ -179,12 +181,15 @@ export function UniversalInlineEditor() {
         if (!blocks.length) return;
 
         blocks.forEach((block) => {
-          // Priority 1: Match by explicit data attribute
+          // Priority 1: Match by explicit data attribute only
           const exactMatch = document.querySelector(
             `[data-editable-block="${block.blockId}"]`
           ) as HTMLElement | null;
 
           if (exactMatch) {
+            // Never override elements marked with data-no-override
+            if (exactMatch.closest("[data-no-override]")) return;
+
             if (block.type === "hidden" || block.content === "__hidden__") {
               exactMatch.style.display = "none";
             } else {
@@ -192,49 +197,11 @@ export function UniversalInlineEditor() {
                 exactMatch.innerText = block.content;
               }
             }
-            return;
-          }
-
-          // Priority 2: Match by previousValue (original text)
-          const searchTarget = block.previousValue?.trim();
-          if (searchTarget && searchTarget.length >= 3) {
-            const walker = document.createTreeWalker(
-              document.body,
-              NodeFilter.SHOW_ELEMENT,
-              {
-                acceptNode(node: Node) {
-                  const el = node as HTMLElement;
-                  if (
-                    el.closest("[data-admin-ui]") ||
-                    el.closest("[data-admin-toolbar]")
-                  ) {
-                    return NodeFilter.FILTER_REJECT;
-                  }
-                  if (
-                    EDITABLE_TAGS.has(el.tagName.toUpperCase()) &&
-                    el.innerText?.trim() === searchTarget
-                  ) {
-                    return NodeFilter.FILTER_ACCEPT;
-                  }
-                  return NodeFilter.FILTER_SKIP;
-                },
-              }
-            );
-
-            const matchedEl = walker.nextNode() as HTMLElement | null;
-            if (matchedEl) {
-              matchedEl.setAttribute("data-editable-block", block.blockId);
-              if (block.type === "hidden" || block.content === "__hidden__") {
-                matchedEl.style.display = "none";
-              } else {
-                matchedEl.innerText = block.content;
-              }
-            }
           }
         });
       })
       .catch(() => {});
-  }, [pageId, pathname]);
+  }, [isAdmin, editMode, pageId, pathname]);
 
   useEffect(() => {
     applyOverridesToDom();

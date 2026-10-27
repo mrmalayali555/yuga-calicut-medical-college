@@ -383,7 +383,7 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
       </div>
 
       {/* 3. Hero Bottom Statistics Strip (Responsive Layout) */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full mt-2 sm:mt-4">
+      <div data-no-override="true" className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full mt-2 sm:mt-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
