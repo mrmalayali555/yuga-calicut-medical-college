@@ -23,6 +23,13 @@ interface NotificationsViewProps {
   columns?: 1 | 2 | 3;
 }
 
+const HARDCODED_NOTIFICATION_SLUGS = new Set([
+  "kuhs-nov-exams-2026",
+  "hostel-wifi-reading-room",
+  "yuga-volunteers-call",
+  "stipend-disbursal-notice",
+]);
+
 export function NotificationsView({
   initialNotifications,
   columns = 1,
@@ -40,6 +47,11 @@ export function NotificationsView({
       transition: { type: "spring" as const, stiffness: 120, damping: 20 },
     },
   };
+
+  const filteredNotifications = (initialNotifications ?? []).filter((c) => {
+    const key = (c.slug || c.id || "").toLowerCase();
+    return !HARDCODED_NOTIFICATION_SLUGS.has(key);
+  });
 
   const gridCls =
     columns === 1
@@ -73,14 +85,25 @@ export function NotificationsView({
         </p>
       </motion.div>
 
-      {/* List or Grid */}
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-        className={gridCls}
-      >
-        {initialNotifications.map((c) => {
+      {/* List or Grid or Empty State */}
+      {filteredNotifications.length === 0 ? (
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-xs p-12 text-center">
+          <Bell className="h-10 w-10 text-[var(--accent)] opacity-30 mx-auto mb-3" />
+          <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-1">
+            No circulars posted yet
+          </h3>
+          <p className="text-sm text-[var(--text-secondary)]">
+            New official notices and despatches will appear here when published.
+          </p>
+        </div>
+      ) : (
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className={gridCls}
+        >
+          {filteredNotifications.map((c) => {
           const itemKey = c.slug || c.id;
           const dateStr =
             typeof c.date === "string" ? c.date : formatDate(new Date(c.date));
@@ -152,6 +175,7 @@ export function NotificationsView({
           );
         })}
       </motion.div>
+      )}
     </div>
   );
 }

@@ -22,8 +22,20 @@ interface CircularsFeedProps {
   initialCirculars?: CircularFeedItem[];
 }
 
+const HARDCODED_NOTIFICATION_SLUGS = new Set([
+  "kuhs-nov-exams-2026",
+  "hostel-wifi-reading-room",
+  "yuga-volunteers-call",
+  "stipend-disbursal-notice",
+]);
+
 export function CircularsFeed({ initialCirculars }: CircularsFeedProps) {
-  const items: CircularFeedItem[] = (initialCirculars ?? []).slice(0, 4);
+  const items: CircularFeedItem[] = (initialCirculars ?? [])
+    .filter((c) => {
+      const key = (c.slug || c.id || "").toLowerCase();
+      return !HARDCODED_NOTIFICATION_SLUGS.has(key);
+    })
+    .slice(0, 4);
 
   return (
     <section className="py-24 sm:py-32 border-t border-[var(--border-primary)]">

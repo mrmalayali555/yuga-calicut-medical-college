@@ -318,62 +318,46 @@ export async function getEvent(slug: string) {
 }
 
 // --- Notifications ---
+const HARDCODED_NOTIFICATION_SLUGS = new Set([
+  "kuhs-nov-exams-2026",
+  "hostel-wifi-reading-room",
+  "yuga-volunteers-call",
+  "stipend-disbursal-notice",
+]);
+
 export async function getNotifications(take?: number) {
-  await ensureInitialNotifications();
   try {
     const dbNotifs = await db.notification.findMany({
       where: { published: true },
       orderBy: { date: "desc" },
-      take,
     });
-    const publishedCount = await db.notification.count({ where: { published: true } });
-    if (publishedCount > 0) return dbNotifs;
+    const filtered = dbNotifs.filter((n) => {
+      const key = (n.slug || n.id || "").toLowerCase();
+      return !HARDCODED_NOTIFICATION_SLUGS.has(key);
+    });
+    return take ? filtered.slice(0, take) : filtered;
   } catch (err) {
     console.error("Error querying notifications:", err);
+    return [];
   }
-
-  let list = CIRCULARS.map((c) => ({
-    id: c.id,
-    title: c.title,
-    slug: c.id,
-    description: c.summary,
-    date: new Date(c.date),
-    image: null as string | null,
-    pdfUrl: "#",
-    published: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }));
-
-  if (take) list = list.slice(0, take);
-  return list;
 }
 
 export async function getNotification(slug: string) {
+  if (HARDCODED_NOTIFICATION_SLUGS.has(slug.toLowerCase())) {
+    return null;
+  }
   try {
     const item = await db.notification.findUnique({
       where: { slug },
     });
-    if (item) return item;
+    if (item && !HARDCODED_NOTIFICATION_SLUGS.has((item.slug || item.id || "").toLowerCase())) {
+      return item;
+    }
   } catch (err) {
     console.error("Error querying notification:", err);
   }
 
-  const mock = CIRCULARS.find((c) => c.id === slug);
-  if (!mock) return null;
-
-  return {
-    id: mock.id,
-    title: mock.title,
-    slug: mock.id,
-    description: `${mock.summary}\n\nIssued by the Office of the General Secretary, YUGA College Union 2026-2027, Government Medical College Kozhikode for wide circulation among students and faculty members.`,
-    date: new Date(mock.date),
-    image: null as string | null,
-    pdfUrl: "#",
-    published: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
+  return null;
 }
 
 // --- Interventions ---

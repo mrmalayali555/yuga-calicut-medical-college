@@ -136,44 +136,7 @@ export const EVENTS: EventItem[] = [
   },
 ];
 
-export const CIRCULARS: CircularItem[] = [
-  {
-    id: "kuhs-nov-exams-2026",
-    title: "KUHS Final Professional MBBS Part II Regular Exam Timetable Despatch",
-    category: "KUHS",
-    date: "Oct 15, 2026",
-    priority: "high",
-    fileSize: "420 KB",
-    summary: "Theory examinations for Medicine, Surgery, Pediatrics, and OBG begin Nov 16, 2026.",
-  },
-  {
-    id: "hostel-wifi-reading-room",
-    title: "24/7 Air-Conditioned Central Reading Room Operational Hours for Exam Term",
-    category: "Hostel",
-    date: "Oct 12, 2026",
-    priority: "high",
-    fileSize: "185 KB",
-    summary: "Reading rooms in Men's and Women's hostels remain open 24 hours with dedicated high-speed Wi-Fi.",
-  },
-  {
-    id: "yuga-volunteers-call",
-    title: "Call for Organizing Committee Volunteers for YUGA '26 Cultural Fest",
-    category: "Union",
-    date: "Oct 09, 2026",
-    priority: "normal",
-    fileSize: "310 KB",
-    summary: "UG & PG students interested in stage management, hospitality, and media coverage can apply.",
-  },
-  {
-    id: "stipend-disbursal-notice",
-    title: "Monthly Stipend Disbursal Schedule for House Surgeons & PG Resident Doctors",
-    category: "Academic",
-    date: "Oct 04, 2026",
-    priority: "normal",
-    fileSize: "240 KB",
-    summary: "Directorate of Medical Education credit confirmation for the month of September.",
-  },
-];
+export const CIRCULARS: CircularItem[] = [];
 
 export const ACHIEVEMENTS: AchievementItem[] = [
   {

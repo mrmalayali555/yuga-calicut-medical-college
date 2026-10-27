@@ -276,58 +276,10 @@ export async function ensureInitialInterventions() {
   }
 }
 
-export const INITIAL_YUGA_NOTIFICATIONS = [
-  {
-    title: "KUHS Final Professional MBBS Part II Regular Exam Timetable Despatch",
-    slug: "kuhs-nov-exams-2026",
-    description: "Theory examinations for Medicine, Surgery, Pediatrics, and OBG begin Nov 16, 2026. Hall tickets available through the respective department academic coordinators.",
-    date: new Date("2026-10-15T09:00:00.000Z"),
-  },
-  {
-    title: "24/7 Air-Conditioned Central Reading Room Operational Hours for Exam Term",
-    slug: "hostel-wifi-reading-room",
-    description: "Reading rooms in Men's and Women's hostels remain open 24 hours with dedicated high-speed Wi-Fi and power backup facilities for all professional batches.",
-    date: new Date("2026-10-12T14:00:00.000Z"),
-  },
-  {
-    title: "Call for Organizing Committee Volunteers for YUGA '26 Cultural Fest",
-    slug: "yuga-volunteers-call",
-    description: "Applications open for Stage Coordination, Media Coverage, Guest Relations, and Technical Hospitality Wings. Register via the union portal.",
-    date: new Date("2026-10-08T11:00:00.000Z"),
-  },
-];
+export const INITIAL_YUGA_NOTIFICATIONS: any[] = [];
 
 export async function ensureInitialNotifications() {
-  try {
-    const syncSetting = await db.setting.findUnique({
-      where: { key: "yuga_initial_notifications_synced" },
-    }).catch(() => null);
-
-    if (syncSetting?.value === "true") {
-      return;
-    }
-
-    for (const item of INITIAL_YUGA_NOTIFICATIONS) {
-      await db.notification.upsert({
-        where: { slug: item.slug },
-        update: {},
-        create: {
-          title: item.title,
-          slug: item.slug,
-          description: item.description,
-          date: item.date,
-          published: true,
-        },
-      });
-    }
-
-    await db.setting.upsert({
-      where: { key: "yuga_initial_notifications_synced" },
-      update: { value: "true" },
-      create: { key: "yuga_initial_notifications_synced", value: "true" },
-    });
-  } catch (err) {
-    // Graceful fallback
-  }
+  // Hardcoded initial notices disabled
+  return;
 }
 

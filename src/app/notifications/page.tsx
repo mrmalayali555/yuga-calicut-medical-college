@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { getNotifications, getGridLayoutSettings } from "@/lib/queries";
-import { ensureInitialNotifications } from "@/lib/initial-sync";
 import { NotificationsView } from "@/components/notifications/notifications-view";
 
 export const metadata: Metadata = {
@@ -13,7 +12,6 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function NotificationsPage() {
-  await ensureInitialNotifications();
   const [notifications, gridLayout] = await Promise.all([
     getNotifications(),
     getGridLayoutSettings(),
