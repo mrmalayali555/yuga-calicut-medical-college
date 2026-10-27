@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 import { JeevanamHero } from "./jeevanam-hero";
 import { GodhaHero } from "./godha-hero";
+import { useAdminEdit } from "@/components/admin/inline/admin-edit-context";
 
 export type ClubSlug = "jeevanam" | "praanah" | "godha" | "ocha";
 
@@ -507,7 +508,45 @@ const BLOOD_GROUPS = [
 ];
 
 export function ClubPortalView({ slug }: { slug: ClubSlug }) {
-  const club = CLUBS_CONFIG[slug] || CLUBS_CONFIG.jeevanam;
+  const baseClub = CLUBS_CONFIG[slug] || CLUBS_CONFIG.jeevanam;
+  const [dbOverrides, setDbOverrides] = useState<Partial<ClubConfig>| null>(null);
+  const { isAdmin } = useAdminEdit();
+
+  // Fetch persisted DB overrides for this club
+  useEffect(() => {
+    fetch(`/api/clubs?slug=${slug}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (data && typeof data === "object") {
+          setDbOverrides(data as Partial<ClubConfig>);
+        }
+      })
+      .catch(() => {});
+  }, [slug]);
+
+  // Merge DB overrides over static defaults
+  const club: ClubConfig = dbOverrides
+    ? {
+        ...baseClub,
+        name: dbOverrides.name ?? baseClub.name,
+        malayalam: dbOverrides.malayalam ?? baseClub.malayalam,
+        tagline: dbOverrides.tagline ?? baseClub.tagline,
+        category: dbOverrides.category ?? baseClub.category,
+        founded: dbOverrides.founded ?? baseClub.founded,
+        logo: dbOverrides.logo ?? baseClub.logo,
+        accent: dbOverrides.accent ?? baseClub.accent,
+        accentRgb: dbOverrides.accentRgb ?? baseClub.accentRgb,
+        heroGradient: dbOverrides.heroGradient ?? baseClub.heroGradient,
+        mission: dbOverrides.mission ?? baseClub.mission,
+        vision: dbOverrides.vision ?? baseClub.vision,
+        heroDescription: dbOverrides.heroDescription ?? baseClub.heroDescription,
+        stats: dbOverrides.stats ?? baseClub.stats,
+        initiatives: dbOverrides.initiatives ?? baseClub.initiatives,
+        achievements: dbOverrides.achievements ?? baseClub.achievements,
+        team: dbOverrides.team ?? baseClub.team,
+      }
+    : baseClub;
+
   const [activeTab, setActiveTab] = useState<"overview" | "engine" | "honors" | "leadership">("overview");
   const [selectedBlood, setSelectedBlood] = useState<string>("O+");
   const [copiedContact, setCopiedContact] = useState<string | null>(null);
@@ -1541,6 +1580,18 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
           </div>
         </div>
       </section>
+
+      {/* Admin Floating Edit Button — only visible for logged-in admins */}
+      {isAdmin && (
+        <a
+          href={`/admin/clubs/${slug}`}
+          className="fixed bottom-5 left-5 z-[999998] flex items-center gap-2 rounded-full bg-[#18181b]/90 backdrop-blur-xl border border-white/20 px-4 py-2.5 text-sm font-bold text-white shadow-[0_8px_32px_rgba(0,0,0,0.5)] hover:bg-[#27272a] transition-all duration-200 hover:scale-105 active:scale-95"
+          title="Edit this club portal in the admin panel"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--accent)]"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></svg>
+          <span>Edit Club Portal</span>
+        </a>
+      )}
     </div>
   );
 }

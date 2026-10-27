@@ -26,6 +26,7 @@ import {
   History,
   QrCode,
   ScanLine,
+  ShieldCheck,
 } from "lucide-react";
 import { logoutAction } from "@/lib/actions/auth";
 import { cn } from "@/lib/utils";
@@ -54,6 +55,7 @@ const NAV = [
       { href: "/admin/emergency", label: "Emergency", icon: Siren },
       { href: "/admin/complaints", label: "Complaints", icon: MessageSquareWarning },
       { href: "/admin/committees", label: "Subcommittees", icon: Users },
+      { href: "/admin/clubs", label: "Club Portals", icon: ShieldCheck },
       { href: "/admin/pages", label: "Custom Pages", icon: BookOpen },
       { href: "/admin/finance", label: "Union Accounts", icon: Wallet },
     ],
