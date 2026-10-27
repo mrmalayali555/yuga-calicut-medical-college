@@ -184,6 +184,31 @@ export async function saveSettingsForm(formData: FormData) {
       image: String(formData.get("hero_card_image") || "").trim(),
     };
 
+    const footer = {
+      tagline: String(formData.get("footer_tagline") || "").trim(),
+      copyright: String(formData.get("footer_copyright") || "").trim(),
+      col1Heading: String(formData.get("footer_col1_heading") || "Explore").trim(),
+      col1Links: [
+        { label: String(formData.get("footer_col1_l1_label") || "").trim(), href: String(formData.get("footer_col1_l1_href") || "").trim() },
+        { label: String(formData.get("footer_col1_l2_label") || "").trim(), href: String(formData.get("footer_col1_l2_href") || "").trim() },
+        { label: String(formData.get("footer_col1_l3_label") || "").trim(), href: String(formData.get("footer_col1_l3_href") || "").trim() },
+        { label: String(formData.get("footer_col1_l4_label") || "").trim(), href: String(formData.get("footer_col1_l4_href") || "").trim() },
+      ].filter(l => l.label && l.href),
+      col2Heading: String(formData.get("footer_col2_heading") || "Union").trim(),
+      col2Links: [
+        { label: String(formData.get("footer_col2_l1_label") || "").trim(), href: String(formData.get("footer_col2_l1_href") || "").trim() },
+        { label: String(formData.get("footer_col2_l2_label") || "").trim(), href: String(formData.get("footer_col2_l2_href") || "").trim() },
+        { label: String(formData.get("footer_col2_l3_label") || "").trim(), href: String(formData.get("footer_col2_l3_href") || "").trim() },
+        { label: String(formData.get("footer_col2_l4_label") || "").trim(), href: String(formData.get("footer_col2_l4_href") || "").trim() },
+      ].filter(l => l.label && l.href),
+      col3Heading: String(formData.get("footer_col3_heading") || "Support").trim(),
+      col3Links: [
+        { label: String(formData.get("footer_col3_l1_label") || "").trim(), href: String(formData.get("footer_col3_l1_href") || "").trim() },
+        { label: String(formData.get("footer_col3_l2_label") || "").trim(), href: String(formData.get("footer_col3_l2_href") || "").trim() },
+        { label: String(formData.get("footer_col3_l3_label") || "").trim(), href: String(formData.get("footer_col3_l3_href") || "").trim() },
+      ].filter(l => l.label && l.href),
+    };
+
     const eventsColumns = Number(formData.get("events_columns") || 3);
     const interventionsColumns = Number(formData.get("interventions_columns") || 2);
     const notificationsColumns = Number(formData.get("notifications_columns") || 1);
@@ -215,6 +240,7 @@ export async function saveSettingsForm(formData: FormData) {
       saveSetting("hero_card", heroCard),
       saveSetting("grid_layouts", gridLayouts),
       saveSetting("achievements_slider", achievementsSlider),
+      saveSetting("footer", footer),
     ];
 
     if (activeThemeRaw) {

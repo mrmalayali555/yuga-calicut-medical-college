@@ -788,9 +788,7 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                     ? "Live Blood Roster"
                     : club.id === "praanah"
                     ? "Cultural Wings"
-                    : club.id === "godha"
-                    ? "CMPL & Arena"
-                    : "Debate & Quizzing",
+                    : "Activities & Programs",
                 icon: Activity,
               },
               { id: "honors", label: "State Honors & Record", icon: Trophy },

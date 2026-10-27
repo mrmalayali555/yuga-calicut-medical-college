@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+import { FooterWrapper } from "@/components/layout/footer-wrapper";
 import { SITE, COLLEGE, YUGA } from "@/lib/site";
 import { getActiveTheme } from "@/lib/queries";
 import { ThemeProvider } from "@/components/theme/theme-context";
@@ -150,7 +150,7 @@ export default async function RootLayout({
             <main id="main-content" className="flex-1">
               {children}
             </main>
-            <Footer />
+            <FooterWrapper />
             <AdminToolbar />
             <UniversalInlineEditor />
           </AdminEditProvider>

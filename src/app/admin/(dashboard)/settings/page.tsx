@@ -18,7 +18,7 @@ async function getSetting<T>(key: string, fallback: T): Promise<T> {
 }
 
 export default async function AdminSettingsPage() {
-  const [hero, identity, contact, stats, socials, navSearch, themeSetting, heroCard, gridLayout, sliderSettings] = await Promise.all([
+  const [hero, identity, contact, stats, socials, navSearch, themeSetting, heroCard, gridLayout, sliderSettings, footerSettings] = await Promise.all([
     getSetting("hero", {
       badge: COLLEGE.name,
       title: "The Voice of Calicut Medicos",
@@ -66,7 +66,32 @@ export default async function AdminSettingsPage() {
     }),
     getGridLayoutSettings(),
     getAchievementsSliderSettings(),
+    getSetting("footer", {
+      tagline: "Official student union of Government Medical College, Kozhikode — representing every medico across academics, culture, sport, and advocacy.",
+      copyright: `© ${new Date().getFullYear()} YUGA College Union · Government Medical College, Kozhikode`,
+      col1Heading: "Explore",
+      col1Links: [
+        { label: "Home", href: "/" },
+        { label: "Events & Fests", href: "/events" },
+        { label: "Achievements", href: "/achievements" },
+        { label: "Notifications", href: "/notifications" },
+      ],
+      col2Heading: "Union",
+      col2Links: [
+        { label: "Interventions", href: "/interventions" },
+        { label: "Subcommittees", href: "/subcommittees" },
+        { label: "Union Accounts", href: "/finance" },
+        { label: "About YUGA", href: "/about" },
+      ],
+      col3Heading: "Support",
+      col3Links: [
+        { label: "Drop a Suggestion", href: "/complaints" },
+        { label: "Emergency Directory", href: "/emergency" },
+        { label: "Contact Us", href: "/contact" },
+      ],
+    }),
   ]);
+
 
   return (
     <>
@@ -427,6 +452,70 @@ export default async function AdminSettingsPage() {
                 Show search bar / ⌘K command trigger on Desktop screens
               </span>
             </label>
+          </div>
+        </AdminCard>
+
+        {/* Footer Customization */}
+        <AdminCard>
+          <h3 className="mb-1 text-base font-bold text-[var(--text-primary)]">
+            Footer Customization
+          </h3>
+          <p className="mb-5 text-xs text-[var(--text-secondary)]">
+            Customize the footer tagline, nav columns, links, and copyright notice shown sitewide.
+          </p>
+          <div className="space-y-5">
+            <Field
+              label="Footer Tagline / Description"
+              name="footer_tagline"
+              defaultValue={footerSettings.tagline}
+              hint="Short description below the logo in the footer"
+            />
+            <Field
+              label="Copyright Notice"
+              name="footer_copyright"
+              defaultValue={footerSettings.copyright}
+              hint="e.g. © 2026 YUGA College Union · Government Medical College, Kozhikode"
+            />
+            <div>
+              <p className="text-xs font-semibold text-[var(--text-secondary)] mb-3">Column 1 — Explore Links</p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Field label="Column Heading" name="footer_col1_heading" defaultValue={footerSettings.col1Heading} />
+                <Field label="Link 1 Label" name="footer_col1_l1_label" defaultValue={footerSettings.col1Links[0]?.label} />
+                <Field label="Link 1 URL" name="footer_col1_l1_href" defaultValue={footerSettings.col1Links[0]?.href} />
+                <Field label="Link 2 Label" name="footer_col1_l2_label" defaultValue={footerSettings.col1Links[1]?.label} />
+                <Field label="Link 2 URL" name="footer_col1_l2_href" defaultValue={footerSettings.col1Links[1]?.href} />
+                <Field label="Link 3 Label" name="footer_col1_l3_label" defaultValue={footerSettings.col1Links[2]?.label} />
+                <Field label="Link 3 URL" name="footer_col1_l3_href" defaultValue={footerSettings.col1Links[2]?.href} />
+                <Field label="Link 4 Label" name="footer_col1_l4_label" defaultValue={footerSettings.col1Links[3]?.label} />
+                <Field label="Link 4 URL" name="footer_col1_l4_href" defaultValue={footerSettings.col1Links[3]?.href} />
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-[var(--text-secondary)] mb-3">Column 2 — Union Links</p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Field label="Column Heading" name="footer_col2_heading" defaultValue={footerSettings.col2Heading} />
+                <Field label="Link 1 Label" name="footer_col2_l1_label" defaultValue={footerSettings.col2Links[0]?.label} />
+                <Field label="Link 1 URL" name="footer_col2_l1_href" defaultValue={footerSettings.col2Links[0]?.href} />
+                <Field label="Link 2 Label" name="footer_col2_l2_label" defaultValue={footerSettings.col2Links[1]?.label} />
+                <Field label="Link 2 URL" name="footer_col2_l2_href" defaultValue={footerSettings.col2Links[1]?.href} />
+                <Field label="Link 3 Label" name="footer_col2_l3_label" defaultValue={footerSettings.col2Links[2]?.label} />
+                <Field label="Link 3 URL" name="footer_col2_l3_href" defaultValue={footerSettings.col2Links[2]?.href} />
+                <Field label="Link 4 Label" name="footer_col2_l4_label" defaultValue={footerSettings.col2Links[3]?.label} />
+                <Field label="Link 4 URL" name="footer_col2_l4_href" defaultValue={footerSettings.col2Links[3]?.href} />
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-[var(--text-secondary)] mb-3">Column 3 — Support Links</p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Field label="Column Heading" name="footer_col3_heading" defaultValue={footerSettings.col3Heading} />
+                <Field label="Link 1 Label" name="footer_col3_l1_label" defaultValue={footerSettings.col3Links[0]?.label} />
+                <Field label="Link 1 URL" name="footer_col3_l1_href" defaultValue={footerSettings.col3Links[0]?.href} />
+                <Field label="Link 2 Label" name="footer_col3_l2_label" defaultValue={footerSettings.col3Links[1]?.label} />
+                <Field label="Link 2 URL" name="footer_col3_l2_href" defaultValue={footerSettings.col3Links[1]?.href} />
+                <Field label="Link 3 Label" name="footer_col3_l3_label" defaultValue={footerSettings.col3Links[2]?.label} />
+                <Field label="Link 3 URL" name="footer_col3_l3_href" defaultValue={footerSettings.col3Links[2]?.href} />
+              </div>
+            </div>
           </div>
         </AdminCard>
 

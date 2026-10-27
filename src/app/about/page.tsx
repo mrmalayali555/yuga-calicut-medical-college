@@ -3,7 +3,6 @@
 import Link from "next/link";
 import {
   History,
-  Quote,
   ArrowRight,
   Building2,
   Stethoscope,
@@ -16,7 +15,7 @@ const STATS = [
   { value: "1957", label: "Founded", sub: "68+ years of service" },
   { value: "3,000+", label: "Beds", sub: "Largest campus in Kerala" },
   { value: "250+", label: "MBBS intake / year", sub: "Top NEET rankers" },
-  { value: "16", label: "Subcommittees", sub: "Culture, sports, research" },
+  { value: "4", label: "Subcommittees", sub: "Culture, sports, research" },
 ];
 
 export default function AboutPage() {
@@ -65,14 +64,14 @@ export default function AboutPage() {
           ))}
         </div>
 
-        {/* Story + Quote */}
-        <div className="grid gap-6 lg:grid-cols-12 items-stretch mb-20">
+        {/* Story */}
+        <div className="mb-20">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ type: "spring", stiffness: 80, damping: 20 }}
-            className="lg:col-span-7 card p-8 sm:p-10 flex flex-col justify-between"
+            className="card p-8 sm:p-10 flex flex-col justify-between"
           >
             <div>
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--accent)]/20 mb-5">
@@ -106,38 +105,8 @@ export default function AboutPage() {
                 <span className="font-medium text-[var(--text-secondary)]">NMC Recognised</span>
               </div>
             </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.08 }}
-            className="lg:col-span-5 card p-8 sm:p-10 flex flex-col justify-between border-[var(--accent)]/20 bg-[var(--accent-subtle)]"
-          >
-            <div>
-              <Quote className="h-8 w-8 text-[var(--accent)] opacity-40 mb-5" aria-hidden="true" />
-              <blockquote className="text-base font-display italic leading-relaxed text-[var(--text-primary)]">
-                &ldquo;Calicut Medicos have consistently proven that rigorous
-                clinical training and vibrant cultural, sporting, and societal
-                excellence are not contradictory — they fuel each other.&rdquo;
-              </blockquote>
-            </div>
-            <div className="mt-6 pt-5 border-t border-[var(--accent)]/20 flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--accent)]/30 font-bold text-sm">
-                AN
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-[var(--text-primary)]">
-                  Dr. Arjun S. Nair
-                </p>
-                <p className="text-xs text-[var(--accent)] font-semibold">
-                  Chairperson, YUGA 2026–27
-                </p>
-              </div>
-            </div>
-          </motion.div>
         </div>
+
 
 
 
@@ -195,13 +164,10 @@ export default function AboutPage() {
                       </p>
                     </div>
                   </div>
-                  <p className="text-xs text-[var(--text-muted)] font-medium mb-3">
+                  <p className="text-xs text-[var(--text-muted)] font-medium mb-1">
                     {leader.portfolio}
                   </p>
-                  <blockquote className="text-sm text-[var(--text-secondary)] italic leading-relaxed border-l-2 border-[var(--accent)] pl-3">
-                    &ldquo;{leader.quote}&rdquo;
-                  </blockquote>
-                  <div className="mt-3 text-[11px] text-[var(--text-faint)] font-mono font-medium">
+                  <div className="text-[11px] text-[var(--text-faint)] font-mono font-medium">
                     {leader.batch}
                   </div>
                 </motion.div>
@@ -223,7 +189,7 @@ export default function AboutPage() {
               Explore student wings and clubs
             </h3>
             <p className="text-sm text-[var(--text-secondary)] mt-1">
-              Find convenors and details for 16 specialized subcommittees.
+              Find convenors and details for all subcommittees.
             </p>
           </div>
           <Link href="/subcommittees" className="btn-primary shrink-0">

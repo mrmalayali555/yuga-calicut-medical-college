@@ -79,13 +79,12 @@ export function LeadershipSection() {
                   </div>
                 </div>
 
-                <p className="text-xs text-[var(--text-faint)] font-medium mb-3">
+                <p className="text-xs text-[var(--text-faint)] font-medium mb-2">
                   {leader.portfolio}
                 </p>
-
-                <blockquote className="text-sm text-[var(--text-secondary)] italic leading-relaxed border-l-2 border-[var(--accent)] pl-3">
-                  &ldquo;{leader.quote}&rdquo;
-                </blockquote>
+                <p className="text-xs text-[var(--text-faint)] font-mono font-medium">
+                  {leader.batch}
+                </p>
               </motion.div>
             );
           })}

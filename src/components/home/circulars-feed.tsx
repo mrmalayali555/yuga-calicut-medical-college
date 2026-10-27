@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Download } from "lucide-react";
-import { CIRCULARS } from "@/lib/data";
+import { ArrowRight, Download, Bell } from "lucide-react";
 import { motion } from "framer-motion";
 import { formatDate } from "@/lib/utils";
 
@@ -24,11 +23,7 @@ interface CircularsFeedProps {
 }
 
 export function CircularsFeed({ initialCirculars }: CircularsFeedProps) {
-  const items: CircularFeedItem[] = (
-    initialCirculars && initialCirculars.length > 0
-      ? initialCirculars
-      : (CIRCULARS as unknown as CircularFeedItem[])
-  ).slice(0, 4);
+  const items: CircularFeedItem[] = (initialCirculars ?? []).slice(0, 4);
 
   return (
     <section className="py-24 sm:py-32 border-t border-[var(--border-primary)]">
@@ -57,6 +52,12 @@ export function CircularsFeed({ initialCirculars }: CircularsFeedProps) {
         </motion.div>
 
         {/* Table-style list */}
+        {items.length === 0 ? (
+          <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-sm p-10 text-center">
+            <Bell className="h-8 w-8 text-[var(--accent)] opacity-30 mx-auto mb-3" />
+            <p className="text-sm text-[var(--text-secondary)]">No circulars posted yet. Check back soon.</p>
+          </div>
+        ) : (
         <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-card)] shadow-sm overflow-hidden">
           {items.map((c, i) => {
             const dateStr =
@@ -112,6 +113,7 @@ export function CircularsFeed({ initialCirculars }: CircularsFeedProps) {
             );
           })}
         </div>
+        )}
 
       </div>
     </section>
