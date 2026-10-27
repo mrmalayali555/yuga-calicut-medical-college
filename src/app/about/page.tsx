@@ -6,14 +6,6 @@ import { LEADERSHIP } from "@/lib/data";
 export const metadata: Metadata = {
   title: "Heritage, Charter & Executive Council Leadership",
   description: `Established in 1957, Government Medical College Kozhikode is the premier medical institution in Northern Kerala. Meet the elected YUGA College Union 2026-2027 leadership team.`,
-  keywords: [
-    "About YUGA Union",
-    "Calicut Medical College Union Leadership",
-    "Government Medical College Kozhikode History",
-    "CMC Kozhikode Executive Council",
-    "Calicut Medicos Union Charter",
-    "KUHS Student Representatives Kozhikode",
-  ],
   alternates: {
     canonical: "/about",
   },
@@ -24,7 +16,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og.png",
+        url: `${SITE.url}/api/og?title=Heritage,%20Charter%20%26%20Executive%20Council&badge=ABOUT%20YUGA`,
         width: 1200,
         height: 630,
         alt: `About YUGA — ${COLLEGE.name}`,
@@ -35,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About YUGA Union · GMC Kozhikode",
     description: `Heritage, charter, and executive leadership of YUGA College Union 2026-2027 at ${COLLEGE.name}.`,
-    images: ["/og.png"],
+    images: [`${SITE.url}/api/og?title=Heritage,%20Charter%20%26%20Executive%20Council&badge=ABOUT%20YUGA`],
   },
 };
 
@@ -44,7 +36,7 @@ export default function AboutPage() {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     name: `${COLLEGE.name} — YUGA College Union`,
-    alternateName: ["YUGA Union CMC Kozhikode", "Calicut Medical College Union 2026-2027"],
+    alternateName: ["YUGA Union CMC Kozhikode", "Calicut Medical College Union 2026-2027", "യുഗ — കോഴിക്കോട് മെഡിക്കൽ കോളേജ് യൂണിയൻ"],
     url: `${SITE.url}/about`,
     foundingDate: "1957",
     parentOrganization: {
@@ -60,11 +52,50 @@ export default function AboutPage() {
     })),
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is YUGA at Government Medical College Kozhikode?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "YUGA is the official, democratically elected student union for the 2026–27 academic tenure at Government Medical College Kozhikode (Calicut Medical College), representing over 3,000 MBBS undergraduates, house surgeons, and PG medical residents.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "When was Government Medical College Kozhikode established?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Government Medical College Kozhikode was established in 1957. It is the premier tertiary healthcare and medical education institution in Northern Kerala, affiliated with the Kerala University of Health Sciences (KUHS).",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Who are the office bearers of YUGA College Union 2026–27?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The YUGA executive council includes the Chairperson, Vice Chairperson, General Secretary, Joint Secretary, Arts Club Secretary, Sports Secretary, Magazine Editor, and University Union Councilors (UUCs) representing KUHS.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Where is the YUGA Union office located?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "The YUGA College Union office is located inside the Government Medical College Campus, Medical College Junction, 17, Kozhikode, Kerala 673008, India.",
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([jsonLd, faqJsonLd]) }}
       />
       <AboutView />
     </>

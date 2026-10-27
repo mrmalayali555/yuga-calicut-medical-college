@@ -17,6 +17,8 @@ export async function generateMetadata({
 
   const description = item.description.slice(0, 160);
 
+  const dynamicOgUrl = `${SITE.url}/api/og?title=${encodeURIComponent(item.title)}&badge=OFFICIAL%20CIRCULAR`;
+
   return {
     title: item.title,
     description,
@@ -28,13 +30,13 @@ export async function generateMetadata({
       description,
       type: "article",
       url: `/notifications/${slug}`,
-      images: [{ url: "/og.png" }],
+      images: [{ url: dynamicOgUrl, width: 1200, height: 630, alt: item.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: item.title,
       description,
-      images: ["/og.png"],
+      images: [dynamicOgUrl],
     },
   };
 }

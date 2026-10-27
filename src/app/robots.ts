@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
+        allow: ["/", "/api/og*"],
         disallow: [
           "/api/",
           "/admin/",
@@ -24,7 +24,7 @@ export default function robots(): MetadataRoute.Robots {
           "DuckDuckBot",
           "YandexBot",
         ],
-        allow: "/",
+        allow: ["/", "/api/og*"],
         disallow: [
           "/api/",
           "/admin/",
@@ -41,7 +41,7 @@ export default function robots(): MetadataRoute.Robots {
           "ClaudeBot",
           "Google-Extended",
         ],
-        allow: "/",
+        allow: ["/", "/api/og*"],
         disallow: [
           "/api/",
           "/admin/",

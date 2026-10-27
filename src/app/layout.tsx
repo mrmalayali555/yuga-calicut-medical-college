@@ -25,6 +25,9 @@ export const metadata: Metadata = {
   publisher: COLLEGE.name,
   alternates: {
     canonical: "./",
+    types: {
+      "application/rss+xml": `${SITE.url}/feed.xml`,
+    },
   },
   openGraph: {
     type: "website",
@@ -189,6 +192,16 @@ export default async function RootLayout({
           "https://youtube.com/@yugacalicut",
           "https://t.me/yugacmc",
         ],
+        inLanguage: ["en-IN", "ml-IN"],
+        knowsAbout: [
+          "Government Medical College Kozhikode",
+          "Calicut Medical College",
+          "MBBS Clinical Training",
+          "Kerala University of Health Sciences",
+          "Medical Student Council",
+          "Campus Advocacy",
+          "Healthcare Student Leadership",
+        ],
       },
     ],
   };
@@ -200,6 +213,7 @@ export default async function RootLayout({
       className={`scroll-smooth antialiased ${activeTheme === "obsidian-crimson" ? "dark" : ""}`}
     >
       <head>
+        <link rel="alternate" type="application/rss+xml" title="YUGA — GMC Kozhikode Union RSS Feed" href={`${SITE.url}/feed.xml`} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link

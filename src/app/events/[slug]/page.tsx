@@ -51,8 +51,10 @@ export async function generateMetadata({
   if (!event) return { title: "Event Not Found" };
 
   const title = event.title;
-  const description = event.description.slice(0, 160);
-  const ogImage = event.poster ? [{ url: event.poster }] : [{ url: "/og.png" }];
+  const description = (event.description || "").slice(0, 160);
+  const categoryLabel = (event as any).committee?.name || "CAMPUS EVENT";
+  const dynamicOgUrl = `${SITE.url}/api/og?title=${encodeURIComponent(event.title)}&badge=${encodeURIComponent(categoryLabel)}`;
+  const ogImage = event.poster ? [{ url: event.poster }] : [{ url: dynamicOgUrl, width: 1200, height: 630, alt: event.title }];
 
   return {
     title,
@@ -71,7 +73,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: event.poster ? [event.poster] : ["/og.png"],
+      images: event.poster ? [event.poster] : [dynamicOgUrl],
     },
   };
 }

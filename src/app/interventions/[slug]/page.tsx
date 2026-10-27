@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, CheckCircle2, Clock, Calendar, Building2, Download, Paperclip, Share2 } from "lucide-react";
 import { getIntervention } from "@/lib/queries";
 import { formatDate } from "@/lib/utils";
-import { COLLEGE, YUGA } from "@/lib/site";
+import { COLLEGE, YUGA, SITE } from "@/lib/site";
 
 import { InterventionDocViewer } from "@/components/interventions/intervention-doc-viewer";
 
@@ -18,6 +18,7 @@ export async function generateMetadata({
   if (!item) return { title: "Intervention Not Found" };
 
   const description = item.description.slice(0, 160);
+  const dynamicOgUrl = `${SITE.url}/api/og?title=${encodeURIComponent(item.title)}&badge=CAMPUS%20INTERVENTION`;
 
   return {
     title: item.title,
@@ -30,13 +31,13 @@ export async function generateMetadata({
       description,
       type: "article",
       url: `/interventions/${slug}`,
-      images: [{ url: "/og.png" }],
+      images: [{ url: dynamicOgUrl, width: 1200, height: 630, alt: item.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: item.title,
       description,
-      images: ["/og.png"],
+      images: [dynamicOgUrl],
     },
   };
 }
