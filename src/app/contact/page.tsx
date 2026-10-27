@@ -2,6 +2,28 @@ import { Metadata } from "next";
 import { MapPin, Phone, Mail, Clock, Send, ShieldAlert, Sparkles } from "lucide-react";
 import { COLLEGE, YUGA, SITE } from "@/lib/site";
 import { ContactClientForm } from "./contact-form-client";
+import { db } from "@/lib/db";
+
+async function getContactSettings() {
+  try {
+    const row = await db.setting.findUnique({ where: { key: "contact" } });
+    if (row?.value) {
+      const s = JSON.parse(row.value);
+      return {
+        phone: s.phone || COLLEGE.phone,
+        email: s.email || YUGA.email,
+        emergencyPhone: s.emergencyPhone || COLLEGE.casualtyPhone,
+        address: s.address || COLLEGE.address,
+      };
+    }
+  } catch {}
+  return {
+    phone: COLLEGE.phone,
+    email: YUGA.email,
+    emergencyPhone: COLLEGE.casualtyPhone,
+    address: COLLEGE.address,
+  };
+}
 
 export const metadata: Metadata = {
   title: "Official Contact Desk & Campus Location · YUGA",
@@ -9,7 +31,8 @@ export const metadata: Metadata = {
     "Get in touch with YUGA College Union 2026-2027 at Government Medical College, Kozhikode. Office location, 24/7 casualty phone, emergency hotline, and official enquiry form.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const contact = await getContactSettings();
   return (
     <div className="min-h-screen pt-28 pb-24 bg-[var(--bg-root)] text-[var(--text-primary)] relative overflow-hidden transition-colors">
       <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(var(--accent)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
@@ -70,10 +93,10 @@ export default function ContactPage() {
                       Union Office Line
                     </h3>
                     <a
-                      href={`tel:${COLLEGE.phone}`}
+                      href={`tel:${contact.phone}`}
                       className="mt-1 block font-semibold text-[var(--accent)] hover:underline"
                     >
-                      {COLLEGE.phone}
+                      {contact.phone}
                     </a>
                   </div>
                   <div className="pt-2 border-t border-[var(--border-primary)] flex flex-col sm:flex-row gap-4 text-xs">
@@ -112,10 +135,10 @@ export default function ContactPage() {
                       Official Email
                     </h3>
                     <a
-                      href={`mailto:${YUGA.email}`}
+                      href={`mailto:${contact.email}`}
                       className="mt-1 block text-xs font-semibold text-[var(--accent)] hover:underline truncate"
                     >
-                      {YUGA.email}
+                      {contact.email}
                     </a>
                   </div>
                 </div>

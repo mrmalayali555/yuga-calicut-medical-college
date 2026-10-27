@@ -213,78 +213,7 @@ export default function SubcommitteesPage() {
           </div>
         </div>
 
-        <div className="mb-6">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[var(--text-muted)]">
-            All Council Wings &amp; Portfolios
-          </h2>
-        </div>
 
-        {/* Grid */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.06 } },
-          }}
-          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
-        >
-          {WINGS.map((wing) => {
-            const Icon = wing.icon;
-            return (
-              <motion.div
-                key={wing.name}
-                variants={{
-                  hidden: { opacity: 0, y: 16 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { type: "spring", stiffness: 120, damping: 20 },
-                  },
-                }}
-                className="card p-6 flex flex-col justify-between border-[var(--border-primary)] bg-[var(--bg-card)] hover:border-[var(--accent)] transition-colors"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--border-primary)]">
-                      <Icon className="h-5 w-5" aria-hidden="true" />
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--text-faint)]">
-                      {wing.category}
-                    </span>
-                  </div>
-
-                  <Link href={`/subcommittees/${wing.slug}`} className="block group/link">
-                    <h3 className="text-base font-semibold text-[var(--text-primary)] leading-snug group-hover/link:text-[var(--accent)] transition-colors">
-                      {wing.name}
-                    </h3>
-                  </Link>
-
-                  <p className="mt-1 text-xs text-[var(--accent)] font-semibold">
-                    Lead: {wing.convenor}
-                  </p>
-
-                  <p className="mt-3 text-sm text-[var(--text-secondary)] leading-relaxed border-t border-[var(--border-primary)] pt-3">
-                    {wing.description}
-                  </p>
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-[var(--border-primary)] flex items-center justify-between text-xs">
-                  <Link
-                    href={`/subcommittees/${wing.slug}`}
-                    className="font-semibold text-[var(--accent)] hover:underline"
-                  >
-                    View Wing & Events →
-                  </Link>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--accent)] bg-[var(--accent-subtle)] border border-[var(--border-primary)] px-2 py-0.5 rounded-full">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                    Active
-                  </span>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
 
         {/* CTA */}
         <motion.div
