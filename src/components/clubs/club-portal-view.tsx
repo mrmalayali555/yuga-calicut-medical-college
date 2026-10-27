@@ -193,7 +193,7 @@ const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
     vision:
       "To be South India's premier medical cultural collective, producing national-standard music, theatre, and films that illuminate the human condition.",
     heroDescription:
-      "The creative heartbeat of Calicut Medical College. Praanah oversees 6 specialized cultural wings, represents GMC at university festivals (KUHAS), curates the annual YUGA Arts Carnival, and nurtures artistic talents that have launched celebrated playback artists, choreographers, and directors.",
+      "The creative heartbeat of Calicut Medical College. Praanah oversees specialized cultural wings, represents GMC at university festivals (KUHAS), curates the annual YUGA Arts Carnival, and nurtures artistic talents that have launched celebrated playback artists, choreographers, and directors.",
     stats: [
       { label: "Active Artists", value: "320+", hint: "Singers, dancers & actors" },
       { label: "KUHAS Gold Medals", value: "24 Titles", hint: "State university meets" },
@@ -974,78 +974,84 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                     ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
                     : "grid-cols-1 md:grid-cols-2"
                 }`}>
-                  {club.initiatives.map((item, idx) => {
-                    const sportsIcons = [Dumbbell, Trophy, Activity, Users];
-                    const SportIcon = sportsIcons[idx % sportsIcons.length];
+                  {club.initiatives && club.initiatives.length > 0 ? (
+                    club.initiatives.map((item, idx) => {
+                      const sportsIcons = [Dumbbell, Trophy, Activity, Users];
+                      const SportIcon = sportsIcons[idx % sportsIcons.length];
 
-                    return (
-                      <div
-                        key={idx}
-                        className={`group relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 ${
-                          isJeevanam
-                            ? "bg-[#0c0d12] border border-white/10 hover:border-red-500/40 hover:shadow-xl text-white"
-                            : isGodha
-                            ? "border border-[#e2dec9] bg-white shadow-xs hover:border-emerald-500/40 hover:shadow-xl hover:-translate-y-0.5"
-                            : "border border-slate-200/80 bg-white shadow-xs hover:border-slate-300 hover:shadow-xl"
-                        }`}
-                      >
-                        <div>
-                          {isGodha && (
-                            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 border border-emerald-200/60 mb-5 shadow-2xs">
-                              <SportIcon className="h-5 w-5" />
+                      return (
+                        <div
+                          key={idx}
+                          className={`group relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 ${
+                            isJeevanam
+                              ? "bg-[#0c0d12] border border-white/10 hover:border-red-500/40 hover:shadow-xl text-white"
+                              : isGodha
+                              ? "border border-[#e2dec9] bg-white shadow-xs hover:border-emerald-500/40 hover:shadow-xl hover:-translate-y-0.5"
+                              : "border border-slate-200/80 bg-white shadow-xs hover:border-slate-300 hover:shadow-xl"
+                          }`}
+                        >
+                          <div>
+                            {isGodha && (
+                              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 border border-emerald-200/60 mb-5 shadow-2xs">
+                                <SportIcon className="h-5 w-5" />
+                              </div>
+                            )}
+                            <div className="flex items-center justify-between mb-3.5">
+                              <span
+                                className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
+                                style={{
+                                  color: club.accent,
+                                  backgroundColor: `rgba(${club.accentRgb}, ${isJeevanam ? 0.2 : 0.08})`,
+                                }}
+                              >
+                                {item.category}
+                              </span>
+                              <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
+                                isJeevanam ? "text-zinc-400" : "text-slate-500"
+                              }`}>
+                                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                {item.status}
+                              </span>
                             </div>
-                          )}
-                          <div className="flex items-center justify-between mb-3.5">
-                            <span
-                              className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
-                              style={{
-                                color: club.accent,
-                                backgroundColor: `rgba(${club.accentRgb}, ${isJeevanam ? 0.2 : 0.08})`,
-                              }}
-                            >
-                              {item.category}
-                            </span>
-                            <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
-                              isJeevanam ? "text-zinc-400" : "text-slate-500"
+                            <h4 className={`text-lg sm:text-xl font-bold mb-2 leading-snug transition-colors ${
+                              isJeevanam
+                                ? "text-white group-hover:text-red-400"
+                                : isGodha
+                                ? "text-slate-900 group-hover:text-emerald-700"
+                                : "text-slate-900 group-hover:text-slate-800"
                             }`}>
-                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                              {item.status}
+                              {item.title}
+                            </h4>
+                            <p className={`text-xs sm:text-sm leading-relaxed ${
+                              isJeevanam ? "text-zinc-400" : "text-slate-600"
+                            }`}>
+                              {item.description}
+                            </p>
+                          </div>
+
+                          <div className={`mt-6 pt-4 border-t flex items-center justify-between text-xs font-bold ${
+                            isJeevanam
+                              ? "border-white/10 text-zinc-500"
+                              : "border-slate-100 text-slate-500"
+                          }`}>
+                            <span>Initiative 0{idx + 1}</span>
+                            <span
+                              className={`group-hover:translate-x-1 transition-transform ${
+                                isGodha ? "text-rose-600" : ""
+                              }`}
+                              style={isGodha ? undefined : { color: club.accent }}
+                            >
+                              Official Program →
                             </span>
                           </div>
-                          <h4 className={`text-lg sm:text-xl font-bold mb-2 leading-snug transition-colors ${
-                            isJeevanam
-                              ? "text-white group-hover:text-red-400"
-                              : isGodha
-                              ? "text-slate-900 group-hover:text-emerald-700"
-                              : "text-slate-900 group-hover:text-slate-800"
-                          }`}>
-                            {item.title}
-                          </h4>
-                          <p className={`text-xs sm:text-sm leading-relaxed ${
-                            isJeevanam ? "text-zinc-400" : "text-slate-600"
-                          }`}>
-                            {item.description}
-                          </p>
                         </div>
-
-                        <div className={`mt-6 pt-4 border-t flex items-center justify-between text-xs font-bold ${
-                          isJeevanam
-                            ? "border-white/10 text-zinc-500"
-                            : "border-slate-100 text-slate-500"
-                        }`}>
-                          <span>Initiative 0{idx + 1}</span>
-                          <span
-                            className={`group-hover:translate-x-1 transition-transform ${
-                              isGodha ? "text-rose-600" : ""
-                            }`}
-                            style={isGodha ? undefined : { color: club.accent }}
-                          >
-                            Official Program →
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })
+                  ) : (
+                    <div className="col-span-full rounded-2xl border border-dashed border-[var(--border-primary)] bg-[var(--bg-card)] p-8 text-center text-sm text-[var(--text-muted)]">
+                      No initiatives listed at this time.
+                    </div>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -1155,67 +1161,22 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                 </div>
               )}
 
-              {/* PRAANAH: CULTURAL WINGS SPOTLIGHT */}
+              {/* PRAANAH: CULTURAL WINGS */}
               {club.id === "praanah" && (
-                <div className="space-y-8">
-                  <div className="text-center max-w-2xl mx-auto mb-6">
-                    <h3 className="text-2xl sm:text-3xl font-display font-bold text-slate-900">
-                      6 Performing Wings of Praanah
+                <div className="py-8">
+                  <div className="rounded-3xl border border-dashed border-amber-300/80 bg-gradient-to-br from-amber-50/40 via-white to-white p-10 sm:p-14 text-center max-w-2xl mx-auto shadow-xs">
+                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-amber-700 mb-4 border border-amber-200 shadow-2xs">
+                      <Sparkles className="h-6 w-6" />
+                    </div>
+                    <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-amber-700 bg-amber-100/80 px-3 py-1 rounded-full mb-3">
+                      Praanah Cultural Wings
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-display font-bold text-slate-900">
+                      No Cultural Wings Listed
                     </h3>
-                    <p className="text-sm text-slate-600 mt-2">
-                      Specialized societies driving cultural productions, band recordings, and festival showcases.
+                    <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-md mx-auto leading-relaxed">
+                      Official performing wings, societies, and rehearsal schedules under Praanah for 2026–2027 will be updated here soon.
                     </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[
-                      {
-                        name: "Symphony Band & Western Music",
-                        lead: "Devanand K.",
-                        specs: "Electric guitars, keyboard, drum kit, live audio mastering",
-                      },
-                      {
-                        name: "Natyarangam Classical Dance",
-                        lead: "Sreelakshmi P.",
-                        specs: "Bharatanatyam, Mohiniyattam, Kathakali, stage choreography",
-                      },
-                      {
-                        name: "Rangabhoomi Theatre Society",
-                        lead: "Kiran Joseph",
-                        specs: "Street plays, satirical mime, Malayalam drama, voice acting",
-                      },
-                      {
-                        name: "Chithrashala Visual Arts",
-                        lead: "Anirudh S.",
-                        specs: "Live canvas painting, anatomical illustration, graffiti",
-                      },
-                      {
-                        name: "CineGMC Short Film Crew",
-                        lead: "Arun Joy",
-                        specs: "Cinematography, 4K color grading, documentary shorts",
-                      },
-                      {
-                        name: "Dhwani Folk & Acoustic Circle",
-                        lead: "Meenakshi R.",
-                        specs: "Traditional Nadan Pattu, acoustic unplugged sessions",
-                      },
-                    ].map((wing, i) => (
-                      <div
-                        key={i}
-                        className="rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50/40 via-white to-white p-6 shadow-xs hover:shadow-lg transition-all"
-                      >
-                        <span className="text-xs font-bold text-amber-700 uppercase tracking-widest">
-                          Wing 0{i + 1}
-                        </span>
-                        <h4 className="text-lg font-bold text-slate-900 mt-1 mb-2">
-                          {wing.name}
-                        </h4>
-                        <p className="text-xs text-slate-500 mb-4">{wing.specs}</p>
-                        <div className="pt-3 border-t border-slate-100 text-xs font-semibold text-slate-700">
-                          Lead: <span className="text-amber-800">{wing.lead}</span>
-                        </div>
-                      </div>
-                    ))}
                   </div>
                 </div>
               )}
@@ -1280,50 +1241,22 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                 </div>
               )}
 
-              {/* OCHA: LITERARY FORUM & QUIZZING */}
+              {/* OCHA: ACTIVITIES & PROGRAMS */}
               {club.id === "ocha" && (
-                <div className="space-y-8">
-                  <div className="rounded-3xl border border-violet-200 bg-gradient-to-br from-violet-50/60 via-white to-white p-8 sm:p-10 shadow-xs">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-                      <div>
-                        <span className="text-xs font-bold uppercase tracking-widest text-violet-700">
-                          Official Publications
-                        </span>
-                        <h3 className="text-2xl sm:text-3xl font-display font-bold text-slate-900">
-                          YUGA Literary Journal &amp; Campus Gazette
-                        </h3>
-                      </div>
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-violet-100 text-violet-800 px-3.5 py-1 text-xs font-bold">
-                        <BookOpen className="h-3.5 w-3.5" />
-                        <span>Volume 16 In Circulation</span>
-                      </span>
+                <div className="py-8">
+                  <div className="rounded-3xl border border-dashed border-violet-300/80 bg-gradient-to-br from-violet-50/40 via-white to-white p-10 sm:p-14 text-center max-w-2xl mx-auto shadow-xs">
+                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-100 text-violet-700 mb-4 border border-violet-200 shadow-2xs">
+                      <BookOpen className="h-6 w-6" />
                     </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-2xs">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-violet-700">
-                          Bi-Monthly
-                        </span>
-                        <h4 className="text-lg font-bold text-slate-900 mt-1 mb-2">
-                          The Hippocratic Inquirer Gazette
-                        </h4>
-                        <p className="text-xs text-slate-600 leading-relaxed">
-                          Print and digital student broadsheet covering campus governance investigations, medical ethics columns, and faculty spotlights.
-                        </p>
-                      </div>
-
-                      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-2xs">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-violet-700">
-                          Annual Anthology
-                        </span>
-                        <h4 className="text-lg font-bold text-slate-900 mt-1 mb-2">
-                          Aksharam Malayalam Sahithya Edition
-                        </h4>
-                        <p className="text-xs text-slate-600 leading-relaxed">
-                          Curated collection of short stories, poetry, and reflective memoirs written by students across MBBS, BDS, and Nursing batches.
-                        </p>
-                      </div>
-                    </div>
+                    <span className="inline-block text-[11px] font-bold uppercase tracking-widest text-violet-700 bg-violet-100/80 px-3 py-1 rounded-full mb-3">
+                      Ocha Literary Society
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-display font-bold text-slate-900">
+                      No Activities &amp; Programs Listed
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-md mx-auto leading-relaxed">
+                      Official literary competitions, debating conclaves, and publications under Ocha for 2026–2027 will be updated here soon.
+                    </p>
                   </div>
                 </div>
               )}
