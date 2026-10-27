@@ -105,6 +105,7 @@ export default function AboutPage() {
                 <span className="font-medium text-[var(--text-secondary)]">NMC Recognised</span>
               </div>
             </div>
+          </motion.div>
         </div>
 
 
