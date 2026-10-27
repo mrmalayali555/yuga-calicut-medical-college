@@ -54,23 +54,21 @@ export function LeadershipSection() {
               <motion.div
                 key={leader.role}
                 variants={{
-                  hidden: { opacity: 0, y: 18 },
+                  hidden: { opacity: 0, y: 16 },
                   visible: {
                     opacity: 1,
                     y: 0,
-                    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+                    transition: { type: "spring", stiffness: 100, damping: 20 },
                   },
                 }}
-                whileHover={{ y: -4, transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1] } }}
-                whileTap={{ scale: 0.98 }}
-                className="card group p-6 sm:p-7 hover:border-[var(--accent)] hover:shadow-md transition-[border-color,box-shadow]"
+                className="card p-6 hover:border-[var(--accent)] transition-colors"
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--border-primary)] font-bold text-sm transition-transform duration-200 group-hover:scale-105 group-hover:bg-[var(--accent-muted)]">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--accent-subtle)] text-[var(--accent)] border border-[var(--accent)]/20 font-bold text-sm">
                     {initials}
                   </div>
                   <div>
-                    <h3 className="text-base font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors">
+                    <h3 className="text-base font-semibold text-[var(--text-primary)]">
                       {leader.name}
                     </h3>
                     <p className="text-xs text-[var(--accent)] font-semibold">
@@ -79,12 +77,12 @@ export function LeadershipSection() {
                   </div>
                 </div>
 
-                <p className="text-xs text-[var(--text-faint)] font-medium mb-2">
+                <p className="text-xs text-[var(--text-primary)] font-medium mb-1">
                   {leader.portfolio}
                 </p>
-                <p className="text-xs text-[var(--text-faint)] font-mono font-medium">
+                <div className="text-[11px] text-[var(--text-faint)] font-mono font-medium">
                   {leader.batch}
-                </p>
+                </div>
               </motion.div>
             );
           })}

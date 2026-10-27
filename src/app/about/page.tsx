@@ -165,7 +165,7 @@ export default function AboutPage() {
                       </p>
                     </div>
                   </div>
-                  <p className="text-xs text-[var(--text-muted)] font-medium mb-1">
+                  <p className="text-xs text-[var(--text-primary)] font-medium mb-1">
                     {leader.portfolio}
                   </p>
                   <div className="text-[11px] text-[var(--text-faint)] font-mono font-medium">
