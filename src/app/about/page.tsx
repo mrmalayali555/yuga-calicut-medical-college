@@ -12,7 +12,7 @@ import { LEADERSHIP } from "@/lib/data";
 import { motion } from "framer-motion";
 
 const STATS = [
-  { value: "1957", label: "Founded", sub: "68+ years of service" },
+  { value: "1957", label: "Founded", sub: "69+ years of service" },
   { value: "3,000+", label: "Beds", sub: "Largest campus in Kerala" },
   { value: "250+", label: "MBBS intake / year", sub: "Top NEET rankers" },
   { value: "4", label: "Subcommittees", sub: "Culture, sports, research" },

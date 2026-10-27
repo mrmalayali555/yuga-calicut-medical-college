@@ -98,7 +98,7 @@ export default function MonumentPage() {
                 <span>1. The Ishigaki Bedrock (1957)</span>
               </div>
               <p className="leading-relaxed text-slate-600">
-                Represents our 68-year collegiate foundation — rigorous preclinical study, anatomy dissections, and medical ethics that ground every physician.
+                Represents our 69-year collegiate foundation — rigorous preclinical study, anatomy dissections, and medical ethics that ground every physician.
               </p>
             </div>
 

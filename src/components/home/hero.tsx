@@ -414,7 +414,7 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
               </div>
               <div>
                 <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-['Plus_Jakarta_Sans',sans-serif]">
-                  <AnimatedCounter value={68} suffix="" />
+                  <AnimatedCounter value={69} suffix="" />
                 </div>
                 <div className="text-xs sm:text-[13px] text-white/60 font-medium">
                   Years of student legacy
@@ -453,7 +453,7 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
             {/* Mobile Metric 2 */}
             <div className="px-1.5 flex flex-col items-center">
               <span className="text-lg xs:text-xl font-black text-white tracking-tight">
-                <AnimatedCounter value={68} suffix="" />
+                <AnimatedCounter value={69} suffix="" />
               </span>
               <span className="text-[10px] text-white/65 font-medium leading-tight mt-0.5 truncate w-full">
                 Years Legacy
