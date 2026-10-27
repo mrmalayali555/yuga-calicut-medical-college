@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Bell, Calendar, Download, Paperclip, AlertTriangle } from "lucide-react";
 import { getNotification } from "@/lib/queries";
 import { formatDate } from "@/lib/utils";
-import { COLLEGE } from "@/lib/site";
+import { COLLEGE, SITE } from "@/lib/site";
 
 export async function generateMetadata({
   params,
@@ -13,11 +13,29 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const item = await getNotification(slug);
-  if (!item) return { title: "Notification Not Found · YUGA" };
+  if (!item) return { title: "Circular Not Found" };
+
+  const description = item.description.slice(0, 160);
 
   return {
-    title: `${item.title} · YUGA Official Circular`,
-    description: item.description.slice(0, 160),
+    title: item.title,
+    description,
+    alternates: {
+      canonical: `/notifications/${slug}`,
+    },
+    openGraph: {
+      title: item.title,
+      description,
+      type: "article",
+      url: `/notifications/${slug}`,
+      images: [{ url: "/og.png" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: item.title,
+      description,
+      images: ["/og.png"],
+    },
   };
 }
 
@@ -30,8 +48,31 @@ export default async function NotificationDetailPage({
   const item = await getNotification(slug);
   if (!item) notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: item.title,
+    description: item.description,
+    datePublished: new Date(item.date).toISOString(),
+    author: {
+      "@type": "Organization",
+      name: `YUGA College Union — ${COLLEGE.name}`,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: COLLEGE.name,
+      url: SITE.url,
+    },
+    image: [`${SITE.url}/og.png`],
+  };
+
   return (
-    <div className="min-h-screen pt-28 pb-24 bg-[var(--bg-root)] text-[var(--text-primary)] relative overflow-hidden transition-colors">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen pt-28 pb-24 bg-[var(--bg-root)] text-[var(--text-primary)] relative overflow-hidden transition-colors">
       <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(var(--accent)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
@@ -94,5 +135,6 @@ export default async function NotificationDetailPage({
         </div>
       </div>
     </div>
+    </>
   );
 }

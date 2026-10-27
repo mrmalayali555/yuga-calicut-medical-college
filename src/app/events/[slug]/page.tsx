@@ -48,19 +48,30 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const event = await getEvent(slug);
-  if (!event) return { title: "Event Not Found · YUGA" };
+  if (!event) return { title: "Event Not Found" };
 
-  const title = `${event.title} · YUGA Events`;
+  const title = event.title;
   const description = event.description.slice(0, 160);
+  const ogImage = event.poster ? [{ url: event.poster }] : [{ url: "/og.png" }];
 
   return {
     title,
     description,
+    alternates: {
+      canonical: `/events/${slug}`,
+    },
     openGraph: {
       title,
       description,
+      url: `/events/${slug}`,
       type: "article",
-      images: event.poster ? [{ url: event.poster }] : [{ url: "/og.png" }],
+      images: ogImage,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: event.poster ? [event.poster] : ["/og.png"],
     },
   };
 }
@@ -76,8 +87,45 @@ export default async function EventDetailPage({
 
   const status = statusTone[event.status] || statusTone.upcoming;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: event.title,
+    description: event.description,
+    startDate: new Date(event.date).toISOString(),
+    ...(event.endDate ? { endDate: new Date(event.endDate).toISOString() } : {}),
+    eventStatus:
+      event.status === "cancelled"
+        ? "https://schema.org/EventCancelled"
+        : "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: event.venue || `Auditorium, ${COLLEGE.name}`,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Medical College Junction, 17",
+        addressLocality: "Kozhikode",
+        addressRegion: "Kerala",
+        postalCode: "673008",
+        addressCountry: "IN",
+      },
+    },
+    image: event.poster ? [event.poster] : [`${SITE.url}/og.png`],
+    organizer: {
+      "@type": "Organization",
+      name: `YUGA College Union — ${COLLEGE.name}`,
+      url: SITE.url,
+    },
+  };
+
   return (
-    <div className="min-h-screen pt-28 pb-24 bg-[var(--bg-root)] text-[var(--text-primary)] relative overflow-hidden transition-colors">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen pt-28 pb-24 bg-[var(--bg-root)] text-[var(--text-primary)] relative overflow-hidden transition-colors">
       <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(var(--accent)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
       <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Back Link */}
@@ -232,5 +280,6 @@ export default async function EventDetailPage({
         )}
       </div>
     </div>
+    </>
   );
 }

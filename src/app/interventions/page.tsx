@@ -4,9 +4,12 @@ import { ensureInitialInterventions } from "@/lib/initial-sync";
 import { InterventionsView } from "@/components/interventions/interventions-view";
 
 export const metadata: Metadata = {
-  title: "Union Interventions · YUGA — GMC Kozhikode",
+  title: "Student Welfare Interventions & Policy Petitions",
   description:
     "Official petitions, policy memorandums, and student welfare representations submitted by YUGA to DME Kerala, KUHS, and Hospital Administration.",
+  alternates: {
+    canonical: "/interventions",
+  },
 };
 
 export const dynamic = "force-dynamic";

@@ -3,9 +3,12 @@ import { getNotifications, getGridLayoutSettings } from "@/lib/queries";
 import { NotificationsView } from "@/components/notifications/notifications-view";
 
 export const metadata: Metadata = {
-  title: "Circulars & Notices · YUGA — GMC Kozhikode",
+  title: "Official Circulars, KUHS Notices & Directives",
   description:
-    "Authenticated communications from the College Union, Dean of Academics, KUHS Senate, and Hostel Wardens.",
+    "Authenticated communications from the College Union, Dean of Academics, KUHS Senate, and Hostel Wardens at Government Medical College, Kozhikode.",
+  alternates: {
+    canonical: "/notifications",
+  },
 };
 
 export const dynamic = "force-dynamic";

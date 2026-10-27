@@ -131,6 +131,7 @@ export function Hero({ heroCard }: { heroCard?: HeroCardConfig | null }) {
                   as="span"
                   className="block drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]"
                 />
+                <span className="sr-only"> — YUGA College Union 2026-2027, Government Medical College Kozhikode</span>
               </h1>
 
               <div className="text-[32px] xs:text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-serif italic leading-[1.12] sm:leading-[1.1] pt-0.5 sm:pt-1">

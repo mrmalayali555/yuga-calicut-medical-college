@@ -11,8 +11,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   return {
-    title: `Registration Pass · YUGA`,
+    title: "Event Registration Pass",
     description: "Official registration and delegate enrollment for GMC Kozhikode union activities.",
+    alternates: {
+      canonical: `/registration/${slug}`,
+    },
   };
 }
 

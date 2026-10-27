@@ -15,11 +15,29 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const item = await getIntervention(slug);
-  if (!item) return { title: "Intervention Not Found · YUGA" };
+  if (!item) return { title: "Intervention Not Found" };
+
+  const description = item.description.slice(0, 160);
 
   return {
-    title: `${item.title} · YUGA Union Interventions`,
-    description: item.description.slice(0, 160),
+    title: item.title,
+    description,
+    alternates: {
+      canonical: `/interventions/${slug}`,
+    },
+    openGraph: {
+      title: item.title,
+      description,
+      type: "article",
+      url: `/interventions/${slug}`,
+      images: [{ url: "/og.png" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: item.title,
+      description,
+      images: ["/og.png"],
+    },
   };
 }
 

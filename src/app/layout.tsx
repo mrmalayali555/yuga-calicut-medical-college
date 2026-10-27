@@ -13,44 +13,68 @@ import { UniversalInlineEditor } from "@/components/admin/inline/universal-edito
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${YUGA.name} · ${COLLEGE.name} — College Union 2026-2027`,
-    template: `%s · ${YUGA.name} — GMC Kozhikode`,
+    default: "YUGA | GMC Kozhikode Union 2026–27",
+    template: "%s | YUGA — GMC Kozhikode Union 2026–27",
   },
-  description: YUGA.description,
-  applicationName: YUGA.name,
-  keywords: [
-    "YUGA",
-    "YUGA GMC Kozhikode",
-    "Calicut Medical College Union",
-    "Government Medical College Kozhikode",
-    "Calicut Medicos",
-    "YUGA Fest",
-    "KUHS Notifications & Directives",
-    "CMC Kozhikode Student Union",
-    "Medical College Union Kerala",
-  ],
-  authors: [{ name: YUGA.name, url: SITE.url }],
+  description:
+    "Discover YUGA, the GMC Kozhikode Union for 2026–27. Explore union initiatives, interventions, events, achievements, student services and official updates.",
+  applicationName: "YUGA — GMC Kozhikode Union",
+  category: "education",
+  authors: [{ name: "YUGA — GMC Kozhikode Union 2026–27", url: SITE.url }],
+  creator: "YUGA Union Executive Council",
+  publisher: COLLEGE.name,
+  alternates: {
+    canonical: "./",
+  },
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: SITE.url,
-    siteName: `${YUGA.name} — ${COLLEGE.shortName}`,
-    title: `${YUGA.name} · College Union — ${COLLEGE.name}`,
-    description: YUGA.description,
+    siteName: "YUGA — GMC Kozhikode Union 2026–27",
+    title: "YUGA | GMC Kozhikode Union 2026–27",
+    description:
+      "Discover YUGA, the GMC Kozhikode Union for 2026–27. Explore union initiatives, interventions, events, achievements, student services and official updates.",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "YUGA — GMC Kozhikode Union 2026–27",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${YUGA.name} · ${COLLEGE.shortName}`,
-    description: YUGA.description,
+    title: "YUGA | GMC Kozhikode Union 2026–27",
+    description:
+      "Discover YUGA, the GMC Kozhikode Union for 2026–27. Explore union initiatives, interventions, events, achievements, student services and official updates.",
+    images: ["/og.png"],
   },
   icons: {
-    icon: "/yuga-logo.png",
-    shortcut: "/yuga-logo.png",
-    apple: "/yuga-logo.png",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/yuga-logo.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
+  manifest: "/manifest.webmanifest",
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    other: {
+      "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || "",
+    },
   },
 };
 
@@ -76,30 +100,95 @@ export default async function RootLayout({
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "WebSite",
+        "@id": `${SITE.url}/#website`,
+        url: SITE.url,
+        name: "YUGA — GMC Kozhikode Union 2026–27",
+        description:
+          "Official website of YUGA, the student union of Government Medical College Kozhikode (Calicut Medical College) for 2026–27.",
+        publisher: {
+          "@id": `${SITE.url}/#organization`,
+        },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: `${SITE.url}/search?q={search_term_string}`,
+          "query-input": "required name=search_term_string",
+        },
+      },
+      {
         "@type": "CollegeOrUniversity",
         "@id": `${SITE.url}/#college`,
         name: COLLEGE.name,
-        alternateName: "Calicut Medical College / GMC Kozhikode",
-        url: SITE.url,
+        alternateName: [
+          "Calicut Medical College",
+          "GMC Kozhikode",
+          "കോഴിക്കോട് മെഡിക്കൽ കോളേജ്",
+        ],
+        url: "https://govtmedicalcollegekozhikode.ac.in",
+        foundingDate: "1957",
+        logo: `${SITE.url}/yuga-logo.png`,
+        telephone: COLLEGE.casualtyPhone,
         address: {
           "@type": "PostalAddress",
-          streetAddress: "Medical College Junction",
+          streetAddress: "Medical College Junction, 17",
           addressLocality: "Kozhikode",
           addressRegion: "Kerala",
           postalCode: "673008",
           addressCountry: "IN",
         },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: "11.2723",
+          longitude: "75.8369",
+        },
       },
       {
-        "@type": "Organization",
+        "@type": "EducationalOrganization",
         "@id": `${SITE.url}/#organization`,
-        name: `${YUGA.name} College Union`,
-        alternateName: "YUGA — Calicut Medical College Union 2026-2027",
+        name: "YUGA — GMC Kozhikode Union 2026–27",
+        alternateName: [
+          "YUGA",
+          "YUGA College Union",
+          "GMC Kozhikode Student Union",
+          "Calicut Medical College Union",
+          "യുഗ — കോഴിക്കോട് മെഡിക്കൽ കോളേജ് യൂണിയൻ",
+        ],
         url: SITE.url,
+        logo: `${SITE.url}/yuga-logo.png`,
+        image: `${SITE.url}/og.png`,
+        description:
+          "Official student union for 3,000+ medical students, house surgeons, and PG residents at Government Medical College, Kozhikode.",
         parentOrganization: {
           "@id": `${SITE.url}/#college`,
         },
-        description: YUGA.description,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Medical College Junction, 17",
+          addressLocality: "Kozhikode",
+          addressRegion: "Kerala",
+          postalCode: "673008",
+          addressCountry: "IN",
+        },
+        contactPoint: [
+          {
+            "@type": "ContactPoint",
+            telephone: COLLEGE.casualtyPhone,
+            contactType: "emergency",
+            areaServed: "IN",
+            availableLanguage: ["English", "Malayalam"],
+          },
+          {
+            "@type": "ContactPoint",
+            telephone: COLLEGE.phone,
+            contactType: "administrative",
+            areaServed: "IN",
+          },
+        ],
+        sameAs: [
+          "https://instagram.com/yuga_calicutmedicos",
+          "https://youtube.com/@yugacalicut",
+          "https://t.me/yugacmc",
+        ],
       },
     ],
   };

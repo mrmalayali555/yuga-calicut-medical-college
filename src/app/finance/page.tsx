@@ -4,9 +4,12 @@ import { COLLEGE, YUGA } from "@/lib/site";
 import { FinanceClientView } from "./finance-client";
 
 export const metadata: Metadata = {
-  title: "Union Accounts & Financial Transparency · YUGA",
+  title: "Union Accounts & Financial Transparency Ledger",
   description:
     "Official financial accounts and budget statement for YUGA College Union 2026-2027 at Government Medical College, Kozhikode. Transparent ledger of union income and campus expenditures.",
+  alternates: {
+    canonical: "/finance",
+  },
 };
 
 export const dynamic = "force-dynamic";

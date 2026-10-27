@@ -26,9 +26,12 @@ async function getContactSettings() {
 }
 
 export const metadata: Metadata = {
-  title: "Official Contact Desk & Campus Location · YUGA",
+  title: "Official Union Contact Desk & Campus Location",
   description:
     "Get in touch with YUGA College Union 2026-2027 at Government Medical College, Kozhikode. Office location, 24/7 casualty phone, emergency hotline, and official enquiry form.",
+  alternates: {
+    canonical: "/contact",
+  },
 };
 
 export const dynamic = "force-dynamic";

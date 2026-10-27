@@ -39,7 +39,7 @@ export const YUGA = {
 export const SITE = {
   name: "YUGA",
   fullName: "YUGA College Union — GMC Kozhikode",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://yugacmc.in",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.yugacollegeunion.co.in",
   college: COLLEGE.name,
   address: COLLEGE.address,
   phone: COLLEGE.phone,

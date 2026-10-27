@@ -17,8 +17,11 @@ export async function generateMetadata({
   });
 
   return {
-    title: event ? `Register · ${event.title}` : "Event Registration · YUGA",
+    title: event ? `Register for ${event.title}` : "Event Registration Pass",
     description: "Official registration pass and delegate enrollment for GMC Kozhikode union events.",
+    alternates: {
+      canonical: `/events/${slug}/register`,
+    },
   };
 }
 

@@ -16,9 +16,13 @@ import { searchAll } from "@/lib/queries";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Site-Wide Search · YUGA",
+  title: "Search Across Campus Portals",
   description:
     "Search across events, academic circulars, laurels, student interventions, and 24/7 hospital emergency contacts at GMC Kozhikode.",
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 export default async function SearchPage({

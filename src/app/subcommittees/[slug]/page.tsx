@@ -22,11 +22,29 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const committee = await getCommittee(slug);
-  if (!committee) return { title: "Club Not Found · YUGA" };
+  if (!committee) return { title: "Subcommittee Not Found" };
+
+  const description = committee.description || `Official union subcommittee at ${COLLEGE.name}.`;
 
   return {
-    title: `${committee.name} · YUGA Student Wings & Clubs`,
-    description: committee.description || "Official union subcommittee at GMC Kozhikode.",
+    title: committee.name,
+    description,
+    alternates: {
+      canonical: `/subcommittees/${slug}`,
+    },
+    openGraph: {
+      title: committee.name,
+      description,
+      url: `/subcommittees/${slug}`,
+      type: "website",
+      images: [{ url: "/og.png" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: committee.name,
+      description,
+      images: ["/og.png"],
+    },
   };
 }
 

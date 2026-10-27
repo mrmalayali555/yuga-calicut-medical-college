@@ -9,27 +9,44 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/admin/", "/_next/", "/static/"],
+        disallow: [
+          "/api/",
+          "/admin/",
+          "/search?",
+          "/search/",
+        ],
       },
       {
-        userAgent: "Googlebot",
+        userAgent: [
+          "Googlebot",
+          "Bingbot",
+          "Applebot",
+          "DuckDuckBot",
+          "YandexBot",
+        ],
         allow: "/",
-        disallow: ["/api/", "/admin/"],
+        disallow: [
+          "/api/",
+          "/admin/",
+          "/search?",
+        ],
       },
+      // Allow Generative Engine Optimization (GEO) agents for public citations
       {
-        userAgent: "Google-Extended",
+        userAgent: [
+          "OAI-SearchBot",
+          "GPTBot",
+          "ChatGPT-User",
+          "PerplexityBot",
+          "ClaudeBot",
+          "Google-Extended",
+        ],
         allow: "/",
-        disallow: ["/api/", "/admin/"],
-      },
-      {
-        userAgent: "Bingbot",
-        allow: "/",
-        disallow: ["/api/", "/admin/"],
-      },
-      {
-        userAgent: "Applebot",
-        allow: "/",
-        disallow: ["/api/", "/admin/"],
+        disallow: [
+          "/api/",
+          "/admin/",
+          "/search?",
+        ],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

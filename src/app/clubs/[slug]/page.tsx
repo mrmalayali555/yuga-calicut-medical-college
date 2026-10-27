@@ -28,10 +28,10 @@ export async function generateMetadata({
   }
 
   const titles: Record<ClubSlug, string> = {
-    jeevanam: "Jeevanam (ജീവനം) — Voluntary Blood Donation Club | YUGA",
-    praanah: "Praanah (പ്രാണഃ) — Fine Arts, Music & Cultural Society | YUGA",
-    godha: "Godha (ഗോദ) — Sports, Athletics & CMPL Arena | YUGA",
-    ocha: "Ocha (ഒച്ച) — Literary, Quizzing & Debating Society | YUGA",
+    jeevanam: "Jeevanam (ജീവനം) — Voluntary Blood Donation Club",
+    praanah: "Praanah (പ്രാണഃ) — Fine Arts, Music & Cultural Society",
+    godha: "Godha (ഗോദ) — Sports, Athletics & CMPL Arena",
+    ocha: "Ocha (ഒച്ച) — Literary, Quizzing & Debating Society",
   };
 
   const descriptions: Record<ClubSlug, string> = {
@@ -45,9 +45,35 @@ export async function generateMetadata({
       "Literary forum and debating society of Calicut Medical College. Parliamentary debate, Hippocratic medical quizzes, and union journals.",
   };
 
+  const currentTitle = titles[slug as ClubSlug];
+  const currentDesc = descriptions[slug as ClubSlug];
+
   return {
-    title: titles[slug as ClubSlug],
-    description: descriptions[slug as ClubSlug],
+    title: currentTitle,
+    description: currentDesc,
+    alternates: {
+      canonical: `/clubs/${slug}`,
+    },
+    openGraph: {
+      title: currentTitle,
+      description: currentDesc,
+      url: `/clubs/${slug}`,
+      type: "website",
+      images: [
+        {
+          url: "/og.png",
+          width: 1200,
+          height: 630,
+          alt: currentTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: currentTitle,
+      description: currentDesc,
+      images: ["/og.png"],
+    },
   };
 }
 

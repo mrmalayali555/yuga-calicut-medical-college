@@ -3,9 +3,12 @@ import { getAchievements, getGridLayoutSettings } from "@/lib/queries";
 import { AchievementsView } from "@/components/achievements/achievements-view";
 
 export const metadata: Metadata = {
-  title: "Honors & Achievements · YUGA — GMC Kozhikode",
+  title: "Honors, Championships & Hall of Fame",
   description:
-    "Commemorating championships, KUHS Arts festival triumphs, ICMR grants, and sports gold won by Calicut Medicos.",
+    "Commemorating championships, KUHS Arts festival triumphs, ICMR research grants, and sports gold won by Calicut Medicos at GMC Kozhikode.",
+  alternates: {
+    canonical: "/achievements",
+  },
 };
 
 export const dynamic = "force-dynamic";

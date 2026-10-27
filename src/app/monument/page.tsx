@@ -10,9 +10,12 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Architectural Growth Study · 3D Heritage Monument | YUGA College Union",
+  title: "Architectural Growth Study · 3D Heritage Monument",
   description:
     "Interactive 3D procedural tenshu construction study for YUGA College Union at Government Medical College, Kozhikode. An architectural exploration of collective endurance and structural integrity.",
+  alternates: {
+    canonical: "/monument",
+  },
 };
 
 export default function MonumentPage() {

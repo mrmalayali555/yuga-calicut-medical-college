@@ -4,9 +4,12 @@ import { ensureInitialEvents } from "@/lib/initial-sync";
 import { EventsView } from "@/components/events/events-view";
 
 export const metadata: Metadata = {
-  title: "Events & Fests · YUGA — GMC Kozhikode",
+  title: "Campus Events, Fests & Stage Passes",
   description:
     "Explore upcoming campus stages, reserve entry passes, and view photo memories from completed fests at Government Medical College, Kozhikode.",
+  alternates: {
+    canonical: "/events",
+  },
 };
 
 export const dynamic = "force-dynamic";

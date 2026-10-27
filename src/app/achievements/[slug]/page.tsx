@@ -15,11 +15,30 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const item = await getAchievement(slug);
-  if (!item) return { title: "Achievement Not Found · YUGA" };
+  if (!item) return { title: "Achievement Not Found" };
+
+  const description = item.description.slice(0, 160);
+  const images = item.coverImage ? [{ url: item.coverImage }] : [{ url: "/og.png" }];
 
   return {
-    title: `${item.title} · YUGA Laurels & Honors`,
-    description: item.description.slice(0, 160),
+    title: item.title,
+    description,
+    alternates: {
+      canonical: `/achievements/${slug}`,
+    },
+    openGraph: {
+      title: item.title,
+      description,
+      type: "article",
+      url: `/achievements/${slug}`,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: item.title,
+      description,
+      images: item.coverImage ? [item.coverImage] : ["/og.png"],
+    },
   };
 }
 
