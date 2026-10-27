@@ -157,9 +157,9 @@ function JeevanamLogo({ className }: { className?: string }) {
 function PraanahLogo({ className }: { className?: string }) {
   return (
     <div className={`relative flex items-center justify-center h-full w-full ${className || ""}`}>
-      <div className="relative h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 rounded-2xl overflow-hidden bg-white shadow-xs border border-amber-100 p-1">
+      <div className="relative h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 rounded-2xl overflow-hidden bg-[#18110b] shadow-xs border border-amber-500/30 p-1">
         <Image
-          src="/clubs/praanah.jpg"
+          src="/clubs/praanah.png"
           alt="Praanah Arts Club"
           fill
           className="object-contain"

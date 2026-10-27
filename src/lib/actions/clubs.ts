@@ -76,6 +76,9 @@ export async function saveClubSettings(slug: ClubSlug, data: ClubSettings) {
   });
   revalidatePath(`/clubs/${slug}`);
   revalidatePath(`/admin/clubs/${slug}`);
+  revalidatePath(`/admin/clubs`);
+  revalidatePath(`/subcommittees`);
+  revalidatePath(`/`);
   return { success: true };
 }
 

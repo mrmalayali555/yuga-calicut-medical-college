@@ -33,6 +33,8 @@ export async function POST(request: NextRequest) {
     revalidatePath(`/clubs/${slug}`);
     revalidatePath(`/admin/clubs/${slug}`);
     revalidatePath(`/admin/clubs`);
+    revalidatePath(`/subcommittees`);
+    revalidatePath(`/`);
 
     return NextResponse.json({ success: true });
   } catch (err) {

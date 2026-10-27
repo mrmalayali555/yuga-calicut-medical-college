@@ -5,6 +5,7 @@ import path from "path";
 import { put } from "@vercel/blob";
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 const VALID_SLUGS = ["jeevanam", "praanah", "godha", "ocha"];
 const ALLOWED_IMAGE_MIMES = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"];
@@ -94,6 +95,11 @@ export async function POST(req: NextRequest) {
       update: { value: JSON.stringify(updated) },
       create: { key: `club:${slug}`, value: JSON.stringify(updated) },
     });
+    revalidatePath(`/clubs/${slug}`);
+    revalidatePath(`/admin/clubs/${slug}`);
+    revalidatePath(`/admin/clubs`);
+    revalidatePath(`/subcommittees`);
+    revalidatePath(`/`);
   } catch (err) {
     console.warn("Could not persist logo URL to DB:", err);
   }

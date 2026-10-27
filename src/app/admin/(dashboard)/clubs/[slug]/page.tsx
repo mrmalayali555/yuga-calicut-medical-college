@@ -99,7 +99,7 @@ const DEFAULTS: Record<ClubSlug, ClubSettings> = {
     tagline: "Fine Arts, Music & Cultural Society",
     category: "Arts & Culture",
     founded: "Est. 2010",
-    logo: "/clubs/praanah.jpg",
+    logo: "/clubs/praanah.png",
     accent: "#d97706",
     accentRgb: "217, 119, 6",
     heroGradient: "from-amber-950 via-slate-900 to-orange-950",

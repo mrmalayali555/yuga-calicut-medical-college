@@ -184,7 +184,7 @@ const CLUBS_CONFIG: Record<ClubSlug, ClubConfig> = {
     tagline: "Fine Arts, Music & Cultural Society",
     category: "Creative & Performing Arts",
     founded: "Est. 1974",
-    logo: "/clubs/praanah.jpg",
+    logo: "/clubs/praanah.png",
     accent: "#d97706",
     accentRgb: "217, 119, 6",
     heroGradient: "from-[#1a0e05] via-[#0d0703] to-[#140802]",
@@ -1542,7 +1542,13 @@ export function ClubPortalView({ slug }: { slug: ClubSlug }) {
                       : "border-slate-200/80 bg-[#FDFBF7] shadow-xs hover:border-slate-300 hover:shadow-xl hover:-translate-y-1"
                   }`}
                 >
-                  <div className="relative h-16 w-16 rounded-2xl overflow-hidden bg-white shadow-xs p-1.5 shrink-0 border border-slate-100">
+                  <div className={`relative h-16 w-16 rounded-2xl overflow-hidden shadow-xs p-1.5 shrink-0 border ${
+                    otherSlug === "praanah"
+                      ? "bg-[#18110b] border-amber-500/30"
+                      : otherSlug === "ocha"
+                      ? "bg-[#140b22] border-violet-500/30"
+                      : "bg-white border-slate-100"
+                  }`}>
                     <Image
                       src={other.logo}
                       alt={other.name}

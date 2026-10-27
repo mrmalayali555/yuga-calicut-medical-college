@@ -169,7 +169,9 @@ function LogoUploader({
       </label>
       <div className="flex items-center gap-4">
         {/* Preview */}
-        <div className="relative h-20 w-20 rounded-2xl border-2 border-[var(--border-primary)] bg-white overflow-hidden shadow-sm shrink-0">
+        <div className={`relative h-20 w-20 rounded-2xl border-2 border-[var(--border-primary)] overflow-hidden shadow-sm shrink-0 ${
+          slug === "praanah" ? "bg-[#18110b]" : slug === "ocha" ? "bg-[#140b22]" : "bg-white"
+        }`}>
           {currentLogo ? (
             <Image src={currentLogo} alt="Club Logo" fill className="object-contain p-1.5" sizes="80px" />
           ) : (

@@ -20,7 +20,7 @@ const CLUBS = [
     malayalam: "പ്രാണഃ",
     tagline: "Fine Arts, Music & Cultural Society",
     color: "#d97706",
-    defaultLogo: "/clubs/praanah.jpg",
+    defaultLogo: "/clubs/praanah.png",
   },
   {
     slug: "godha",
@@ -74,7 +74,9 @@ export default async function AdminClubsPage() {
               <div className="p-5 flex flex-col flex-1">
                 <div className="flex items-start gap-4 mb-4">
                   {/* Logo */}
-                  <div className="relative h-16 w-16 shrink-0 rounded-2xl border border-[var(--border-primary)] bg-white overflow-hidden shadow-sm">
+                  <div className={`relative h-16 w-16 shrink-0 rounded-2xl border border-[var(--border-primary)] overflow-hidden shadow-sm ${
+                    club.slug === "praanah" ? "bg-[#18110b]" : club.slug === "ocha" ? "bg-[#140b22]" : "bg-white"
+                  }`}>
                     <Image
                       src={logoSrc}
                       alt={club.name}
