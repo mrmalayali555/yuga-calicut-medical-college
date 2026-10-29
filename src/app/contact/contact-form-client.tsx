@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { submitComplaint } from "@/lib/actions/complaints";
 
 export function ContactClientForm() {
   const [name, setName] = useState("");
@@ -24,20 +25,34 @@ export function ContactClientForm() {
     setError(null);
 
     try {
-      // Simulate/post to complaints/feedback table
-      const res = await fetch("/api/admin/complaints", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          message: `[${category.toUpperCase()}] ${subject ? `${subject}: ` : ""}${message.trim()}`,
-          anonymous: false,
-        }),
+      const res = await submitComplaint({
+        name: name.trim(),
+        email: email.trim(),
+        category,
+        subject: subject.trim() || undefined,
+        message: message.trim(),
+        anonymous: false,
       });
 
-      if (!res.ok) {
-        // Even if API is configured differently, resolve gracefully
+      if (!res.success) {
+        // Fallback to API route
+        const apiRes = await fetch("/api/admin/complaints", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name.trim(),
+            email: email.trim(),
+            category,
+            subject: subject.trim(),
+            message: message.trim(),
+            anonymous: false,
+          }),
+        });
+
+        const apiData = await apiRes.json().catch(() => ({}));
+        if (!apiRes.ok || !apiData.success) {
+          throw new Error(apiData.error || res.error || "Failed to deliver message.");
+        }
       }
 
       setSuccess(true);
@@ -45,8 +60,9 @@ export function ContactClientForm() {
       setEmail("");
       setSubject("");
       setMessage("");
-    } catch {
-      setSuccess(true); // Treat as delivered locally
+    } catch (err: any) {
+      console.error("[ContactClientForm] Error submitting:", err);
+      setError(err?.message || "Could not dispatch your communication. Please try again.");
     } finally {
       setLoading(false);
     }

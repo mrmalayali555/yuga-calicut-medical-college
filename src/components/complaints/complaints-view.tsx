@@ -7,27 +7,91 @@ import {
   Lock,
   Copy,
   Check,
+  AlertCircle,
+  Shield,
+  Loader2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { submitComplaint } from "@/lib/actions/complaints";
 
 export function ComplaintsView() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [referenceId, setReferenceId] = useState("");
   const [copied, setCopied] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Form field state
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [batch, setBatch] = useState("2022");
+  const [category, setCategory] = useState("academic");
+  const [message, setMessage] = useState("");
+  const [isAnonymous, setIsAnonymous] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!message.trim()) {
+      setError("Please describe your concern or proposal.");
+      return;
+    }
+
     setLoading(true);
-    setTimeout(() => {
-      const generatedId = `YUGA-GRV-${Math.floor(100000 + Math.random() * 900000)}`;
-      setReferenceId(generatedId);
-      setLoading(false);
+    setError(null);
+
+    try {
+      // Determine effective anonymity
+      const effectiveAnonymous = isAnonymous || !name.trim();
+
+      const res = await submitComplaint({
+        name: effectiveAnonymous ? null : name.trim(),
+        email: effectiveAnonymous ? null : (email.trim() || null),
+        batch,
+        category,
+        message: message.trim(),
+        anonymous: effectiveAnonymous,
+      });
+
+      if (!res.success) {
+        // Fallback to REST API if server action returns an error
+        const apiRes = await fetch("/api/complaints", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: effectiveAnonymous ? null : name.trim(),
+            email: effectiveAnonymous ? null : (email.trim() || null),
+            batch,
+            category,
+            message: message.trim(),
+            anonymous: effectiveAnonymous,
+          }),
+        });
+
+        const apiData = await apiRes.json().catch(() => ({}));
+        if (!apiRes.ok || !apiData.success) {
+          throw new Error(apiData.error || res.error || "Submission failed. Please try again.");
+        }
+
+        setReferenceId(apiData.referenceId || `YUGA-GRV-${Math.floor(100000 + Math.random() * 900000)}`);
+      } else {
+        setReferenceId(res.referenceId || `YUGA-GRV-${Math.floor(100000 + Math.random() * 900000)}`);
+      }
+
       setSubmitted(true);
-    }, 700);
+      // Reset input fields
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (err: any) {
+      console.error("Grievance submission error:", err);
+      setError(err?.message || "Could not register grievance. Please check your network and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCopy = () => {
+    if (!referenceId) return;
     navigator.clipboard.writeText(referenceId);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -78,7 +142,7 @@ export function ComplaintsView() {
                 Dispatched to Council
               </h2>
               <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                Your submission has been registered securely.
+                Your grievance/suggestion has been delivered to the Union executive council.
               </p>
 
               <div className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)] px-4 py-2.5 font-mono text-sm shadow-xs">
@@ -112,6 +176,13 @@ export function ComplaintsView() {
               className="card p-6 sm:p-10 border-[var(--border-primary)] bg-[var(--bg-card)]"
             >
               <form onSubmit={handleSubmit} className="space-y-5">
+                {error && (
+                  <div className="flex items-center gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 p-3.5 text-xs text-rose-500">
+                    <AlertCircle className="h-4 w-4 shrink-0" />
+                    <span>{error}</span>
+                  </div>
+                )}
+
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label className="block text-sm font-semibold text-[var(--text-secondary)] mb-2">
@@ -119,37 +190,66 @@ export function ComplaintsView() {
                     </label>
                     <input
                       type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       placeholder="Leave blank for anonymous"
                       className={inputClasses}
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-[var(--text-secondary)] mb-2">
-                      Batch / Phase
+                      Contact Email (optional)
                     </label>
-                    <select className={inputClasses} defaultValue="2022">
-                      <option value="2020">2020 Batch (Final Year)</option>
-                      <option value="2021">2021 Batch (3rd Year)</option>
-                      <option value="2022">2022 Batch (2nd Year)</option>
-                      <option value="2023">2023 Batch (1st Year)</option>
-                      <option value="2024">2024 Batch (Freshers)</option>
-                      <option value="interns">House Surgeons (Interns)</option>
-                      <option value="pg">PG Residents</option>
-                    </select>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="For private council follow-up"
+                      className={inputClasses}
+                    />
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-[var(--text-secondary)] mb-2">
-                    Issue Category *
-                  </label>
-                  <select className={inputClasses} defaultValue="academic" required>
-                    <option value="academic">Academic / Exam Schedule Feedback</option>
-                    <option value="hostel">Hostel & Mess Facilities</option>
-                    <option value="clinical">Clinical Postings & Library</option>
-                    <option value="fest">Arts & Sports Committee Proposal</option>
-                    <option value="general">General Student Representation</option>
-                  </select>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label className="block text-sm font-semibold text-[var(--text-secondary)] mb-2">
+                      Batch / Phase
+                    </label>
+                    <select
+                      className={inputClasses}
+                      value={batch}
+                      onChange={(e) => setBatch(e.target.value)}
+                    >
+                      <option value="2020 Batch">2020 Batch (Final Year)</option>
+                      <option value="2021 Batch">2021 Batch (3rd Year)</option>
+                      <option value="2022 Batch">2022 Batch (2nd Year)</option>
+                      <option value="2023 Batch">2023 Batch (1st Year)</option>
+                      <option value="2024 Batch">2024 Batch (Freshers)</option>
+                      <option value="House Surgeons">House Surgeons (Interns)</option>
+                      <option value="PG Residents">PG Residents</option>
+                      <option value="Faculty / Alumni">Faculty / Alumni</option>
+                      <option value="General Student">General Medicos</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-[var(--text-secondary)] mb-2">
+                      Issue Category *
+                    </label>
+                    <select
+                      className={inputClasses}
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      required
+                    >
+                      <option value="academic">Academic / Exam Schedule Feedback</option>
+                      <option value="hostel">Hostel & Mess Facilities</option>
+                      <option value="clinical">Clinical Postings & Library</option>
+                      <option value="fest">Arts & Sports Committee Proposal</option>
+                      <option value="general">General Student Representation</option>
+                      <option value="amenities">Campus Infrastructure & Hygiene</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div>
@@ -158,20 +258,48 @@ export function ComplaintsView() {
                   </label>
                   <textarea
                     rows={4}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                     placeholder="Provide details. What happened? What resolution are you proposing?"
                     required
                     className={inputClasses}
                   />
                 </div>
 
+                <div className="flex items-center gap-2 pt-1">
+                  <input
+                    type="checkbox"
+                    id="anonymous-toggle"
+                    checked={isAnonymous}
+                    onChange={(e) => setIsAnonymous(e.target.checked)}
+                    className="h-4 w-4 rounded border-[var(--border-primary)] text-[var(--accent)] focus:ring-[var(--accent)]"
+                  />
+                  <label
+                    htmlFor="anonymous-toggle"
+                    className="text-xs text-[var(--text-secondary)] select-none cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Shield className="h-3.5 w-3.5 text-[var(--accent)]" />
+                    Strict Anonymous Mode (hide name and contact details completely from council record)
+                  </label>
+                </div>
+
                 <div className="pt-2">
                   <button
                     type="submit"
                     disabled={loading}
-                    className="btn-primary w-full justify-center text-sm py-3.5"
+                    className="btn-primary w-full justify-center text-sm py-3.5 cursor-pointer disabled:opacity-60"
                   >
-                    <Send className="h-4 w-4" />
-                    <span>{loading ? "Registering..." : "Submit to Student Council"}</span>
+                    {loading ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span>Transmitting to Union Council...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="h-4 w-4" />
+                        <span>Submit to Student Council</span>
+                      </>
+                    )}
                   </button>
                 </div>
 
